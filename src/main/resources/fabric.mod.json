@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "nemesis",
+  "version": "${version}",
+  "name": "nemesis",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/nemesis/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.typho.nemesis.client.NemesisDataGenerator"
+    ],
+    "client": [
+      "net.typho.nemesis.client.NemesisClient"
+    ],
+    "main": [
+      "net.typho.nemesis.Nemesis"
+    ]
+  },
+  "mixins": [
+    "nemesis.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
