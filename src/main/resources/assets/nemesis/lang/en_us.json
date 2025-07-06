@@ -1,3 +1,5 @@
 {
-  "item.nemesis.diamond_arrow": "Diamond Arrow"
+  "item.nemesis.diamond_arrow": "Diamond Arrow",
+  "entity.nemesis.diamond_arrow": "Diamond Arrow",
+  "enchantment.nemesis.thunder_aspect": "Thunder Aspect"
 }
