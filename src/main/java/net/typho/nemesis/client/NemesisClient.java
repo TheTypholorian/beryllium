@@ -2,6 +2,7 @@ package net.typho.nemesis.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.render.entity.EndCrystalEntityRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.typho.nemesis.Nemesis;
@@ -15,5 +16,6 @@ public class NemesisClient implements ClientModInitializer {
                 return new Identifier(Nemesis.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
             }
         });
+        EntityRendererRegistry.register(Nemesis.MOVING_END_CRYSTAL_ENTITY, EndCrystalEntityRenderer::new);
     }
 }

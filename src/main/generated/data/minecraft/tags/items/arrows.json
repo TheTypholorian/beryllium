@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "nemesis:diamond_arrow"
+    "nemesis:diamond_arrow",
+    "minecraft:end_crystal"
   ]
 }

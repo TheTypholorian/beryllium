@@ -8,16 +8,11 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Models;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
 import net.typho.nemesis.Nemesis;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,7 +41,8 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.ARROWS)
-                    .add(Nemesis.DIAMOND_ARROW);
+                    .add(Nemesis.DIAMOND_ARROW)
+                    .add(Items.END_CRYSTAL);
         }
     }
 
