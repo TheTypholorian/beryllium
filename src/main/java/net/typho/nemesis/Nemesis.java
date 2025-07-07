@@ -9,6 +9,8 @@ import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.FireAspectEnchantment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -44,8 +46,8 @@ public class Nemesis implements ModInitializer {
         }
     }
 
-    public static class ThunderAspectEnchantment extends Enchantment {
-        protected ThunderAspectEnchantment(Rarity weight, EnchantmentTarget target, EquipmentSlot[] slotTypes) {
+    public abstract static class AspectEnchantment extends Enchantment {
+        protected AspectEnchantment(Rarity weight, EnchantmentTarget target, EquipmentSlot[] slotTypes) {
             super(weight, target, slotTypes);
         }
 
@@ -64,15 +66,15 @@ public class Nemesis implements ModInitializer {
             World world = user.getWorld();
 
             if (!world.isClient) {
-                LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
-                entity.setPosition(target.getX(), target.getY(), target.getZ());
-                world.spawnEntity(entity);
+                inflict(world, user, target, level);
             }
         }
 
+        public abstract void inflict(World world, LivingEntity user, Entity target, int level);
+
         @Override
         protected boolean canAccept(Enchantment other) {
-            if (other instanceof FireAspectEnchantment) {
+            if (other instanceof FireAspectEnchantment || other instanceof AspectEnchantment) {
                 return false;
             }
 
@@ -134,7 +136,22 @@ public class Nemesis implements ModInitializer {
             return new DiamondArrowEntity(DIAMOND_ARROW_TYPE, shooter, world);
         }
     });
-    public static final Enchantment THUNDER_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder_aspect"), new ThunderAspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]));
+    public static final Enchantment THUNDER_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder_aspect"), new AspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]) {
+        @Override
+        public void inflict(World world, LivingEntity user, Entity target, int level) {
+            LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
+            entity.setPosition(target.getX(), target.getY(), target.getZ());
+            world.spawnEntity(entity);
+        }
+    });
+    public static final Enchantment POISON_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "poison_aspect"), new AspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]) {
+        @Override
+        public void inflict(World world, LivingEntity user, Entity target, int level) {
+            if (target instanceof LivingEntity living) {
+                living.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 1), user);
+            }
+        }
+    });
     public static final EntityType<MovingEndCrystalEntity> MOVING_END_CRYSTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "moving_end_crystal"), FabricEntityTypeBuilder.<MovingEndCrystalEntity>create(SpawnGroup.MISC, MovingEndCrystalEntity::new).dimensions(EntityDimensions.fixed(2f, 2f)).trackRangeChunks(16).trackedUpdateRate(3).build());
 
     @Override

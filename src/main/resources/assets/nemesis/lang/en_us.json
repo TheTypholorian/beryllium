@@ -1,5 +1,7 @@
 {
   "item.nemesis.diamond_arrow": "Diamond Arrow",
   "entity.nemesis.diamond_arrow": "Diamond Arrow",
-  "enchantment.nemesis.thunder_aspect": "Thunder Aspect"
+  "entity.nemesis.moving_end_crystal": "Moving End Crystal",
+  "enchantment.nemesis.thunder_aspect": "Thunder Aspect",
+  "enchantment.nemesis.poison_aspect": "Poison Aspect"
 }
