@@ -23,6 +23,8 @@ import net.minecraft.world.World;
 public class Nemesis implements ModInitializer {
     public static final String MOD_ID = "nemesis";
 
+    public static final int MAX_ENCHANTMENTS = 3;
+
     public static class DiamondArrowEntity extends PersistentProjectileEntity {
         public DiamondArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
             super(entityType, world);
