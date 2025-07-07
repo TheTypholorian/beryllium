@@ -94,6 +94,7 @@ public class Nemesis implements ModInitializer {
         public void tick() {
             super.tick();
             move(MovementType.SELF, getVelocity());
+            setVelocity(getVelocity().subtract(0, 0.04, 0));
         }
 
         @Override
@@ -112,17 +113,17 @@ public class Nemesis implements ModInitializer {
             Vec3d vec3d = new Vec3d(x, y, z)
                     .normalize()
                     .add(
-                            this.random.nextTriangular(0.0, 0.0172275 * divergence),
-                            this.random.nextTriangular(0.0, 0.0172275 * divergence),
-                            this.random.nextTriangular(0.0, 0.0172275 * divergence)
+                            random.nextTriangular(0.0, 0.0172275 * divergence),
+                            random.nextTriangular(0.0, 0.0172275 * divergence),
+                            random.nextTriangular(0.0, 0.0172275 * divergence)
                     )
                     .multiply(speed);
-            this.setVelocity(vec3d);
+            setVelocity(vec3d);
             double d = vec3d.horizontalLength();
-            this.setYaw((float)(MathHelper.atan2(vec3d.x, vec3d.z) * 180.0F / (float)Math.PI));
-            this.setPitch((float)(MathHelper.atan2(vec3d.y, d) * 180.0F / (float)Math.PI));
-            this.prevYaw = this.getYaw();
-            this.prevPitch = this.getPitch();
+            setYaw((float)(MathHelper.atan2(vec3d.x, vec3d.z) * 180.0F / (float)Math.PI));
+            setPitch((float)(MathHelper.atan2(vec3d.y, d) * 180.0F / (float)Math.PI));
+            prevYaw = getYaw();
+            prevPitch = getPitch();
         }
     }
 
