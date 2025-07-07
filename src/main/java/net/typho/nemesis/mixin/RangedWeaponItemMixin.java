@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Predicate;
 
 @Mixin(RangedWeaponItem.class)
-public class RangedWeaponMixin {
+public class RangedWeaponItemMixin {
     @Shadow
     @Mutable
     @Final
@@ -22,7 +22,6 @@ public class RangedWeaponMixin {
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void onClassInit(CallbackInfo ci) {
-        System.out.println(CROSSBOW_HELD_PROJECTILES);
         CROSSBOW_HELD_PROJECTILES = CROSSBOW_HELD_PROJECTILES.or(stack -> stack.isOf(Items.END_CRYSTAL));
     }
 }

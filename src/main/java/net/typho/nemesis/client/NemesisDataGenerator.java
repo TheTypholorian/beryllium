@@ -42,9 +42,6 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.ARROWS)
                     .add(Nemesis.DIAMOND_ARROW);
-            getOrCreateTagBuilder(Nemesis.CROSSBOW_PROJECTILES)
-                    .addTag(net.minecraft.registry.tag.ItemTags.ARROWS)
-                    .add(Items.END_CRYSTAL);
         }
     }
 

@@ -8,7 +8,7 @@
     "EnchantmentTargetMixin",
     "EndCrystalEntityMixin",
     "PotionItemMixin",
-    "RangedWeaponMixin"
+    "RangedWeaponItemMixin"
   ],
   "client": [],
   "injectors": {
