@@ -13,6 +13,8 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -135,6 +137,7 @@ public class Nemesis implements ModInitializer {
     });
     public static final Enchantment THUNDER_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder_aspect"), new ThunderAspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]));
     public static final EntityType<MovingEndCrystalEntity> MOVING_END_CRYSTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "moving_end_crystal"), FabricEntityTypeBuilder.<MovingEndCrystalEntity>create(SpawnGroup.MISC, MovingEndCrystalEntity::new).dimensions(EntityDimensions.fixed(2f, 2f)).trackRangeChunks(16).trackedUpdateRate(3).build());
+    public static final TagKey<Item> CROSSBOW_PROJECTILES = TagKey.of(RegistryKeys.ITEM, new Identifier(MOD_ID, "crossbow_projectiles"));
 
     @Override
     public void onInitialize() {

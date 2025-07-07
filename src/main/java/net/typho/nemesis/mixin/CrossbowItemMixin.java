@@ -16,6 +16,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Predicate;
 
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin {
@@ -40,5 +43,14 @@ public class CrossbowItemMixin {
             world.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
             ci.cancel();
         }
+    }
+
+    @Inject(
+            method = "getProjectiles()Ljava/util/function/Predicate;",
+            at = @At("TAIL"),
+            cancellable = true
+    )
+    private void shoot(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
+        cir.setReturnValue(stack -> stack.isIn(Nemesis.CROSSBOW_PROJECTILES));
     }
 }
