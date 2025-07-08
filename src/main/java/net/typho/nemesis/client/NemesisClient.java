@@ -16,6 +16,24 @@ public class NemesisClient implements ClientModInitializer {
                 return new Identifier(Nemesis.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
             }
         });
+        EntityRendererRegistry.register(Nemesis.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+            @Override
+            public Identifier getTexture(Nemesis.IronArrowEntity entity) {
+                return new Identifier(Nemesis.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
+            }
+        });
+        EntityRendererRegistry.register(Nemesis.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+            @Override
+            public Identifier getTexture(Nemesis.FlamingArrowEntity entity) {
+                return new Identifier(Nemesis.MOD_ID, "textures/entity/projectiles/flaming_arrow.png");
+            }
+        });
+        EntityRendererRegistry.register(Nemesis.SHOCK_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+            @Override
+            public Identifier getTexture(Nemesis.ShockArrowEntity entity) {
+                return new Identifier(Nemesis.MOD_ID, "textures/entity/projectiles/shock_arrow.png");
+            }
+        });
         EntityRendererRegistry.register(Nemesis.MOVING_END_CRYSTAL_ENTITY, EndCrystalEntityRenderer::new);
     }
 }

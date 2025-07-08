@@ -4,18 +4,15 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.enchantment.FireAspectEnchantment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.EndCrystalEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -48,39 +45,88 @@ public class Nemesis implements ModInitializer {
         }
     }
 
-    public abstract static class AspectEnchantment extends Enchantment {
-        protected AspectEnchantment(Rarity weight, EnchantmentTarget target, EquipmentSlot[] slotTypes) {
-            super(weight, target, slotTypes);
+    public static class IronArrowEntity extends PersistentProjectileEntity {
+        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+            super(entityType, world);
+        }
+
+        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world) {
+            super(type, x, y, z, world);
+        }
+
+        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world) {
+            super(type, owner, world);
+        }
+
+        {
+            setDamage(4);
         }
 
         @Override
-        public int getMinPower(int level) {
-            return 10 + 20 * (level - 1);
+        public ItemStack asItemStack() {
+            return new ItemStack(IRON_ARROW);
+        }
+    }
+
+    public static class FlamingArrowEntity extends PersistentProjectileEntity {
+        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+            super(entityType, world);
+        }
+
+        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world) {
+            super(type, x, y, z, world);
+        }
+
+        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world) {
+            super(type, owner, world);
+        }
+
+        {
+            setOnFireFor(100);
         }
 
         @Override
-        public int getMaxPower(int level) {
-            return super.getMinPower(level) + 50;
+        public ItemStack asItemStack() {
+            return new ItemStack(FLAMING_ARROW);
+        }
+    }
+
+    public static class ShockArrowEntity extends PersistentProjectileEntity {
+        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+            super(entityType, world);
         }
 
-        @Override
-        public void onTargetDamaged(LivingEntity user, Entity target, int level) {
-            World world = user.getWorld();
+        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world) {
+            super(type, x, y, z, world);
+        }
 
-            if (!world.isClient) {
-                inflict(world, user, target, level);
+        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world) {
+            super(type, owner, world);
+        }
+
+        public void thunder(World world) {
+            if (world.isThundering()) {
+                LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
+                entity.setPosition(getPos());
+                world.spawnEntity(entity);
             }
         }
 
-        public abstract void inflict(World world, LivingEntity user, Entity target, int level);
+        @Override
+        protected void onEntityHit(EntityHitResult entityHitResult) {
+            thunder(getWorld());
+            super.onEntityHit(entityHitResult);
+        }
 
         @Override
-        protected boolean canAccept(Enchantment other) {
-            if (other instanceof FireAspectEnchantment || other instanceof AspectEnchantment) {
-                return false;
-            }
+        protected void onBlockHit(BlockHitResult blockHitResult) {
+            thunder(getWorld());
+            super.onBlockHit(blockHitResult);
+        }
 
-            return super.canAccept(other);
+        @Override
+        public ItemStack asItemStack() {
+            return new ItemStack(SHOCK_ARROW);
         }
     }
 
@@ -138,20 +184,25 @@ public class Nemesis implements ModInitializer {
             return new DiamondArrowEntity(DIAMOND_ARROW_TYPE, shooter, world);
         }
     });
-    public static final Enchantment THUNDER_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "thunder_aspect"), new AspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]) {
+    public static final EntityType<IronArrowEntity> IRON_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "iron_arrow"), EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, SpawnGroup.MISC).setDimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("iron_arrow"));
+    public static final Item IRON_ARROW = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "iron_arrow"), new ArrowItem(new FabricItemSettings()) {
         @Override
-        public void inflict(World world, LivingEntity user, Entity target, int level) {
-            LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
-            entity.setPosition(target.getX(), target.getY(), target.getZ());
-            world.spawnEntity(entity);
+        public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
+            return new IronArrowEntity(IRON_ARROW_TYPE, shooter, world);
         }
     });
-    public static final Enchantment POISON_ASPECT = Registry.register(Registries.ENCHANTMENT, new Identifier(MOD_ID, "poison_aspect"), new AspectEnchantment(Enchantment.Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[0]) {
+    public static final EntityType<FlamingArrowEntity> FLAMING_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "flaming_arrow"), EntityType.Builder.<FlamingArrowEntity>create(FlamingArrowEntity::new, SpawnGroup.MISC).setDimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("flaming_arrow"));
+    public static final Item FLAMING_ARROW = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "flaming_arrow"), new ArrowItem(new FabricItemSettings()) {
         @Override
-        public void inflict(World world, LivingEntity user, Entity target, int level) {
-            if (target instanceof LivingEntity living) {
-                living.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 100, 1), user);
-            }
+        public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
+            return new FlamingArrowEntity(FLAMING_ARROW_TYPE, shooter, world);
+        }
+    });
+    public static final EntityType<ShockArrowEntity> SHOCK_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "shock_arrow"), EntityType.Builder.<ShockArrowEntity>create(ShockArrowEntity::new, SpawnGroup.MISC).setDimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("shock_arrow"));
+    public static final Item SHOCK_ARROW = Registry.register(Registries.ITEM, new Identifier(MOD_ID, "shock_arrow"), new ArrowItem(new FabricItemSettings()) {
+        @Override
+        public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
+            return new ShockArrowEntity(SHOCK_ARROW_TYPE, shooter, world);
         }
     });
     public static final EntityType<MovingEndCrystalEntity> MOVING_END_CRYSTAL_ENTITY = Registry.register(Registries.ENTITY_TYPE, new Identifier(MOD_ID, "moving_end_crystal"), FabricEntityTypeBuilder.<MovingEndCrystalEntity>create(SpawnGroup.MISC, MovingEndCrystalEntity::new).dimensions(EntityDimensions.fixed(2f, 2f)).trackRangeChunks(16).trackedUpdateRate(3).build());
@@ -160,7 +211,7 @@ public class Nemesis implements ModInitializer {
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
-                    entries.addAfter(Items.ARROW, DIAMOND_ARROW);
+                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, SHOCK_ARROW);
                 });
     }
 }

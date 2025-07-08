@@ -16,8 +16,9 @@ public class EnchantmentsMixin {
     )
     private static void register(String name, Enchantment enchantment, CallbackInfoReturnable<Enchantment> cir) {
         switch (name) {
-            case "unbreaking", "mending": {
+            case "unbreaking", "mending", "flame": {
                 cir.setReturnValue(enchantment);
+                break;
             }
         }
     }

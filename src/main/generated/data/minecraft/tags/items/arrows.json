@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "nemesis:diamond_arrow"
+    "nemesis:diamond_arrow",
+    "nemesis:iron_arrow",
+    "nemesis:flaming_arrow",
+    "nemesis:shock_arrow"
   ]
 }
