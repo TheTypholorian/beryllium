@@ -1,25 +1,21 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_diamond": {
+    "has_feather": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:diamond"
-            ]
+            "items": "minecraft:feather"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_feather": {
+    "has_fire_charge": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:feather"
-            ]
+            "items": "minecraft:fire_charge"
           }
         ]
       },
@@ -27,22 +23,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:diamond_arrow"
+        "recipe": "nemesis:flaming_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_feather",
-      "has_diamond",
-      "has_the_recipe"
+      "has_fire_charge"
     ]
   ],
   "rewards": {
     "recipes": [
-      "nemesis:diamond_arrow"
+      "nemesis:flaming_arrow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

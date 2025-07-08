@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -18,7 +18,6 @@ import net.typho.nemesis.Nemesis;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 public class NemesisDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -68,11 +67,11 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
     }
 
     public static class Recipes extends FabricRecipeProvider {
-        public Recipes(FabricDataOutput output) {
-            super(output);
+        public Recipes(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
         }
 
-        public static void arrow(Consumer<RecipeJsonProvider> consumer, Item result, Item tip, String tipCriterion) {
+        public static void arrow(RecipeExporter exporter, Item result, Item tip, String tipCriterion) {
             ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, result, 4)
                     .input('#', Items.STICK)
                     .input('X', tip)
@@ -82,15 +81,15 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
                     .pattern("Y")
                     .criterion("has_feather", conditionsFromItem(Items.FEATHER))
                     .criterion(tipCriterion, conditionsFromItem(tip))
-                    .offerTo(consumer);
+                    .offerTo(exporter);
         }
 
         @Override
-        public void generate(Consumer<RecipeJsonProvider> consumer) {
-            arrow(consumer, Nemesis.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
-            arrow(consumer, Nemesis.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
-            arrow(consumer, Nemesis.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
-            arrow(consumer, Nemesis.SHOCK_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
+        public void generate(RecipeExporter exporter) {
+            arrow(exporter, Nemesis.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
+            arrow(exporter, Nemesis.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
+            arrow(exporter, Nemesis.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
+            arrow(exporter, Nemesis.SHOCK_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
         }
     }
 }

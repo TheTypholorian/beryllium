@@ -7,5 +7,6 @@
   "entity.nemesis.iron_arrow": "Iron Arrow",
   "entity.nemesis.flaming_arrow": "Flaming Arrow",
   "entity.nemesis.shock_arrow": "Shock Arrow",
-  "entity.nemesis.moving_end_crystal": "Moving End Crystal"
+  "entity.nemesis.moving_end_crystal": "Moving End Crystal",
+  "enchantment.nemesis.vitality": "Vitality"
 }

@@ -5,15 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnvilScreenHandlerMixin",
-    "CrossbowItemMixin",
-    "EnchantmentHelperMixin",
-    "EnchantmentMixin",
     "EnchantmentsMixin",
-    "EnchantmentTargetMixin",
     "EndCrystalEntityMixin",
+    "EndCrystalItemMixin",
     "ItemStackMixin",
     "PotionItemMixin",
-    "ProtectionEnchantmentMixin",
     "RangedWeaponItemMixin"
   ],
   "client": [],

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:feather"
-            ]
+            "items": "minecraft:feather"
           }
         ]
       },
@@ -17,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:iron_ingot"
-            ]
+            "items": "minecraft:iron_ingot"
           }
         ]
       },
@@ -34,15 +30,14 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_feather",
-      "has_iron_ingot",
-      "has_the_recipe"
+      "has_iron_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
       "nemesis:iron_arrow"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

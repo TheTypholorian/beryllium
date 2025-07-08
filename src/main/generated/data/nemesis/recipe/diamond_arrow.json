@@ -6,7 +6,7 @@
       "item": "minecraft:stick"
     },
     "X": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:diamond"
     },
     "Y": {
       "item": "minecraft:feather"
@@ -19,7 +19,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "nemesis:iron_arrow"
-  },
-  "show_notification": true
+    "id": "nemesis:diamond_arrow"
+  }
 }
