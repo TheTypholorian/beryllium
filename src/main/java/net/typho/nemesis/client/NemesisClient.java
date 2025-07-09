@@ -45,7 +45,7 @@ public class NemesisClient implements ClientModInitializer {
             matrices.translate(0.0F, -0.5F, 0.0F);
             int k = OverlayTexture.DEFAULT_UV;
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(j));
-            matrices.translate(0.0F, 1.5F, 0.0F);
+            matrices.translate(0.0F, 1F, 0.0F);
             matrices.multiply(new Quaternionf().setAngleAxis((float) (Math.PI / 3), SINE_45_DEGREES, 0.0F, SINE_45_DEGREES));
             this.frame.render(matrices, vertexConsumer, light, k);
             float l = 0.875F;

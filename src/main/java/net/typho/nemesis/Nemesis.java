@@ -156,13 +156,25 @@ public class Nemesis implements ModInitializer {
         @Override
         protected void onEntityHit(EntityHitResult entityHitResult) {
             super.onEntityHit(entityHitResult);
-            explode();
+
+            if (entityHitResult.getEntity() != getOwner()) {
+                explode();
+            }
         }
 
         @Override
         protected void onBlockHit(BlockHitResult blockHitResult) {
             super.onBlockHit(blockHitResult);
             explode();
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+
+            if (age >= 100) {
+                explode();
+            }
         }
 
         @Override

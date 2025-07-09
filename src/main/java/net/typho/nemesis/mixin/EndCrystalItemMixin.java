@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Implements(@Interface(iface = ProjectileItem.class, prefix = "proj$"))
 public class EndCrystalItemMixin {
     public ProjectileEntity proj$createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-        System.out.println("create proj");
-        return new Nemesis.EndCrystalProjectileEntity(Nemesis.END_CRYSTAL_PROJECTILE_ENTITY, pos.getX(), pos.getY(), pos.getZ(), world, stack, null);
+        return new Nemesis.EndCrystalProjectileEntity(Nemesis.END_CRYSTAL_PROJECTILE_ENTITY, pos.getX(), pos.getY() - 1, pos.getZ(), world, stack, null);
     }
 }
