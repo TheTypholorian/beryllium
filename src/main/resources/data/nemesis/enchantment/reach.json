@@ -1,10 +1,10 @@
 {
   "description": {
-    "translate": "enchantment.nemesis.vitality"
+    "translate": "enchantment.nemesis.reach"
   },
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#nemesis:enchantable/handheld",
   "weight": 2,
-  "max_level": 2,
+  "max_level": 5,
   "min_cost": {
     "base": 25,
     "per_level_above_first": 25
@@ -15,17 +15,17 @@
   },
   "anvil_cost": 10,
   "slots": [
-    "armor"
+    "mainhand"
   ],
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "minecraft:generic.max_health",
-        "id": "max_health",
+        "attribute": "minecraft:player.block_interaction_range",
+        "id": "block_interaction_range",
         "amount": {
           "type": "minecraft:linear",
-          "base": 1,
-          "per_level_above_first": 1
+          "base": 0.5,
+          "per_level_above_first": 0.5
         },
         "operation": "add_value"
       }

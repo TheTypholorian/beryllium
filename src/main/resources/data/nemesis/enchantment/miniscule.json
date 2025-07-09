@@ -1,8 +1,8 @@
 {
   "description": {
-    "translate": "enchantment.nemesis.vitality"
+    "translate": "enchantment.nemesis.miniscule"
   },
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#minecraft:enchantable/chest_armor",
   "weight": 2,
   "max_level": 2,
   "min_cost": {
@@ -20,12 +20,12 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "minecraft:generic.max_health",
-        "id": "max_health",
+        "attribute": "minecraft:generic.scale",
+        "id": "scale",
         "amount": {
           "type": "minecraft:linear",
-          "base": 1,
-          "per_level_above_first": 1
+          "base": -0.2,
+          "per_level_above_first": -0.2
         },
         "operation": "add_value"
       }

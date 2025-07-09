@@ -1,10 +1,10 @@
 {
   "description": {
-    "translate": "enchantment.nemesis.vitality"
+    "translate": "enchantment.nemesis.step"
   },
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#minecraft:enchantable/leg_armor",
   "weight": 2,
-  "max_level": 2,
+  "max_level": 4,
   "min_cost": {
     "base": 25,
     "per_level_above_first": 25
@@ -20,12 +20,12 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "minecraft:generic.max_health",
-        "id": "max_health",
+        "attribute": "minecraft:generic.step_height",
+        "id": "step_height",
         "amount": {
           "type": "minecraft:linear",
-          "base": 1,
-          "per_level_above_first": 1
+          "base": 0.5,
+          "per_level_above_first": 0.5
         },
         "operation": "add_value"
       }
