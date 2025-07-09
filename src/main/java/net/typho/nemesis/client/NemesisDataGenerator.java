@@ -44,7 +44,7 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
                     .add(Nemesis.DIAMOND_ARROW)
                     .add(Nemesis.IRON_ARROW)
                     .add(Nemesis.FLAMING_ARROW)
-                    .add(Nemesis.copper_arrow);
+                    .add(Nemesis.COPPER_ARROW);
         }
     }
 
@@ -62,7 +62,7 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Nemesis.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Nemesis.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Nemesis.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Nemesis.copper_arrow, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Nemesis.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
         }
     }
 
@@ -89,7 +89,7 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
             arrow(exporter, Nemesis.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
             arrow(exporter, Nemesis.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
             arrow(exporter, Nemesis.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
-            arrow(exporter, Nemesis.copper_arrow, Items.COPPER_INGOT, "has_copper_ingot");
+            arrow(exporter, Nemesis.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
         }
     }
 }

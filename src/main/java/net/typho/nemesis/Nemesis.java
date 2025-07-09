@@ -2,7 +2,11 @@ package net.typho.nemesis;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -15,6 +19,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.item.Item.BASE_ATTACK_DAMAGE_MODIFIER_ID;
+import static net.minecraft.item.Item.BASE_ATTACK_SPEED_MODIFIER_ID;
 
 public class Nemesis implements ModInitializer {
     public static final String MOD_ID = "nemesis";
@@ -123,7 +130,7 @@ public class Nemesis implements ModInitializer {
 
         @Override
         protected ItemStack getDefaultItemStack() {
-            return new ItemStack(copper_arrow);
+            return new ItemStack(COPPER_ARROW);
         }
     }
 
@@ -214,19 +221,52 @@ public class Nemesis implements ModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<CopperArrowEntity> copper_arrow_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "copper_arrow"), EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
-    public static final Item copper_arrow = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "copper_arrow"), new ArrowItem(new Item.Settings()) {
+    public static final EntityType<CopperArrowEntity> COPPER_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "copper_arrow"), EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
+    public static final Item COPPER_ARROW = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "copper_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
-            return new CopperArrowEntity(copper_arrow_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
+            return new CopperArrowEntity(COPPER_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
 
         public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-            CopperArrowEntity arrowEntity = new CopperArrowEntity(copper_arrow_TYPE, pos.getX(), pos.getY(), pos.getZ(), world, stack.copyWithCount(1), null);
+            CopperArrowEntity arrowEntity = new CopperArrowEntity(COPPER_ARROW_TYPE, pos.getX(), pos.getY(), pos.getZ(), world, stack.copyWithCount(1), null);
             arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
             return arrowEntity;
         }
     });
     public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "moving_end_crystal"), EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
+    public static final Item DIAMOND_GLAIVE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "diamond_glaive"),
+            new SwordItem(
+                    ToolMaterials.DIAMOND,
+                    new Item.Settings().attributeModifiers(glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f))
+            )
+    );
+
+    public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {
+        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+        builder.add(
+                        EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
+                        new EntityAttributeModifier(Identifier.of(MOD_ID, "glaive_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                        new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                        EntityAttributes.GENERIC_ATTACK_SPEED,
+                        new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                        AttributeModifierSlot.MAINHAND
+                )
+                .add(
+                EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO,
+                new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                AttributeModifierSlot.MAINHAND
+        );
+        return builder.build();
+    }
 
     public static String toRomanNumeral(int n) {
         enum Letter {
@@ -269,7 +309,7 @@ public class Nemesis implements ModInitializer {
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
-                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, copper_arrow);
+                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, COPPER_ARROW);
                 });
     }
 }
