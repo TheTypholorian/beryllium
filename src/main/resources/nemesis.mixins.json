@@ -4,8 +4,7 @@
   "package": "net.typho.nemesis.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AnvilScreenHandlerMixin",
-    "EnchantmentsMixin",
+    "EnchantmentMixin",
     "EndCrystalEntityMixin",
     "EndCrystalItemMixin",
     "ItemStackMixin",

@@ -32,7 +32,6 @@ public class RangedWeaponItemMixin {
     @Inject(method = "createArrowEntity", at = @At("HEAD"), cancellable = true)
     protected void createArrowEntity(World world, LivingEntity shooter, ItemStack weaponStack, ItemStack projectileStack, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir) {
         Item item = projectileStack.getItem();
-        System.out.println(item);
 
         if (item instanceof ArrowItem arrowItem) {
             PersistentProjectileEntity proj = arrowItem.createArrow(world, projectileStack, shooter, weaponStack);

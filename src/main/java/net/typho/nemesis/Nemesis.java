@@ -2,15 +2,12 @@ package net.typho.nemesis;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -232,7 +229,43 @@ public class Nemesis implements ModInitializer {
         }
     });
     public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "moving_end_crystal"), EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
-    public static final RegistryKey<Enchantment> VITALITY_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(MOD_ID, "vitality"));
+
+    public static String toRomanNumeral(int n) {
+        enum Letter {
+            M(1000), D(500), C(100), L(50), X(10), V(5), I(1);
+
+            public final int value;
+
+            Letter(int value) {
+                this.value = value;
+            }
+        }
+
+        StringBuilder builder = new StringBuilder();
+
+        for (Letter letter : Letter.values()) {
+            int num = Math.floorDiv(n, letter.value);
+
+            switch (num) {
+                case 1, 2, 3: {
+                    builder.append(letter.name().repeat(num));
+                    break;
+                }
+                case 4: {
+                    if (letter == Letter.M) {
+                        builder.append("MMMM");
+                    } else {
+                        builder.append(letter.name()).append(Letter.values()[letter.ordinal() - 1]);
+                    }
+                    break;
+                }
+            }
+
+            n -= letter.value * num;
+        }
+
+        return builder.toString();
+    }
 
     @Override
     public void onInitialize() {
