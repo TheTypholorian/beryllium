@@ -93,16 +93,16 @@ public class Nemesis implements ModInitializer {
         }
     }
 
-    public static class ShockArrowEntity extends PersistentProjectileEntity {
-        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
+    public static class CopperArrowEntity extends PersistentProjectileEntity {
+        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
             super(entityType, world);
         }
 
-        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
+        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
             super(type, x, y, z, world, stack, weapon);
         }
 
-        public ShockArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
+        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
             super(type, owner, world, stack, shotFrom);
         }
 
@@ -128,7 +128,7 @@ public class Nemesis implements ModInitializer {
 
         @Override
         protected ItemStack getDefaultItemStack() {
-            return new ItemStack(SHOCK_ARROW);
+            return new ItemStack(copper_arrow);
         }
     }
 
@@ -219,14 +219,14 @@ public class Nemesis implements ModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<ShockArrowEntity> SHOCK_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "shock_arrow"), EntityType.Builder.<ShockArrowEntity>create(ShockArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("shock_arrow"));
-    public static final Item SHOCK_ARROW = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "shock_arrow"), new ArrowItem(new Item.Settings()) {
+    public static final EntityType<CopperArrowEntity> copper_arrow_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "copper_arrow"), EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
+    public static final Item copper_arrow = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "copper_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
-            return new ShockArrowEntity(SHOCK_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
+            return new CopperArrowEntity(copper_arrow_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
 
         public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-            ShockArrowEntity arrowEntity = new ShockArrowEntity(SHOCK_ARROW_TYPE, pos.getX(), pos.getY(), pos.getZ(), world, stack.copyWithCount(1), null);
+            CopperArrowEntity arrowEntity = new CopperArrowEntity(copper_arrow_TYPE, pos.getX(), pos.getY(), pos.getZ(), world, stack.copyWithCount(1), null);
             arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
             return arrowEntity;
         }
@@ -238,7 +238,7 @@ public class Nemesis implements ModInitializer {
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
-                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, SHOCK_ARROW);
+                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, copper_arrow);
                 });
         /*
         Registry.register(

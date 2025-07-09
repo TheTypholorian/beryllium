@@ -1,9 +1,9 @@
-// 1.21.1	2025-07-08T16:49:43.2421848	nemesis/Recipes
+// 1.21.1	2025-07-09T11:00:54.6142368	nemesis/Recipes
 ec6e55721b8bb4a340ab3bff32956eea0eb29b9b data\nemesis\recipe\diamond_arrow.json
 902b9634a8a1bc3147b797c4cb37b041480b4bc7 data\nemesis\recipe\flaming_arrow.json
-6e5b8cb8ff1f886b36dc6ffb04a1ff7f6f660a96 data\nemesis\advancement\recipes\combat\flaming_arrow.json
 5fab7734ec780157f833cade2cfb7dca525630f4 data\nemesis\advancement\recipes\combat\iron_arrow.json
-4860ca7f22c1c83f11e75a7855c6f483ec357aea data\nemesis\advancement\recipes\combat\shock_arrow.json
-04c524d8268219c9238a448aa74a550e06d276ae data\nemesis\recipe\shock_arrow.json
+6e5b8cb8ff1f886b36dc6ffb04a1ff7f6f660a96 data\nemesis\advancement\recipes\combat\flaming_arrow.json
+e1ab068655adaa7974e6fd695829bb7d618e0715 data\nemesis\recipe\copper_arrow.json
+fb54f0ead03257363ff47eeacb8b656a3df11d7e data\nemesis\advancement\recipes\combat\copper_arrow.json
 e9d59c8216c9f3e61c5ec01152408c435768b990 data\nemesis\recipe\iron_arrow.json
 0538cf7a0d4d80625ac5171b7608bd4209abfe7e data\nemesis\advancement\recipes\combat\diamond_arrow.json

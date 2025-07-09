@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:shock_arrow"
+        "recipe": "nemesis:copper_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:shock_arrow"
+      "nemesis:copper_arrow"
     ]
   }
 }
