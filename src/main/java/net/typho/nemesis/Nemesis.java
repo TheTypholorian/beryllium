@@ -19,8 +19,6 @@ import org.jetbrains.annotations.Nullable;
 public class Nemesis implements ModInitializer {
     public static final String MOD_ID = "nemesis";
 
-    public static final int MAX_ENCHANTMENTS = 3;
-
     public static class DiamondArrowEntity extends PersistentProjectileEntity {
         public DiamondArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
             super(entityType, world);
@@ -273,28 +271,5 @@ public class Nemesis implements ModInitializer {
                 .register(entries -> {
                     entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, copper_arrow);
                 });
-        /*
-        Registry.register(
-                RegistryKeys.ENCHANTMENT,
-                VITALITY_ENCHANTMENT,
-                Enchantment.builder(
-                                Enchantment.definition(
-                                        En.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
-                                        10,
-                                        4,
-                                        Enchantment.leveledCost(1, 11),
-                                        Enchantment.leveledCost(12, 11),
-                                        1,
-                                        AttributeModifierSlot.ARMOR
-                                )
-                        )
-                        .exclusiveSet(registryEntryLookup2.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE_SET))
-                        .addEffect(
-                                EnchantmentEffectComponentTypes.DAMAGE_PROTECTION,
-                                new AddEnchantmentEffect(EnchantmentLevelBasedValue.linear(1.0F)),
-                                DamageSourcePropertiesLootCondition.builder(DamageSourcePredicate.Builder.create().tag(TagPredicate.unexpected(DamageTypeTags.BYPASSES_INVULNERABILITY)))
-                        )
-        );
-         */
     }
 }
