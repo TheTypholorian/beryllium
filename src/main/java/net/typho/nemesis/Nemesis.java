@@ -149,7 +149,7 @@ public class Nemesis implements ModInitializer {
             if (!isRemoved() && !getWorld().isClient) {
                 remove(Entity.RemovalReason.KILLED);
 
-                getWorld().createExplosion(this, getDamageSources().explosion(this, getOwner()), null, getX(), getY(), getZ(), 4f, true, World.ExplosionSourceType.BLOCK);
+                getWorld().createExplosion(this, getDamageSources().explosion(this, getOwner()), null, getX(), getY(), getZ(), 4f, false, World.ExplosionSourceType.BLOCK);
             }
         }
 
