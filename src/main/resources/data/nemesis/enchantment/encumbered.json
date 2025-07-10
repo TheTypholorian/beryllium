@@ -3,6 +3,7 @@
     "translate": "enchantment.nemesis.encumbered"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
+  "exclusive_set": "#nemesis:exclusive_set/gravity",
   "weight": 2,
   "max_level": 4,
   "min_cost": {
@@ -13,7 +14,7 @@
     "base": 75,
     "per_level_above_first": 25
   },
-  "anvil_cost": 10,
+  "anvil_cost": 5,
   "slots": [
     "armor"
   ],

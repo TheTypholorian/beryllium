@@ -292,22 +292,22 @@ public class Nemesis implements ModInitializer {
     public static final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 2, -2.8f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 0, -2.8f)))
     );
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 2, -2.8f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 0, -2.8f)))
     );
     public static final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 2, -2.8f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 0, -2.8f)))
     );
     public static final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 2, -2.8f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 0, -2.8f)))
     );
 
     public static String toRomanNumeral(int n) {

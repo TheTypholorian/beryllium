@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.nemesis.lightweight"
+  },
+  "supported_items": "#minecraft:enchantable/sword",
+  "weight": 2,
+  "max_level": 5,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 25
+  },
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 25
+  },
+  "anvil_cost": 10,
+  "slots": [],
+  "effects": {
+  }
+}

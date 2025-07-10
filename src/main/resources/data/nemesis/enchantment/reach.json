@@ -2,7 +2,7 @@
   "description": {
     "translate": "enchantment.nemesis.reach"
   },
-  "supported_items": "#nemesis:enchantable/handheld",
+  "supported_items": "#minecraft:enchantable/mining",
   "weight": 2,
   "max_level": 5,
   "min_cost": {

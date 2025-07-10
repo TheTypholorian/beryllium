@@ -19,5 +19,8 @@
   "enchantment.nemesis.enlarged": "Enlarged",
   "enchantment.nemesis.reach": "Reach",
   "enchantment.nemesis.step": "Step",
-  "tag.item.nemesis.enchantable.handheld": "Handheld"
+  "enchantment.nemesis.lightweight": "Lightweight",
+  "tag.item.nemesis.glaives": "Glaives",
+  "tag.enchantment.nemesis.exclusive_set.gravity": "Gravity",
+  "tag.enchantment.nemesis.exclusive_set.scale": "Scale"
 }
