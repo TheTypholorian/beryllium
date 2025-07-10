@@ -12,7 +12,11 @@
     "PotionItemMixin",
     "RangedWeaponItemMixin"
   ],
-  "client": [],
+  "client": [
+    "ItemRendererMixin",
+    "ModelLoaderMixin",
+    "PlayerEntityRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

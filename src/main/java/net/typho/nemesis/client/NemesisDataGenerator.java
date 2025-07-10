@@ -84,12 +84,25 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
                     .offerTo(exporter);
         }
 
+        public static void glaive(RecipeExporter exporter, Item result, Item tip, String tipCriterion) {
+            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, result, 1)
+                    .input('#', Items.STICK)
+                    .input('X', tip)
+                    .pattern("  X")
+                    .pattern(" # ")
+                    .pattern("#  ")
+                    .criterion(tipCriterion, conditionsFromItem(tip))
+                    .offerTo(exporter);
+        }
+
         @Override
         public void generate(RecipeExporter exporter) {
             arrow(exporter, Nemesis.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
             arrow(exporter, Nemesis.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
             arrow(exporter, Nemesis.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
             arrow(exporter, Nemesis.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
+
+            glaive(exporter, Nemesis.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
         }
     }
 }

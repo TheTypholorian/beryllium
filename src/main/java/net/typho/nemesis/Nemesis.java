@@ -2,6 +2,7 @@ package net.typho.nemesis;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.*;
@@ -19,9 +20,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import static net.minecraft.item.Item.BASE_ATTACK_DAMAGE_MODIFIER_ID;
-import static net.minecraft.item.Item.BASE_ATTACK_SPEED_MODIFIER_ID;
 
 public class Nemesis implements ModInitializer {
     public static final String MOD_ID = "nemesis";
@@ -185,6 +183,63 @@ public class Nemesis implements ModInitializer {
         }
     }
 
+    public static class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelItem {
+        public GlaiveItem(ToolMaterial toolMaterial, Settings settings) {
+            super(toolMaterial, settings);
+        }
+
+        @Override
+        public BipedEntityModel.ArmPose pose() {
+            return BipedEntityModel.ArmPose.CROSSBOW_HOLD;
+        }
+
+        @Override
+        public Identifier worldModel() {
+            Identifier id = Registries.ITEM.getId(this);
+            return Identifier.of(id.getNamespace(), id.getPath() + "_3d");
+        }
+
+        @Override
+        public Identifier guiModel() {
+            return Registries.ITEM.getId(this);
+        }
+
+        public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {
+            AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+            builder.add(
+                            EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
+                            new EntityAttributeModifier(Identifier.of(MOD_ID, "glaive_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    )
+                    .add(
+                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    )
+                    .add(
+                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    )
+                    .add(
+                            EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO,
+                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    );
+            return builder.build();
+        }
+    }
+
+    public interface CustomPoseItem {
+        BipedEntityModel.ArmPose pose();
+    }
+
+    public interface DualModelItem {
+        Identifier worldModel();
+
+        Identifier guiModel();
+    }
+
     public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
     public static final Item DIAMOND_ARROW = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "diamond_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
@@ -237,36 +292,11 @@ public class Nemesis implements ModInitializer {
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "diamond_glaive"),
-            new SwordItem(
+            new GlaiveItem(
                     ToolMaterials.DIAMOND,
-                    new Item.Settings().attributeModifiers(glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f))
+                    new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f))
             )
     );
-
-    public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {
-        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
-        builder.add(
-                        EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                        new EntityAttributeModifier(Identifier.of(MOD_ID, "glaive_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
-                        AttributeModifierSlot.MAINHAND
-                )
-                .add(
-                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                        new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
-                        AttributeModifierSlot.MAINHAND
-                )
-                .add(
-                        EntityAttributes.GENERIC_ATTACK_SPEED,
-                        new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
-                        AttributeModifierSlot.MAINHAND
-                )
-                .add(
-                EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO,
-                new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
-                AttributeModifierSlot.MAINHAND
-        );
-        return builder.build();
-    }
 
     public static String toRomanNumeral(int n) {
         enum Letter {
