@@ -289,13 +289,25 @@ public class Nemesis implements ModInitializer {
         }
     });
     public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "moving_end_crystal"), EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
+    public static final Item NETHERITE_GLAIVE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "netherite_glaive"),
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 2, -2.8f)))
+    );
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "diamond_glaive"),
-            new GlaiveItem(
-                    ToolMaterials.DIAMOND,
-                    new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f))
-            )
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 2, -2.8f)))
+    );
+    public static final Item IRON_GLAIVE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "iron_glaive"),
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 2, -2.8f)))
+    );
+    public static final Item GOLDEN_GLAIVE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "golden_glaive"),
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 2, -2.8f)))
     );
 
     public static String toRomanNumeral(int n) {
@@ -340,6 +352,10 @@ public class Nemesis implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
                     entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, COPPER_ARROW);
+                    entries.addAfter(Items.NETHERITE_SWORD, NETHERITE_GLAIVE);
+                    entries.addAfter(Items.DIAMOND_SWORD, DIAMOND_GLAIVE);
+                    entries.addAfter(Items.IRON_SWORD, IRON_GLAIVE);
+                    entries.addAfter(Items.GOLDEN_SWORD, GOLDEN_GLAIVE);
                 });
     }
 }

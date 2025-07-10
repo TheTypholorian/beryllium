@@ -1,6 +1,6 @@
 {
   "parent": "nemesis:item/glaive_3d",
   "textures": {
-    "layer0": "nemesis:item/diamond_glaive_3d"
+    "layer0": "nemesis:item/netherite_glaive_3d"
   }
 }

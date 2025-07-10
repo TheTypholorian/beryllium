@@ -102,7 +102,10 @@ public class NemesisDataGenerator implements DataGeneratorEntrypoint {
             arrow(exporter, Nemesis.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
             arrow(exporter, Nemesis.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
 
+            offerNetheriteUpgradeRecipe(exporter, Nemesis.DIAMOND_ARROW, RecipeCategory.COMBAT, Nemesis.NETHERITE_GLAIVE);
             glaive(exporter, Nemesis.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
+            glaive(exporter, Nemesis.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
+            glaive(exporter, Nemesis.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
         }
     }
 }
