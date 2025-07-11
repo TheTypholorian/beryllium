@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnvilScreenHandlerMixin",
+    "ElytraItemMixin",
     "EnchantmentMixin",
     "EndCrystalEntityMixin",
     "EndCrystalItemMixin",
     "EnderPearlItemMixin",
     "ItemStackMixin",
+    "LivingEntityMixin",
     "MaceItemMixin",
     "PointOfInterestTypesMixin",
     "PotionItemMixin",
