@@ -5,7 +5,7 @@
   "supported_items": "#minecraft:enchantable/chest_armor",
   "exclusive_set": "#nemesis:exclusive_set/gravity",
   "weight": 2,
-  "max_level": 4,
+  "max_level": 2,
   "min_cost": {
     "base": 25,
     "per_level_above_first": 25

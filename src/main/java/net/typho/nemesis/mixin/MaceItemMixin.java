@@ -31,7 +31,7 @@ public class MaceItemMixin {
                     height += EnchantmentHelper.getSmashDamagePerFallenBlock(serverWorld, livingEntity.getWeaponStack(), target, damageSource, 0);
                 }
 
-                cir.setReturnValue((float) (10 * Math.cbrt(height / 20)));
+                cir.setReturnValue((float) (15 * Math.cbrt(height / 20)));
             }
         } else {
             cir.setReturnValue(0f);

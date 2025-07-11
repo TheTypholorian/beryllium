@@ -15,7 +15,9 @@
     "MaceItemMixin",
     "PointOfInterestTypesMixin",
     "PotionItemMixin",
-    "RangedWeaponItemMixin"
+    "ProjectileUtilMixin",
+    "RangedWeaponItemMixin",
+    "SwordItemMixin"
   ],
   "client": [
     "ItemRendererMixin",

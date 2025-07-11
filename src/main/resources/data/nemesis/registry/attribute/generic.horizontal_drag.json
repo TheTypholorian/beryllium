@@ -1,0 +1,8 @@
+{
+  "value": {
+    "name": "attribute.name.nemesis.generic.horizontal_drag",
+    "default": 0.91,
+    "min": 0,
+    "max": 1
+  }
+}

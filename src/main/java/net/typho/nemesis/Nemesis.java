@@ -6,13 +6,17 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.ClampedEntityAttribute;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -155,8 +159,6 @@ public class Nemesis implements ModInitializer {
 
         @Override
         protected void onEntityHit(EntityHitResult entityHitResult) {
-            super.onEntityHit(entityHitResult);
-
             if (entityHitResult.getEntity() != getOwner()) {
                 explode();
             }
@@ -164,7 +166,6 @@ public class Nemesis implements ModInitializer {
 
         @Override
         protected void onBlockHit(BlockHitResult blockHitResult) {
-            super.onBlockHit(blockHitResult);
             explode();
         }
 
@@ -240,6 +241,10 @@ public class Nemesis implements ModInitializer {
         Identifier guiModel();
     }
 
+    public interface SweepingItem {
+        float sweep(PlayerEntity player, ItemStack stack);
+    }
+
     public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(MOD_ID, "diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
     public static final Item DIAMOND_ARROW = Registry.register(Registries.ITEM, Identifier.of(MOD_ID, "diamond_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
@@ -292,23 +297,25 @@ public class Nemesis implements ModInitializer {
     public static final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 0, -2.8f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 1, -2.8f)))
     );
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 0, -2.8f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f)))
     );
     public static final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 0, -2.8f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 1, -2.8f)))
     );
     public static final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 0, -2.8f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 1, -2.8f)))
     );
+    public static final RegistryEntry<EntityAttribute> GENERIC_HORIZONTAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "horizontal_drag"), new ClampedEntityAttribute("attribute.nemesis.name.generic.horizontal_drag", 0.91, 0, 1).setTracked(true));
+    //public static final RegistryEntry<EntityAttribute> GENERIC_VERTICAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "vertical_drag"), new ClampedEntityAttribute("attribute.nemesis.name.generic.vertical_drag", 0.098, 0, 1));
 
     public static String toRomanNumeral(int n) {
         enum Letter {
