@@ -1,14 +1,16 @@
 package net.typho.nemesis.mixin;
 
 import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,14 +26,11 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
+import java.util.Optional;
 
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
@@ -43,9 +42,9 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
     @Shadow @Final private ScreenHandlerContext context;
 
-    @Shadow protected abstract List<EnchantmentLevelEntry> generateEnchantments(DynamicRegistryManager registryManager, ItemStack stack, int slot, int level);
-
     @Shadow @Final private Property seed;
+
+    @Shadow @Final public int[] enchantmentId;
 
     @Shadow @Final public int[] enchantmentLevel;
 
@@ -155,7 +154,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
     /**
      * @author The Typhothanian
-     * @reason Implement enchantment recipes to reward exploration
+     * @reason Implement enchantment catalysts to reward exploration
      */
     @Overwrite
     public boolean onButtonClick(PlayerEntity player, int id) {
@@ -173,10 +172,16 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
             } else {
                 context.run((world, pos) -> {
                     ItemStack itemStack3 = enchantSlot;
-                    EnchantmentLevelEntry enchant = generateEnchantments(world.getRegistryManager(), enchantSlot, id, this.enchantmentPower[id]).get(0);
+                    Optional<RegistryEntry.Reference<Enchantment>> enchOptional = player
+                            .getWorld()
+                            .getRegistryManager()
+                            .get(RegistryKeys.ENCHANTMENT)
+                            .getEntry(enchantmentId[id]);
 
-                    if (enchant != null) {
-                        ItemStack fuelReq = Nemesis.getRecipeStack(enchant.enchantment, enchant.level);
+                    if (enchOptional.isPresent()) {
+                        RegistryEntry<Enchantment> enchant = enchOptional.get();
+                        int level = enchantmentLevel[id];
+                        ItemStack fuelReq = Nemesis.getEnchantmentCatalyst(enchant, level);
 
                         if (fuelReq.getItem() == fuelSlot.getItem() && fuelSlot.getCount() >= fuelReq.getCount()) {
                             player.applyEnchantmentCosts(enchantSlot, i);
@@ -185,7 +190,20 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(0, itemStack3);
                             }
 
-                            itemStack3.addEnchantment(enchant.enchantment, enchant.level);
+                            boolean hasApplied = false;
+                            for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : itemStack3.getEnchantments().getEnchantmentEntries()) {
+                                if (entry.getKey() == enchant) {
+                                    if (level == entry.getIntValue() && level != enchant.value().getMaxLevel()) {
+                                        itemStack3.addEnchantment(enchant, level + 1);
+                                        hasApplied = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (!hasApplied) {
+                                itemStack3.addEnchantment(enchant, level);
+                            }
 
                             lapisSlot.decrementUnlessCreative(i, player);
                             if (lapisSlot.isEmpty()) {
@@ -215,6 +233,17 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
             Util.error(player.getName() + " pressed invalid button id: " + id);
             return false;
         }
+    }
+
+    @Redirect(
+            method = "onContentChanged",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/ItemStack;isEnchantable()Z"
+            )
+    )
+    public boolean isEnchantableRedirect(ItemStack stack) {
+        return stack.getItem().isEnchantable(stack);
     }
 
     @Mixin(targets = "net.minecraft.screen.EnchantmentScreenHandler$2")

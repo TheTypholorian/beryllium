@@ -422,7 +422,7 @@ public class Nemesis implements ModInitializer {
         return 1f / enchant.getWeight();
     }
 
-    public static ItemStack getRecipeStack(RegistryEntry<Enchantment> enchant, int level) {
+    public static ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
         return new ItemStack(Items.SNOWBALL, level);
     }
 
