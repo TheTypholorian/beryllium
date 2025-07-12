@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -190,7 +191,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                             }
 
                             boolean hasApplied = false;
-                            for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : itemStack3.getEnchantments().getEnchantmentEntries()) {
+                            for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(itemStack3).getEnchantmentEntries()) {
                                 if (entry.getKey() == enchant) {
                                     if (level == entry.getIntValue() && level != enchant.value().getMaxLevel()) {
                                         itemStack3.addEnchantment(enchant, level + 1);

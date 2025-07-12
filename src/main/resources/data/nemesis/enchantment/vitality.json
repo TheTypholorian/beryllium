@@ -30,5 +30,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:golden_apple",
+  "catalystCount": 6,
+  "capacity": 4
 }

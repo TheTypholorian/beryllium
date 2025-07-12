@@ -25,6 +25,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.awt.*;
+
 @Mixin(Enchantment.class)
 public class EnchantmentMixin {
     @Inject(
@@ -45,7 +47,14 @@ public class EnchantmentMixin {
             text.append(ScreenTexts.SPACE).append(Nemesis.toRomanNumeral(level));
         }
 
-        text.append(ScreenTexts.SPACE).append("(" + Nemesis.getEnchantmentCapacity(enchantment.value()) + " pts)");
+        Color low = new Color(89, 43, 144), high = new Color(167, 85, 255);
+        float capacity = Math.max(0, Math.min(1, BalancedEnchantment.cast(enchantment.value().definition()).getCapacity() / 4f));
+
+        text.setStyle(Style.EMPTY.withColor(new Color(
+                (int) (low.getRed() * (1 - capacity) + high.getRed() * capacity),
+                (int) (low.getGreen() * (1 - capacity) + high.getGreen() * capacity),
+                (int) (low.getBlue() * (1 - capacity) + high.getBlue() * capacity)
+        ).getRGB()));
 
         cir.setReturnValue(text);
     }
@@ -57,7 +66,7 @@ public class EnchantmentMixin {
     )
     private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            if (Nemesis.getEnchantmentCapacity(stack) + Nemesis.getEnchantmentCapacity((Enchantment) (Object) this) > Nemesis.getStackEnchantmentCapacity(stack)) {
+            if (!Nemesis.canFitEnchantment(stack, (Enchantment) (Object) this)) {
                 cir.setReturnValue(false);
             }
         }
@@ -77,8 +86,8 @@ public class EnchantmentMixin {
             CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     vanilla.forGetter(def -> def),
                     RegistryFixedCodec.of(RegistryKeys.ITEM).optionalFieldOf("catalyst", RegistryEntry.of(null)).forGetter(def -> BalancedEnchantment.cast(def).getCatalyst()),
-                    Codecs.rangedInt(0, 1024).optionalFieldOf("catalystCount", 0).forGetter(def -> BalancedEnchantment.cast(def).getCatalystCount()),
-                    Codecs.rangedInt(0, 1024).optionalFieldOf("capacity", 1).forGetter(def -> BalancedEnchantment.cast(def).getCapacity())
+                    Codecs.rangedInt(0, 16).optionalFieldOf("catalystCount", 0).forGetter(def -> BalancedEnchantment.cast(def).getCatalystCount()),
+                    Codecs.rangedInt(0, 4).optionalFieldOf("capacity", 1).forGetter(def -> BalancedEnchantment.cast(def).getCapacity())
             ).apply(instance,
                     (def, catalyst, catalystCount, capacity) -> {
                         BalancedEnchantment.cast(def).setCatalyst(catalyst);

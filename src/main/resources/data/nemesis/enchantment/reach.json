@@ -30,5 +30,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:stick",
+  "catalystCount": 2,
+  "capacity": 3
 }

@@ -400,15 +400,15 @@ public class Nemesis implements ModInitializer {
         return builder.toString();
     }
 
-    public static int getStackEnchantmentCapacity(ItemStack stack) {
+    public static int getMaxEnchCapacity(ItemStack stack) {
         return stack.getItem().getEnchantability();
     }
 
-    public static int getEnchantmentCapacity(ItemStack stack) {
-        return getEnchantmentCapacity(EnchantmentHelper.getEnchantments(stack));
+    public static int getUsedEnchCapacity(ItemStack stack) {
+        return getUsedEnchCapacity(EnchantmentHelper.getEnchantments(stack));
     }
 
-    public static int getEnchantmentCapacity(ItemEnchantmentsComponent enchants) {
+    public static int getUsedEnchCapacity(ItemEnchantmentsComponent enchants) {
         int i = 0;
 
         for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchants.getEnchantmentEntries()) {
@@ -420,6 +420,14 @@ public class Nemesis implements ModInitializer {
 
     public static int getEnchantmentCapacity(Enchantment enchant) {
         return BalancedEnchantment.cast(enchant.definition()).getCapacity();
+    }
+
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
+        if (stack.getItem() instanceof BookItem) {
+            return EnchantmentHelper.getEnchantments(stack).getSize() == 0;
+        }
+
+        return Nemesis.getUsedEnchCapacity(stack) + Nemesis.getEnchantmentCapacity(enchant) <= Nemesis.getMaxEnchCapacity(stack);
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {

@@ -31,5 +31,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:rabbit_hide",
+  "catalystCount": 4,
+  "capacity": 3
 }

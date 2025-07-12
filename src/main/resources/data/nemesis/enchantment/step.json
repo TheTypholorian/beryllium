@@ -30,5 +30,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:sugar",
+  "catalystCount": 8,
+  "capacity": 3
 }

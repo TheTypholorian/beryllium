@@ -1,5 +1,6 @@
 package net.typho.nemesis.mixin;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.EnchantingPhrases;
@@ -11,8 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.screen.ScreenTexts;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.typho.nemesis.Nemesis;
 import org.spongepowered.asm.mixin.Final;
@@ -20,6 +24,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mixin(EnchantmentScreen.class)
@@ -101,6 +106,63 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                 }
 
                 context.drawTextWithShadow(textRenderer, powerText, n + 86 - textRenderer.getWidth(powerText), y + 16 + 19 * id + 7, q);
+            }
+        }
+    }
+
+    /**
+     * @author The Typhothanian
+     * @reason Add catalyst to the tooltip
+     */
+    @Overwrite
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        this.drawMouseoverTooltip(context, mouseX, mouseY);
+        boolean bl = this.client.player.getAbilities().creativeMode;
+        int i = this.handler.getLapisCount();
+
+        for (int j = 0; j < 3; j++) {
+            int k = this.handler.enchantmentPower[j];
+            Optional<RegistryEntry.Reference<Enchantment>> optional = this.client
+                    .world
+                    .getRegistryManager()
+                    .get(RegistryKeys.ENCHANTMENT)
+                    .getEntry(this.handler.enchantmentId[j]);
+            if (!optional.isEmpty()) {
+                int l = this.handler.enchantmentLevel[j];
+                int m = j + 1;
+                if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0 && optional != null) {
+                    List<Text> list = Lists.newArrayList();
+                    list.add(Text.translatable("container.enchant.clue", Enchantment.getName(optional.get(), l)).formatted(Formatting.WHITE));
+                    ItemStack catalyst = Nemesis.getEnchantmentCatalyst(optional.get(), l);
+                    if (!bl) {
+                        list.add(ScreenTexts.EMPTY);
+                        if (this.client.player.experienceLevel < k) {
+                            list.add(Text.translatable("container.enchant.level.requirement", this.handler.enchantmentPower[j]).formatted(Formatting.RED));
+                        } else {
+                            MutableText mutableText;
+                            if (m == 1) {
+                                mutableText = Text.translatable("container.enchant.lapis.one");
+                            } else {
+                                mutableText = Text.translatable("container.enchant.lapis.many", m);
+                            }
+
+                            list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
+                            list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Nemesis.hasEnoughCatalysts(handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
+                            MutableText mutableText3;
+                            if (m == 1) {
+                                mutableText3 = Text.translatable("container.enchant.level.one");
+                            } else {
+                                mutableText3 = Text.translatable("container.enchant.level.many", m);
+                            }
+
+                            list.add(mutableText3.formatted(Formatting.GRAY));
+                        }
+                    }
+
+                    context.drawTooltip(this.textRenderer, list, mouseX, mouseY);
+                    break;
+                }
             }
         }
     }

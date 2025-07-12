@@ -31,5 +31,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:feather",
+  "catalystCount": 8,
+  "capacity": 4
 }

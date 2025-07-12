@@ -59,4 +59,13 @@ public class RangedWeaponItemMixin {
             cir.setReturnValue(proj);
         }
     }
+
+    @Inject(
+            method = "getEnchantability",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void getEnchantability(CallbackInfoReturnable<Integer> cir) {
+        cir.setReturnValue(ToolMaterials.NETHERITE.getEnchantability());
+    }
 }

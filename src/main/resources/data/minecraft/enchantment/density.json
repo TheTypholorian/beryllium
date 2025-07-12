@@ -1,17 +1,17 @@
 {
-  "anvil_cost": 4,
+  "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.minecraft.breach"
+    "translate": "enchantment.minecraft.density"
   },
   "effects": {
-    "minecraft:armor_effectiveness": [
+    "minecraft:smash_damage_per_fallen_block": [
       {
         "effect": {
           "type": "minecraft:add",
           "value": {
             "type": "minecraft:linear",
-            "base": -0.15,
-            "per_level_above_first": -0.15
+            "base": 0.5,
+            "per_level_above_first": 0.5
           }
         }
       }
@@ -19,20 +19,20 @@
   },
   "exclusive_set": "#minecraft:exclusive_set/damage",
   "max_cost": {
-    "base": 65,
-    "per_level_above_first": 9
+    "base": 25,
+    "per_level_above_first": 8
   },
-  "max_level": 3,
+  "max_level": 5,
   "min_cost": {
-    "base": 15,
-    "per_level_above_first": 9
+    "base": 5,
+    "per_level_above_first": 8
   },
   "slots": [
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/mace",
-  "weight": 2,
-  "catalyst": "minecraft:gunpowder",
+  "weight": 5,
+  "catalyst": "minecraft:gold_block",
   "catalystCount": 4,
   "capacity": 4
 }

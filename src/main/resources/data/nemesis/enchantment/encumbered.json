@@ -31,5 +31,8 @@
         "operation": "add_value"
       }
     ]
-  }
+  },
+  "catalyst": "minecraft:anvil",
+  "catalystCount": 2,
+  "capacity": 4
 }

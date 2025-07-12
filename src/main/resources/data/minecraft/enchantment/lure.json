@@ -1,23 +1,22 @@
 {
   "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.minecraft.breach"
+    "translate": "enchantment.minecraft.lure"
   },
   "effects": {
-    "minecraft:armor_effectiveness": [
+    "minecraft:fishing_time_reduction": [
       {
         "effect": {
           "type": "minecraft:add",
           "value": {
             "type": "minecraft:linear",
-            "base": -0.15,
-            "per_level_above_first": -0.15
+            "base": 5.0,
+            "per_level_above_first": 5.0
           }
         }
       }
     ]
   },
-  "exclusive_set": "#minecraft:exclusive_set/damage",
   "max_cost": {
     "base": 65,
     "per_level_above_first": 9
@@ -30,9 +29,9 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/mace",
+  "supported_items": "#minecraft:enchantable/fishing",
   "weight": 2,
-  "catalyst": "minecraft:gunpowder",
+  "catalyst": "minecraft:kelp",
   "catalystCount": 4,
-  "capacity": 4
+  "capacity": 2
 }

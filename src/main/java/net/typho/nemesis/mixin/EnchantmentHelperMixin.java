@@ -29,7 +29,7 @@ public class EnchantmentHelperMixin {
 
             for (int j = enchantment.getMaxLevel(); j >= enchantment.getMinLevel(); j--) {
                 if (level >= enchantment.getMinPower(j) && level <= enchantment.getMaxPower(j)) {
-                    for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : stack.getEnchantments().getEnchantmentEntries()) {
+                    for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
                         if (entry.getKey().value() == enchantment) {
                             if (j < entry.getIntValue()) {
                                 return;
