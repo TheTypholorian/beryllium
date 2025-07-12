@@ -400,30 +400,41 @@ public class Nemesis implements ModInitializer {
         return builder.toString();
     }
 
-    public static float getMaxEnchantmentPoints(ItemStack stack) {
-        return stack.getItem().getEnchantability() / 5f;
+    public static int getStackEnchantmentCapacity(ItemStack stack) {
+        return stack.getItem().getEnchantability();
     }
 
-    public static float getEnchantmentPoints(ItemStack stack) {
-        return getEnchantmentPoints(EnchantmentHelper.getEnchantments(stack));
+    public static int getEnchantmentCapacity(ItemStack stack) {
+        return getEnchantmentCapacity(EnchantmentHelper.getEnchantments(stack));
     }
 
-    public static float getEnchantmentPoints(ItemEnchantmentsComponent enchants) {
-        float i = 0;
+    public static int getEnchantmentCapacity(ItemEnchantmentsComponent enchants) {
+        int i = 0;
 
         for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchants.getEnchantmentEntries()) {
-            i += getEnchantmentPoints(entry.getKey().value());
+            i += getEnchantmentCapacity(entry.getKey().value());
         }
 
         return i;
     }
 
-    public static float getEnchantmentPoints(Enchantment enchant) {
-        return 1f / enchant.getWeight();
+    public static int getEnchantmentCapacity(Enchantment enchant) {
+        return BalancedEnchantment.cast(enchant.definition()).getCapacity();
+    }
+
+    public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
+        if (player.getAbilities().creativeMode) {
+            return true;
+        }
+
+        ItemStack req = Nemesis.getEnchantmentCatalyst(enchant, level);
+
+        return source.getItem() == req.getItem() && source.getCount() >= req.getCount();
     }
 
     public static ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        return new ItemStack(Items.SNOWBALL, level);
+        BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
+        return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
     }
 
     @Override

@@ -76,35 +76,31 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                         .get(RegistryKeys.ENCHANTMENT)
                         .getEntry(handler.enchantmentId[id]);
 
-                if (enchOptional.isPresent()) {
-                    ItemStack catalystReq = Nemesis.getEnchantmentCatalyst(enchOptional.get(), handler.enchantmentLevel[id]);
-
-                    if ((lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || catalystReq.getItem() != catalystSlot.getItem() || catalystSlot.getCount() < catalystReq.getCount()) {
-                        RenderSystem.enableBlend();
-                        context.drawGuiTexture(ENCHANTMENT_SLOT_DISABLED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
-                        context.drawGuiTexture(LEVEL_DISABLED_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
-                        RenderSystem.disableBlend();
-                        context.drawTextWrapped(textRenderer, stringVisitable, n, y + 16 + 19 * id, p, (q & 16711422) >> 1);
-                        q = 4226832;
+                if (enchOptional.isEmpty() || (lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || !Nemesis.hasEnoughCatalysts(catalystSlot, enchOptional.get(), handler.enchantmentLevel[id], client.player)) {
+                    RenderSystem.enableBlend();
+                    context.drawGuiTexture(ENCHANTMENT_SLOT_DISABLED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
+                    context.drawGuiTexture(LEVEL_DISABLED_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
+                    RenderSystem.disableBlend();
+                    context.drawTextWrapped(textRenderer, stringVisitable, n, y + 16 + 19 * id, p, (q & 16711422) >> 1);
+                    q = 4226832;
+                } else {
+                    int r = mouseX - (x + 60);
+                    int s = mouseY - (y + 14 + 19 * id);
+                    RenderSystem.enableBlend();
+                    if (r >= 0 && s >= 0 && r < 108 && s < 19) {
+                        context.drawGuiTexture(ENCHANTMENT_SLOT_HIGHLIGHTED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
+                        q = 16777088;
                     } else {
-                        int r = mouseX - (x + 60);
-                        int s = mouseY - (y + 14 + 19 * id);
-                        RenderSystem.enableBlend();
-                        if (r >= 0 && s >= 0 && r < 108 && s < 19) {
-                            context.drawGuiTexture(ENCHANTMENT_SLOT_HIGHLIGHTED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
-                            q = 16777088;
-                        } else {
-                            context.drawGuiTexture(ENCHANTMENT_SLOT_TEXTURE, m, y + 14 + 19 * id, 108, 19);
-                        }
-
-                        context.drawGuiTexture(LEVEL_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
-                        RenderSystem.disableBlend();
-                        context.drawTextWrapped(textRenderer, stringVisitable, n, y + 16 + 19 * id, p, q);
-                        q = 8453920;
+                        context.drawGuiTexture(ENCHANTMENT_SLOT_TEXTURE, m, y + 14 + 19 * id, 108, 19);
                     }
 
-                    context.drawTextWithShadow(textRenderer, powerText, n + 86 - textRenderer.getWidth(powerText), y + 16 + 19 * id + 7, q);
+                    context.drawGuiTexture(LEVEL_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
+                    RenderSystem.disableBlend();
+                    context.drawTextWrapped(textRenderer, stringVisitable, n, y + 16 + 19 * id, p, q);
+                    q = 8453920;
                 }
+
+                context.drawTextWithShadow(textRenderer, powerText, n + 86 - textRenderer.getWidth(powerText), y + 16 + 19 * id + 7, q);
             }
         }
     }

@@ -161,7 +161,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
         if (id >= 0 && id < enchantmentPower.length) {
             ItemStack enchantSlot = this.inventory.getStack(0);
             ItemStack lapisSlot = this.inventory.getStack(1);
-            ItemStack fuelSlot = this.inventory.getStack(2);
+            ItemStack catalystSlot = this.inventory.getStack(2);
             int i = id + 1;
             if ((lapisSlot.isEmpty() || lapisSlot.getCount() < i) && !player.isInCreativeMode()) {
                 return false;
@@ -181,9 +181,8 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                     if (enchOptional.isPresent()) {
                         RegistryEntry<Enchantment> enchant = enchOptional.get();
                         int level = enchantmentLevel[id];
-                        ItemStack fuelReq = Nemesis.getEnchantmentCatalyst(enchant, level);
 
-                        if (fuelReq.getItem() == fuelSlot.getItem() && fuelSlot.getCount() >= fuelReq.getCount()) {
+                        if (Nemesis.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
                             player.applyEnchantmentCosts(enchantSlot, i);
                             if (enchantSlot.isOf(Items.BOOK)) {
                                 itemStack3 = enchantSlot.withItem(Items.ENCHANTED_BOOK);
@@ -210,8 +209,8 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                             }
 
-                            fuelSlot.decrementUnlessCreative(fuelReq.getCount(), player);
-                            if (fuelSlot.isEmpty()) {
+                            catalystSlot.decrementUnlessCreative(Nemesis.getEnchantmentCatalyst(enchant, level).getCount(), player);
+                            if (catalystSlot.isEmpty()) {
                                 this.inventory.setStack(2, ItemStack.EMPTY);
                             }
 

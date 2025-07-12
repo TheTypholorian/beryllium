@@ -6,7 +6,9 @@
   "mixins": [
     "AnvilScreenHandlerMixin",
     "ElytraItemMixin",
+    "EnchantmentHelperMixin",
     "EnchantmentMixin",
+    "EnchantmentMixin$DefinitionMixin",
     "EnchantmentScreenHandlerMixin",
     "EnchantmentScreenHandlerMixin$SubMixin2",
     "EndCrystalEntityMixin",
