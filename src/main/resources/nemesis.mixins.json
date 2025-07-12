@@ -8,6 +8,7 @@
     "ElytraItemMixin",
     "EnchantmentMixin",
     "EnchantmentScreenHandlerMixin",
+    "EnchantmentScreenHandlerMixin$SubMixin2",
     "EndCrystalEntityMixin",
     "EndCrystalItemMixin",
     "EnderPearlItemMixin",
