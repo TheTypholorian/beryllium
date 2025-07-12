@@ -3,7 +3,7 @@
     "translate": "enchantment.nemesis.vitality"
   },
   "supported_items": "#minecraft:enchantable/armor",
-  "weight": 2,
+  "weight": 1,
   "max_level": 2,
   "min_cost": {
     "base": 25,

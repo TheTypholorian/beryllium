@@ -1,6 +1,7 @@
 package net.typho.nemesis.mixin;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.screen.ScreenTexts;
@@ -35,6 +36,21 @@ public class EnchantmentMixin {
             text.append(ScreenTexts.SPACE).append(Nemesis.toRomanNumeral(level));
         }
 
+        text.append(ScreenTexts.SPACE).append("(" + Nemesis.getEnchantmentPoints(enchantment.value()) + " pts)");
+
         cir.setReturnValue(text);
+    }
+
+    @Inject(
+            method = "isAcceptableItem",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if (cir.getReturnValue()) {
+            if (Nemesis.getEnchantmentPoints(stack) + Nemesis.getEnchantmentPoints((Enchantment) (Object) this) > Nemesis.getMaxEnchantmentPoints(stack)) {
+                cir.setReturnValue(false);
+            }
+        }
     }
 }

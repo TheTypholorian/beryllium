@@ -1,0 +1,3201 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "java_block",
+    "box_uv": false
+  },
+  "name": "scythe_3d",
+  "parent": "",
+  "ambientocclusion": true,
+  "front_gui_light": false,
+  "visible_box": [
+    1,
+    1,
+    0
+  ],
+  "variable_placeholders": "",
+  "variable_placeholder_buttons": [],
+  "unhandled_root_fields": {},
+  "resolution": {
+    "width": 16,
+    "height": 16
+  },
+  "elements": [
+    {
+      "name": "netherite_scythe_3d_0",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        10,
+        26,
+        0
+      ],
+      "to": [
+        20,
+        30,
+        1
+      ],
+      "autouv": 0,
+      "color": 9,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            1,
+            5,
+            3
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            9.5,
+            1,
+            10,
+            3
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            5,
+            1,
+            10,
+            3
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            5,
+            1,
+            5.5,
+            3
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            5,
+            1,
+            10,
+            1.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            5,
+            2.5,
+            10,
+            3
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8a8dd0e6-fee0-7041-5411-c5b1c8a9788d"
+    },
+    {
+      "name": "netherite_scythe_3d_1",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        6,
+        26,
+        0
+      ],
+      "to": [
+        10,
+        29,
+        1
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            1.5,
+            3,
+            3
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            4.5,
+            1.5,
+            5,
+            3
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            3,
+            1.5,
+            5,
+            3
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            3,
+            1.5,
+            3.5,
+            3
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            3,
+            1.5,
+            5,
+            2
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            3,
+            2.5,
+            5,
+            3
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "e6a2dc73-bd84-d001-a5cc-57302013fc0c"
+    },
+    {
+      "name": "netherite_scythe_3d_2",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        20,
+        23,
+        0
+      ],
+      "to": [
+        22,
+        29,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            1.5,
+            10,
+            4.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            10.5,
+            1.5,
+            11,
+            4.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            10,
+            1.5,
+            11,
+            4.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            10,
+            1.5,
+            10.5,
+            4.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            10,
+            1.5,
+            11,
+            2
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            10,
+            4,
+            11,
+            4.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "46967dcc-00b8-9c7c-9c08-e6cefdf9a05e"
+    },
+    {
+      "name": "netherite_scythe_3d_3",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        4,
+        25,
+        0
+      ],
+      "to": [
+        6,
+        28,
+        1
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            2,
+            2,
+            3.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            2.5,
+            2,
+            3,
+            3.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            2,
+            2,
+            3,
+            3.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            2,
+            2,
+            2.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            3,
+            2.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            2,
+            3,
+            3,
+            3.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "5574430c-533b-d3ce-8aad-21e8fd793131"
+    },
+    {
+      "name": "netherite_scythe_3d_4",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        22,
+        21,
+        0
+      ],
+      "to": [
+        24,
+        28,
+        1
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            2,
+            11,
+            5.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            11.5,
+            2,
+            12,
+            5.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            11,
+            2,
+            12,
+            5.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            11,
+            2,
+            11.5,
+            5.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            11,
+            2,
+            12,
+            2.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            11,
+            5,
+            12,
+            5.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "330d6d66-ebff-a3c0-05bf-b813681417f3"
+    },
+    {
+      "name": "netherite_scythe_3d_5",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        3,
+        24,
+        0
+      ],
+      "to": [
+        4,
+        27,
+        1
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            2.5,
+            1.5,
+            4
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            1.5,
+            2.5,
+            2,
+            4
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            1.5,
+            2.5,
+            2,
+            4
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            1.5,
+            2.5,
+            2,
+            4
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            1.5,
+            2.5,
+            2,
+            3
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            1.5,
+            3.5,
+            2,
+            4
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "37bf1dfd-18e5-9894-52ce-91a19b0bd075"
+    },
+    {
+      "name": "netherite_scythe_3d_6",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        24,
+        18,
+        0
+      ],
+      "to": [
+        25,
+        27,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12.5,
+            2.5,
+            12,
+            7
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            12,
+            2.5,
+            12.5,
+            7
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            12,
+            2.5,
+            12.5,
+            7
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            12,
+            2.5,
+            12.5,
+            7
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            12,
+            2.5,
+            12.5,
+            3
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            12,
+            6.5,
+            12.5,
+            7
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "eed52d42-10a7-1eb0-82d5-23dc9b07804e"
+    },
+    {
+      "name": "netherite_scythe_3d_7",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        2,
+        24,
+        0
+      ],
+      "to": [
+        3,
+        26,
+        1
+      ],
+      "autouv": 0,
+      "color": 5,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.5,
+            3,
+            1,
+            4
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            3,
+            1.5,
+            4
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            1,
+            3,
+            1.5,
+            4
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            1,
+            3,
+            1.5,
+            4
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            1,
+            3,
+            1.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            1,
+            3.5,
+            1.5,
+            4
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "2effe888-c2aa-395b-f7bd-c9162f3b9d72"
+    },
+    {
+      "name": "netherite_scythe_3d_8",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        6,
+        25,
+        0
+      ],
+      "to": [
+        7,
+        26,
+        1
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3.5,
+            3,
+            3,
+            3.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            3,
+            3,
+            3.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            3,
+            3,
+            3.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            3,
+            3,
+            3.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            3.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            3.5,
+            3.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "04299021-d908-ef04-8d02-bfa182bea102"
+    },
+    {
+      "name": "netherite_scythe_3d_9",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        14,
+        25,
+        0
+      ],
+      "to": [
+        20,
+        26,
+        1
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            3,
+            7,
+            3.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            9.5,
+            3,
+            10,
+            3.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            7,
+            3,
+            10,
+            3.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            7,
+            3,
+            7.5,
+            3.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            7,
+            3,
+            10,
+            3.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            7,
+            3,
+            10,
+            3.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "9fb769e9-cd95-810b-12cf-f3f6ca85f678"
+    },
+    {
+      "name": "netherite_scythe_3d_10",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        25,
+        17,
+        0
+      ],
+      "to": [
+        26,
+        26,
+        1
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13,
+            3,
+            12.5,
+            7.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            12.5,
+            3,
+            13,
+            7.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            12.5,
+            3,
+            13,
+            7.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            12.5,
+            3,
+            13,
+            7.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            12.5,
+            3,
+            13,
+            3.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            12.5,
+            7,
+            13,
+            7.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "6231ba72-7373-e195-544c-1004281707fe"
+    },
+    {
+      "name": "netherite_scythe_3d_11",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        18,
+        24,
+        0
+      ],
+      "to": [
+        20,
+        25,
+        1
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            3.5,
+            9,
+            4
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            9.5,
+            3.5,
+            10,
+            4
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            9,
+            3.5,
+            10,
+            4
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            9,
+            3.5,
+            9.5,
+            4
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            9,
+            3.5,
+            10,
+            4
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            9,
+            3.5,
+            10,
+            4
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "1c9fa11c-11cb-3d02-ff8e-7df4145c5e24"
+    },
+    {
+      "name": "netherite_scythe_3d_12",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        26,
+        18,
+        0
+      ],
+      "to": [
+        27,
+        25,
+        1
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13.5,
+            3.5,
+            13,
+            7
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            13,
+            3.5,
+            13.5,
+            7
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            13,
+            3.5,
+            13.5,
+            7
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            13,
+            3.5,
+            13.5,
+            7
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            13,
+            3.5,
+            13.5,
+            4
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            13,
+            6.5,
+            13.5,
+            7
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "efb69611-eb2f-7035-58a4-717834f5ca4a"
+    },
+    {
+      "name": "netherite_scythe_3d_13",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        21,
+        20,
+        0
+      ],
+      "to": [
+        22,
+        23,
+        1
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            4.5,
+            10.5,
+            6
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            10.5,
+            4.5,
+            11,
+            6
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            10.5,
+            4.5,
+            11,
+            6
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            10.5,
+            4.5,
+            11,
+            6
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            10.5,
+            4.5,
+            11,
+            5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            10.5,
+            5.5,
+            11,
+            6
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "78c6f6e3-6cea-257c-b16a-d068bc07aa62"
+    },
+    {
+      "name": "netherite_scythe_3d_14",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        27,
+        19,
+        0
+      ],
+      "to": [
+        28,
+        23,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14,
+            4.5,
+            13.5,
+            6.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            13.5,
+            4.5,
+            14,
+            6.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            13.5,
+            4.5,
+            14,
+            6.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            13.5,
+            4.5,
+            14,
+            6.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            13.5,
+            4.5,
+            14,
+            5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            13.5,
+            6,
+            14,
+            6.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "e6ae292d-ae21-a85f-31e2-632c58d0efde"
+    },
+    {
+      "name": "netherite_scythe_3d_15",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        20,
+        19,
+        0
+      ],
+      "to": [
+        21,
+        22,
+        1
+      ],
+      "autouv": 0,
+      "color": 1,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.5,
+            5,
+            10,
+            6.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            10,
+            5,
+            10.5,
+            6.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            10,
+            5,
+            10.5,
+            6.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            10,
+            5,
+            10.5,
+            6.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            10,
+            5,
+            10.5,
+            5.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            10,
+            6,
+            10.5,
+            6.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "6d6b41ec-b375-c313-351b-c7a1353b9a16"
+    },
+    {
+      "name": "netherite_scythe_3d_16",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        19,
+        18,
+        0
+      ],
+      "to": [
+        20,
+        21,
+        1
+      ],
+      "autouv": 0,
+      "color": 7,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            5.5,
+            9.5,
+            7
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            9.5,
+            5.5,
+            10,
+            7
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            9.5,
+            5.5,
+            10,
+            7
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            9.5,
+            5.5,
+            10,
+            7
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            9.5,
+            5.5,
+            10,
+            6
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            9.5,
+            6.5,
+            10,
+            7
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "5bc7a22f-d22e-f314-4ad4-b28c8f01323f"
+    },
+    {
+      "name": "netherite_scythe_3d_17",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        23,
+        20,
+        0
+      ],
+      "to": [
+        24,
+        21,
+        1
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            5.5,
+            11.5,
+            6
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            11.5,
+            5.5,
+            12,
+            6
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            11.5,
+            5.5,
+            12,
+            6
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            11.5,
+            5.5,
+            12,
+            6
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            11.5,
+            5.5,
+            12,
+            6
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            11.5,
+            5.5,
+            12,
+            6
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8dbe1ae0-921e-deaf-9023-02c689f234da"
+    },
+    {
+      "name": "netherite_scythe_3d_18",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        18,
+        17,
+        0
+      ],
+      "to": [
+        19,
+        20,
+        1
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.5,
+            6,
+            9,
+            7.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            9,
+            6,
+            9.5,
+            7.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            9,
+            6,
+            9.5,
+            7.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            9,
+            6,
+            9.5,
+            7.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            9,
+            6,
+            9.5,
+            6.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            9,
+            7,
+            9.5,
+            7.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "57661895-6207-27b1-daa1-d86bd7730efd"
+    },
+    {
+      "name": "netherite_scythe_3d_19",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        17,
+        16,
+        0
+      ],
+      "to": [
+        18,
+        19,
+        1
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9,
+            6.5,
+            8.5,
+            8
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            8.5,
+            6.5,
+            9,
+            8
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            8.5,
+            6.5,
+            9,
+            8
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            8.5,
+            6.5,
+            9,
+            8
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            8.5,
+            6.5,
+            9,
+            7
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            8.5,
+            7.5,
+            9,
+            8
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "4fffb419-9040-3a37-10f8-0ef69d9b4cac"
+    },
+    {
+      "name": "netherite_scythe_3d_20",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        16,
+        15,
+        0
+      ],
+      "to": [
+        17,
+        18,
+        1
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8.5,
+            7,
+            8,
+            8.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            8,
+            7,
+            8.5,
+            8.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            8,
+            7,
+            8.5,
+            8.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            8,
+            7,
+            8.5,
+            8.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            8,
+            7,
+            8.5,
+            7.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            8.5,
+            8.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "b03b3cca-fbe7-86eb-eb73-551603ec591a"
+    },
+    {
+      "name": "netherite_scythe_3d_21",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        15,
+        14,
+        0
+      ],
+      "to": [
+        16,
+        17,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            7.5,
+            7.5,
+            9
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            7.5,
+            7.5,
+            8,
+            9
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            7.5,
+            7.5,
+            8,
+            9
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            7.5,
+            7.5,
+            8,
+            9
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            7.5,
+            7.5,
+            8,
+            8
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            7.5,
+            8.5,
+            8,
+            9
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8175e4dd-fabe-4882-f438-d8f3674518fd"
+    },
+    {
+      "name": "netherite_scythe_3d_22",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        14,
+        13,
+        0
+      ],
+      "to": [
+        15,
+        16,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7.5,
+            8,
+            7,
+            9.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            7,
+            8,
+            7.5,
+            9.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            7,
+            8,
+            7.5,
+            9.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            7,
+            8,
+            7.5,
+            9.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            7,
+            8,
+            7.5,
+            8.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            7,
+            9,
+            7.5,
+            9.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "d6bb9c83-0f07-d3b3-662e-9c7e491ad201"
+    },
+    {
+      "name": "netherite_scythe_3d_23",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        13,
+        12,
+        0
+      ],
+      "to": [
+        14,
+        15,
+        1
+      ],
+      "autouv": 0,
+      "color": 3,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            8.5,
+            6.5,
+            10
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            6.5,
+            8.5,
+            7,
+            10
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            6.5,
+            8.5,
+            7,
+            10
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            6.5,
+            8.5,
+            7,
+            10
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            6.5,
+            8.5,
+            7,
+            9
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            6.5,
+            9.5,
+            7,
+            10
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "9605d86c-be58-a6bf-2c07-9992204c8d12"
+    },
+    {
+      "name": "netherite_scythe_3d_24",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        12,
+        11,
+        0
+      ],
+      "to": [
+        13,
+        14,
+        1
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6.5,
+            9,
+            6,
+            10.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            6,
+            9,
+            6.5,
+            10.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            6,
+            9,
+            6.5,
+            10.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            6,
+            9,
+            6.5,
+            10.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            6,
+            9,
+            6.5,
+            9.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            6,
+            10,
+            6.5,
+            10.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "4f872be1-a564-f5e7-e369-bb652e4cf5a2"
+    },
+    {
+      "name": "netherite_scythe_3d_25",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        11,
+        10,
+        0
+      ],
+      "to": [
+        12,
+        13,
+        1
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            9.5,
+            5.5,
+            11
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            5.5,
+            9.5,
+            6,
+            11
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            5.5,
+            9.5,
+            6,
+            11
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            5.5,
+            9.5,
+            6,
+            11
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            5.5,
+            9.5,
+            6,
+            10
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            5.5,
+            10.5,
+            6,
+            11
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "df581a83-24a9-7010-5c98-ed267778e5c9"
+    },
+    {
+      "name": "netherite_scythe_3d_26",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        10,
+        9,
+        0
+      ],
+      "to": [
+        11,
+        12,
+        1
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5.5,
+            10,
+            5,
+            11.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            5,
+            10,
+            5.5,
+            11.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            5,
+            10,
+            5.5,
+            11.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            5,
+            10,
+            5.5,
+            11.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            5,
+            10,
+            5.5,
+            10.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            5,
+            11,
+            5.5,
+            11.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "33d9899e-c61e-5581-e56b-c566dfb1be50"
+    },
+    {
+      "name": "netherite_scythe_3d_27",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        9,
+        8,
+        0
+      ],
+      "to": [
+        10,
+        11,
+        1
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            10.5,
+            4.5,
+            12
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            4.5,
+            10.5,
+            5,
+            12
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            4.5,
+            10.5,
+            5,
+            12
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            4.5,
+            10.5,
+            5,
+            12
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            4.5,
+            10.5,
+            5,
+            11
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            4.5,
+            11.5,
+            5,
+            12
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "6134c7c7-6632-2084-609b-e41bad1546c7"
+    },
+    {
+      "name": "netherite_scythe_3d_28",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        8,
+        7,
+        0
+      ],
+      "to": [
+        9,
+        10,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4.5,
+            11,
+            4,
+            12.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            4,
+            11,
+            4.5,
+            12.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            4,
+            11,
+            4.5,
+            12.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            4,
+            11,
+            4.5,
+            12.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            4,
+            11,
+            4.5,
+            11.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            4,
+            12,
+            4.5,
+            12.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "0e7a6cd8-8683-ebfe-a097-d065bc32290c"
+    },
+    {
+      "name": "netherite_scythe_3d_29",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        7,
+        6,
+        0
+      ],
+      "to": [
+        8,
+        9,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            11.5,
+            3.5,
+            13
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            3.5,
+            11.5,
+            4,
+            13
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            3.5,
+            11.5,
+            4,
+            13
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            3.5,
+            11.5,
+            4,
+            13
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            3.5,
+            11.5,
+            4,
+            12
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            3.5,
+            12.5,
+            4,
+            13
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "9fb2344e-c83c-33e9-394b-cfccdaf2edae"
+    },
+    {
+      "name": "netherite_scythe_3d_30",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        6,
+        5,
+        0
+      ],
+      "to": [
+        7,
+        8,
+        1
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3.5,
+            12,
+            3,
+            13.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            3,
+            12,
+            3.5,
+            13.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            3,
+            12,
+            3.5,
+            13.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            3,
+            12,
+            3.5,
+            13.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            3,
+            12,
+            3.5,
+            12.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            3,
+            13,
+            3.5,
+            13.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "51c48a04-d6bc-97db-6713-811c7166ebbe"
+    },
+    {
+      "name": "netherite_scythe_3d_31",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        5,
+        4,
+        0
+      ],
+      "to": [
+        6,
+        7,
+        1
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            12.5,
+            2.5,
+            14
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            2.5,
+            12.5,
+            3,
+            14
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            2.5,
+            12.5,
+            3,
+            14
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            2.5,
+            12.5,
+            3,
+            14
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            2.5,
+            12.5,
+            3,
+            13
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            2.5,
+            13.5,
+            3,
+            14
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "167e17ab-0a2c-c600-95e2-765222bb0fb5"
+    },
+    {
+      "name": "netherite_scythe_3d_32",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        4,
+        3,
+        0
+      ],
+      "to": [
+        5,
+        6,
+        1
+      ],
+      "autouv": 0,
+      "color": 2,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2.5,
+            13,
+            2,
+            14.5
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            2,
+            13,
+            2.5,
+            14.5
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            2,
+            13,
+            2.5,
+            14.5
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            2,
+            13,
+            2.5,
+            14.5
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            2,
+            13,
+            2.5,
+            13.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            2,
+            14,
+            2.5,
+            14.5
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "3d76756a-a192-a961-15a0-3641573d4c14"
+    },
+    {
+      "name": "netherite_scythe_3d_33",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        3,
+        2,
+        0
+      ],
+      "to": [
+        4,
+        5,
+        1
+      ],
+      "autouv": 0,
+      "color": 6,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            13.5,
+            1.5,
+            15
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            1.5,
+            13.5,
+            2,
+            15
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            1.5,
+            13.5,
+            2,
+            15
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            1.5,
+            13.5,
+            2,
+            15
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            1.5,
+            13.5,
+            2,
+            14
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            1.5,
+            14.5,
+            2,
+            15
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "f8ae9ab5-2b3c-1f10-9fb0-3357c2d1948a"
+    },
+    {
+      "name": "netherite_scythe_3d_34",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        2,
+        0,
+        0
+      ],
+      "to": [
+        3,
+        4,
+        1
+      ],
+      "autouv": 0,
+      "color": 8,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1.5,
+            14,
+            1,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            14,
+            1.5,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            1,
+            14,
+            1.5,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            1,
+            14,
+            1.5,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            1,
+            14,
+            1.5,
+            14.5
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            1,
+            15.5,
+            1.5,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "daa068c9-b913-9e73-2b7d-1fcda00bd69f"
+    },
+    {
+      "name": "netherite_scythe_3d_35",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "light_emission": 0,
+      "render_order": "default",
+      "allow_mirror_modeling": true,
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        2,
+        3,
+        1
+      ],
+      "autouv": 0,
+      "color": 4,
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            14.5,
+            0,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0.5,
+            14.5,
+            1,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            14.5,
+            1,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            14.5,
+            0.5,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            14.5,
+            1,
+            15
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            15.5,
+            1,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8932a94c-1710-e12a-f95c-252ee9964a7d"
+    }
+  ],
+  "outliner": [
+    {
+      "name": "netherite_scythe_3d",
+      "origin": [
+        8,
+        8,
+        8
+      ],
+      "color": 0,
+      "uuid": "d8631636-7242-1b33-2b15-c2b01ef481eb",
+      "export": true,
+      "mirror_uv": false,
+      "isOpen": false,
+      "locked": false,
+      "visibility": true,
+      "autouv": 0,
+      "selected": false,
+      "children": [
+        "8a8dd0e6-fee0-7041-5411-c5b1c8a9788d",
+        "e6a2dc73-bd84-d001-a5cc-57302013fc0c",
+        "46967dcc-00b8-9c7c-9c08-e6cefdf9a05e",
+        "5574430c-533b-d3ce-8aad-21e8fd793131",
+        "330d6d66-ebff-a3c0-05bf-b813681417f3",
+        "37bf1dfd-18e5-9894-52ce-91a19b0bd075",
+        "eed52d42-10a7-1eb0-82d5-23dc9b07804e",
+        "2effe888-c2aa-395b-f7bd-c9162f3b9d72",
+        "04299021-d908-ef04-8d02-bfa182bea102",
+        "9fb769e9-cd95-810b-12cf-f3f6ca85f678",
+        "6231ba72-7373-e195-544c-1004281707fe",
+        "1c9fa11c-11cb-3d02-ff8e-7df4145c5e24",
+        "efb69611-eb2f-7035-58a4-717834f5ca4a",
+        "78c6f6e3-6cea-257c-b16a-d068bc07aa62",
+        "e6ae292d-ae21-a85f-31e2-632c58d0efde",
+        "6d6b41ec-b375-c313-351b-c7a1353b9a16",
+        "5bc7a22f-d22e-f314-4ad4-b28c8f01323f",
+        "8dbe1ae0-921e-deaf-9023-02c689f234da",
+        "57661895-6207-27b1-daa1-d86bd7730efd",
+        "4fffb419-9040-3a37-10f8-0ef69d9b4cac",
+        "b03b3cca-fbe7-86eb-eb73-551603ec591a",
+        "8175e4dd-fabe-4882-f438-d8f3674518fd",
+        "d6bb9c83-0f07-d3b3-662e-9c7e491ad201",
+        "9605d86c-be58-a6bf-2c07-9992204c8d12",
+        "4f872be1-a564-f5e7-e369-bb652e4cf5a2",
+        "df581a83-24a9-7010-5c98-ed267778e5c9",
+        "33d9899e-c61e-5581-e56b-c566dfb1be50",
+        "6134c7c7-6632-2084-609b-e41bad1546c7",
+        "0e7a6cd8-8683-ebfe-a097-d065bc32290c",
+        "9fb2344e-c83c-33e9-394b-cfccdaf2edae",
+        "51c48a04-d6bc-97db-6713-811c7166ebbe",
+        "167e17ab-0a2c-c600-95e2-765222bb0fb5",
+        "3d76756a-a192-a961-15a0-3641573d4c14",
+        "f8ae9ab5-2b3c-1f10-9fb0-3357c2d1948a",
+        "daa068c9-b913-9e73-2b7d-1fcda00bd69f",
+        "8932a94c-1710-e12a-f95c-252ee9964a7d"
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "C:\\Users\\evan\\CppProjects\\nemesis\\src\\main\\resources\\assets\\nemesis\\textures\\item\\netherite_scythe_3d.png",
+      "name": "netherite_scythe_3d.png",
+      "folder": "item",
+      "namespace": "nemesis",
+      "id": "layer0",
+      "group": "",
+      "width": 32,
+      "height": 32,
+      "uv_width": 16,
+      "uv_height": 16,
+      "particle": false,
+      "use_as_default": false,
+      "layers_enabled": false,
+      "sync_to_project": "",
+      "render_mode": "default",
+      "render_sides": "auto",
+      "pbr_channel": "color",
+      "frame_time": 1,
+      "frame_order_type": "loop",
+      "frame_order": "",
+      "frame_interpolate": false,
+      "visible": true,
+      "internal": true,
+      "saved": true,
+      "uuid": "ffd457e0-4d23-1480-f07c-498fc7bc807e",
+      "relative_path": "../../textures/item/netherite_scythe_3d.png",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAbVJREFUWEfFl71Lw0AYh984dVGiqfEDRKoiiIHq4iAiDtJBN/9ENxcRRIdOouLioOgQFIVKwX4Zta5CI+/BhUtyd7nEXHpT2lzv9zzvveEaA4Y8jCHngzLA3sqOrwJ77l4or4nrCSdHA7cOaon53Y8uPF/ek3mqIDEAGswG4sJ0eF8e/Ly/BZ/HZufJtTVuBd/ZZRuuj+tKICEADMdgGnh6dCi0dhwndg9heCCyagQAGL68vQZs6Ov3p3CLFs2JUE+wQCwIVsx7bAq3JATw1HoAWaisCShQFAS3q9nrwPTIDBciVccmdiEAIAhCYBVo+Gp1A27qZ1y53AEQkkKg+dzkFIHBwYPIHaBaWfB3lypwcnsH0e3QDoDh65YJVy8NUm5aCbTHKmgFYM3ZRmZ7QhtA1JxtVgTYrO3ra0KReRRC9Hj/qwll5iqPrPQwSlpAxTxpjcwAeZhTuNRbkJd5JoA8zVMD5G2eCkCHuTKALnMlAJ3miQC6zaUARZgLAYoy5wIUaR4DKNo8AKAvIn3zF9qum/lfscrBw5tjIEB70IJ+p1d4ODkN7VLZHy0NCFzWd4Ks9vi7P/OqHTCOFAZiAAAAAElFTkSuQmCC"
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        55
+      ],
+      "translation": [
+        -7.75,
+        3,
+        1.5
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -55
+      ],
+      "translation": [
+        7.5,
+        3,
+        1.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        -45,
+        -90,
+        0
+      ],
+      "translation": [
+        1,
+        1,
+        -3
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        -45,
+        90,
+        0
+      ],
+      "translation": [
+        16.25,
+        1,
+        -3
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        5,
+        7.75
+      ]
+    },
+    "fixed": {
+      "translation": [
+        0,
+        0,
+        7.5
+      ]
+    }
+  }
+}

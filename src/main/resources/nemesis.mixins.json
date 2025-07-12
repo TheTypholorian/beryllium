@@ -7,9 +7,11 @@
     "AnvilScreenHandlerMixin",
     "ElytraItemMixin",
     "EnchantmentMixin",
+    "EnchantmentScreenHandlerMixin",
     "EndCrystalEntityMixin",
     "EndCrystalItemMixin",
     "EnderPearlItemMixin",
+    "EntityAttributesMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
     "MaceItemMixin",
@@ -17,6 +19,7 @@
     "PotionItemMixin",
     "ProjectileUtilMixin",
     "RangedWeaponItemMixin",
+    "RespawnAnchorBlockMixin",
     "SwordItemMixin"
   ],
   "client": [

@@ -3,7 +3,7 @@
     "translate": "enchantment.nemesis.step"
   },
   "supported_items": "#minecraft:enchantable/leg_armor",
-  "weight": 2,
+  "weight": 1,
   "max_level": 4,
   "min_cost": {
     "base": 25,

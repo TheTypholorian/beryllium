@@ -1,5 +1,5 @@
 {
-  "anvil_cost": 8,
+  "anvil_cost": 4,
   "description": {
     "translate": "enchantment.minecraft.blast_protection"
   },
@@ -58,5 +58,5 @@
     "armor"
   ],
   "supported_items": "#minecraft:enchantable/armor",
-  "weight": 1
+  "weight": 2
 }

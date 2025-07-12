@@ -1,5 +1,5 @@
 {
-  "anvil_cost": 8,
+  "anvil_cost": 2,
   "description": {
     "translate": "enchantment.minecraft.fire_protection"
   },
@@ -63,5 +63,5 @@
     "armor"
   ],
   "supported_items": "#minecraft:enchantable/armor",
-  "weight": 1
+  "weight": 5
 }

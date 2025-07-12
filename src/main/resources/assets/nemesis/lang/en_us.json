@@ -7,6 +7,7 @@
   "item.nemesis.diamond_glaive": "Diamond Glaive",
   "item.nemesis.iron_glaive": "Iron Glaive",
   "item.nemesis.golden_glaive": "Golden Glaive",
+  "item.nemesis.netherite_scythe": "Netherite Scythe",
   "entity.nemesis.diamond_arrow": "Diamond Arrow",
   "entity.nemesis.iron_arrow": "Iron Arrow",
   "entity.nemesis.flaming_arrow": "Flaming Arrow",
@@ -21,6 +22,8 @@
   "enchantment.nemesis.step": "Step",
   "enchantment.nemesis.lightweight": "Lightweight",
   "tag.item.nemesis.glaives": "Glaives",
+  "tag.item.nemesis.scythes": "Scythes",
   "tag.enchantment.nemesis.exclusive_set.gravity": "Gravity",
-  "tag.enchantment.nemesis.exclusive_set.scale": "Scale"
+  "tag.enchantment.nemesis.exclusive_set.scale": "Scale",
+  "commands.nemesis.enchant.failed.not_an_action": "%s is not a valid action"
 }

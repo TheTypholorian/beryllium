@@ -1,9 +1,8 @@
 package net.typho.nemesis.mixin;
 
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.EndCrystalItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ProjectileItem;
+import net.minecraft.item.*;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
@@ -11,11 +10,26 @@ import net.typho.nemesis.Nemesis;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EndCrystalItem.class)
 @Implements(@Interface(iface = ProjectileItem.class, prefix = "proj$"))
 public class EndCrystalItemMixin {
     public ProjectileEntity proj$createEntity(World world, Position pos, ItemStack stack, Direction direction) {
         return new Nemesis.EndCrystalProjectileEntity(Nemesis.END_CRYSTAL_PROJECTILE_ENTITY, pos.getX(), pos.getY() - 1, pos.getZ(), world, stack, null);
+    }
+
+    @Inject(
+            method = "useOnBlock",
+            at = @At("RETURN")
+    )
+    private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
+        if (cir.getReturnValue().isAccepted()) {
+            if (context.getPlayer() != null) {
+                context.getPlayer().getItemCooldownManager().set((Item) (Object) this, 30);
+            }
+        }
     }
 }

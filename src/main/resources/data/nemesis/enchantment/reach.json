@@ -3,7 +3,7 @@
     "translate": "enchantment.nemesis.reach"
   },
   "supported_items": "#minecraft:enchantable/mining",
-  "weight": 2,
+  "weight": 1,
   "max_level": 5,
   "min_cost": {
     "base": 25,

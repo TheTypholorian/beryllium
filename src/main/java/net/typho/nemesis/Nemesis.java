@@ -1,10 +1,14 @@
 package net.typho.nemesis;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -153,7 +157,7 @@ public class Nemesis implements ModInitializer {
             if (!isRemoved() && !getWorld().isClient) {
                 remove(Entity.RemovalReason.KILLED);
 
-                getWorld().createExplosion(this, getDamageSources().explosion(this, getOwner()), null, getX(), getY(), getZ(), 4f, false, World.ExplosionSourceType.BLOCK);
+                getWorld().createExplosion(this, getDamageSources().explosion(this, getOwner()), null, getX(), getY(), getZ(), 3f, false, World.ExplosionSourceType.BLOCK);
             }
         }
 
@@ -209,7 +213,44 @@ public class Nemesis implements ModInitializer {
             AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
             builder.add(
                             EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                            new EntityAttributeModifier(Identifier.of(MOD_ID, "glaive_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
+                            new EntityAttributeModifier(Identifier.of(MOD_ID, "entity_interaction_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    )
+                    .add(
+                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+                            new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    )
+                    .add(
+                            EntityAttributes.GENERIC_ATTACK_SPEED,
+                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                            AttributeModifierSlot.MAINHAND
+                    );
+            return builder.build();
+        }
+    }
+
+    public static class ScytheItem extends SwordItem implements DualModelItem {
+        public ScytheItem(ToolMaterial toolMaterial, Settings settings) {
+            super(toolMaterial, settings);
+        }
+
+        @Override
+        public Identifier worldModel() {
+            Identifier id = Registries.ITEM.getId(this);
+            return Identifier.of(id.getNamespace(), id.getPath() + "_3d");
+        }
+
+        @Override
+        public Identifier guiModel() {
+            return Registries.ITEM.getId(this);
+        }
+
+        public static AttributeModifiersComponent scytheModifiers(ToolMaterial material, float damage, float speed) {
+            AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+            builder.add(
+                            EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
+                            new EntityAttributeModifier(Identifier.of(MOD_ID, "entity_interaction_range"), -1, EntityAttributeModifier.Operation.ADD_VALUE),
                             AttributeModifierSlot.MAINHAND
                     )
                     .add(
@@ -223,8 +264,8 @@ public class Nemesis implements ModInitializer {
                             AttributeModifierSlot.MAINHAND
                     )
                     .add(
-                            EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO,
-                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
+                            EntityAttributes.GENERIC_ATTACK_KNOCKBACK,
+                            new EntityAttributeModifier(Identifier.of(MOD_ID, "attack_knockback"), -5, EntityAttributeModifier.Operation.ADD_VALUE),
                             AttributeModifierSlot.MAINHAND
                     );
             return builder.build();
@@ -297,22 +338,27 @@ public class Nemesis implements ModInitializer {
     public static final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 1, -2.8f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 3, -3.2f)))
     );
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 1, -2.8f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 3, -3.2f)))
     );
     public static final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 1, -2.8f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 3, -3.2f)))
     );
     public static final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(MOD_ID, "golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 1, -2.8f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 3, -3.2f)))
+    );
+    public static final Item NETHERITE_SCYTHE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(MOD_ID, "netherite_scythe"),
+            new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.NETHERITE, 4, -3.4f)))
     );
     public static final RegistryEntry<EntityAttribute> GENERIC_HORIZONTAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "horizontal_drag"), new ClampedEntityAttribute("attribute.nemesis.name.generic.horizontal_drag", 0.91, 0, 1).setTracked(true));
     //public static final RegistryEntry<EntityAttribute> GENERIC_VERTICAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "vertical_drag"), new ClampedEntityAttribute("attribute.nemesis.name.generic.vertical_drag", 0.098, 0, 1));
@@ -354,12 +400,38 @@ public class Nemesis implements ModInitializer {
         return builder.toString();
     }
 
+    public static float getMaxEnchantmentPoints(ItemStack stack) {
+        return stack.getItem().getEnchantability() / 5f;
+    }
+
+    public static float getEnchantmentPoints(ItemStack stack) {
+        return getEnchantmentPoints(EnchantmentHelper.getEnchantments(stack));
+    }
+
+    public static float getEnchantmentPoints(ItemEnchantmentsComponent enchants) {
+        float i = 0;
+
+        for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchants.getEnchantmentEntries()) {
+            i += getEnchantmentPoints(entry.getKey().value());
+        }
+
+        return i;
+    }
+
+    public static float getEnchantmentPoints(Enchantment enchant) {
+        return 1f / enchant.getWeight();
+    }
+
+    public static ItemStack getRecipeStack(Enchantment enchant, int level) {
+        return new ItemStack(Items.SNOWBALL, level);
+    }
+
     @Override
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
                     entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, COPPER_ARROW);
-                    entries.addAfter(Items.NETHERITE_SWORD, NETHERITE_GLAIVE);
+                    entries.addAfter(Items.NETHERITE_SWORD, NETHERITE_GLAIVE, NETHERITE_SCYTHE);
                     entries.addAfter(Items.DIAMOND_SWORD, DIAMOND_GLAIVE);
                     entries.addAfter(Items.IRON_SWORD, IRON_GLAIVE);
                     entries.addAfter(Items.GOLDEN_SWORD, GOLDEN_GLAIVE);
