@@ -1,18 +1,28 @@
 package net.typho.nemesis.mixin;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.typho.nemesis.Nemesis;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -21,11 +31,23 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
+
 @Mixin(EnchantmentScreenHandler.class)
 public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     @Shadow
     @Final
     private Inventory inventory;
+
+    @Shadow @Final public int[] enchantmentPower;
+
+    @Shadow @Final private ScreenHandlerContext context;
+
+    @Shadow protected abstract List<EnchantmentLevelEntry> generateEnchantments(DynamicRegistryManager registryManager, ItemStack stack, int slot, int level);
+
+    @Shadow @Final private Property seed;
+
+    @Shadow @Final public int[] enchantmentLevel;
 
     protected EnchantmentScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);
@@ -128,6 +150,70 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
         if (cir.getReturnValue() != null) {
             cir.setReturnValue(itemStack);
+        }
+    }
+
+    /**
+     * @author The Typhothanian
+     * @reason Implement enchantment recipes to reward exploration
+     */
+    @Overwrite
+    public boolean onButtonClick(PlayerEntity player, int id) {
+        if (id >= 0 && id < enchantmentPower.length) {
+            ItemStack enchantSlot = this.inventory.getStack(0);
+            ItemStack lapisSlot = this.inventory.getStack(1);
+            ItemStack fuelSlot = this.inventory.getStack(2);
+            int i = id + 1;
+            if ((lapisSlot.isEmpty() || lapisSlot.getCount() < i) && !player.isInCreativeMode()) {
+                return false;
+            } else if (this.enchantmentPower[id] <= 0
+                    || enchantSlot.isEmpty()
+                    || (player.experienceLevel < i || player.experienceLevel < this.enchantmentPower[id]) && !player.getAbilities().creativeMode) {
+                return false;
+            } else {
+                context.run((world, pos) -> {
+                    ItemStack itemStack3 = enchantSlot;
+                    EnchantmentLevelEntry enchant = generateEnchantments(world.getRegistryManager(), enchantSlot, id, this.enchantmentPower[id]).get(0);
+
+                    if (enchant != null) {
+                        ItemStack fuelReq = Nemesis.getRecipeStack(enchant.enchantment, enchant.level);
+
+                        if (fuelReq.getItem() == fuelSlot.getItem() && fuelSlot.getCount() >= fuelReq.getCount()) {
+                            player.applyEnchantmentCosts(enchantSlot, i);
+                            if (enchantSlot.isOf(Items.BOOK)) {
+                                itemStack3 = enchantSlot.withItem(Items.ENCHANTED_BOOK);
+                                this.inventory.setStack(0, itemStack3);
+                            }
+
+                            itemStack3.addEnchantment(enchant.enchantment, enchant.level);
+
+                            lapisSlot.decrementUnlessCreative(i, player);
+                            if (lapisSlot.isEmpty()) {
+                                this.inventory.setStack(1, ItemStack.EMPTY);
+                            }
+
+                            fuelSlot.decrementUnlessCreative(fuelReq.getCount(), player);
+                            if (fuelSlot.isEmpty()) {
+                                this.inventory.setStack(2, ItemStack.EMPTY);
+                            }
+
+                            player.incrementStat(Stats.ENCHANT_ITEM);
+                            if (player instanceof ServerPlayerEntity) {
+                                Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, itemStack3, i);
+                            }
+
+                            this.inventory.markDirty();
+                            seed.set(player.getEnchantmentTableSeed());
+                            this.onContentChanged(this.inventory);
+                            world.playSound(null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+                        }
+                    }
+                });
+                return true;
+            }
+        } else {
+            Util.error(player.getName() + " pressed invalid button id: " + id);
+            return false;
         }
     }
 
