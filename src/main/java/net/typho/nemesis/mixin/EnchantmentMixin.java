@@ -25,8 +25,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.awt.*;
-
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
     @Shadow
@@ -51,15 +49,6 @@ public abstract class EnchantmentMixin {
         if (level != 1 || enchantment.value().getMaxLevel() != 1) {
             text.append(ScreenTexts.SPACE).append(Nemesis.toRomanNumeral(level));
         }
-
-        Color low = new Color(89, 43, 144), high = new Color(167, 85, 255);
-        float capacity = Math.max(0, Math.min(1, BalancedEnchantment.cast(enchantment.value().definition()).getCapacity() / 4f));
-
-        text.setStyle(Style.EMPTY.withColor(new Color(
-                (int) (low.getRed() * (1 - capacity) + high.getRed() * capacity),
-                (int) (low.getGreen() * (1 - capacity) + high.getGreen() * capacity),
-                (int) (low.getBlue() * (1 - capacity) + high.getBlue() * capacity)
-        ).getRGB()));
 
         cir.setReturnValue(text);
     }
