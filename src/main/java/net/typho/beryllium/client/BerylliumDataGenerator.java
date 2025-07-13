@@ -147,8 +147,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         public static void compact(RecipeExporter gen, Block result, Block ingredient) {
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, result, 4)
-                    .pattern("AA")
-                    .pattern("AA")
+                    .pattern(" A ")
+                    .pattern("A A")
+                    .pattern(" A ")
                     .input('A', ingredient)
                     .criterion("has_" + Registries.BLOCK.getId(ingredient).getPath(), FabricRecipeProvider.conditionsFromItem(ingredient))
                     .offerTo(gen, Registries.BLOCK.getId(result));
