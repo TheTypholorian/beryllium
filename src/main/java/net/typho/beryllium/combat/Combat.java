@@ -118,11 +118,11 @@ public final class Combat {
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
-                    entries.addAfter(Items.ARROW, Combat.DIAMOND_ARROW, Combat.IRON_ARROW, Combat.FLAMING_ARROW, Combat.COPPER_ARROW);
-                    entries.addAfter(Items.NETHERITE_SWORD, Combat.NETHERITE_GLAIVE, Combat.NETHERITE_SCYTHE);
-                    entries.addAfter(Items.DIAMOND_SWORD, Combat.DIAMOND_GLAIVE);
-                    entries.addAfter(Items.IRON_SWORD, Combat.IRON_GLAIVE);
-                    entries.addAfter(Items.GOLDEN_SWORD, Combat.GOLDEN_GLAIVE);
+                    entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, COPPER_ARROW);
+                    entries.addAfter(Items.NETHERITE_SWORD, NETHERITE_GLAIVE, NETHERITE_SCYTHE);
+                    entries.addAfter(Items.DIAMOND_SWORD, DIAMOND_GLAIVE, DIAMOND_SCYTHE);
+                    entries.addAfter(Items.IRON_SWORD, IRON_GLAIVE, IRON_SCYTHE);
+                    entries.addAfter(Items.GOLDEN_SWORD, GOLDEN_GLAIVE, GOLDEN_SCYTHE);
                 });
     }
 }

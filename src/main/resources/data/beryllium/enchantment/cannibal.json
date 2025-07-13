@@ -10,8 +10,8 @@
           "type": "minecraft:add",
           "value": {
             "type": "minecraft:linear",
-            "base": 2.5,
-            "per_level_above_first": 2.5
+            "base": 1,
+            "per_level_above_first": 0.5
           }
         },
         "requirements": {
@@ -31,8 +31,8 @@
   },
   "max_level": 5,
   "min_cost": {
-    "base": 5,
-    "per_level_above_first": 8
+    "base": 20,
+    "per_level_above_first": 2
   },
   "primary_items": "#minecraft:enchantable/sword",
   "slots": [
