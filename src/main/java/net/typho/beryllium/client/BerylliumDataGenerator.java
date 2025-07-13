@@ -18,6 +18,8 @@ import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Identifier;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.BlockSet;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnBlock;
@@ -220,6 +222,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
             glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK, 1)
+                    .pattern("AAA")
+                    .pattern("A A")
+                    .pattern("AAA")
+                    .input('A', Items.BRICK)
+                    .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
+                    .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "kiln"));
+
             vanillaWood(exporter, Building.OAK_BLOCK_SET);
             vanillaWood(exporter, Building.SPRUCE_BLOCK_SET);
             vanillaWood(exporter, Building.BIRCH_BLOCK_SET);
@@ -228,6 +238,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             vanillaWood(exporter, Building.DARK_OAK_BLOCK_SET);
             vanillaWood(exporter, Building.MANGROVE_BLOCK_SET);
             vanillaWood(exporter, Building.CHERRY_BLOCK_SET);
+
             wall(exporter, Building.STONE_BLOCK_SET.wall, Building.STONE_BLOCK_SET.solid);
             firingBlockSets(exporter, Building.COBBLESTONE_BLOCK_SET, Building.STONE_BLOCK_SET, "stone");
             firingBlockSets(exporter, Building.STONE_BLOCK_SET, Building.SMOOTH_STONE_BLOCK_SET, "smooth_stone");

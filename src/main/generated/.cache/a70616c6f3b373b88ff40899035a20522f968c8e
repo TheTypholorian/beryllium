@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-13T14:07:16.4896454	Beryllium/Model Definitions
+// 1.21.1	2025-07-13T15:04:40.5734729	Beryllium/Model Definitions
 f03aac3cdc6d1c770c38588d66705a05f8aa34ef assets\minecraft\blockstates\smooth_stone.json
 579f30e77384336e6cff7b396d1ae148e8748625 assets\beryllium\models\item\mossy_stone_pressure_plate.json
 fdc3ea220d127f556c6e1192b0e3144990f9bb14 assets\beryllium\models\block\mossy_stone_stairs_inner.json
@@ -74,8 +74,8 @@ c7f7fcdedb7c8c67fc345e29aeb28047eeb2bbd6 assets\beryllium\models\block\quartz_br
 bbe96b34e601b2452604140d98c43e7880b8faf1 assets\beryllium\blockstates\smooth_stone_stairs.json
 4fab48c6baf5d9206e7d51f4805c5768406181a6 assets\beryllium\models\block\quartz_brick_stairs.json
 34928999ae2788eea7a9046adf628c07292c173b assets\beryllium\models\block\stone_wall_post.json
-875e57c5de37cff48f09df57628a19cd818c7010 assets\beryllium\blockstates\smooth_quartz_wall.json
 98fc7fb999ee69615ad074eb65df8955c0b347a1 assets\beryllium\blockstates\chiseled_warped_planks.json
+875e57c5de37cff48f09df57628a19cd818c7010 assets\beryllium\blockstates\smooth_quartz_wall.json
 89d25947fc718879f175004648c21e30ca9a557f assets\beryllium\blockstates\quartz_brick_wall.json
 b0c19eaf81d2091f407b9ebddda0fbc0e662e34b assets\beryllium\models\item\chiseled_cherry_planks.json
 f148377f08de4a8e3eb918090396554a3fdb7bc2 assets\beryllium\models\block\mossy_stone_wall_inventory.json
