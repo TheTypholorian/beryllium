@@ -62,6 +62,11 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
                             EnchantmentHelper.set(output, builder.build());
                         }
+
+                        if (builder.getEnchantments().equals(EnchantmentHelper.getEnchantments(input0).getEnchantments())) {
+                            cost = 0;
+                            output = ItemStack.EMPTY;
+                        }
                     }
                 }
             }
