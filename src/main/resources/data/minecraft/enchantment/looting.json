@@ -40,6 +40,6 @@
   "supported_items": "#minecraft:enchantable/sword",
   "weight": 2,
   "catalyst": "minecraft:emerald",
-  "catalystCount": 6,
-  "capacity": 4
+  "catalyst_count": 4,
+  "capacity": 3
 }

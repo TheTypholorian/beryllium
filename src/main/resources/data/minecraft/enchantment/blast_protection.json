@@ -60,6 +60,6 @@
   "supported_items": "#minecraft:enchantable/armor",
   "weight": 2,
   "catalyst": "minecraft:obsidian",
-  "catalystCount": 4,
-  "capacity": 3
+  "catalyst_count": 4,
+  "capacity": 4
 }

@@ -32,6 +32,6 @@
   "supported_items": "#minecraft:enchantable/head_armor",
   "weight": 2,
   "catalyst": "minecraft:soul_sand",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 2
 }

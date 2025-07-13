@@ -39,6 +39,6 @@
   "supported_items": "#minecraft:enchantable/bow",
   "weight": 10,
   "catalyst": "minecraft:diamond",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 3
 }

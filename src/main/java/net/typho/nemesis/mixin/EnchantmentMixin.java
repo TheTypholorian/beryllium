@@ -94,7 +94,7 @@ public abstract class EnchantmentMixin {
             CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                     vanilla.forGetter(def -> def),
                     RegistryFixedCodec.of(RegistryKeys.ITEM).optionalFieldOf("catalyst", RegistryEntry.of(null)).forGetter(def -> BalancedEnchantment.cast(def).getCatalyst()),
-                    Codecs.rangedInt(0, 16).optionalFieldOf("catalystCount", 0).forGetter(def -> BalancedEnchantment.cast(def).getCatalystCount()),
+                    Codecs.rangedInt(0, 16).optionalFieldOf("catalyst_count", 0).forGetter(def -> BalancedEnchantment.cast(def).getCatalystCount()),
                     Codecs.rangedInt(0, 4).optionalFieldOf("capacity", 1).forGetter(def -> BalancedEnchantment.cast(def).getCapacity())
             ).apply(instance,
                     (def, catalyst, catalystCount, capacity) -> {

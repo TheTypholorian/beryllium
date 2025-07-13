@@ -260,6 +260,6 @@
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 1,
   "catalyst": "minecraft:soul_soil",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 3
 }

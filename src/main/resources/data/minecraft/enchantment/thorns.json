@@ -53,6 +53,6 @@
   "supported_items": "#minecraft:enchantable/armor",
   "weight": 1,
   "catalyst": "minecraft:cactus",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 4
 }

@@ -31,6 +31,6 @@
   "supported_items": "#minecraft:enchantable/mining",
   "weight": 10,
   "catalyst": "minecraft:coal",
-  "catalystCount": 4,
-  "capacity": 1
+  "catalyst_count": 4,
+  "capacity": 2
 }

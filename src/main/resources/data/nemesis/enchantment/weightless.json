@@ -33,6 +33,6 @@
     ]
   },
   "catalyst": "minecraft:feather",
-  "catalystCount": 8,
-  "capacity": 4
+  "catalyst_count": 8,
+  "capacity": 2
 }

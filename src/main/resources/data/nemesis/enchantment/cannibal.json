@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.minecraft.smite"
+    "translate": "enchantment.nemesis.cannibal"
   },
   "effects": {
     "minecraft:damage": [
@@ -18,7 +18,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "this",
           "predicate": {
-            "type": "#minecraft:sensitive_to_smite"
+            "type": "minecraft:player"
           }
         }
       }
@@ -42,5 +42,5 @@
   "weight": 5,
   "catalyst": "minecraft:rotten_flesh",
   "catalyst_count": 4,
-  "capacity": 3
+  "capacity": 4
 }

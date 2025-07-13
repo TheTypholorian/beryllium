@@ -47,6 +47,6 @@
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 5,
   "catalyst": "minecraft:feather",
-  "catalystCount": 6,
+  "catalyst_count": 4,
   "capacity": 3
 }

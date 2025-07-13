@@ -66,6 +66,6 @@
   "supported_items": "#minecraft:enchantable/mace",
   "weight": 2,
   "catalyst": "minecraft:wind_charge",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 4
 }

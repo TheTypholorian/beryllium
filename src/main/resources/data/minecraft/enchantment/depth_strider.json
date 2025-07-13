@@ -33,6 +33,6 @@
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 2,
   "catalyst": "minecraft:prismarine_shard",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 2
 }

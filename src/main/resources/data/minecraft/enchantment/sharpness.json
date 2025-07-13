@@ -34,6 +34,6 @@
   "supported_items": "#minecraft:enchantable/sharp_weapon",
   "weight": 10,
   "catalyst": "minecraft:diamond",
-  "catalystCount": 4,
-  "capacity": 2
+  "catalyst_count": 4,
+  "capacity": 3
 }

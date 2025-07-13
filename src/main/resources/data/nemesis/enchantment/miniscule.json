@@ -33,6 +33,6 @@
     ]
   },
   "catalyst": "minecraft:rabbit_hide",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 3
 }

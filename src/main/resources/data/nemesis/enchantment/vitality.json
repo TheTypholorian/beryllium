@@ -32,6 +32,6 @@
     ]
   },
   "catalyst": "minecraft:golden_apple",
-  "catalystCount": 6,
+  "catalyst_count": 6,
   "capacity": 4
 }

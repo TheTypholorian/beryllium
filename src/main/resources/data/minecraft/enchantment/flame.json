@@ -26,6 +26,6 @@
   "supported_items": [],
   "weight": 2,
   "catalyst": "minecraft:fire_charge",
-  "catalystCount": 4,
-  "capacity": 1
+  "catalyst_count": 4,
+  "capacity": 3
 }

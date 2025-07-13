@@ -35,6 +35,6 @@
   "supported_items": "#minecraft:enchantable/bow",
   "weight": 1,
   "catalyst": "minecraft:spectral_arrow",
-  "catalystCount": 4,
+  "catalyst_count": 4,
   "capacity": 4
 }

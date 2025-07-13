@@ -108,6 +108,6 @@
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 2,
   "catalyst": "minecraft:ice",
-  "catalystCount": 4,
-  "capacity": 4
+  "catalyst_count": 4,
+  "capacity": 2
 }

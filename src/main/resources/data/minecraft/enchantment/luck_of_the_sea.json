@@ -32,6 +32,6 @@
   "supported_items": "#minecraft:enchantable/fishing",
   "weight": 2,
   "catalyst": "minecraft:emerald",
-  "catalystCount": 4,
-  "capacity": 2
+  "catalyst_count": 4,
+  "capacity": 3
 }

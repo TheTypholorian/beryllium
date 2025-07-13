@@ -19,6 +19,6 @@
   "supported_items": "#minecraft:enchantable/mining_loot",
   "weight": 2,
   "catalyst": "minecraft:emerald",
-  "catalystCount": 6,
+  "catalyst_count": 4,
   "capacity": 4
 }

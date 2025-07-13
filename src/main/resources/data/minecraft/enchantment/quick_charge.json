@@ -43,6 +43,6 @@
   "supported_items": "#minecraft:enchantable/crossbow",
   "weight": 5,
   "catalyst": "minecraft:redstone",
-  "catalystCount": 4,
-  "capacity": 4
+  "catalyst_count": 4,
+  "capacity": 3
 }

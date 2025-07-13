@@ -32,6 +32,6 @@
     ]
   },
   "catalyst": "minecraft:sugar",
-  "catalystCount": 8,
-  "capacity": 3
+  "catalyst_count": 8,
+  "capacity": 2
 }
