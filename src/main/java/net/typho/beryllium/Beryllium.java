@@ -7,6 +7,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
+import net.typho.beryllium.building.Building;
+import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.enchanting.Enchanting;
 
 public class Beryllium implements ModInitializer {
     public static final String MOD_ID = "beryllium";
@@ -18,5 +21,6 @@ public class Beryllium implements ModInitializer {
     public void onInitialize() {
         Enchanting.init();
         Combat.init();
+        Building.init();
     }
 }

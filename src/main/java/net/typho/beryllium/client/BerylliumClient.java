@@ -16,7 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Combat;
+import net.typho.beryllium.combat.Combat;
 import org.joml.Quaternionf;
 
 public class BerylliumClient implements ClientModInitializer {

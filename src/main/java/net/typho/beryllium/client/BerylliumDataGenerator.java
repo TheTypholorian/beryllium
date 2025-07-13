@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
-import net.typho.beryllium.Combat;
+import net.typho.beryllium.combat.Combat;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
