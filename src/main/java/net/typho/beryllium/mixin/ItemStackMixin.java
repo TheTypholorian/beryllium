@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Enchanting;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,7 +47,7 @@ public abstract class ItemStackMixin {
             ItemStack stack = (ItemStack) (Object) this;
 
             if (stack.getItem().getEnchantability() != 0) {
-                text.add(Text.literal(Beryllium.getUsedEnchCapacity(stack) + " / " + Beryllium.getMaxEnchCapacity(stack)).setStyle(Style.EMPTY.withColor(new Color(167, 85, 255).getRGB())));
+                text.add(Text.literal(Enchanting.getUsedEnchCapacity(stack) + " / " + Enchanting.getMaxEnchCapacity(stack)).setStyle(Style.EMPTY.withColor(new Color(167, 85, 255).getRGB())));
             }
         }
     }

@@ -16,10 +16,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Combat;
 import org.joml.Quaternionf;
 
 public class BerylliumClient implements ClientModInitializer {
-    public static class EndCrystalProjectileEntityRenderer extends EntityRenderer<Beryllium.EndCrystalProjectileEntity> {
+    public static class EndCrystalProjectileEntityRenderer extends EntityRenderer<Combat.EndCrystalProjectileEntity> {
         private static final Identifier TEXTURE = Identifier.ofVanilla("textures/entity/end_crystal/end_crystal.png");
         private static final RenderLayer END_CRYSTAL = RenderLayer.getEntityCutoutNoCull(TEXTURE);
         private static final float SINE_45_DEGREES = (float)Math.sin(Math.PI / 4);
@@ -36,7 +37,7 @@ public class BerylliumClient implements ClientModInitializer {
         }
 
         @Override
-        public void render(Beryllium.EndCrystalProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        public void render(Combat.EndCrystalProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
             matrices.push();
             float j = (entity.age + tickDelta) * 3.0F;
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(END_CRYSTAL);
@@ -64,37 +65,37 @@ public class BerylliumClient implements ClientModInitializer {
         }
 
         @Override
-        public Identifier getTexture(Beryllium.EndCrystalProjectileEntity entity) {
+        public Identifier getTexture(Combat.EndCrystalProjectileEntity entity) {
             return TEXTURE;
         }
     }
 
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.register(Beryllium.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Beryllium.DiamondArrowEntity entity) {
+            public Identifier getTexture(Combat.DiamondArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Beryllium.IronArrowEntity entity) {
+            public Identifier getTexture(Combat.IronArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Beryllium.FlamingArrowEntity entity) {
+            public Identifier getTexture(Combat.FlamingArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/flaming_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Beryllium.CopperArrowEntity entity) {
+            public Identifier getTexture(Combat.CopperArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/copper_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
+        EntityRendererRegistry.register(Combat.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
     }
 }

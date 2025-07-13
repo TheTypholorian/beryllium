@@ -3,7 +3,7 @@ package net.typho.beryllium.mixin;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.registry.Registries;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.DualModelItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +18,7 @@ public abstract class ModelLoaderMixin {
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/ModelLoader;loadItemModel(Lnet/minecraft/client/util/ModelIdentifier;)V", ordinal = 1))
     private void onInit(CallbackInfo ci) {
         Registries.ITEM.forEach(item -> {
-            if (item instanceof Beryllium.DualModelItem dual) {
+            if (item instanceof DualModelItem dual) {
                 loadItemModel(ModelIdentifier.ofInventoryVariant(dual.worldModel()));
             }
         });

@@ -8,7 +8,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.SweepingItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +34,7 @@ public class ProjectileUtilMixin {
         if (entity instanceof PlayerEntity player) {
             ItemStack held = player.getMainHandStack();
 
-            if (held.getItem() instanceof Beryllium.SweepingItem sweep) {
+            if (held.getItem() instanceof SweepingItem sweep) {
                 margin += sweep.sweep(player, held);
             }
         }

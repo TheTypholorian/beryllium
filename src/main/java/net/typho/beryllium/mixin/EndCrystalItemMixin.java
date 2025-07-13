@@ -6,7 +6,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Combat;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Implements(@Interface(iface = ProjectileItem.class, prefix = "proj$"))
 public class EndCrystalItemMixin {
     public ProjectileEntity proj$createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-        return new Beryllium.EndCrystalProjectileEntity(Beryllium.END_CRYSTAL_PROJECTILE_ENTITY, pos.getX(), pos.getY() - 1, pos.getZ(), world, stack, null);
+        return new Combat.EndCrystalProjectileEntity(Combat.END_CRYSTAL_PROJECTILE_ENTITY, pos.getX(), pos.getY() - 1, pos.getZ(), world, stack, null);
     }
 
     @Inject(

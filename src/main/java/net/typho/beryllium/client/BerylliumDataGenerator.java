@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Combat;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -41,10 +41,10 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.ARROWS)
-                    .add(Beryllium.DIAMOND_ARROW)
-                    .add(Beryllium.IRON_ARROW)
-                    .add(Beryllium.FLAMING_ARROW)
-                    .add(Beryllium.COPPER_ARROW);
+                    .add(Combat.DIAMOND_ARROW)
+                    .add(Combat.IRON_ARROW)
+                    .add(Combat.FLAMING_ARROW)
+                    .add(Combat.COPPER_ARROW);
         }
     }
 
@@ -59,10 +59,10 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generateItemModels(ItemModelGenerator gen) {
-            gen.register(Beryllium.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Combat.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Combat.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Combat.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Combat.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
         }
     }
 
@@ -97,15 +97,15 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate(RecipeExporter exporter) {
-            arrow(exporter, Beryllium.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
-            arrow(exporter, Beryllium.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
-            arrow(exporter, Beryllium.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
-            arrow(exporter, Beryllium.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
+            arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
+            arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
+            arrow(exporter, Combat.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
+            arrow(exporter, Combat.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
 
-            offerNetheriteUpgradeRecipe(exporter, Beryllium.DIAMOND_ARROW, RecipeCategory.COMBAT, Beryllium.NETHERITE_GLAIVE);
-            glaive(exporter, Beryllium.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
-            glaive(exporter, Beryllium.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
-            glaive(exporter, Beryllium.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
+            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_ARROW, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
+            glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
+            glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
+            glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
         }
     }
 }

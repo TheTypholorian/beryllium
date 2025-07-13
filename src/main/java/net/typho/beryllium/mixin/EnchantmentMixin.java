@@ -19,7 +19,7 @@ import net.minecraft.text.Texts;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.dynamic.Codecs;
 import net.typho.beryllium.BalancedEnchantment;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Enchanting;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -47,7 +47,7 @@ public abstract class EnchantmentMixin {
         }
 
         if (level != 1 || enchantment.value().getMaxLevel() != 1) {
-            text.append(ScreenTexts.SPACE).append(Beryllium.toRomanNumeral(level));
+            text.append(ScreenTexts.SPACE).append(Enchanting.toRomanNumeral(level));
         }
 
         cir.setReturnValue(text);
@@ -62,7 +62,7 @@ public abstract class EnchantmentMixin {
         Enchantment ench = (Enchantment) (Object) this;
 
         if (cir.getReturnValue()) {
-            if (!Beryllium.canFitEnchantment(stack, ench)) {
+            if (!Enchanting.canFitEnchantment(stack, ench)) {
                 cir.setReturnValue(false);
             } else {
                 for (RegistryEntry<Enchantment> enchantment : stack.getEnchantments().getEnchantments()) {

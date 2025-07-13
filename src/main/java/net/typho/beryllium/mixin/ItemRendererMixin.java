@@ -7,7 +7,7 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.item.ItemStack;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.DualModelItem;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +29,7 @@ public abstract class ItemRendererMixin {
             argsOnly = true
     )
     public BakedModel renderItem(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack, @Local(argsOnly = true) ModelTransformationMode renderMode) {
-        if (stack.getItem() instanceof Beryllium.DualModelItem dual && (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED)) {
+        if (stack.getItem() instanceof DualModelItem dual && (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED)) {
             return getModels().getModelManager().getModel(ModelIdentifier.ofInventoryVariant(dual.guiModel()));
         }
 
@@ -42,7 +42,7 @@ public abstract class ItemRendererMixin {
             ordinal = 1
     )
     public BakedModel getHeldItemModelMixin(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack) {
-        if (stack.getItem() instanceof Beryllium.DualModelItem dual) {
+        if (stack.getItem() instanceof DualModelItem dual) {
             return models.getModelManager().getModel(ModelIdentifier.ofInventoryVariant(dual.worldModel()));
         }
 
