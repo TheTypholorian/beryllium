@@ -222,6 +222,13 @@ public final class Building {
             .setWall(block("stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE).solid())))
             .setPressurePlate(Blocks.STONE_PRESSURE_PLATE);
 
+    public static final BlockSet MOSSY_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("mossy_stone"))
+            .setSolid(block("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE).solid())))
+            .setStairs(block("mossy_stone_stairs", new StairsBlock(Blocks.STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE).solid())))
+            .setSlab(block("mossy_stone_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.STONE).solid())))
+            .setWall(block("mossy_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE).solid())))
+            .setPressurePlate(block("mossy_stone_pressure_plate", new PressurePlateBlock(BlockSetType.STONE, AbstractBlock.Settings.copy(Blocks.STONE).solid())));
+
     public static final BlockSet SMOOTH_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("smooth_stone"))
             .setSolid(Blocks.SMOOTH_STONE)
             .setStairs(block("smooth_stone_stairs", new StairsBlock(Blocks.SMOOTH_STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE).solid())))

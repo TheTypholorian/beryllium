@@ -84,12 +84,16 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             BlockStateModelGenerator.BlockTexturePool stonePool = gen.registerCubeAllModelTexturePool(Building.STONE_BLOCK_SET.solid);
             stonePool.wall(Building.STONE_BLOCK_SET.wall);
 
+            BlockStateModelGenerator.BlockTexturePool mossyStonePool = gen.registerCubeAllModelTexturePool(Building.MOSSY_STONE_BLOCK_SET.solid);
+            mossyStonePool.stairs(Building.MOSSY_STONE_BLOCK_SET.stairs);
+            mossyStonePool.slab(Building.MOSSY_STONE_BLOCK_SET.slab);
+            mossyStonePool.wall(Building.MOSSY_STONE_BLOCK_SET.wall);
+            mossyStonePool.pressurePlate(Building.MOSSY_STONE_BLOCK_SET.pressurePlate);
+
             BlockStateModelGenerator.BlockTexturePool smoothStonePool = gen.registerCubeAllModelTexturePool(Building.SMOOTH_STONE_BLOCK_SET.solid);
             smoothStonePool.stairs(Building.SMOOTH_STONE_BLOCK_SET.stairs);
             // no datagen for this wall due to custom textures
             //smoothStonePool.wall(Building.SMOOTH_STONE_BLOCK_SET.wall);
-
-            // no datagen for quartz walls due to separate top/side/bottom textures
 
             BlockStateModelGenerator.BlockTexturePool quartzBricksPool = gen.registerCubeAllModelTexturePool(Building.QUARTZ_BRICKS_BLOCK_SET.solid);
             quartzBricksPool.stairs(Building.QUARTZ_BRICKS_BLOCK_SET.stairs);
@@ -98,6 +102,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
             BlockStateModelGenerator.BlockTexturePool smoothQuartzPool = gen.registerCubeAllModelTexturePool(Building.SMOOTH_QUARTZ_BLOCK_SET.solid);
             smoothQuartzPool.wall(Building.SMOOTH_QUARTZ_BLOCK_SET.wall);
+
+            //BlockStateModelGenerator.BlockTexturePool quartzPool = gen.registerCubeAllModelTexturePool(Building.QUARTZ_BLOCK_SET.solid);
+            //quartzPool.wall(Building.QUARTZ_BLOCK_SET.wall);
         }
 
         @Override
@@ -247,6 +254,18 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             vanillaWood(Building.MANGROVE_BLOCK_SET);
             vanillaWood(Building.CHERRY_BLOCK_SET);
             addDrop(Building.STONE_BLOCK_SET.wall);
+            addDrop(Building.MOSSY_STONE_BLOCK_SET.solid);
+            addDrop(Building.MOSSY_STONE_BLOCK_SET.stairs);
+            addDrop(Building.MOSSY_STONE_BLOCK_SET.slab);
+            addDrop(Building.MOSSY_STONE_BLOCK_SET.wall);
+            addDrop(Building.MOSSY_STONE_BLOCK_SET.pressurePlate);
+            addDrop(Building.SMOOTH_QUARTZ_BLOCK_SET.stairs);
+            addDrop(Building.SMOOTH_QUARTZ_BLOCK_SET.wall);
+            addDrop(Building.QUARTZ_BLOCK_SET.wall);
+            addDrop(Building.QUARTZ_BRICKS_BLOCK_SET.stairs);
+            addDrop(Building.QUARTZ_BRICKS_BLOCK_SET.slab);
+            addDrop(Building.QUARTZ_BRICKS_BLOCK_SET.wall);
+            addDrop(Building.SMOOTH_QUARTZ_BLOCK_SET.wall);
             addDrop(Building.KILN_BLOCK);
         }
     }
@@ -260,18 +279,32 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.PICKAXE_MINEABLE)
                     .add(Building.STONE_BLOCK_SET.wall)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.solid)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.stairs)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.slab)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.wall)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.pressurePlate)
+                    .add(Building.SMOOTH_STONE_BLOCK_SET.stairs)
+                    .add(Building.SMOOTH_STONE_BLOCK_SET.wall)
+                    .add(Building.QUARTZ_BLOCK_SET.wall)
+                    .add(Building.QUARTZ_BRICKS_BLOCK_SET.stairs)
+                    .add(Building.QUARTZ_BRICKS_BLOCK_SET.slab)
+                    .add(Building.QUARTZ_BRICKS_BLOCK_SET.wall)
+                    .add(Building.SMOOTH_QUARTZ_BLOCK_SET.wall)
                     .add(Building.KILN_BLOCK);
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
                     .add(Building.STONE_BLOCK_SET.wall)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.wall)
                     .add(Building.SMOOTH_STONE_BLOCK_SET.wall)
                     .add(Building.QUARTZ_BLOCK_SET.wall)
                     .add(Building.QUARTZ_BRICKS_BLOCK_SET.wall)
                     .add(Building.SMOOTH_QUARTZ_BLOCK_SET.wall);
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.stairs)
                     .add(Building.SMOOTH_STONE_BLOCK_SET.stairs)
-                    .add(Building.QUARTZ_BLOCK_SET.stairs)
                     .add(Building.QUARTZ_BRICKS_BLOCK_SET.stairs);
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
+                    .add(Building.MOSSY_STONE_BLOCK_SET.slab)
                     .add(Building.QUARTZ_BRICKS_BLOCK_SET.slab);
         }
     }
