@@ -427,6 +427,10 @@ public class Nemesis implements ModInitializer {
             return EnchantmentHelper.getEnchantments(stack).getSize() == 0;
         }
 
+        if (stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.value() == enchant)) {
+            return true;
+        }
+
         return Nemesis.getUsedEnchCapacity(stack) + Nemesis.getEnchantmentCapacity(enchant) <= Nemesis.getMaxEnchCapacity(stack);
     }
 

@@ -34,13 +34,13 @@
   },
   "exclusive_set": "#minecraft:exclusive_set/armor",
   "max_cost": {
-    "base": 9,
-    "per_level_above_first": 6
+    "base": 15,
+    "per_level_above_first": 12
   },
   "max_level": 2,
   "min_cost": {
-    "base": 3,
-    "per_level_above_first": 6
+    "base": 9,
+    "per_level_above_first": 12
   },
   "slots": [
     "armor"

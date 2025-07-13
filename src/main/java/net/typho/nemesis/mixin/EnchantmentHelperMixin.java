@@ -22,7 +22,7 @@ public class EnchantmentHelperMixin {
      */
     @Overwrite
     public static List<EnchantmentLevelEntry> getPossibleEntries(int level, ItemStack stack, Stream<RegistryEntry<Enchantment>> possibleEnchantments) {
-        List<EnchantmentLevelEntry> list = Lists.<EnchantmentLevelEntry>newArrayList();
+        List<EnchantmentLevelEntry> list = Lists.newArrayList();
         boolean bl = stack.isOf(Items.BOOK);
         possibleEnchantments.filter(enchantment -> (enchantment.value().isPrimaryItem(stack) || bl) && enchantment.value().isAcceptableItem(stack)).forEach(enchantmentx -> {
             Enchantment enchantment = enchantmentx.value();
