@@ -94,6 +94,21 @@ public final class Combat {
             Identifier.of(Beryllium.MOD_ID, "netherite_scythe"),
             new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.NETHERITE, 4, -3.4f)))
     );
+    public static final Item DIAMOND_SCYTHE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(Beryllium.MOD_ID, "diamond_scythe"),
+            new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.DIAMOND, 4, -3.4f)))
+    );
+    public static final Item IRON_SCYTHE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(Beryllium.MOD_ID, "iron_scythe"),
+            new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.IRON, 4, -3.4f)))
+    );
+    public static final Item GOLDEN_SCYTHE = Registry.register(
+            Registries.ITEM,
+            Identifier.of(Beryllium.MOD_ID, "golden_scythe"),
+            new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.GOLD, 4, -3.4f)))
+    );
     public static final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Beryllium.MOD_ID, "wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
     });
 
