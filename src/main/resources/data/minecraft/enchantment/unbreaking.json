@@ -67,10 +67,8 @@
     "base": 5,
     "per_level_above_first": 8
   },
-  "slots": [
-    "any"
-  ],
-  "supported_items": "#minecraft:enchantable/durability",
+  "slots": [],
+  "supported_items": [],
   "weight": 5,
   "capacity": 1
 }
