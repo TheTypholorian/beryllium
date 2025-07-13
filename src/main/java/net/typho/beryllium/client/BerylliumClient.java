@@ -16,11 +16,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.combat.*;
 import org.joml.Quaternionf;
 
 public class BerylliumClient implements ClientModInitializer {
-    public static class EndCrystalProjectileEntityRenderer extends EntityRenderer<Combat.EndCrystalProjectileEntity> {
+    public static class EndCrystalProjectileEntityRenderer extends EntityRenderer<EndCrystalProjectileEntity> {
         private static final Identifier TEXTURE = Identifier.ofVanilla("textures/entity/end_crystal/end_crystal.png");
         private static final RenderLayer END_CRYSTAL = RenderLayer.getEntityCutoutNoCull(TEXTURE);
         private static final float SINE_45_DEGREES = (float)Math.sin(Math.PI / 4);
@@ -37,7 +37,7 @@ public class BerylliumClient implements ClientModInitializer {
         }
 
         @Override
-        public void render(Combat.EndCrystalProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        public void render(EndCrystalProjectileEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
             matrices.push();
             float j = (entity.age + tickDelta) * 3.0F;
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(END_CRYSTAL);
@@ -65,7 +65,7 @@ public class BerylliumClient implements ClientModInitializer {
         }
 
         @Override
-        public Identifier getTexture(Combat.EndCrystalProjectileEntity entity) {
+        public Identifier getTexture(EndCrystalProjectileEntity entity) {
             return TEXTURE;
         }
     }
@@ -74,25 +74,25 @@ public class BerylliumClient implements ClientModInitializer {
     public void onInitializeClient() {
         EntityRendererRegistry.register(Combat.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Combat.DiamondArrowEntity entity) {
+            public Identifier getTexture(DiamondArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
             }
         });
         EntityRendererRegistry.register(Combat.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Combat.IronArrowEntity entity) {
+            public Identifier getTexture(IronArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
             }
         });
         EntityRendererRegistry.register(Combat.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Combat.FlamingArrowEntity entity) {
+            public Identifier getTexture(FlamingArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/flaming_arrow.png");
             }
         });
         EntityRendererRegistry.register(Combat.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
-            public Identifier getTexture(Combat.CopperArrowEntity entity) {
+            public Identifier getTexture(CopperArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/copper_arrow.png");
             }
         });

@@ -1,29 +1,22 @@
 package net.typho.beryllium.combat;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.util.CustomPoseItem;
-import net.typho.beryllium.util.DualModelItem;
 import org.jetbrains.annotations.Nullable;
 
 public final class Combat {
@@ -101,6 +94,8 @@ public final class Combat {
             Identifier.of(Beryllium.MOD_ID, "netherite_scythe"),
             new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.NETHERITE, 4, -3.4f)))
     );
+    public static final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Beryllium.MOD_ID, "wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
+    });
 
     private Combat() {
     }
@@ -114,245 +109,5 @@ public final class Combat {
                     entries.addAfter(Items.IRON_SWORD, Combat.IRON_GLAIVE);
                     entries.addAfter(Items.GOLDEN_SWORD, Combat.GOLDEN_GLAIVE);
                 });
-    }
-
-    public static class DiamondArrowEntity extends PersistentProjectileEntity {
-        public DiamondArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-            super(entityType, world);
-        }
-
-        public DiamondArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
-            super(type, x, y, z, world, stack, weapon);
-        }
-
-        public DiamondArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
-            super(type, owner, world, stack, shotFrom);
-        }
-
-        {
-            setDamage(6);
-        }
-
-        @Override
-        protected ItemStack getDefaultItemStack() {
-            return new ItemStack(DIAMOND_ARROW);
-        }
-    }
-
-    public static class IronArrowEntity extends PersistentProjectileEntity {
-        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-            super(entityType, world);
-        }
-
-        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
-            super(type, x, y, z, world, stack, weapon);
-        }
-
-        public IronArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
-            super(type, owner, world, stack, shotFrom);
-        }
-
-        {
-            setDamage(4);
-        }
-
-        @Override
-        protected ItemStack getDefaultItemStack() {
-            return new ItemStack(IRON_ARROW);
-        }
-    }
-
-    public static class FlamingArrowEntity extends PersistentProjectileEntity {
-        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-            super(entityType, world);
-        }
-
-        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
-            super(type, x, y, z, world, stack, weapon);
-        }
-
-        public FlamingArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
-            super(type, owner, world, stack, shotFrom);
-        }
-
-        {
-            setOnFireFor(100);
-        }
-
-        @Override
-        protected ItemStack getDefaultItemStack() {
-            return new ItemStack(FLAMING_ARROW);
-        }
-    }
-
-    public static class CopperArrowEntity extends PersistentProjectileEntity {
-        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-            super(entityType, world);
-        }
-
-        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
-            super(type, x, y, z, world, stack, weapon);
-        }
-
-        public CopperArrowEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
-            super(type, owner, world, stack, shotFrom);
-        }
-
-        public void thunder(World world) {
-            if (world.isThundering()) {
-                LightningEntity entity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
-                entity.setPosition(getPos());
-                world.spawnEntity(entity);
-            }
-        }
-
-        @Override
-        protected void onEntityHit(EntityHitResult entityHitResult) {
-            thunder(getWorld());
-            super.onEntityHit(entityHitResult);
-        }
-
-        @Override
-        protected void onBlockHit(BlockHitResult blockHitResult) {
-            thunder(getWorld());
-            super.onBlockHit(blockHitResult);
-        }
-
-        @Override
-        protected ItemStack getDefaultItemStack() {
-            return new ItemStack(COPPER_ARROW);
-        }
-    }
-
-    public static class EndCrystalProjectileEntity extends PersistentProjectileEntity {
-        public EndCrystalProjectileEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-            super(entityType, world);
-        }
-
-        public EndCrystalProjectileEntity(EntityType<? extends PersistentProjectileEntity> type, double x, double y, double z, World world, ItemStack stack, @Nullable ItemStack weapon) {
-            super(type, x, y, z, world, stack, weapon);
-        }
-
-        public EndCrystalProjectileEntity(EntityType<? extends PersistentProjectileEntity> type, LivingEntity owner, World world, ItemStack stack, @Nullable ItemStack shotFrom) {
-            super(type, owner, world, stack, shotFrom);
-        }
-
-        public void explode() {
-            if (!isRemoved() && !getWorld().isClient) {
-                remove(RemovalReason.KILLED);
-
-                getWorld().createExplosion(this, getDamageSources().explosion(this, getOwner()), null, getX(), getY(), getZ(), 3f, false, World.ExplosionSourceType.BLOCK);
-            }
-        }
-
-        @Override
-        protected void onEntityHit(EntityHitResult entityHitResult) {
-            if (entityHitResult.getEntity() != getOwner()) {
-                explode();
-            }
-        }
-
-        @Override
-        protected void onBlockHit(BlockHitResult blockHitResult) {
-            explode();
-        }
-
-        @Override
-        public void tick() {
-            super.tick();
-
-            if (age >= 100) {
-                explode();
-            }
-        }
-
-        @Override
-        protected ItemStack getDefaultItemStack() {
-            return new ItemStack(Items.END_CRYSTAL);
-        }
-    }
-
-    public static class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelItem {
-        public GlaiveItem(ToolMaterial toolMaterial, Settings settings) {
-            super(toolMaterial, settings);
-        }
-
-        @Override
-        public BipedEntityModel.ArmPose pose() {
-            return BipedEntityModel.ArmPose.CROSSBOW_HOLD;
-        }
-
-        @Override
-        public Identifier worldModel() {
-            Identifier id = Registries.ITEM.getId(this);
-            return Identifier.of(id.getNamespace(), id.getPath() + "_3d");
-        }
-
-        @Override
-        public Identifier guiModel() {
-            return Registries.ITEM.getId(this);
-        }
-
-        public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {
-            AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
-            builder.add(
-                            EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                            new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "entity_interaction_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    )
-                    .add(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    )
-                    .add(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    );
-            return builder.build();
-        }
-    }
-
-    public static class ScytheItem extends SwordItem implements DualModelItem {
-        public ScytheItem(ToolMaterial toolMaterial, Settings settings) {
-            super(toolMaterial, settings);
-        }
-
-        @Override
-        public Identifier worldModel() {
-            Identifier id = Registries.ITEM.getId(this);
-            return Identifier.of(id.getNamespace(), id.getPath() + "_3d");
-        }
-
-        @Override
-        public Identifier guiModel() {
-            return Registries.ITEM.getId(this);
-        }
-
-        public static AttributeModifiersComponent scytheModifiers(ToolMaterial material, float damage, float speed) {
-            AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
-            builder.add(
-                            EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                            new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "entity_interaction_range"), -1, EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    )
-                    .add(
-                            EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                            new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    )
-                    .add(
-                            EntityAttributes.GENERIC_ATTACK_SPEED,
-                            new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, speed, EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    )
-                    .add(
-                            EntityAttributes.GENERIC_ATTACK_KNOCKBACK,
-                            new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "attack_knockback"), -5, EntityAttributeModifier.Operation.ADD_VALUE),
-                            AttributeModifierSlot.MAINHAND
-                    );
-            return builder.build();
-        }
     }
 }
