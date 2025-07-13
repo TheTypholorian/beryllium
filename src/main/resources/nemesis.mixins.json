@@ -19,12 +19,12 @@
     "ItemStackMixin",
     "LivingEntityMixin",
     "MaceItemMixin",
-    "PointOfInterestTypesMixin",
     "PotionItemMixin",
     "ProjectileUtilMixin",
     "RangedWeaponItemMixin",
     "RespawnAnchorBlockMixin",
     "SwordItemMixin",
+    "TradeOffersMixin",
     "TridentItemMixin"
   ],
   "client": [
