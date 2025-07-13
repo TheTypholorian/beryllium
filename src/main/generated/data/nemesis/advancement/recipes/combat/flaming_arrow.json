@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:flaming_arrow"
+        "recipe": "beryllium:flaming_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:flaming_arrow"
+      "beryllium:flaming_arrow"
     ]
   }
 }

@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:diamond_arrow"
+        "recipe": "beryllium:diamond_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:diamond_arrow"
+      "beryllium:diamond_arrow"
     ]
   }
 }

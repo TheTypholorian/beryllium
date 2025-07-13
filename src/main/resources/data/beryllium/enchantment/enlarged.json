@@ -1,0 +1,38 @@
+{
+  "description": {
+    "translate": "enchantment.beryllium.enlarged"
+  },
+  "supported_items": "#minecraft:enchantable/chest_armor",
+  "exclusive_set": "#beryllium:exclusive_set/scale",
+  "weight": 1,
+  "max_level": 2,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 10
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 10
+  },
+  "anvil_cost": 10,
+  "slots": [
+    "armor"
+  ],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "attribute": "minecraft:generic.scale",
+        "id": "scale",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.2,
+          "per_level_above_first": 0.2
+        },
+        "operation": "add_value"
+      }
+    ]
+  },
+  "catalyst": "minecraft:bone_meal",
+  "catalyst_count": 8,
+  "capacity": 3
+}

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:netherite_glaive_smithing"
+        "recipe": "beryllium:netherite_glaive_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:netherite_glaive_smithing"
+      "beryllium:netherite_glaive_smithing"
     ]
   }
 }

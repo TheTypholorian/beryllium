@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:copper_arrow"
+        "recipe": "beryllium:copper_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:copper_arrow"
+      "beryllium:copper_arrow"
     ]
   }
 }

@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:axes",
-    "#nemesis:glaives",
-    "#nemesis:scythes"
+    "#beryllium:glaives",
+    "#beryllium:scythes"
   ]
 }

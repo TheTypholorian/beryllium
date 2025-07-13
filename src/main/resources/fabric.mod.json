@@ -1,27 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "nemesis",
+  "id": "beryllium",
   "version": "${version}",
-  "name": "nemesis",
-  "description": "",
-  "authors": [],
+  "name": "beryllium",
+  "description": "All the things I wish were in Minecraft",
+  "authors": [
+    "The Typhothanian"
+  ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/nemesis/icon.png",
+  "icon": "assets/beryllium/icon.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.typho.nemesis.client.NemesisDataGenerator"
+      "net.typho.beryllium.client.BerylliumDataGenerator"
     ],
     "client": [
-      "net.typho.nemesis.client.NemesisClient"
+      "net.typho.beryllium.client.BerylliumClient"
     ],
     "main": [
-      "net.typho.nemesis.Nemesis"
+      "net.typho.beryllium.Beryllium"
     ]
   },
   "mixins": [
-    "nemesis.mixins.json"
+    "beryllium.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

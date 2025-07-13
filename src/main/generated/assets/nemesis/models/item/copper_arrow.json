@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nemesis:item/copper_arrow"
+    "layer0": "beryllium:item/copper_arrow"
   }
 }

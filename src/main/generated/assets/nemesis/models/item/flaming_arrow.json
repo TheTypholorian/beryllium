@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "nemesis:item/flaming_arrow"
+    "layer0": "beryllium:item/flaming_arrow"
   }
 }

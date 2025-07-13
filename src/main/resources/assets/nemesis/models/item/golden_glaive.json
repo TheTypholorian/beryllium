@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "nemesis:item/golden_glaive_2d"
-  }
-}

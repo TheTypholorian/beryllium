@@ -1,6 +1,0 @@
-{
-  "parent": "nemesis:item/scythe_3d",
-  "textures": {
-    "layer0": "nemesis:item/netherite_scythe_3d"
-  }
-}

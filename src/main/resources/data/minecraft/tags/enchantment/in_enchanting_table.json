@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "nemesis:encumbered",
-    "nemesis:enlarged",
-    "nemesis:miniscule",
-    "nemesis:reach",
-    "nemesis:step",
-    "nemesis:vitality",
-    "nemesis:weightless"
+    "beryllium:encumbered",
+    "beryllium:enlarged",
+    "beryllium:miniscule",
+    "beryllium:reach",
+    "beryllium:step",
+    "beryllium:vitality",
+    "beryllium:weightless"
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "description": {
+    "translate": "enchantment.beryllium.weightless"
+  },
+  "supported_items": "#minecraft:enchantable/chest_armor",
+  "exclusive_set": "#beryllium:exclusive_set/gravity",
+  "weight": 1,
+  "max_level": 2,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 5
+  },
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 5
+  },
+  "anvil_cost": 10,
+  "slots": [
+    "armor"
+  ],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "attribute": "minecraft:generic.gravity",
+        "id": "gravity",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": -0.01,
+          "per_level_above_first": -0.01
+        },
+        "operation": "add_value"
+      }
+    ]
+  },
+  "catalyst": "minecraft:feather",
+  "catalyst_count": 8,
+  "capacity": 2
+}

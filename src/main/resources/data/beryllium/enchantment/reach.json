@@ -1,0 +1,37 @@
+{
+  "description": {
+    "translate": "enchantment.beryllium.reach"
+  },
+  "supported_items": "#minecraft:enchantable/mining",
+  "weight": 1,
+  "max_level": 5,
+  "min_cost": {
+    "base": 3,
+    "per_level_above_first": 4
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 5
+  },
+  "anvil_cost": 10,
+  "slots": [
+    "mainhand"
+  ],
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "attribute": "minecraft:player.block_interaction_range",
+        "id": "block_interaction_range",
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.5,
+          "per_level_above_first": 0.5
+        },
+        "operation": "add_value"
+      }
+    ]
+  },
+  "catalyst": "minecraft:stick",
+  "catalyst_count": 2,
+  "capacity": 3
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "beryllium:item/scythe_3d",
+  "textures": {
+    "layer0": "beryllium:item/netherite_scythe_3d"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "beryllium:item/glaive_3d",
+  "textures": {
+    "layer0": "beryllium:item/diamond_glaive_3d"
+  }
+}

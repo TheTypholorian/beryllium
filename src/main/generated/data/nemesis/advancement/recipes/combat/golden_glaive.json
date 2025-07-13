@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "nemesis:golden_glaive"
+        "recipe": "beryllium:golden_glaive"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "nemesis:golden_glaive"
+      "beryllium:golden_glaive"
     ]
   }
 }
