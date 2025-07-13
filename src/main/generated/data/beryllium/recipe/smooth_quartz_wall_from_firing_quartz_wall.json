@@ -1,0 +1,13 @@
+{
+  "type": "beryllium:kiln",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "smooth_quartz",
+  "ingredient": {
+    "item": "beryllium:quartz_wall"
+  },
+  "result": {
+    "id": "beryllium:smooth_quartz_wall"
+  }
+}

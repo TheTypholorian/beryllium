@@ -105,7 +105,7 @@ public final class Combat {
     private Combat() {
     }
 
-    static void init() {
+    public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
                     entries.addAfter(Items.ARROW, Combat.DIAMOND_ARROW, Combat.IRON_ARROW, Combat.FLAMING_ARROW, Combat.COPPER_ARROW);

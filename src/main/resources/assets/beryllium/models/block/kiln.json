@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "beryllium:block/kiln_front",
+    "side": "beryllium:block/kiln_side",
+    "top": "beryllium:block/kiln_top"
+  }
+}

@@ -4,6 +4,7 @@
   "package": "net.typho.beryllium.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "building.CookingRecipeDataGenMixin",
     "combat.ElytraItemMixin",
     "combat.EndCrystalEntityMixin",
     "combat.EndCrystalItemMixin",

@@ -1,0 +1,13 @@
+{
+  "type": "beryllium:kiln",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "group": "smooth_stone",
+  "ingredient": {
+    "item": "beryllium:stone_wall"
+  },
+  "result": {
+    "id": "beryllium:smooth_stone_wall"
+  }
+}

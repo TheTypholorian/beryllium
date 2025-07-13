@@ -13,7 +13,7 @@ public final class Enchanting {
     private Enchanting() {
     }
 
-    static void init() {
+    public static void init() {
     }
 
     public static String toRomanNumeral(int n) {
