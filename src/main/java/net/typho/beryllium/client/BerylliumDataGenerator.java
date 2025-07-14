@@ -24,6 +24,7 @@ import net.typho.beryllium.building.BlockSet;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnBlock;
 import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.Exploring;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -115,6 +116,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Combat.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
+
+            gen.register(Exploring.METAL_DETECTOR_ITEM, net.minecraft.data.client.Models.GENERATED);
         }
     }
 
@@ -217,7 +220,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             arrow(exporter, Combat.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
             arrow(exporter, Combat.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
 
-            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_ARROW, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
+            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_GLAIVE, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
             glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
             glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
             glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
@@ -229,6 +232,15 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .input('A', Items.BRICK)
                     .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
                     .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "kiln"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Exploring.METAL_DETECTOR_ITEM, 1)
+                    .pattern(" C ")
+                    .pattern("CRC")
+                    .pattern(" C ")
+                    .input('C', Items.COPPER_INGOT)
+                    .input('R', Items.REDSTONE)
+                    .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
+                    .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "metal_detector"));
 
             vanillaWood(exporter, Building.OAK_BLOCK_SET);
             vanillaWood(exporter, Building.SPRUCE_BLOCK_SET);

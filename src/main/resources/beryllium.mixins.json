@@ -30,7 +30,8 @@
     "enchanting.EnchantmentScreenHandlerMixin$SubMixin2",
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
-    "enchanting.TradeOffersMixin"
+    "enchanting.TradeOffersMixin",
+    "exploring.HeightRangePlacementModifierMixin"
   ],
   "client": [
     "client.ItemRendererMixin",

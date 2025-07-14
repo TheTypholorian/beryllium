@@ -10,6 +10,7 @@ import net.minecraft.util.Identifier;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.exploring.Exploring;
 
 public class Beryllium implements ModInitializer {
     public static final String MOD_ID = "beryllium";
@@ -22,5 +23,6 @@ public class Beryllium implements ModInitializer {
         Enchanting.init();
         Combat.init();
         Building.init();
+        Exploring.init();
     }
 }
