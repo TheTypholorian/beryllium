@@ -15,6 +15,8 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -271,6 +273,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             firingBlockSets(exporter, Building.COBBLESTONE_BLOCK_SET, Building.STONE_BLOCK_SET, "stone");
             firingBlockSets(exporter, Building.STONE_BLOCK_SET, Building.SMOOTH_STONE_BLOCK_SET, "smooth_stone");
             firingBlockSets(exporter, Building.QUARTZ_BLOCK_SET, Building.SMOOTH_QUARTZ_BLOCK_SET, "smooth_quartz");
+
+            offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
+            offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
         }
     }
 

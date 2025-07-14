@@ -117,13 +117,13 @@ public class BerylliumClient implements ClientModInitializer {
             ItemStack main = client.player.getMainHandStack();
 
             if (!main.isEmpty()) {
-                drawMainTooltip(context, main, client.getWindow().getScaledWidth() / 2 - 127 - 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
+                drawMainTooltip(context, main, client.getWindow().getScaledWidth() / 2 + (client.player.getMainArm() == Arm.RIGHT ? 127 : -127), client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
             }
 
             ItemStack off = client.player.getOffHandStack();
 
             if (!off.isEmpty()) {
-                drawOffTooltip(context, off, client.getWindow().getScaledWidth() / 2 + 127 + 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
+                drawOffTooltip(context, off, client.getWindow().getScaledWidth() / 2 + (client.player.getMainArm() == Arm.LEFT ? 127 : -127), client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
             }
         });
     }
@@ -136,7 +136,7 @@ public class BerylliumClient implements ClientModInitializer {
         int width = lines.stream().mapToInt(renderer::getWidth).max().orElse(0) + 8;
         int height = lines.size() * renderer.fontHeight + 8;
 
-        if (player.getMainArm() == Arm.RIGHT) {
+        if (player.getMainArm() == Arm.LEFT) {
             x -= width;
         }
 
@@ -157,7 +157,7 @@ public class BerylliumClient implements ClientModInitializer {
         int width = lines.stream().mapToInt(renderer::getWidth).max().orElse(0) + 8;
         int height = lines.size() * renderer.fontHeight + 8;
 
-        if (player.getMainArm() == Arm.LEFT) {
+        if (player.getMainArm() == Arm.RIGHT) {
             x -= width;
         }
 
