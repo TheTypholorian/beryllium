@@ -1,6 +1,8 @@
 package net.typho.beryllium.exploring;
 
-import com.mojang.serialization.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -8,28 +10,50 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.*;
-import net.minecraft.registry.Registry;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.dimension.DimensionTypes;
-import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.heightprovider.*;
-import net.minecraft.world.gen.placementmodifier.HeightRangePlacementModifier;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class MetalDetectorItem extends Item {
+    public record OrePeak(int yMin, int yMax, @Nullable Collection<RegistryKey<Biome>> biomes) {
+        public OrePeak(int yMin, int yMax) {
+            this(yMin, yMax, null);
+        }
+
+        public boolean check(World world, BlockPos pos) {
+            if (biomes != null) {
+                RegistryKey<Biome> current = world.getBiome(pos).getKey().orElse(null);
+
+                if (!biomes.contains(current)) {
+                    return false;
+                }
+            }
+
+            return pos.getY() >= yMin && pos.getY() <= yMax;
+        }
+    }
+
     public static final Map<Block, Color> BLOCK_COLORS = new HashMap<>();
     public static final Map<RegistryKey<DimensionType>, Collection<Block>> BLOCK_DIMENSIONS = new HashMap<>();
+    public static final List<Block> BLACKLIST = new LinkedList<>(List.of(Blocks.CLAY, Blocks.DIRT, Blocks.GRAVEL, Blocks.INFESTED_STONE));
+
+    public static final Map<Block, List<OrePeak>> ORE_PEAKS = new HashMap<>();
 
     static {
         BLOCK_COLORS.put(Blocks.ANCIENT_DEBRIS, new Color(101, 71, 64));
@@ -80,6 +104,34 @@ public class MetalDetectorItem extends Item {
                 Blocks.NETHER_QUARTZ_ORE,
                 Blocks.SOUL_SAND
         )));
+
+        ORE_PEAKS.put(Blocks.COAL_ORE, new LinkedList<>(List.of(
+                new OrePeak(64, 254)
+        )));
+        ORE_PEAKS.put(Blocks.COPPER_ORE, new LinkedList<>(List.of(
+                new OrePeak(32, 64),
+                new OrePeak(16, 80, List.of(BiomeKeys.DRIPSTONE_CAVES))
+        )));
+        ORE_PEAKS.put(Blocks.DIAMOND_ORE, new LinkedList<>(List.of(
+                new OrePeak(-64, -32)
+        )));
+        ORE_PEAKS.put(Blocks.EMERALD_ORE, new LinkedList<>(List.of(
+                new OrePeak(200, 254, List.of(BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.SNOWY_SLOPES))
+        )));
+        ORE_PEAKS.put(Blocks.GOLD_ORE, new LinkedList<>(List.of(
+                new OrePeak(-32, 0),
+                new OrePeak(32, 254, List.of(BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS))
+        )));
+        ORE_PEAKS.put(Blocks.IRON_ORE, new LinkedList<>(List.of(
+                new OrePeak(200, 254),
+                new OrePeak(0, 32)
+        )));
+        ORE_PEAKS.put(Blocks.LAPIS_ORE, new LinkedList<>(List.of(
+                new OrePeak(-16, 16)
+        )));
+        ORE_PEAKS.put(Blocks.REDSTONE_ORE, new LinkedList<>(List.of(
+                new OrePeak(-64, -32)
+        )));
     }
 
     public MetalDetectorItem(Settings settings) {
@@ -93,12 +145,36 @@ public class MetalDetectorItem extends Item {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
 
         if (player != null && player.getInventory().contains(stack)) {
+            tooltip.add(Text.translatable("item.beryllium.metal_detector.y_level", (int) player.getY()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+
+            boolean[] found = {false};
+
+            ORE_PEAKS.forEach((block, peaks) -> {
+                found[0] = true;
+
+                for (OrePeak peak : peaks) {
+                    if (peak.check(player.getWorld(), player.getBlockPos())) {
+                        tooltip.add(Text.translatable(block.getTranslationKey()).setStyle(Style.EMPTY.withColor(BLOCK_COLORS.computeIfAbsent(block, b -> new Color(b.getDefaultMapColor().color)).getRGB())));
+                        break;
+                    }
+                }
+            });
+
+            if (!found[0]) {
+                tooltip.add(Text.translatable("item.beryllium.metal_detector.no_ores").setStyle(Style.EMPTY.withBold(true).withColor(Formatting.RED)));
+            }
+        }
+
+        /*
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player != null && player.getInventory().contains(stack)) {
             ServerWorld world = Objects.requireNonNull(MinecraftClient.getInstance().getServer()).getWorld(player.getWorld().getRegistryKey());
 
             if (world != null) {
-                int y = (int) player.getY();
+                int playerY = (int) player.getY();
 
-                tooltip.add(Text.translatable("item.beryllium.metal_detector.y_level", y).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+                tooltip.add(Text.translatable("item.beryllium.metal_detector.y_level", playerY).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
 
                 Registry<PlacedFeature> reg = world.getRegistryManager().get(RegistryKeys.PLACED_FEATURE);
                 List<Block> blocks = new LinkedList<>();
@@ -113,7 +189,7 @@ public class MetalDetectorItem extends Item {
                         if (config.config() instanceof OreFeatureConfig oreConfig) {
                             Block block = oreConfig.targets.getFirst().state.getBlock();
 
-                            if (block != null && !blocks.contains(block) && (dimension == null || dimension.contains(block))) {
+                            if (block != null && (dimension == null || dimension.contains(block)) && !BLACKLIST.contains(block)) {
                                 feature.placementModifiers().stream()
                                         .filter(m -> m instanceof HeightRangePlacementModifier)
                                         .map(m -> (HeightRangePlacementModifier) m)
@@ -130,7 +206,7 @@ public class MetalDetectorItem extends Item {
                                                         int min = getY(nbt.getCompound("min_inclusive"), world),
                                                                 max = getY(nbt.getCompound("max_inclusive"), world);
 
-                                                        if (y >= min && y <= max) {
+                                                        if (playerY >= min && playerY <= max) {
                                                             blocks.add(block);
                                                         }
                                                     }
@@ -144,9 +220,9 @@ public class MetalDetectorItem extends Item {
                                                         int min = getY(nbt.getCompound("min_inclusive"), world),
                                                                 max = getY(nbt.getCompound("max_inclusive"), world),
                                                                 plateau = nbt.getInt("plateau");
-                                                        int half = plateau != 0 ? (max - min - plateau) / 2 : (max - min) / 3;
+                                                        int half = (max - min - (plateau == 0 ? 20 : plateau)) / 2;
 
-                                                        if (y >= min + half && y <= max - half) {
+                                                        if (playerY >= min + half && playerY <= max - half) {
                                                             blocks.add(block);
                                                         }
                                                     }
@@ -175,6 +251,7 @@ public class MetalDetectorItem extends Item {
                 }
             }
         }
+         */
     }
 
     public static <A> NbtElement serialize(Codec<A> codec, A instance) {
