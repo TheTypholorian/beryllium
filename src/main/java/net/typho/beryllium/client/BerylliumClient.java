@@ -117,13 +117,13 @@ public class BerylliumClient implements ClientModInitializer {
             ItemStack main = client.player.getMainHandStack();
 
             if (!main.isEmpty()) {
-                drawMainTooltip(context, main, client.getWindow().getScaledWidth() - 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
+                drawMainTooltip(context, main, client.getWindow().getScaledWidth() / 2 - 127 - 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
             }
 
             ItemStack off = client.player.getOffHandStack();
 
             if (!off.isEmpty()) {
-                drawOffTooltip(context, off, 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
+                drawOffTooltip(context, off, client.getWindow().getScaledWidth() / 2 + 127 + 4, client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
             }
         });
     }

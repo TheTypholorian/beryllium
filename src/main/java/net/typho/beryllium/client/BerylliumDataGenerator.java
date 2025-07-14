@@ -150,6 +150,17 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .offerTo(exporter);
         }
 
+        public static void scythe(RecipeExporter exporter, Item result, Item tip, String tipCriterion) {
+            ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, result, 1)
+                    .input('#', Items.STICK)
+                    .input('X', tip)
+                    .pattern("XXX")
+                    .pattern(" #X")
+                    .pattern("#  ")
+                    .criterion(tipCriterion, conditionsFromItem(tip))
+                    .offerTo(exporter);
+        }
+
         public static void compact(RecipeExporter gen, Block result, Block ingredient) {
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, result, 4)
                     .pattern(" A ")
@@ -224,6 +235,11 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
             glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
             glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
+
+            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_SCYTHE, RecipeCategory.COMBAT, Combat.NETHERITE_SCYTHE);
+            scythe(exporter, Combat.DIAMOND_SCYTHE, Items.DIAMOND, "has_diamond");
+            scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
+            scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK, 1)
                     .pattern("AAA")
