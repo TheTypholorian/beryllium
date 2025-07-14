@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import java.util.HashMap;
 
 @Mixin(TradeOffers.class)
+@SuppressWarnings("unchecked")
 public abstract class TradeOffersMixin {
     @Shadow
     private static Int2ObjectMap<TradeOffers.Factory[]> copyToFastUtilMap(ImmutableMap<Integer, TradeOffers.Factory[]> map) {

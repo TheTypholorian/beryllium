@@ -34,6 +34,7 @@
     "exploring.HeightRangePlacementModifierMixin"
   ],
   "client": [
+    "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin",
     "combat.PlayerEntityRendererMixin",

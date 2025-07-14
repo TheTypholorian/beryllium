@@ -2,8 +2,6 @@ package net.typho.beryllium.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.model.ModelPart;
@@ -21,16 +19,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.OrderedText;
-import net.minecraft.text.Text;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.combat.*;
 import org.joml.Quaternionf;
-
-import java.util.List;
+import org.joml.Vector2i;
 
 public class BerylliumClient implements ClientModInitializer {
     public static class EndCrystalProjectileEntityRenderer extends EntityRenderer<EndCrystalProjectileEntity> {
@@ -110,63 +105,21 @@ public class BerylliumClient implements ClientModInitializer {
             }
         });
         EntityRendererRegistry.register(Combat.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
-
-        HudRenderCallback.EVENT.register((context, renderTickCounter) -> {
-            MinecraftClient client = MinecraftClient.getInstance();
-
-            ItemStack main = client.player.getMainHandStack();
-
-            if (!main.isEmpty()) {
-                drawMainTooltip(context, main, client.getWindow().getScaledWidth() / 2 + (client.player.getMainArm() == Arm.RIGHT ? 127 : -127), client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
-            }
-
-            ItemStack off = client.player.getOffHandStack();
-
-            if (!off.isEmpty()) {
-                drawOffTooltip(context, off, client.getWindow().getScaledWidth() / 2 + (client.player.getMainArm() == Arm.LEFT ? 127 : -127), client.getWindow().getScaledHeight() - 3, client.player, client.textRenderer);
-            }
-        });
     }
 
-    public static void drawMainTooltip(DrawContext context, ItemStack stack, int x, int y, PlayerEntity player, TextRenderer renderer) {
-        List<Text> tooltip = stack.getTooltip(Item.TooltipContext.DEFAULT, player, TooltipType.BASIC);
-        List<OrderedText> lines = tooltip.stream()
-                .flatMap(t -> renderer.wrapLines(t, 160).stream())
-                .toList();
-        int width = lines.stream().mapToInt(renderer::getWidth).max().orElse(0) + 8;
-        int height = lines.size() * renderer.fontHeight + 8;
-
-        if (player.getMainArm() == Arm.LEFT) {
-            x -= width;
-        }
-
-        y -= height;
-
-        context.fill(x, y, x + width, y + height - 1, 0xF0100010);
-
-        for (int i = 0; i < lines.size(); i++) {
-            context.drawTextWithShadow(renderer, lines.get(i), x + 4, y + 4 + i * renderer.fontHeight, 0xFFFFFFFF);
-        }
-    }
-
-    public static void drawOffTooltip(DrawContext context, ItemStack stack, int x, int y, PlayerEntity player, TextRenderer renderer) {
-        List<Text> tooltip = stack.getTooltip(Item.TooltipContext.DEFAULT, player, TooltipType.BASIC);
-        List<OrderedText> lines = tooltip.stream()
-                .flatMap(t -> renderer.wrapLines(t, 160).stream())
-                .toList();
-        int width = lines.stream().mapToInt(renderer::getWidth).max().orElse(0) + 8;
-        int height = lines.size() * renderer.fontHeight + 8;
-
-        if (player.getMainArm() == Arm.RIGHT) {
-            x -= width;
-        }
-
-        y -= height;
-
-        context.fill(x, y, x + width, y + height - 1, 0xF0100010);
-
-        for (int i = 0; i < lines.size(); i++) {
-            context.drawTextWithShadow(renderer, lines.get(i), x + 4, y + 4 + i * renderer.fontHeight, 0xFFFFFFFF);
-        }
+    public static void drawTooltip(DrawContext context, ItemStack stack, Arm arm, int x, int y, PlayerEntity player, TextRenderer renderer) {
+        context.drawTooltip(
+                renderer,
+                stack.getTooltip(Item.TooltipContext.DEFAULT, player, TooltipType.BASIC)
+                        .stream()
+                        .flatMap(t -> renderer.wrapLines(t, 160).stream())
+                        .toList(),
+                (screenWidth, screenHeight, x1, y1, width1, height1) -> new Vector2i(
+                        player.getMainArm() != arm ? x1 - width1 : x1,
+                        y1 - height1 - 8
+                ),
+                x,
+                y
+        );
     }
 }
