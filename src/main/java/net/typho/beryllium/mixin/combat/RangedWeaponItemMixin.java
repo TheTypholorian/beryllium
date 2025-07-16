@@ -26,7 +26,7 @@ public class RangedWeaponItemMixin {
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void onClassInit(CallbackInfo ci) {
-        CROSSBOW_HELD_PROJECTILES = CROSSBOW_HELD_PROJECTILES.or(stack -> stack.isOf(Items.END_CRYSTAL) || stack.isOf(Items.WIND_CHARGE));
+        CROSSBOW_HELD_PROJECTILES = CROSSBOW_HELD_PROJECTILES.or(stack -> stack.isOf(Items.END_CRYSTAL)); //  || stack.isOf(Items.WIND_CHARGE)
     }
 
     @Inject(method = "createArrowEntity", at = @At("HEAD"), cancellable = true)

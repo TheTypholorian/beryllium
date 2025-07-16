@@ -11,6 +11,7 @@
     "combat.EnderPearlItemMixin",
     "combat.EntityAttributesMixin",
     "combat.EntityMixin",
+    "combat.ItemMixin",
     "combat.ItemStackMixin",
     "combat.LivingEntityMixin",
     "combat.MaceItemMixin",

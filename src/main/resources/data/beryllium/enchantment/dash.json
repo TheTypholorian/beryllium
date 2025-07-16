@@ -1,0 +1,26 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.beryllium.dash"
+  },
+  "effects": {},
+  "exclusive_set": "#beryllium:exclusive_set/ability",
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 8
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 2
+  },
+  "primary_items": "#minecraft:enchantable/sword",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#minecraft:enchantable/weapon",
+  "weight": 5,
+  "catalyst": "minecraft:wind_charge",
+  "catalyst_count": 4,
+  "capacity": 4
+}

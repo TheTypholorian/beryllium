@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 @Implements(@Interface(iface = SweepingItem.class, prefix = "sweep$"))
 public class SwordItemMixin {
     public float sweep$sweep(PlayerEntity player, ItemStack stack) {
-        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) / 10;
+        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) / 20;
     }
 }

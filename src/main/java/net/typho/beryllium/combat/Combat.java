@@ -1,6 +1,8 @@
 package net.typho.beryllium.combat;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
@@ -11,15 +13,24 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.BerylliumModule;
 import org.jetbrains.annotations.Nullable;
 
-public final class Combat {
+import java.util.Optional;
+import java.util.function.Predicate;
+
+public class Combat implements BerylliumModule {
     public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
     public static final Item DIAMOND_ARROW = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "diamond_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
@@ -72,22 +83,22 @@ public final class Combat {
     public static final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(Beryllium.MOD_ID, "netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 3, -3.2f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 2, -3.4f)))
     );
     public static final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(Beryllium.MOD_ID, "diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 3, -3.2f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 2, -3.4f)))
     );
     public static final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(Beryllium.MOD_ID, "iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 3, -3.2f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 2, -3.4f)))
     );
     public static final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             Identifier.of(Beryllium.MOD_ID, "golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 3, -3.2f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 2, -3.4f)))
     );
     public static final Item NETHERITE_SCYTHE = Registry.register(
             Registries.ITEM,
@@ -111,11 +122,47 @@ public final class Combat {
     );
     public static final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Beryllium.MOD_ID, "wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
     });
+    public static final RegistryKey<Enchantment> DASH_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Beryllium.MOD_ID, "dash"));
+    public static final RegistryKey<Enchantment> REEL_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Beryllium.MOD_ID, "reel"));
 
-    private Combat() {
+    public static @Nullable EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance, double margin) {
+        World world = entity.getWorld();
+        double distance = maxDistance;
+        Entity found = null;
+        Vec3d foundPos = null;
+
+        for (Entity entity3 : world.getOtherEntities(entity, box, predicate)) {
+            Box box2 = entity3.getBoundingBox().expand(entity3.getTargetingMargin() + margin);
+            Optional<Vec3d> optional = box2.raycast(min, max);
+            if (box2.contains(min)) {
+                if (distance >= 0.0) {
+                    found = entity3;
+                    foundPos = optional.orElse(min);
+                    distance = 0.0;
+                }
+            } else if (optional.isPresent()) {
+                Vec3d vec3d2 = optional.get();
+                double e = min.squaredDistanceTo(vec3d2);
+                if (e < distance || distance == 0.0) {
+                    if (entity3.getRootVehicle() == entity.getRootVehicle()) {
+                        if (distance == 0.0) {
+                            found = entity3;
+                            foundPos = vec3d2;
+                        }
+                    } else {
+                        found = entity3;
+                        foundPos = vec3d2;
+                        distance = e;
+                    }
+                }
+            }
+        }
+
+        return found == null ? null : new EntityHitResult(found, foundPos);
     }
 
-    public static void init() {
+    @Override
+    public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT)
                 .register(entries -> {
                     entries.addAfter(Items.ARROW, DIAMOND_ARROW, IRON_ARROW, FLAMING_ARROW, COPPER_ARROW);

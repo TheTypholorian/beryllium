@@ -1,18 +1,14 @@
 {
   "values": [
-    "beryllium:stone_wall",
     "beryllium:mossy_stone",
+    "beryllium:mossy_stone_wall",
     "beryllium:mossy_stone_stairs",
     "beryllium:mossy_stone_slab",
-    "beryllium:mossy_stone_wall",
     "beryllium:mossy_stone_pressure_plate",
-    "beryllium:smooth_stone_stairs",
-    "beryllium:smooth_stone_wall",
-    "beryllium:quartz_wall",
-    "beryllium:quartz_brick_stairs",
-    "beryllium:quartz_brick_slab",
-    "beryllium:quartz_brick_wall",
-    "beryllium:smooth_quartz_wall",
+    "beryllium:mossy_stone_button",
+    "beryllium:cracked_stone_brick_wall",
+    "beryllium:cracked_stone_brick_stairs",
+    "beryllium:cracked_stone_brick_slab",
     "beryllium:kiln"
   ]
 }

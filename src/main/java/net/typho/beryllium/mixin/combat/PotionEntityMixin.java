@@ -58,15 +58,15 @@ public abstract class PotionEntityMixin extends ThrownItemEntity implements Flyi
 
             if (contents.matches(Potions.WATER)) {
                 applyWater();
+            }
 
-                if (contents.hasEffects()) {
-                    if (isLingering()) {
-                        applyLingeringPotion(contents);
-                    } else {
-                        applySplashPotion(
-                                contents.getEffects(), hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null
-                        );
-                    }
+            if (contents.hasEffects()) {
+                if (isLingering()) {
+                    applyLingeringPotion(contents);
+                } else {
+                    applySplashPotion(
+                            contents.getEffects(), hitResult.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)hitResult).getEntity() : null
+                    );
                 }
             }
 

@@ -32,7 +32,7 @@ public class ProjectileUtilMixin {
         float margin = 0;
 
         if (entity instanceof PlayerEntity player) {
-            ItemStack held = player.getMainHandStack();
+            ItemStack held = player.getWeaponStack();
 
             if (held.getItem() instanceof SweepingItem sweep) {
                 margin += sweep.sweep(player, held);

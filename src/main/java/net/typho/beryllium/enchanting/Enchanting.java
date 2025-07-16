@@ -8,12 +8,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.typho.beryllium.BerylliumModule;
 
-public final class Enchanting {
-    private Enchanting() {
-    }
-
-    public static void init() {
+public class Enchanting implements BerylliumModule {
+    @Override
+    public void onInitialize() {
     }
 
     public static String toRomanNumeral(int n) {

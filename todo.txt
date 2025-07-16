@@ -1,0 +1,6 @@
+- connecting glass
+- firing recipes (glass, bricks)
+- fix stair recipes
+- dash
+- disable weapons (like a shield)
+- fix vitality respawn

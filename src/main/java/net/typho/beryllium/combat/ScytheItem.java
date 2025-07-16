@@ -4,14 +4,17 @@ import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.util.DualModelItem;
+import net.typho.beryllium.util.SweepingItem;
 
-public class ScytheItem extends SwordItem implements DualModelItem {
+public class ScytheItem extends SwordItem implements DualModelItem, SweepingItem {
     public ScytheItem(ToolMaterial toolMaterial, Settings settings) {
         super(toolMaterial, settings);
     }
@@ -30,11 +33,6 @@ public class ScytheItem extends SwordItem implements DualModelItem {
     public static AttributeModifiersComponent scytheModifiers(ToolMaterial material, float damage, float speed) {
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
         builder.add(
-                        EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                        new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "entity_interaction_range"), -1, EntityAttributeModifier.Operation.ADD_VALUE),
-                        AttributeModifierSlot.MAINHAND
-                )
-                .add(
                         EntityAttributes.GENERIC_ATTACK_DAMAGE,
                         new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, damage + material.getAttackDamage(), EntityAttributeModifier.Operation.ADD_VALUE),
                         AttributeModifierSlot.MAINHAND
@@ -50,5 +48,10 @@ public class ScytheItem extends SwordItem implements DualModelItem {
                         AttributeModifierSlot.MAINHAND
                 );
         return builder.build();
+    }
+
+    @Override
+    public float sweep(PlayerEntity player, ItemStack stack) {
+        return 1;
     }
 }

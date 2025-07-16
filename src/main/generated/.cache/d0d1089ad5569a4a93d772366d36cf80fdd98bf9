@@ -1,5 +1,5 @@
-// 1.21.1	2025-07-14T11:00:22.5110536	Beryllium/Tags for minecraft:block
-56231551bac84385fe2e45baec0aaf98795f4afc data\minecraft\tags\block\mineable\pickaxe.json
-4588749cc380053a4532559f2f762396400fb411 data\minecraft\tags\block\walls.json
-6cb4ab189839d3bb0d154898c7a9ea230798d810 data\minecraft\tags\block\stairs.json
-9ad1b33d4488abad167eba24de39177c6bda753a data\minecraft\tags\block\slabs.json
+// 1.21.1	2025-07-15T15:10:47.6495718	Beryllium/Tags for minecraft:block
+35afbf2727634fb89021188bc19786b98b16d665 data\minecraft\tags\block\mineable\pickaxe.json
+15119d83e2c785fbc3fa9b440630907a3ae1fcad data\minecraft\tags\block\walls.json
+ad6ed91643e3f053954bf8c76e633ab77140486d data\minecraft\tags\block\stairs.json
+a658fb58680cf065625c20eef81d844db91d75a3 data\minecraft\tags\block\slabs.json

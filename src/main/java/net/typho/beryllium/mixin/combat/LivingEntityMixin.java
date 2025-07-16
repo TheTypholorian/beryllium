@@ -3,15 +3,23 @@ package net.typho.beryllium.mixin.combat;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.ScytheItem;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+    @Shadow
+    @NotNull
+    public abstract ItemStack getWeaponStack();
+
     @ModifyConstant(
             method = "travel",
             constant = @Constant(floatValue = 0.91f)
@@ -67,6 +75,17 @@ public abstract class LivingEntityMixin {
         entity.setVelocity(vec3d.x / 2.0 - vec3d2.x, entity.isOnGround() ? Math.min(0.4, vec3d.y / 2.0 + strength) : vec3d.y, vec3d.z / 2.0 - vec3d2.z);
 
         ci.cancel();
+    }
+
+    @Inject(
+            method = "disablesShield",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void disablesShield(CallbackInfoReturnable<Boolean> cir) {
+        if (getWeaponStack().getItem() instanceof ScytheItem) {
+            cir.setReturnValue(true);
+        }
     }
 
     /*
