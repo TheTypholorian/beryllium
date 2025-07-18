@@ -31,10 +31,10 @@
     "enchanting.EnchantmentScreenHandlerMixin$SubMixin2",
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
-    "enchanting.TradeOffersMixin",
-    "exploring.HeightRangePlacementModifierMixin"
+    "enchanting.TradeOffersMixin"
   ],
   "client": [
+    "client.DirectoryAtlasSourceMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin",

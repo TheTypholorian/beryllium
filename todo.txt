@@ -4,3 +4,4 @@
 - dash
 - disable weapons (like a shield)
 - fix vitality respawn
+- compasses

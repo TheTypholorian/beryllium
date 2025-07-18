@@ -3,10 +3,7 @@ package net.typho.beryllium.client;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
@@ -16,25 +13,42 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.SurvivesExplosionLootCondition;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.*;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.*;
+import net.minecraft.registry.tag.EnchantmentTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.structure.Structure;
+import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnBlock;
 import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
 import net.typho.beryllium.exploring.Exploring;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -45,7 +59,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(Models::new);
         pack.addProvider(Recipes::new);
         pack.addProvider(BlockLootTables::new);
+        pack.addProvider(BarterLootTables::new);
         pack.addProvider(BlockTags::new);
+        pack.addProvider(StructureTags::new);
     }
 
     public static class ItemTags extends FabricTagProvider.ItemTagProvider {
@@ -74,8 +90,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator gen) {
-            gen.registerCubeAllModelTexturePool(Building.MOSSY_STONE.getBaseBlock()).family(Building.MOSSY_STONE);
-            gen.registerCubeAllModelTexturePool(Building.CRACKED_STONE_BRICKS.getBaseBlock()).family(Building.CRACKED_STONE_BRICKS);
+            //gen.registerCubeAllModelTexturePool(Building.MOSSY_STONE.getBaseBlock()).family(Building.MOSSY_STONE);
+            //gen.registerCubeAllModelTexturePool(Building.CRACKED_STONE_BRICKS.getBaseBlock()).family(Building.CRACKED_STONE_BRICKS);
         }
 
         @Override
@@ -171,7 +187,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
             scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK, 1)
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK_ITEM, 1)
                     .pattern("AAA")
                     .pattern("A A")
                     .pattern("AAA")
@@ -188,9 +204,19 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
                     .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "metal_detector"));
 
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.LODESTONE, 1)
+                    .pattern("AAA")
+                    .pattern("ABA")
+                    .pattern("AAA")
+                    .input('A', Items.CHISELED_STONE_BRICKS)
+                    .input('B', Items.IRON_INGOT)
+                    .criterion("has_chiseled_stone_bricks", FabricRecipeProvider.conditionsFromItem(Items.CHISELED_STONE_BRICKS))
+                    .offerTo(exporter, Identifier.ofVanilla("lodestone"));
+
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
+            /*
             ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.MOSSY_STONE.getBaseBlock())
                     .input(Blocks.STONE)
                     .input(Blocks.VINE)
@@ -215,6 +241,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     firingStone(exporter, List.of(stone), smooth, "smooth_stone");
                 }
             });
+             */
         }
     }
 
@@ -227,6 +254,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         public void generate() {
             addDrop(Building.KILN_BLOCK);
 
+            /*
             addDrop(Building.MOSSY_STONE.getBaseBlock());
             addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL));
             addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS));
@@ -237,6 +265,119 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+             */
+        }
+    }
+
+    public static class BarterLootTables extends SimpleFabricLootTableProvider {
+        protected final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
+
+        public BarterLootTables(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+            super(output, registryLookup, LootContextTypes.BARTER);
+            this.registryLookup = registryLookup;
+        }
+
+        @Override
+        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> out) {
+            RegistryWrapper.WrapperLookup lookup = registryLookup.join();
+
+            LootPool.Builder pool = LootPool.builder()
+                    .rolls(ConstantLootNumberProvider.create(1))
+                    .with(ItemEntry.builder(Items.COMPASS).weight(40)
+                            .apply(new ExplorationCompassLootFunction.Builder()
+                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Identifier.of(Beryllium.MOD_ID, "on_bastion_maps")))
+                                    .searchRadius(100)
+                                    .withSkipExistingChunks(false)
+                            )
+                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                    )
+                    .with(ItemEntry.builder(Items.COMPASS).weight(40)
+                            .apply(new ExplorationCompassLootFunction.Builder()
+                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Identifier.of(Beryllium.MOD_ID, "on_fortress_maps")))
+                                    .searchRadius(100)
+                                    .withSkipExistingChunks(false)
+                            )
+                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                    )
+                    .with(ItemEntry.builder(Items.BOOK).weight(5)
+                            .apply(new EnchantRandomlyLootFunction.Builder()
+                                    .option(lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SOUL_SPEED))
+                            )
+                    )
+                    .with(ItemEntry.builder(Items.IRON_BOOTS).weight(8)
+                            .apply(EnchantRandomlyLootFunction.builder(lookup)
+                                    .option(lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SOUL_SPEED))
+                            )
+                    )
+                    .with(ItemEntry.builder(Items.POTION).weight(8)
+                            .apply(SetPotionLootFunction.builder(Potions.FIRE_RESISTANCE))
+                    )
+                    .with(ItemEntry.builder(Items.SPLASH_POTION).weight(8)
+                            .apply(SetPotionLootFunction.builder(Potions.FIRE_RESISTANCE))
+                    )
+                    .with(ItemEntry.builder(Items.POTION).weight(10)
+                            .apply(SetPotionLootFunction.builder(Potions.WATER))
+                    )
+                    .with(ItemEntry.builder(Items.IRON_NUGGET).weight(10)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(10, 36)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.ENDER_PEARL).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(2, 4)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.STRING).weight(20)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(3, 9)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.QUARTZ).weight(20)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(5, 12)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.OBSIDIAN).weight(40))
+                    .with(ItemEntry.builder(Items.CRYING_OBSIDIAN).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(1, 3)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.FIRE_CHARGE).weight(40))
+                    .with(ItemEntry.builder(Items.LEATHER).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(2, 4)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.SOUL_SAND).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(2, 8)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.NETHER_BRICK).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(2, 8)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.SPECTRAL_ARROW).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(6, 12)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.GRAVEL).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(8, 16)
+                            ))
+                    )
+                    .with(ItemEntry.builder(Items.BLACKSTONE).weight(40)
+                            .apply(SetCountLootFunction.builder(
+                                    UniformLootNumberProvider.create(8, 16)
+                            ))
+                    );
+            LootTable.Builder table = LootTable.builder()
+                    .pool(pool);
+            out.accept(LootTables.PIGLIN_BARTERING_GAMEPLAY, table);
         }
     }
 
@@ -248,6 +389,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.PICKAXE_MINEABLE)
+                    /*
                     .add(Building.MOSSY_STONE.getBaseBlock())
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
@@ -258,9 +400,11 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                     */
 
                     .add(Building.KILN_BLOCK);
 
+                    /*
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
@@ -272,6 +416,21 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                     */
+        }
+    }
+
+    public static class StructureTags extends FabricTagProvider<Structure> {
+        public StructureTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.STRUCTURE, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "on_bastion_maps")))
+                    .add(StructureKeys.BASTION_REMNANT);
+            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "on_fortress_maps")))
+                    .add(StructureKeys.FORTRESS);
         }
     }
 }

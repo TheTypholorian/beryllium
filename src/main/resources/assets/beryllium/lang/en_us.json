@@ -58,5 +58,7 @@
   "commands.beryllium.enchant.failed.not_an_action": "%s is not a valid action",
   "container.beryllium.kiln": "Kiln",
   "stat.beryllium.interact_with_kiln": "Interact with Kiln",
-  "gui.beryllium.recipebook.toggleRecipes.fireable": "Fireable"
+  "gui.beryllium.recipebook.toggleRecipes.fireable": "Fireable",
+  "item.beryllium.bastion_compass": "Bastion Remnant",
+  "item.beryllium.fortress_compass": "Nether Fortress"
 }

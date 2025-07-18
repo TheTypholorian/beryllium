@@ -7,6 +7,8 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.datafixer.TypeReferences;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -17,10 +19,11 @@ import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.BerylliumModule;
 import net.typho.beryllium.building.kiln.KilnBlock;
 
-import static net.typho.beryllium.BerylliumModule.block;
+import static net.typho.beryllium.BerylliumModule.*;
 
 public class Building implements BerylliumModule {
     public static final Block KILN_BLOCK = block("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)));
+    public static final Item KILN_BLOCK_ITEM = item("kiln", new BlockItem(KILN_BLOCK, new Item.Settings()));
 
     private static <T extends BlockEntity> BlockEntityType<T> blockEntity(String id, BlockEntityType.Builder<T> builder) {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, id), builder.build(Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)));
@@ -47,6 +50,7 @@ public class Building implements BerylliumModule {
 
     @Override
     public void onInitialize() {
+        /*
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
                 .register(entries -> {
                     entries.addAfter(
@@ -64,6 +68,7 @@ public class Building implements BerylliumModule {
                             CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB)
                     );
                 });
+         */
         HandledScreens.register(KilnBlock.SCREEN_HANDLER_TYPE, KilnBlock.Screen::new);
         /*
         CommandRegistrationCallback.EVENT.register(
