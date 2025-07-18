@@ -25,43 +25,39 @@ public class DirectoryAtlasSourceMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void method_47683(ResourceFinder finder, AtlasSource.SpriteRegions regions, Identifier identifier, Resource resource, CallbackInfo ci) {
-        identifier = finder.toResourceId(identifier).withPrefixedPath(prefix);
-        DynamicSpriteLoader loader = BerylliumClient.DYNAMIC_TEXTURES.get(identifier);
+    private void method_47683(ResourceFinder finder, AtlasSource.SpriteRegions regions, Identifier file, Resource resource, CallbackInfo ci) {
+        DynamicSpriteLoader loader = BerylliumClient.DYNAMIC_TEXTURES.get(file);
 
         if (loader != null) {
-            loader.loadSprite(finder, regions, identifier, resource);
+            loader.loadSprite(finder, regions, file, resource);
             ci.cancel();
         }
 
         /*
-        if (Objects.equals(identifier.getNamespace(), Beryllium.MOD_ID) && Objects.equals(identifier.getPath(), "textures/item/metal_detector.png")) {
-            regions.add(resourceFinder.toResourceId(identifier).withPrefixedPath(prefix), opener -> {
+        if (prefix.contains("block") || prefix.contains("item") || prefix.contains("entity")) {
+            Identifier target = finder.toResourceId(file).withPrefixedPath(prefix);
+            regions.add(target, opener -> {
                 try {
-                    Identifier target = resourceFinder.toResourceId(identifier).withPrefixedPath(prefix);
-                    NativeImage nativeImage = new NativeImage(16, 16, false);
-                    NativeImage compass = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(Identifier.ofVanilla("textures/item/compass_00.png")).orElseThrow().getInputStream());
+                    NativeImage original = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(file).orElseThrow().getInputStream());
+                    NativeImage output = new NativeImage(original.getWidth(), original.getHeight(), false);
 
-                    for (int x = 0; x < 16; x++) {
-                        for (int y = 0; y < 16; y++) {
-                            int color = compass.getColor(x, y);
+                    for (int x = 0; x < output.getWidth(); x++) {
+                        for (int y = 0; y < output.getHeight(); y++) {
+                            int color = original.getColor(x, y);
 
-                            color = switch (color) {
-                                case 0xFFFFFFFF -> 0xFFB6C3FB;
-                                case 0xFFD8D8D8 -> 0xFF8299FC;
-                                case 0xFFA8A8A8 -> 0xFF567CE7;
-                                case 0xFF828282 -> 0xFF365AC1;
-                                case 0xFF5E5E5E, 0xFF646464 -> 0xFF314E9C;
-                                case 0xFF353535 -> 0xFF29418A;
-                                case 0xFF2F2F2F, 0xFF171718, 0xFF4D4D4F -> 0xFF21346D;
-                                default -> color;
-                            };
+                            float red = (color & 0xFF) / 127f;
+                            float green = (color >> 8 & 0xFF) / 127f;
+                            float blue = (color >> 16 & 0xFF) / 127f;
 
-                            nativeImage.setColor(x, y, color);
+                            red = red * red * red;
+                            green = green * green * green;
+                            blue = blue * blue * blue;
+
+                            output.setColor(x, y, (color & 0xFF000000) | ((int) Math.min(255, red * 127)) | ((int) Math.min(255, green * 127) << 8) | ((int) Math.min(255, blue * 127) << 16));
                         }
                     }
 
-                    return new SpriteContents(target, new SpriteDimensions(16, 16), nativeImage, new ResourceMetadata() {
+                    return new SpriteContents(target, new SpriteDimensions(16, 16), output, new ResourceMetadata() {
                         @Override
                         public <T> Optional<T> decode(ResourceMetadataReader<T> reader) {
                             return Optional.empty();
