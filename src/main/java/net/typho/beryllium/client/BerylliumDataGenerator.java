@@ -5,14 +5,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.family.BlockFamilies;
-import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -20,20 +16,23 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
-import net.minecraft.loot.condition.SurvivesExplosionLootCondition;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.*;
+import net.minecraft.loot.function.EnchantRandomlyLootFunction;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.function.SetNameLootFunction;
+import net.minecraft.loot.function.SetPotionLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.*;
-import net.minecraft.registry.tag.EnchantmentTags;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.structure.Structure;
@@ -100,8 +99,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Combat.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
-
-            gen.register(Exploring.METAL_DETECTOR_ITEM, net.minecraft.data.client.Models.GENERATED);
         }
     }
 
@@ -431,6 +428,12 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(StructureKeys.BASTION_REMNANT);
             getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "on_fortress_maps")))
                     .add(StructureKeys.FORTRESS);
+            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "spawn")))
+                    .add(StructureKeys.VILLAGE_PLAINS)
+                    .add(StructureKeys.VILLAGE_DESERT)
+                    .add(StructureKeys.VILLAGE_SAVANNA)
+                    .add(StructureKeys.VILLAGE_SNOWY)
+                    .add(StructureKeys.VILLAGE_TAIGA);
         }
     }
 }

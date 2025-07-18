@@ -8,9 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.typho.beryllium.BerylliumModule;
+import net.typho.beryllium.Module;
 
-public class Enchanting implements BerylliumModule {
+public class Enchanting implements Module {
     @Override
     public void onInitialize() {
     }

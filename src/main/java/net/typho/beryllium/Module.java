@@ -7,7 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public interface BerylliumModule extends ModInitializer {
+public interface Module extends ModInitializer {
     String MOD_ID = "beryllium";
 
     static Identifier id(String name) {

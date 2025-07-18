@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.BerylliumModule;
+import net.typho.beryllium.Module;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -143,7 +143,7 @@ public class BlockSet {
 
     public BlockSet genSolid(Block parent) {
         datagen = true;
-        return setSolid(BerylliumModule.block(id.getPath(), new Block(AbstractBlock.Settings.copy(parent))));
+        return setSolid(Module.block(id.getPath(), new Block(AbstractBlock.Settings.copy(parent))));
     }
 
     public BlockSet setChiseled(Block chiseled) {
@@ -153,7 +153,7 @@ public class BlockSet {
 
     public BlockSet genChiseled() {
         datagen = true;
-        return setChiseled(BerylliumModule.block("chiseled_" + id.getPath(), new Block(AbstractBlock.Settings.copy(solid))));
+        return setChiseled(Module.block("chiseled_" + id.getPath(), new Block(AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setPillar(Block pillar) {
@@ -163,7 +163,7 @@ public class BlockSet {
 
     public BlockSet genPillar() {
         datagen = true;
-        return setPillar(BerylliumModule.block(id.getPath() + "_pillar", new Block(AbstractBlock.Settings.copy(solid))));
+        return setPillar(Module.block(id.getPath() + "_pillar", new Block(AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setStairs(Block stairs) {
@@ -173,7 +173,7 @@ public class BlockSet {
 
     public BlockSet genStairs() {
         datagen = true;
-        return setStairs(BerylliumModule.block(id.getPath() + "_stairs", new StairsBlock(solid.getDefaultState(), AbstractBlock.Settings.copy(solid))));
+        return setStairs(Module.block(id.getPath() + "_stairs", new StairsBlock(solid.getDefaultState(), AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setSlab(Block slab) {
@@ -183,7 +183,7 @@ public class BlockSet {
 
     public BlockSet genSlab() {
         datagen = true;
-        return setSlab(BerylliumModule.block(id.getPath() + "_slab", new SlabBlock(AbstractBlock.Settings.copy(solid))));
+        return setSlab(Module.block(id.getPath() + "_slab", new SlabBlock(AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setButton(Block button) {
@@ -193,7 +193,7 @@ public class BlockSet {
 
     public BlockSet genButton(BlockSetType set, int pressTicks) {
         datagen = true;
-        return setButton(BerylliumModule.block(id.getPath() + "_button", new ButtonBlock(set, pressTicks, AbstractBlock.Settings.copy(solid))));
+        return setButton(Module.block(id.getPath() + "_button", new ButtonBlock(set, pressTicks, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setPressurePlate(Block pressurePlate) {
@@ -203,7 +203,7 @@ public class BlockSet {
 
     public BlockSet genPressurePlate(BlockSetType set) {
         datagen = true;
-        return setPressurePlate(BerylliumModule.block(id.getPath() + "_pressure_plate", new PressurePlateBlock(set, AbstractBlock.Settings.copy(solid))));
+        return setPressurePlate(Module.block(id.getPath() + "_pressure_plate", new PressurePlateBlock(set, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setFence(Block fence) {
@@ -213,7 +213,7 @@ public class BlockSet {
 
     public BlockSet genFence() {
         datagen = true;
-        return setFence(BerylliumModule.block(id.getPath() + "_fence", new FenceBlock(AbstractBlock.Settings.copy(solid))));
+        return setFence(Module.block(id.getPath() + "_fence", new FenceBlock(AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setFenceGate(Block fenceGate) {
@@ -223,7 +223,7 @@ public class BlockSet {
 
     public BlockSet genFenceGate(WoodType type) {
         datagen = true;
-        return setFenceGate(BerylliumModule.block(id.getPath() + "_fence_gate", new FenceGateBlock(type, AbstractBlock.Settings.copy(solid))));
+        return setFenceGate(Module.block(id.getPath() + "_fence_gate", new FenceGateBlock(type, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setSign(Block sign) {
@@ -233,7 +233,7 @@ public class BlockSet {
 
     public BlockSet genSign(WoodType type) {
         datagen = true;
-        return setSign(BerylliumModule.block(id.getPath() + "_sign", new SignBlock(type, AbstractBlock.Settings.copy(solid))));
+        return setSign(Module.block(id.getPath() + "_sign", new SignBlock(type, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setWallSign(Block wallSign) {
@@ -243,7 +243,7 @@ public class BlockSet {
 
     public BlockSet genWallSign(WoodType type) {
         datagen = true;
-        return setWallSign(BerylliumModule.block(id.getPath() + "_wall_sign", new WallSignBlock(type, AbstractBlock.Settings.copy(solid))));
+        return setWallSign(Module.block(id.getPath() + "_wall_sign", new WallSignBlock(type, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setWall(Block wall) {
@@ -253,7 +253,7 @@ public class BlockSet {
 
     public BlockSet genWall() {
         datagen = true;
-        return setWall(BerylliumModule.block(id.getPath() + "_wall", new WallBlock(AbstractBlock.Settings.copy(solid))));
+        return setWall(Module.block(id.getPath() + "_wall", new WallBlock(AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setDoor(Block door) {
@@ -263,7 +263,7 @@ public class BlockSet {
 
     public BlockSet genDoor(BlockSetType type) {
         datagen = true;
-        return setDoor(BerylliumModule.block(id.getPath() + "_door", new DoorBlock(type, AbstractBlock.Settings.copy(solid))));
+        return setDoor(Module.block(id.getPath() + "_door", new DoorBlock(type, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setTrapdoor(Block trapdoor) {
@@ -273,7 +273,7 @@ public class BlockSet {
 
     public BlockSet genTrapdoor(BlockSetType type) {
         datagen = true;
-        return setTrapdoor(BerylliumModule.block(id.getPath() + "_trapdoor", new TrapdoorBlock(type, AbstractBlock.Settings.copy(solid))));
+        return setTrapdoor(Module.block(id.getPath() + "_trapdoor", new TrapdoorBlock(type, AbstractBlock.Settings.copy(solid))));
     }
 
     public BlockSet setDatagen(boolean datagen) {

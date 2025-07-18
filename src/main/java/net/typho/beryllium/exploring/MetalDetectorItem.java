@@ -4,10 +4,10 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -15,22 +15,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.dimension.DimensionTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 public class MetalDetectorItem extends Item {
     public record OrePeak(int yMin, int yMax, @Nullable Collection<RegistryKey<Biome>> biomes) {
@@ -56,19 +53,69 @@ public class MetalDetectorItem extends Item {
     static {
         BLOCK_COLORS.put(Blocks.ANCIENT_DEBRIS, new Color(101, 71, 64));
         BLOCK_COLORS.put(Blocks.COAL_ORE, new Color(37, 37, 37));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_COAL_ORE, new Color(37, 37, 37));
         BLOCK_COLORS.put(Blocks.COPPER_ORE, new Color(224, 115, 77));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_COPPER_ORE, new Color(224, 115, 77));
         BLOCK_COLORS.put(Blocks.DIAMOND_ORE, new Color(30, 208, 214));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_DIAMOND_ORE, new Color(30, 208, 214));
         BLOCK_COLORS.put(Blocks.EMERALD_ORE, new Color(23, 197, 68));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_EMERALD_ORE, new Color(23, 197, 68));
         BLOCK_COLORS.put(Blocks.GOLD_ORE, new Color(252, 238, 75));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_GOLD_ORE, new Color(252, 238, 75));
         BLOCK_COLORS.put(Blocks.IRON_ORE, new Color(216, 175, 147));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_IRON_ORE, new Color(216, 175, 147));
         BLOCK_COLORS.put(Blocks.LAPIS_ORE, new Color(68, 111, 220));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_LAPIS_ORE, new Color(68, 111, 220));
         BLOCK_COLORS.put(Blocks.NETHER_GOLD_ORE, new Color(252, 238, 75));
         BLOCK_COLORS.put(Blocks.NETHER_QUARTZ_ORE, new Color(212, 202, 186));
         BLOCK_COLORS.put(Blocks.REDSTONE_ORE, new Color(255, 0, 0));
+        BLOCK_COLORS.put(Blocks.DEEPSLATE_REDSTONE_ORE, new Color(255, 0, 0));
     }
 
     public MetalDetectorItem(Settings settings) {
         super(settings);
+    }
+
+    public static GlobalPos nearestOre(Entity entity, World world) {
+        BlockPos origin = entity.getBlockPos();
+        Set<BlockPos> found = new HashSet<>();
+
+        for (int y = -2; y <= 2; y++) {
+            int by = origin.getY() + y;
+
+            for (int x = -16; x <= 16; x++) {
+                int bx = origin.getX() + x;
+
+                for (int z = -16; z <= 16; z++) {
+                    int bz = origin.getZ() + z;
+                    BlockPos pos = new BlockPos(bx, by, bz);
+
+                    if (BLOCK_COLORS.containsKey(world.getBlockState(pos).getBlock())) {
+                        found.add(pos);
+                    }
+                }
+            }
+        }
+
+        return new GlobalPos(
+                world.getRegistryKey(),
+                found.stream()
+                        .min(Comparator.comparingDouble(pos -> pos.getSquaredDistance(origin)))
+                        .orElseGet(() -> {
+                            int age = entity.age % 8;
+                            return switch (age) {
+                                case 0 -> new BlockPos(origin.getX() + 1, origin.getY(), origin.getZ());
+                                case 1 -> new BlockPos(origin.getX() + 1, origin.getY(), origin.getZ() + 1);
+                                case 2 -> new BlockPos(origin.getX(), origin.getY(), origin.getZ() + 1);
+                                case 3 -> new BlockPos(origin.getX() - 1, origin.getY(), origin.getZ() + 1);
+                                case 4 -> new BlockPos(origin.getX() - 1, origin.getY(), origin.getZ());
+                                case 5 -> new BlockPos(origin.getX() - 1, origin.getY(), origin.getZ() - 1);
+                                case 6 -> new BlockPos(origin.getX(), origin.getY(), origin.getZ() - 1);
+                                case 7 -> new BlockPos(origin.getX() + 1, origin.getY(), origin.getZ() - 1);
+                                default -> origin;
+                            };
+                        })
+        );
     }
 
     @Override
@@ -81,9 +128,9 @@ public class MetalDetectorItem extends Item {
             BlockPos playerPos = player.getBlockPos();
             World world = player.getWorld();
             int radius = 16;
-            Set<Block> found = new HashSet<>();
+            Map<Block, Integer> found = new HashMap<>();
 
-            tooltip.add(Text.translatable("item.beryllium.metal_detector.y_level", playerPos.getY()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+            tooltip.add(Text.translatable("item.minecraft.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
 
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {
@@ -91,15 +138,16 @@ public class MetalDetectorItem extends Item {
                         Block block = world.getBlockState(new BlockPos(playerPos.getX() + x, playerPos.getY() + y, playerPos.getZ() + z)).getBlock();
 
                         if (BLOCK_COLORS.containsKey(block)) {
-                            found.add(block);
+                            found.compute(block, (k, v) -> v == null ? 1 : v + 1);
                         }
                     }
                 }
             }
 
-            for (Block block : found) {
-                tooltip.add(block.getName().setStyle(Style.EMPTY.withColor(BLOCK_COLORS.get(block).getRGB())));
-            }
+            found.entrySet()
+                    .stream()
+                    .sorted(Comparator.comparingInt(entry -> -entry.getValue()))
+                    .forEachOrdered(entry -> tooltip.add(entry.getKey().getName().setStyle(Style.EMPTY.withColor(BLOCK_COLORS.get(entry.getKey()).getRGB()))));
         }
 
         /*

@@ -1,6 +1,9 @@
 package net.typho.beryllium.combat;
 
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.model.BakedModel;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -32,6 +35,13 @@ public class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelIt
     @Override
     public Identifier guiModel() {
         return Registries.ITEM.getId(this);
+    }
+
+    @Override
+    public void transform(ModelTransformationMode renderMode, BakedModel model, MatrixStack matrices) {
+        if (!(renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED)) {
+            matrices.scale(1, 2, 2);
+        }
     }
 
     public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {

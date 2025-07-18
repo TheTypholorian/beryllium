@@ -1,6 +1,5 @@
 package net.typho.beryllium.building;
 
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -9,19 +8,18 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.BerylliumModule;
+import net.typho.beryllium.Module;
 import net.typho.beryllium.building.kiln.KilnBlock;
 
-import static net.typho.beryllium.BerylliumModule.*;
+import static net.typho.beryllium.Module.block;
+import static net.typho.beryllium.Module.item;
 
-public class Building implements BerylliumModule {
+public class Building implements Module {
     public static final Block KILN_BLOCK = block("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)));
     public static final Item KILN_BLOCK_ITEM = item("kiln", new BlockItem(KILN_BLOCK, new Item.Settings()));
 

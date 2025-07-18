@@ -1,5 +1,6 @@
 {
-  "parent": "beryllium:item/scythe_3d",
+  "parent": "minecraft:item/handheld",
+  "gui_light": "front",
   "textures": {
     "layer0": "beryllium:item/golden_scythe_3d"
   }

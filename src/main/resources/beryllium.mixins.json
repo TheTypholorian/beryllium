@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "building.CookingRecipeDataGenMixin",
+    "client.CompassItemMixin",
     "combat.ElytraItemMixin",
     "combat.EndCrystalEntityMixin",
     "combat.EndCrystalItemMixin",
@@ -31,7 +32,9 @@
     "enchanting.EnchantmentScreenHandlerMixin$SubMixin2",
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
-    "enchanting.TradeOffersMixin"
+    "enchanting.TradeOffersMixin",
+    "exploring.MinecraftServerMixin",
+    "exploring.ServerWorldMixin"
   ],
   "client": [
     "client.AtlasLoaderMixin",

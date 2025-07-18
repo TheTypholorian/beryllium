@@ -12,9 +12,6 @@
   "item.beryllium.iron_scythe": "Iron Scythe",
   "item.beryllium.golden_scythe": "Golden Scythe",
   "item.beryllium.metal_detector": "Metal Detector",
-  "item.beryllium.metal_detector.y_level": "Y: %s",
-  "item.beryllium.metal_detector.no_ores": "No Ores",
-  "item.beryllium.metal_detector.found_ores": "Found Ores:",
   "block.beryllium.chiseled_oak_planks": "Chiseled Oak Planks",
   "block.beryllium.chiseled_spruce_planks": "Chiseled Spruce Planks",
   "block.beryllium.chiseled_birch_planks": "Chiseled Birch Planks",
@@ -60,5 +57,6 @@
   "stat.beryllium.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.fireable": "Fireable",
   "item.beryllium.bastion_compass": "Bastion Remnant",
-  "item.beryllium.fortress_compass": "Nether Fortress"
+  "item.beryllium.fortress_compass": "Nether Fortress",
+  "item.minecraft.compass.pos": "X: %s Y: %s Z: %s"
 }
