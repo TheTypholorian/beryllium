@@ -34,6 +34,7 @@
     "enchanting.TradeOffersMixin"
   ],
   "client": [
+    "client.AtlasLoaderMixin",
     "client.DirectoryAtlasSourceMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",

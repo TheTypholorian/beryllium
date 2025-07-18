@@ -1,29 +1,18 @@
 package net.typho.beryllium.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.resource.metadata.AnimationResourceMetadata;
-import net.minecraft.client.texture.NativeImage;
-import net.minecraft.client.texture.SpriteContents;
-import net.minecraft.client.texture.SpriteDimensions;
 import net.minecraft.client.texture.atlas.AtlasSource;
 import net.minecraft.client.texture.atlas.DirectoryAtlasSource;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceFinder;
-import net.minecraft.resource.metadata.ResourceMetadata;
-import net.minecraft.resource.metadata.ResourceMetadataReader;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.typho.beryllium.client.BerylliumClient;
+import net.typho.beryllium.client.DynamicSpriteLoader;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
 
 @Mixin(DirectoryAtlasSource.class)
 public class DirectoryAtlasSourceMixin {
@@ -36,19 +25,39 @@ public class DirectoryAtlasSourceMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void method_47683(ResourceFinder resourceFinder, AtlasSource.SpriteRegions regions, Identifier identifier, Resource resource, CallbackInfo ci) {
-        if (Objects.equals(identifier.getPath(), "textures/item/iron_sword.png")) {
+    private void method_47683(ResourceFinder finder, AtlasSource.SpriteRegions regions, Identifier identifier, Resource resource, CallbackInfo ci) {
+        identifier = finder.toResourceId(identifier).withPrefixedPath(prefix);
+        DynamicSpriteLoader loader = BerylliumClient.DYNAMIC_TEXTURES.get(identifier);
+
+        if (loader != null) {
+            loader.loadSprite(finder, regions, identifier, resource);
+            ci.cancel();
+        }
+
+        /*
+        if (Objects.equals(identifier.getNamespace(), Beryllium.MOD_ID) && Objects.equals(identifier.getPath(), "textures/item/metal_detector.png")) {
             regions.add(resourceFinder.toResourceId(identifier).withPrefixedPath(prefix), opener -> {
                 try {
                     Identifier target = resourceFinder.toResourceId(identifier).withPrefixedPath(prefix);
                     NativeImage nativeImage = new NativeImage(16, 16, false);
-                    NativeImage copy1 = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(Identifier.ofVanilla("textures/item/diamond_sword.png")).orElseThrow().getInputStream());
-                    NativeImage copy2 = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(Identifier.ofVanilla("textures/item/netherite_sword.png")).orElseThrow().getInputStream());
-                    NativeImage copy3 = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(Identifier.ofVanilla("textures/item/golden_sword.png")).orElseThrow().getInputStream());
+                    NativeImage compass = NativeImage.read(MinecraftClient.getInstance().getResourceManager().getResource(Identifier.ofVanilla("textures/item/compass_00.png")).orElseThrow().getInputStream());
 
                     for (int x = 0; x < 16; x++) {
                         for (int y = 0; y < 16; y++) {
-                            nativeImage.setColor(x, y, copy1.getColor(x, y) | copy2.getColor(x, y) | copy3.getColor(x, y));
+                            int color = compass.getColor(x, y);
+
+                            color = switch (color) {
+                                case 0xFFFFFFFF -> 0xFFB6C3FB;
+                                case 0xFFD8D8D8 -> 0xFF8299FC;
+                                case 0xFFA8A8A8 -> 0xFF567CE7;
+                                case 0xFF828282 -> 0xFF365AC1;
+                                case 0xFF5E5E5E, 0xFF646464 -> 0xFF314E9C;
+                                case 0xFF353535 -> 0xFF29418A;
+                                case 0xFF2F2F2F, 0xFF171718, 0xFF4D4D4F -> 0xFF21346D;
+                                default -> color;
+                            };
+
+                            nativeImage.setColor(x, y, color);
                         }
                     }
 
@@ -64,5 +73,6 @@ public class DirectoryAtlasSourceMixin {
             });
             ci.cancel();
         }
+         */
     }
 }
