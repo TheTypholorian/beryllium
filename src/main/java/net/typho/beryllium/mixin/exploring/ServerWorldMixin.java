@@ -30,7 +30,6 @@ public abstract class ServerWorldMixin extends World {
     @Override
     public BlockPos getSpawnPos() {
         BlockPos spawn = locateStructure(Exploring.SPAWN_KEY, super.getSpawnPos(), 500, false);
-        System.out.println(Exploring.SPAWN_KEY + " " + spawn);
 
         if (spawn != null) {
             properties.setSpawnPos(new BlockPos(spawn.getX(), getTopY(Heightmap.Type.WORLD_SURFACE, spawn.getX(), spawn.getZ()), spawn.getZ()), 0);

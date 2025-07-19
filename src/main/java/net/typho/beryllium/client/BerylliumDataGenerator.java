@@ -99,6 +99,33 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Combat.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Combat.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
+
+            /*
+            int directions = 32;
+
+            for (int i = 0; i < directions; i++) {
+                String si = i < 10 ? "0" + i : String.valueOf(i);
+                float f = (float) i / directions;
+
+                JsonObject needleModel = new JsonObject();
+                needleModel.addProperty("parent", "minecraft:item/generated");
+
+                JsonArray overrides = new JsonArray();
+
+                for (DyeColor color : DyeColor.values()) {
+                    JsonObject predicate = new JsonObject();
+                    JsonObject angle = new JsonObject();
+                    angle.addProperty("angle", f);
+                    predicate.add("predicate", angle);
+                    predicate.addProperty("model", "beryllium:item/compass/" + color + "/" + si);
+                    overrides.add(predicate);
+                }
+
+                needleModel.add("overrides", overrides);
+
+                gen.writer.accept(Identifier.ofVanilla("item/compass/" + si), () -> needleModel);
+            }
+             */
         }
     }
 
