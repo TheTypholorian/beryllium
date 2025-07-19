@@ -2,6 +2,7 @@ package net.typho.beryllium;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -20,5 +21,11 @@ public interface Module extends ModInitializer {
 
     static Block block(String id, Block block) {
         return Registry.register(Registries.BLOCK, id(id), block);
+    }
+
+    static Block blockWithItem(String id, Block block, Item.Settings settings) {
+        Block res = Registry.register(Registries.BLOCK, id(id), block);
+        Registry.register(Registries.ITEM, id(id), new BlockItem(res, settings));
+        return res;
     }
 }

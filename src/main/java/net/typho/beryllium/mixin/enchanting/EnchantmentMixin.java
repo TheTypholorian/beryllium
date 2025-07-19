@@ -27,11 +27,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
-    @Shadow
-    public static boolean canBeCombined(RegistryEntry<Enchantment> first, RegistryEntry<Enchantment> second) {
-        return false;
-    }
-
     @Inject(
             method = "getName",
             at = @At("HEAD"),
@@ -60,6 +55,10 @@ public abstract class EnchantmentMixin {
     )
     private void isAcceptableItem(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         Enchantment ench = (Enchantment) (Object) this;
+
+        if (stack.isOf(Items.BOOK) || stack.isOf(Items.ENCHANTED_BOOK)) {
+            cir.setReturnValue(true);
+        }
 
         if (cir.getReturnValue()) {
             if (!Enchanting.canFitEnchantment(stack, ench)) {

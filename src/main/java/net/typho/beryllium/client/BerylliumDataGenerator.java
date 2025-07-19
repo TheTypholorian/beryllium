@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.enchantment.Enchantments;
@@ -18,10 +19,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.EnchantRandomlyLootFunction;
-import net.minecraft.loot.function.SetCountLootFunction;
-import net.minecraft.loot.function.SetNameLootFunction;
-import net.minecraft.loot.function.SetPotionLootFunction;
+import net.minecraft.loot.function.*;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potions;
@@ -43,6 +41,7 @@ import net.typho.beryllium.building.kiln.KilnBlock;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
 import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.mixin.client.VariantPoolFunctionsAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -58,7 +57,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(Models::new);
         pack.addProvider(Recipes::new);
         pack.addProvider(BlockLootTables::new);
-        pack.addProvider(BarterLootTables::new);
+        pack.addProvider(ChestLootTables::new);
         pack.addProvider(BlockTags::new);
         pack.addProvider(StructureTags::new);
     }
@@ -87,10 +86,21 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             super(output);
         }
 
+        public static void family(BlockStateModelGenerator gen, BlockFamily family) {
+            BlockStateModelGenerator.BlockTexturePool pool = gen.registerCubeAllModelTexturePool(family.getBaseBlock());
+
+            family.getVariants().forEach((variant, block) -> {
+                if (variant != null && block != null && block.asItem() != Items.AIR) {
+                    VariantPoolFunctionsAccessor.getVariantPools().get(variant).accept(pool, block);
+                }
+            });
+        }
+
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator gen) {
-            //gen.registerCubeAllModelTexturePool(Building.MOSSY_STONE.getBaseBlock()).family(Building.MOSSY_STONE);
-            //gen.registerCubeAllModelTexturePool(Building.CRACKED_STONE_BRICKS.getBaseBlock()).family(Building.CRACKED_STONE_BRICKS);
+            family(gen, Building.MOSSY_STONE);
+            family(gen, Building.CRACKED_STONE_BRICKS);
+            family(gen, Building.SMOOTH_STONE);
         }
 
         @Override
@@ -211,7 +221,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
             scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK_ITEM, 1)
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK, 1)
                     .pattern("AAA")
                     .pattern("A A")
                     .pattern("AAA")
@@ -278,25 +288,25 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         public void generate() {
             addDrop(Building.KILN_BLOCK);
 
-            /*
             addDrop(Building.MOSSY_STONE.getBaseBlock());
             addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL));
             addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB));
-            addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.PRESSURE_PLATE));
-            addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.BUTTON));
 
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
-             */
+
+            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED));
         }
     }
 
-    public static class BarterLootTables extends SimpleFabricLootTableProvider {
+    public static class ChestLootTables extends SimpleFabricLootTableProvider {
         protected final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
 
-        public BarterLootTables(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+        public ChestLootTables(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(output, registryLookup, LootContextTypes.BARTER);
             this.registryLookup = registryLookup;
         }
@@ -305,7 +315,45 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> out) {
             RegistryWrapper.WrapperLookup lookup = registryLookup.join();
 
-            LootPool.Builder pool = LootPool.builder()
+            out.accept(LootTables.JUNGLE_TEMPLE_CHEST, LootTable.builder()
+                    .pool(LootPool.builder()
+                            .rolls(ConstantLootNumberProvider.create(4))
+                            .with(ItemEntry.builder(Items.DIAMOND).weight(10)
+                                    .apply(SetCountLootFunction.builder(
+                                            UniformLootNumberProvider.create(1, 3)
+                                    ))
+                            )
+                            .with(ItemEntry.builder(Items.IRON_INGOT).weight(15)
+                                    .apply(SetCountLootFunction.builder(
+                                            UniformLootNumberProvider.create(1, 5)
+                                    ))
+                            )
+                            .with(ItemEntry.builder(Items.GOLD_INGOT).weight(15)
+                                    .apply(SetCountLootFunction.builder(
+                                            UniformLootNumberProvider.create(2, 7)
+                                    ))
+                            )
+                            .with(ItemEntry.builder(Items.EMERALD).weight(5)
+                                    .apply(SetCountLootFunction.builder(
+                                            UniformLootNumberProvider.create(1, 3)
+                                    ))
+                            )
+                            .with(ItemEntry.builder(Items.SADDLE).weight(5))
+                            .with(ItemEntry.builder(Items.IRON_HORSE_ARMOR).weight(5))
+                            .with(ItemEntry.builder(Items.GOLDEN_HORSE_ARMOR).weight(5))
+                            .with(ItemEntry.builder(Items.DIAMOND_HORSE_ARMOR).weight(5))
+                            .with(ItemEntry.builder(Items.BOOK).weight(5)
+                                    .apply(EnchantWithLevelsLootFunction.builder(lookup, UniformLootNumberProvider.create(25, 35)))
+                            )
+                            .with(ItemEntry.builder(Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE).weight(20)
+                                    .apply(SetCountLootFunction.builder(
+                                            UniformLootNumberProvider.create(1, 2)
+                                    ))
+                            )
+                    ));
+
+            out.accept(LootTables.PIGLIN_BARTERING_GAMEPLAY, LootTable.builder()
+                    .pool(LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(1))
                     .with(ItemEntry.builder(Items.COMPASS).weight(40)
                             .apply(new ExplorationCompassLootFunction.Builder()
@@ -398,10 +446,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             .apply(SetCountLootFunction.builder(
                                     UniformLootNumberProvider.create(8, 16)
                             ))
-                    );
-            LootTable.Builder table = LootTable.builder()
-                    .pool(pool);
-            out.accept(LootTables.PIGLIN_BARTERING_GAMEPLAY, table);
+                    )));
         }
     }
 
@@ -413,34 +458,34 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.PICKAXE_MINEABLE)
-                    /*
                     .add(Building.MOSSY_STONE.getBaseBlock())
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.PRESSURE_PLATE))
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.BUTTON))
 
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                     */
+
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
 
                     .add(Building.KILN_BLOCK);
 
-                    /*
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
-                     */
         }
     }
 

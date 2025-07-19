@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_wall_side_tall",
   "textures": {
-    "wall": "beryllium:block/smoother_stone"
+    "wall": "minecraft:block/cracked_stone_bricks"
   }
 }

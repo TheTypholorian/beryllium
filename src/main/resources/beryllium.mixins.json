@@ -6,6 +6,8 @@
   "mixins": [
     "building.CookingRecipeDataGenMixin",
     "client.CompassItemMixin",
+    "client.StructureVoidBlockMixin",
+    "client.VariantPoolFunctionsAccessor",
     "combat.ElytraItemMixin",
     "combat.EndCrystalEntityMixin",
     "combat.EndCrystalItemMixin",
@@ -33,6 +35,8 @@
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
     "enchanting.TradeOffersMixin",
+    "exploring.JungleTempleGeneratorMixin",
+    "exploring.JungleTempleStructureMixin",
     "exploring.MinecraftServerMixin",
     "exploring.ServerWorldMixin"
   ],

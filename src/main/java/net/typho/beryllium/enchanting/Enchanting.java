@@ -1,14 +1,15 @@
 package net.typho.beryllium.enchanting;
 
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BookItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Module;
+
+import java.util.stream.Stream;
 
 public class Enchanting implements Module {
     @Override
@@ -57,17 +58,11 @@ public class Enchanting implements Module {
     }
 
     public static int getUsedEnchCapacity(ItemStack stack) {
-        return getUsedEnchCapacity(EnchantmentHelper.getEnchantments(stack));
+        return getUsedEnchCapacity(EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static int getUsedEnchCapacity(ItemEnchantmentsComponent enchants) {
-        int i = 0;
-
-        for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : enchants.getEnchantmentEntries()) {
-            i += getEnchantmentCapacity(entry.getKey().value());
-        }
-
-        return i;
+    public static int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
+        return stream.mapToInt(entry -> getEnchantmentCapacity(entry.enchantment.value())).sum();
     }
 
     public static int getEnchantmentCapacity(Enchantment enchant) {
@@ -75,15 +70,19 @@ public class Enchanting implements Module {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
-        if (stack.getItem() instanceof BookItem) {
-            return EnchantmentHelper.getEnchantments(stack).getSize() == 0;
+        return canFitEnchantment(stack, enchant, EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
+    }
+
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Stream<EnchantmentLevelEntry> enchantments) {
+        if (stack.isOf(Items.BOOK) || stack.isOf(Items.ENCHANTED_BOOK)) {
+            return enchantments.findAny().isEmpty();
         }
 
-        if (stack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.value() == enchant)) {
+        if (enchantments.anyMatch(entry -> entry.enchantment.value() == enchant)) {
             return true;
         }
 
-        return getUsedEnchCapacity(stack) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
+        return getUsedEnchCapacity(enchantments) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {

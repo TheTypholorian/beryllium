@@ -12,6 +12,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.structure.Structure;
@@ -23,6 +24,8 @@ public class Exploring implements Module {
     public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, Module.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
     public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, Module.id("spawn"));
     public static final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Module.id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
+    public static final StructureProcessorType<StoneBrickVariantProcessor> STONE_BRICK_VARIANT_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("stone_brick_variants"), () -> StoneBrickVariantProcessor.CODEC);
+    public static final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("container_contents"), () -> ContainerContentsProcessor.CODEC);
 
     @Override
     public void onInitialize() {
