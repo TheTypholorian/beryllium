@@ -8,8 +8,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public interface Module extends ModInitializer {
-    String MOD_ID = "beryllium";
+public abstract class Module implements ModInitializer {
+    public static final String MOD_ID = "beryllium";
+    public final String
+
+    default boolean isEnabled() {
+    }
 
     static Identifier id(String name) {
         return Identifier.of(MOD_ID, name);
