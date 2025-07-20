@@ -28,7 +28,7 @@ public abstract class CompassItemMixin extends Item {
 
         if (player != null && player.getInventory().contains(stack)) {
             BlockPos playerPos = player.getBlockPos();
-            tooltip.add(Text.translatable("item.minecraft.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+            tooltip.add(Text.translatable("item.beryllium.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
         }
     }
 }

@@ -4,7 +4,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.loot.LootTables;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
-import net.minecraft.structure.JungleTempleGenerator;
+import net.minecraft.structure.DesertTempleGenerator;
 import net.minecraft.structure.ShiftableStructurePiece;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.structure.StructurePlacementData;
@@ -20,32 +20,32 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.typho.beryllium.Module;
 import net.typho.beryllium.exploring.ContainerContentsProcessor;
-import net.typho.beryllium.exploring.StoneBrickVariantProcessor;
+import net.typho.beryllium.exploring.SusSandProcessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Objects;
 
-@Mixin(JungleTempleGenerator.class)
-public abstract class JungleTempleGeneratorMixin extends ShiftableStructurePiece {
-    protected JungleTempleGeneratorMixin(StructurePieceType type, int x, int y, int z, int width, int height, int depth, Direction orientation) {
+@Mixin(DesertTempleGenerator.class)
+public abstract class DesertTempleGeneratorMixin extends ShiftableStructurePiece {
+    protected DesertTempleGeneratorMixin(StructurePieceType type, int x, int y, int z, int width, int height, int depth, Direction orientation) {
         super(type, x, y, z, width, height, depth, orientation);
     }
 
-    protected JungleTempleGeneratorMixin(StructurePieceType structurePieceType, NbtCompound nbtCompound) {
+    protected DesertTempleGeneratorMixin(StructurePieceType structurePieceType, NbtCompound nbtCompound) {
         super(structurePieceType, nbtCompound);
     }
 
     /**
      * @author The Typhothanian
-     * @reason Custom jungle temple
+     * @reason Custom desert temple
      */
     @Overwrite
     public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
-        if (adjustToAverageHeight(world, chunkBox, -6)) {
+        if (adjustToAverageHeight(world, chunkBox, -15)) {
             Objects.requireNonNull(world.getServer())
                     .getStructureTemplateManager()
-                    .getTemplate(Module.id("jungle_pyramid"))
+                    .getTemplate(Module.id("desert_pyramid"))
                     .orElseThrow()
                     .place(
                         world,
@@ -53,10 +53,9 @@ public abstract class JungleTempleGeneratorMixin extends ShiftableStructurePiece
                         pivot,
                         new StructurePlacementData()
                                 .setMirror(BlockMirror.NONE)
-                                .setRotation(BlockRotation.random(random))
-                                .addProcessor(new StoneBrickVariantProcessor())
-                                .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, Registries.BLOCK.getKey(Blocks.DISPENSER).orElseThrow()))
-                                .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
+                                .setRotation(BlockRotation.NONE)
+                                .addProcessor(new SusSandProcessor(LootTables.DESERT_PYRAMID_ARCHAEOLOGY))
+                                .addProcessor(new ContainerContentsProcessor(LootTables.DESERT_PYRAMID_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
                                 .setRandom(random),
                         random,
                         2

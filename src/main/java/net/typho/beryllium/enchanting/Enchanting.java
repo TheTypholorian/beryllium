@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Module;
 
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class Enchanting implements Module {
@@ -70,19 +71,19 @@ public class Enchanting implements Module {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
-        return canFitEnchantment(stack, enchant, EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
+        return canFitEnchantment(stack, enchant, () -> EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Stream<EnchantmentLevelEntry> enchantments) {
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
         if (stack.isOf(Items.BOOK) || stack.isOf(Items.ENCHANTED_BOOK)) {
-            return enchantments.findAny().isEmpty();
+            return enchantments.get().findAny().isEmpty();
         }
 
-        if (enchantments.anyMatch(entry -> entry.enchantment.value() == enchant)) {
+        if (enchantments.get().anyMatch(entry -> entry.enchantment.value() == enchant)) {
             return true;
         }
 
-        return getUsedEnchCapacity(enchantments) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
+        return getUsedEnchCapacity(enchantments.get()) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {

@@ -81,7 +81,7 @@ public class EnchantmentHelperMixin {
 
             if (!list2.isEmpty()) {
                 Weighting.getRandom(random, list2).ifPresent(add -> {
-                    if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list.stream())) {
+                    if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                         list.add(add);
                     }
                 });
@@ -96,7 +96,7 @@ public class EnchantmentHelperMixin {
                     }
 
                     Weighting.getRandom(random, list2).ifPresent(add -> {
-                        if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list.stream())) {
+                        if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                             list.add(add);
                         }
                     });

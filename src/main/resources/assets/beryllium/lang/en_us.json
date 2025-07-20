@@ -12,6 +12,10 @@
   "item.beryllium.iron_scythe": "Iron Scythe",
   "item.beryllium.golden_scythe": "Golden Scythe",
   "item.beryllium.metal_detector": "Metal Detector",
+  "item.beryllium.magic_wand": "Magic Wand",
+  "item.beryllium.bastion_compass": "Bastion Remnant",
+  "item.beryllium.fortress_compass": "Nether Fortress",
+  "item.beryllium.compass.pos": "X: %s Y: %s Z: %s",
   "block.beryllium.chiseled_oak_planks": "Chiseled Oak Planks",
   "block.beryllium.chiseled_spruce_planks": "Chiseled Spruce Planks",
   "block.beryllium.chiseled_birch_planks": "Chiseled Birch Planks",
@@ -56,7 +60,5 @@
   "container.beryllium.kiln": "Kiln",
   "stat.beryllium.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.fireable": "Fireable",
-  "item.beryllium.bastion_compass": "Bastion Remnant",
-  "item.beryllium.fortress_compass": "Nether Fortress",
-  "item.minecraft.compass.pos": "X: %s Y: %s Z: %s"
+  "tooltip.beryllium.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand"
 }

@@ -35,10 +35,13 @@
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
     "enchanting.TradeOffersMixin",
+    "exploring.DesertPyramidStructureMixin",
+    "exploring.DesertTempleGeneratorMixin",
     "exploring.JungleTempleGeneratorMixin",
     "exploring.JungleTempleStructureMixin",
     "exploring.MinecraftServerMixin",
-    "exploring.ServerWorldMixin"
+    "exploring.ServerWorldMixin",
+    "redstone.TntBlockMixin"
   ],
   "client": [
     "client.AtlasLoaderMixin",

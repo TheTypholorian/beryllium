@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-19T11:50:30.4908554	Beryllium/Model Definitions
+// 1.21.1	2025-07-19T17:47:05.1302503	Beryllium/Model Definitions
 7cbe9e369a1a57273cae7209c31da67262b0bf21 assets\beryllium\models\item\iron_arrow.json
 5d944a5d5c5de9312551f8972c0ae0a79168c09b assets\beryllium\models\block\mossy_stone_stairs_outer.json
 758728c093a3a9654442468c54f5226d27c04a24 assets\beryllium\models\block\cracked_stone_brick_slab.json
@@ -24,8 +24,8 @@ f4bda3b2f9cef8d218e651a7fb1b592df49c8266 assets\beryllium\models\block\smooth_st
 d61dfe150a72a97327b5b79acac96c5fb2c9fd30 assets\minecraft\models\block\smooth_stone.json
 b767228c65aaf36bffe606e2d7fc50d25e6b5198 assets\beryllium\models\block\smooth_stone_wall_post.json
 c471522d450864275bbedc841063d557908db719 assets\beryllium\models\item\chiseled_smooth_stone.json
-61eace830b1709e686e4bee0518a80434425e3a6 assets\beryllium\models\block\cracked_stone_brick_slab_top.json
 2ace18a9a3c55e49b0666203c2e1600c28b47b44 assets\beryllium\models\block\mossy_stone.json
+61eace830b1709e686e4bee0518a80434425e3a6 assets\beryllium\models\block\cracked_stone_brick_slab_top.json
 bf926de4ed97435c744fd9494bc8d90f403d4610 assets\minecraft\blockstates\smooth_stone_slab.json
 0d6e71e277377651c58822439ee0fba5d95aeeb8 assets\beryllium\models\block\smooth_stone_stairs_inner.json
 42256aafbff352a30d55bb1717e264ae1b9ba2e6 assets\beryllium\models\item\mossy_stone.json
@@ -54,7 +54,8 @@ afd78597134f15b8fbf8f35ee8dc3206d2b44b09 assets\minecraft\models\block\smooth_st
 ac50b598a4cde4ea42d696a7b6871dc045efdff6 assets\beryllium\models\item\flaming_arrow.json
 1095959336c26c91bb1438069e30ba49644e62f3 assets\beryllium\models\item\mossy_stone_stairs.json
 f03aac3cdc6d1c770c38588d66705a05f8aa34ef assets\minecraft\blockstates\smooth_stone.json
-0a5d61f1de68da6396dabebbae5003fe4864494c assets\beryllium\blockstates\cracked_stone_brick_stairs.json
 04ab6fb9df16adc3891e6539542ec9ad29079c3f assets\beryllium\models\block\mossy_stone_wall_side_tall.json
+0a5d61f1de68da6396dabebbae5003fe4864494c assets\beryllium\blockstates\cracked_stone_brick_stairs.json
+680341af83d41c435e8417ac7b2c217a5b353e15 assets\beryllium\models\item\magic_wand.json
 d041e7d443cd4452c6a5bde7b8816ddd3f1baad3 assets\beryllium\blockstates\chiseled_smooth_stone.json
 3473e18d10c72ae162077cd48cb8ca04431a507f assets\beryllium\models\block\cracked_stone_brick_stairs_outer.json

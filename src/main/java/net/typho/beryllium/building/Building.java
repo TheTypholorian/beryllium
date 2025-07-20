@@ -25,6 +25,7 @@ public class Building implements Module {
     }
 
     public static final BlockEntityType<KilnBlock.Entity> KILN_BLOCK_ENTITY_TYPE = blockEntity("kiln", BlockEntityType.Builder.create(KilnBlock.Entity::new, KILN_BLOCK));
+    public static final Item MAGIC_WAND_ITEM = Registry.register(Registries.ITEM, Module.id("magic_wand"), new MagicWandItem(new Item.Settings()));
 
     public static final BlockFamily MOSSY_STONE = new BlockFamily.Builder(blockWithItem("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .wall(blockWithItem("mossy_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
