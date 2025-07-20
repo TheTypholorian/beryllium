@@ -33,6 +33,8 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
@@ -60,6 +62,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(ChestLootTables::new);
         pack.addProvider(BlockTags::new);
         pack.addProvider(StructureTags::new);
+        pack.addProvider(BiomeTags::new);
     }
 
     public static class ItemTags extends FabricTagProvider.ItemTagProvider {
@@ -102,6 +105,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             family(gen, Building.CRACKED_STONE_BRICKS);
             family(gen, Building.SMOOTH_STONE);
             family(gen, Building.SNOW_BRICKS);
+            gen.registerLantern(Exploring.FIREFLY_BOTTLE);
         }
 
         @Override
@@ -524,6 +528,21 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(StructureKeys.VILLAGE_SAVANNA)
                     .add(StructureKeys.VILLAGE_SNOWY)
                     .add(StructureKeys.VILLAGE_TAIGA);
+        }
+    }
+
+    public static class BiomeTags extends FabricTagProvider<Biome> {
+        public BiomeTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.BIOME, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "has_fireflies")))
+                    .add(BiomeKeys.BIRCH_FOREST)
+                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+                    .add(BiomeKeys.SWAMP)
+                    .add(BiomeKeys.MANGROVE_SWAMP);
         }
     }
 }

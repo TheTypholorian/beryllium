@@ -2,9 +2,10 @@ package net.typho.beryllium.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -32,7 +33,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
@@ -95,10 +95,17 @@ public class BerylliumClient implements ClientModInitializer {
             return 0xFFFFFFFF;
         }, Items.COMPASS);
         BiomeModifications.create(Module.id("fireflies"))
-                .add(ModificationPhase.ADDITIONS, context -> context.getBiomeKey().equals(BiomeKeys.BIRCH_FOREST), context -> {
-                    BiomeModificationContext.EffectsContext fx = context.getEffects();
-                    fx.setParticleConfig(new BiomeParticleConfig(Exploring.FIREFLY_PARTICLE, 0.008f));
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Exploring.HAS_FIREFLIES), context -> {
+                    context.getEffects().setParticleConfig(new BiomeParticleConfig(Exploring.FIREFLY_PARTICLE, 0.008f));
                 });
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Exploring.FIREFLY_BOTTLE,
+                RenderLayer.getCutout()
+        );
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Exploring.FIREFLY_BOTTLE,
+                RenderLayer.getTranslucent()
+        );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;
 

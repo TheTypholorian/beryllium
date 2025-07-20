@@ -37,6 +37,7 @@
     "enchanting.TradeOffersMixin",
     "exploring.DesertPyramidStructureMixin",
     "exploring.DesertTempleGeneratorMixin",
+    "exploring.GlassBottleItemMixin",
     "exploring.JungleTempleGeneratorMixin",
     "exploring.JungleTempleStructureMixin",
     "exploring.MinecraftServerMixin",

@@ -18,6 +18,10 @@ public class FireflyFactory implements ParticleFactory<SimpleParticleType> {
 
     @Override
     public Particle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double dx, double dy, double dz) {
+        if (world.getAmbientDarkness() >= 4) {
+            return null;
+        }
+
         int surf = world.getTopY(Heightmap.Type.WORLD_SURFACE, (int) Math.floor(x), (int) Math.floor(z));
 
         if (y > surf + 5) {
