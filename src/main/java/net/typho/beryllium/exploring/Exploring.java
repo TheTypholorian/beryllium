@@ -27,18 +27,18 @@ import net.minecraft.world.gen.structure.Structure;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 
-public class Exploring implements Module {
-    public static final Item METAL_DETECTOR_ITEM = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "metal_detector"), new MetalDetectorItem(new Item.Settings()));
-    public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, Module.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
-    public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, Module.id("spawn"));
-    public static final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Module.id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
-    public static final StructureProcessorType<StoneBrickVariantProcessor> STONE_BRICK_VARIANT_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("stone_brick_variants"), () -> StoneBrickVariantProcessor.CODEC);
-    public static final StructureProcessorType<SusSandProcessor> SUS_SAND_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("sus_sand"), () -> SusSandProcessor.CODEC);
-    public static final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("container_contents"), () -> ContainerContentsProcessor.CODEC);
-    public static final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, Module.id("firefly"), FabricParticleTypes.simple(false));
-    public static final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, Module.id("has_fireflies"));
-    public static final Block FIREFLY_BOTTLE =
-            Module.blockWithItem(
+public class Exploring extends Module {
+    public final Item METAL_DETECTOR_ITEM = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "metal_detector"), new MetalDetectorItem(new Item.Settings()));
+    public final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
+    public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
+    public final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
+    public final StructureProcessorType<StoneBrickVariantProcessor> STONE_BRICK_VARIANT_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("stone_brick_variants"), () -> StoneBrickVariantProcessor.CODEC);
+    public final StructureProcessorType<SusSandProcessor> SUS_SAND_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("sus_sand"), () -> SusSandProcessor.CODEC);
+    public final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("container_contents"), () -> ContainerContentsProcessor.CODEC);
+    public final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("firefly"), FabricParticleTypes.simple(false));
+    public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
+    public final Block FIREFLY_BOTTLE =
+            blockWithItem(
                     "firefly_bottle",
                     new FireflyBottleBlock(AbstractBlock.Settings.create()
                             .solid()
@@ -55,6 +55,10 @@ public class Exploring implements Module {
             new Item.Settings()
     );
 
+    public Exploring(String name) {
+        super(name);
+    }
+
     @Override
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
@@ -62,12 +66,12 @@ public class Exploring implements Module {
                     entries.addAfter(Items.COMPASS, METAL_DETECTOR_ITEM);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
-        Registry.register(Registries.RECIPE_TYPE, Module.id("compass_dye"), new RecipeType<>() {
+        Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
             @Override
             public String toString() {
                 return "compass_dye";
             }
         });
-        Registry.register(Registries.RECIPE_SERIALIZER, Module.id("compass_dye"), CompassDyeRecipe.SERIALIZER);
+        Registry.register(Registries.RECIPE_SERIALIZER, id("compass_dye"), CompassDyeRecipe.SERIALIZER);
     }
 }

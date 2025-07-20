@@ -10,6 +10,7 @@ import net.minecraft.recipe.book.CraftingRecipeCategory;
 import net.minecraft.recipe.input.CraftingRecipeInput;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 
 public class CompassDyeRecipe implements CraftingRecipe {
     public static final RecipeSerializer<CompassDyeRecipe> SERIALIZER = new SpecialRecipeSerializer<>(CompassDyeRecipe::new);
@@ -44,7 +45,7 @@ public class CompassDyeRecipe implements CraftingRecipe {
                 .filter(i -> i instanceof DyeItem)
                 .map(i -> ((DyeItem) i).getColor())
                 .findFirst()
-                .ifPresent(color -> baseCompass.set(Exploring.COMPASS_NEEDLE_COMPONENT, color));
+                .ifPresent(color -> baseCompass.set(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT, color));
 
         return baseCompass;
     }

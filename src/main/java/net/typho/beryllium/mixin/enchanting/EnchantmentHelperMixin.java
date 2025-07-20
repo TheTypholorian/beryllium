@@ -13,7 +13,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.collection.Weighting;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -81,7 +81,7 @@ public class EnchantmentHelperMixin {
 
             if (!list2.isEmpty()) {
                 Weighting.getRandom(random, list2).ifPresent(add -> {
-                    if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                    if (Beryllium.ENCHANTING.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                         list.add(add);
                     }
                 });
@@ -96,7 +96,7 @@ public class EnchantmentHelperMixin {
                     }
 
                     Weighting.getRandom(random, list2).ifPresent(add -> {
-                        if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                        if (Beryllium.ENCHANTING.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                             list.add(add);
                         }
                     });

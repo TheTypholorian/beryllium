@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.Item;
@@ -14,44 +15,48 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 import net.typho.beryllium.building.kiln.KilnBlock;
 
-import static net.typho.beryllium.Module.blockWithItem;
-
-public class Building implements Module {
-    public static final Block KILN_BLOCK = blockWithItem("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)), new Item.Settings());
+public class Building extends Module {
+    public final Block KILN_BLOCK = blockWithItem("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)), new Item.Settings());
 
     private static <T extends BlockEntity> BlockEntityType<T> blockEntity(String id, BlockEntityType.Builder<T> builder) {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, id), builder.build(Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)));
     }
 
-    public static final BlockEntityType<KilnBlock.Entity> KILN_BLOCK_ENTITY_TYPE = blockEntity("kiln", BlockEntityType.Builder.create(KilnBlock.Entity::new, KILN_BLOCK));
-    public static final Item MAGIC_WAND_ITEM = Registry.register(Registries.ITEM, Module.id("magic_wand"), new MagicWandItem(new Item.Settings()));
+    public final BlockEntityType<KilnBlock.Entity> KILN_BLOCK_ENTITY_TYPE = blockEntity("kiln", BlockEntityType.Builder.create(KilnBlock.Entity::new, KILN_BLOCK));
+    public final ComponentType<BlockPos> MAGIC_WAND_COMPONENT_TYPE = Registry.register(Registries.DATA_COMPONENT_TYPE, id("magic_wand_component"), ComponentType.<BlockPos>builder().codec(BlockPos.CODEC).packetCodec(BlockPos.PACKET_CODEC).build());
+    public final Item MAGIC_WAND_ITEM = Registry.register(Registries.ITEM, id("magic_wand"), new MagicWandItem(new Item.Settings()));
 
-    public static final BlockFamily MOSSY_STONE = new BlockFamily.Builder(blockWithItem("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
+    public final BlockFamily MOSSY_STONE = new BlockFamily.Builder(blockWithItem("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .wall(blockWithItem("mossy_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .stairs(blockWithItem("mossy_stone_stairs", new StairsBlock(Blocks.STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .slab(blockWithItem("mossy_stone_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .build();
-    public static final BlockFamily CRACKED_STONE_BRICKS = new BlockFamily.Builder(Blocks.CRACKED_STONE_BRICKS)
+    public final BlockFamily CRACKED_STONE_BRICKS = new BlockFamily.Builder(Blocks.CRACKED_STONE_BRICKS)
             .wall(blockWithItem("cracked_stone_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
             .stairs(blockWithItem("cracked_stone_brick_stairs", new StairsBlock(Blocks.STONE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
             .slab(blockWithItem("cracked_stone_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
             .build();
-    public static final BlockFamily SMOOTH_STONE = new BlockFamily.Builder(Blocks.SMOOTH_STONE)
+    public final BlockFamily SMOOTH_STONE = new BlockFamily.Builder(Blocks.SMOOTH_STONE)
             .chiseled(blockWithItem("chiseled_smooth_stone", new Block(AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
             .wall(blockWithItem("smooth_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
             .stairs(blockWithItem("smooth_stone_stairs", new StairsBlock(Blocks.SMOOTH_STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .build();
-    public static final BlockFamily SNOW_BRICKS = new BlockFamily.Builder(blockWithItem("snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+    public final BlockFamily SNOW_BRICKS = new BlockFamily.Builder(blockWithItem("snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .chiseled(blockWithItem("chiseled_snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .wall(blockWithItem("snow_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .stairs(blockWithItem("snow_brick_stairs", new StairsBlock(Blocks.SNOW_BLOCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .slab(blockWithItem("snow_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .build();
+
+    public Building(String name) {
+        super(name);
+    }
 
     @Override
     public void onInitialize() {
@@ -117,7 +122,7 @@ public class Building implements Module {
     }
 }
     /*
-    public static final BlockSet OAK_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("oak"))
+    public final BlockSet OAK_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("oak"))
             .setSolid(Blocks.OAK_PLANKS)
             .genChiseled()
             .setStairs(Blocks.OAK_STAIRS)
@@ -131,7 +136,7 @@ public class Building implements Module {
             .setSign(Blocks.OAK_SIGN)
             .setWallSign(Blocks.OAK_WALL_SIGN);
 
-    public static final BlockSet SPRUCE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("spruce"))
+    public final BlockSet SPRUCE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("spruce"))
             .setSolid(Blocks.SPRUCE_PLANKS)
             .genChiseled()
             .setStairs(Blocks.SPRUCE_STAIRS)
@@ -145,7 +150,7 @@ public class Building implements Module {
             .setSign(Blocks.SPRUCE_SIGN)
             .setWallSign(Blocks.SPRUCE_WALL_SIGN);
 
-    public static final BlockSet BIRCH_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("birch"))
+    public final BlockSet BIRCH_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("birch"))
             .setSolid(Blocks.BIRCH_PLANKS)
             .genChiseled()
             .setStairs(Blocks.BIRCH_STAIRS)
@@ -159,7 +164,7 @@ public class Building implements Module {
             .setSign(Blocks.BIRCH_SIGN)
             .setWallSign(Blocks.BIRCH_WALL_SIGN);
 
-    public static final BlockSet JUNGLE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("jungle"))
+    public final BlockSet JUNGLE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("jungle"))
             .setSolid(Blocks.JUNGLE_PLANKS)
             .genChiseled()
             .setStairs(Blocks.JUNGLE_STAIRS)
@@ -173,7 +178,7 @@ public class Building implements Module {
             .setSign(Blocks.JUNGLE_SIGN)
             .setWallSign(Blocks.JUNGLE_WALL_SIGN);
 
-    public static final BlockSet ACACIA_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("acacia"))
+    public final BlockSet ACACIA_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("acacia"))
             .setSolid(Blocks.ACACIA_PLANKS)
             .genChiseled()
             .setStairs(Blocks.ACACIA_STAIRS)
@@ -187,7 +192,7 @@ public class Building implements Module {
             .setSign(Blocks.ACACIA_SIGN)
             .setWallSign(Blocks.ACACIA_WALL_SIGN);
 
-    public static final BlockSet DARK_OAK_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("dark_oak"))
+    public final BlockSet DARK_OAK_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("dark_oak"))
             .setSolid(Blocks.DARK_OAK_PLANKS)
             .genChiseled()
             .setStairs(Blocks.DARK_OAK_STAIRS)
@@ -201,7 +206,7 @@ public class Building implements Module {
             .setSign(Blocks.DARK_OAK_SIGN)
             .setWallSign(Blocks.DARK_OAK_WALL_SIGN);
 
-    public static final BlockSet MANGROVE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("mangrove"))
+    public final BlockSet MANGROVE_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("mangrove"))
             .setSolid(Blocks.MANGROVE_PLANKS)
             .genChiseled()
             .setStairs(Blocks.MANGROVE_STAIRS)
@@ -215,7 +220,7 @@ public class Building implements Module {
             .setSign(Blocks.MANGROVE_SIGN)
             .setWallSign(Blocks.MANGROVE_WALL_SIGN);
 
-    public static final BlockSet CHERRY_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("cherry"))
+    public final BlockSet CHERRY_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("cherry"))
             .setSolid(Blocks.CHERRY_PLANKS)
             .genChiseled()
             .setStairs(Blocks.CHERRY_STAIRS)
@@ -229,7 +234,7 @@ public class Building implements Module {
             .setSign(Blocks.CHERRY_SIGN)
             .setWallSign(Blocks.CHERRY_WALL_SIGN);
 
-    public static final BlockSet BAMBOO_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("bamboo"))
+    public final BlockSet BAMBOO_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("bamboo"))
             .setSolid(Blocks.BAMBOO_PLANKS)
             .genChiseled()
             .setStairs(Blocks.BAMBOO_STAIRS)
@@ -243,12 +248,12 @@ public class Building implements Module {
             .setSign(Blocks.BAMBOO_SIGN)
             .setWallSign(Blocks.BAMBOO_WALL_SIGN);
 
-    public static final BlockSet BAMBOO_MOSAIC_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("bamboo_mosaic"))
+    public final BlockSet BAMBOO_MOSAIC_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("bamboo_mosaic"))
             .setSolid(Blocks.BAMBOO_MOSAIC)
             .setStairs(Blocks.BAMBOO_MOSAIC_STAIRS)
             .setSlab(Blocks.BAMBOO_MOSAIC_SLAB);
 
-    public static final BlockSet CRIMSON_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("crimson"))
+    public final BlockSet CRIMSON_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("crimson"))
             .setSolid(Blocks.CRIMSON_PLANKS)
             .genChiseled()
             .setStairs(Blocks.CRIMSON_STAIRS)
@@ -262,7 +267,7 @@ public class Building implements Module {
             .setSign(Blocks.CRIMSON_SIGN)
             .setWallSign(Blocks.CRIMSON_WALL_SIGN);
 
-    public static final BlockSet WARPED_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("warped"))
+    public final BlockSet WARPED_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, Identifier.of("warped"))
             .setSolid(Blocks.WARPED_PLANKS)
             .genChiseled()
             .setStairs(Blocks.WARPED_STAIRS)
@@ -276,46 +281,46 @@ public class Building implements Module {
             .setSign(Blocks.WARPED_SIGN)
             .setWallSign(Blocks.WARPED_WALL_SIGN);
 
-    public static final BlockSet COBBLESTONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("cobblestone"))
+    public final BlockSet COBBLESTONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("cobblestone"))
             .setSolid(Blocks.COBBLESTONE)
             .setStairs(Blocks.COBBLESTONE_STAIRS)
             .setSlab(Blocks.COBBLESTONE_SLAB)
             .setWall(Blocks.COBBLESTONE_WALL);
 
-    public static final BlockSet STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("stone"))
+    public final BlockSet STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("stone"))
             .setSolid(Blocks.STONE)
             .setStairs(Blocks.STONE_STAIRS)
             .setSlab(Blocks.STONE_SLAB)
             .genWall()
             .setPressurePlate(Blocks.STONE_PRESSURE_PLATE);
 
-    public static final BlockSet MOSSY_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of(Beryllium.MOD_ID, "mossy_stone"))
+    public final BlockSet MOSSY_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of(Beryllium.MOD_ID, "mossy_stone"))
             .genSolid(Blocks.STONE)
             .genStairs()
             .genSlab()
             .genWall()
             .genPressurePlate(BlockSetType.STONE);
 
-    public static final BlockSet SMOOTH_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("smooth_stone"))
+    public final BlockSet SMOOTH_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("smooth_stone"))
             .setSolid(Blocks.SMOOTH_STONE)
             .genStairs()
             .setSlab(Blocks.SMOOTH_STONE_SLAB)
             .genWall();
 
-    public static final BlockSet QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("quartz"))
+    public final BlockSet QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("quartz"))
             .setSolid(Blocks.QUARTZ_BLOCK)
             .setPillar(Blocks.QUARTZ_PILLAR)
             .setStairs(Blocks.QUARTZ_STAIRS)
             .setSlab(Blocks.QUARTZ_SLAB)
             .genWall();
 
-    public static final BlockSet QUARTZ_BRICKS_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("quartz_bricks"))
+    public final BlockSet QUARTZ_BRICKS_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("quartz_bricks"))
             .setSolid(Blocks.QUARTZ_BRICKS)
             .genStairs()
             .genSlab()
             .genWall();
 
-    public static final BlockSet SMOOTH_QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("smooth_quartz"))
+    public final BlockSet SMOOTH_QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, Identifier.of("smooth_quartz"))
             .setSolid(Blocks.SMOOTH_QUARTZ)
             .setStairs(Blocks.SMOOTH_QUARTZ_STAIRS)
             .setSlab(Blocks.SMOOTH_QUARTZ_SLAB)

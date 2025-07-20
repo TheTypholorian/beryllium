@@ -14,6 +14,7 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
+import net.typho.beryllium.Beryllium;
 
 public class ContainerContentsProcessor extends StructureProcessor {
     public static final MapCodec<ContainerContentsProcessor> CODEC = RecordCodecBuilder.mapCodec(inst ->
@@ -50,6 +51,6 @@ public class ContainerContentsProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return Exploring.CONTAINER_CONTENTS_PROCESSOR;
+        return Beryllium.EXPLORING.CONTAINER_CONTENTS_PROCESSOR;
     }
 }

@@ -20,7 +20,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -183,7 +183,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                         RegistryEntry<Enchantment> enchant = enchOptional.get();
                         int level = enchantmentLevel[id];
 
-                        if (Enchanting.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
+                        if (Beryllium.ENCHANTING.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
                             player.applyEnchantmentCosts(enchantSlot, i);
                             if (enchantSlot.isOf(Items.BOOK)) {
                                 itemStack3 = enchantSlot.withItem(Items.ENCHANTED_BOOK);
@@ -210,7 +210,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                             }
 
-                            catalystSlot.decrementUnlessCreative(Enchanting.getEnchantmentCatalyst(enchant, level).getCount(), player);
+                            catalystSlot.decrementUnlessCreative(Beryllium.ENCHANTING.getEnchantmentCatalyst(enchant, level).getCount(), player);
                             if (catalystSlot.isEmpty()) {
                                 this.inventory.setStack(2, ItemStack.EMPTY);
                             }

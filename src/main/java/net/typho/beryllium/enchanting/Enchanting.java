@@ -12,12 +12,16 @@ import net.typho.beryllium.Module;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class Enchanting implements Module {
+public class Enchanting extends Module {
+    public Enchanting(String name) {
+        super(name);
+    }
+
     @Override
     public void onInitialize() {
     }
 
-    public static String toRomanNumeral(int n) {
+    public String toRomanNumeral(int n) {
         enum Letter {
             M(1000), D(500), C(100), L(50), X(10), V(5), I(1);
 
@@ -54,27 +58,27 @@ public class Enchanting implements Module {
         return builder.toString();
     }
 
-    public static int getMaxEnchCapacity(ItemStack stack) {
+    public int getMaxEnchCapacity(ItemStack stack) {
         return stack.getItem().getEnchantability();
     }
 
-    public static int getUsedEnchCapacity(ItemStack stack) {
+    public int getUsedEnchCapacity(ItemStack stack) {
         return getUsedEnchCapacity(EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
+    public int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
         return stream.mapToInt(entry -> getEnchantmentCapacity(entry.enchantment.value())).sum();
     }
 
-    public static int getEnchantmentCapacity(Enchantment enchant) {
+    public int getEnchantmentCapacity(Enchantment enchant) {
         return BalancedEnchantment.cast(enchant.definition()).getCapacity();
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
+    public boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
         return canFitEnchantment(stack, enchant, () -> EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
+    public boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
         if (stack.isOf(Items.BOOK) || stack.isOf(Items.ENCHANTED_BOOK)) {
             return enchantments.get().findAny().isEmpty();
         }
@@ -86,7 +90,7 @@ public class Enchanting implements Module {
         return getUsedEnchCapacity(enchantments.get()) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
     }
 
-    public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
+    public boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
         if (player.getAbilities().creativeMode) {
             return true;
         }
@@ -96,7 +100,7 @@ public class Enchanting implements Module {
         return source.getItem() == req.getItem() && source.getCount() >= req.getCount();
     }
 
-    public static ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
+    public ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
         BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
         return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
     }

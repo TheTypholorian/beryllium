@@ -3,7 +3,7 @@ package net.typho.beryllium.mixin.combat;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
-import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -19,6 +19,6 @@ public class PotionsMixin {
             )
     )
     private static Potion redirectWater(StatusEffectInstance[] effects) {
-        return new Potion(new StatusEffectInstance(Combat.WET_EFFECT, 100, 0));
+        return new Potion(new StatusEffectInstance(Beryllium.COMBAT.WET_EFFECT, 100, 0));
     }
 }

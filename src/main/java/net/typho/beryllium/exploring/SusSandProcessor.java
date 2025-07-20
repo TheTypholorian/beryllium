@@ -15,6 +15,7 @@ import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldView;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 public class SusSandProcessor extends StructureProcessor {
@@ -48,6 +49,6 @@ public class SusSandProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return Exploring.SUS_SAND_PROCESSOR;
+        return Beryllium.EXPLORING.SUS_SAND_PROCESSOR;
     }
 }

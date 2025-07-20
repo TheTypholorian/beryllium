@@ -12,7 +12,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +27,7 @@ public class ItemMixin {
     private void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack stack = user.getStackInHand(hand);
 
-        int dash = EnchantmentHelper.getLevel(world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Combat.DASH_ENCHANTMENT).orElseThrow(), stack);
+        int dash = EnchantmentHelper.getLevel(world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Beryllium.COMBAT.DASH_ENCHANTMENT).orElseThrow(), stack);
 
         if (dash > 0) {
             Vec3d look = user.getRotationVector();
@@ -36,12 +36,12 @@ public class ItemMixin {
             user.getItemCooldownManager().set((Item) (Object) this, 200);
         }
 
-        int reel = EnchantmentHelper.getLevel(world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Combat.REEL_ENCHANTMENT).orElseThrow(), stack);
+        int reel = EnchantmentHelper.getLevel(world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Beryllium.COMBAT.REEL_ENCHANTMENT).orElseThrow(), stack);
 
         if (reel > 0) {
             Vec3d look = user.getRotationVector();
             Vec3d target = user.getPos().add(look.multiply(128));
-            EntityHitResult hit = Combat.raycast(user, user.getPos(), target, new Box(user.getPos(), target).expand(1), entity -> !entity.isSpectator() && entity.canHit(), 128, 5);
+            EntityHitResult hit = Beryllium.COMBAT.raycast(user, user.getPos(), target, new Box(user.getPos(), target).expand(1), entity -> !entity.isSpectator() && entity.canHit(), 128, 5);
 
             if (hit != null) {
                 Entity reelTarget = hit.getEntity();

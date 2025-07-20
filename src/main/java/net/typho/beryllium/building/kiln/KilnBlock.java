@@ -38,7 +38,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.building.Building;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -81,7 +80,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(world, type, Building.KILN_BLOCK_ENTITY_TYPE);
+        return validateTicker(world, type, Beryllium.BUILDING.KILN_BLOCK_ENTITY_TYPE);
     }
 
     @Override
@@ -116,7 +115,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
 
     public static class Entity extends AbstractFurnaceBlockEntity {
         public Entity(BlockPos pos, BlockState state) {
-            super(Building.KILN_BLOCK_ENTITY_TYPE, pos, state, RECIPE_TYPE);
+            super(Beryllium.BUILDING.KILN_BLOCK_ENTITY_TYPE, pos, state, RECIPE_TYPE);
         }
 
         @Override
@@ -142,7 +141,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
 
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(Building.KILN_BLOCK);
+            return new ItemStack(Beryllium.BUILDING.KILN_BLOCK);
         }
 
         @Override

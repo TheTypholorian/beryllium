@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 public class FlamingArrowEntity extends PersistentProjectileEntity {
@@ -26,6 +27,6 @@ public class FlamingArrowEntity extends PersistentProjectileEntity {
 
     @Override
     protected ItemStack getDefaultItemStack() {
-        return new ItemStack(Combat.FLAMING_ARROW);
+        return new ItemStack(Beryllium.COMBAT.FLAMING_ARROW);
     }
 }

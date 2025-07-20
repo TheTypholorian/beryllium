@@ -16,23 +16,21 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class Combat implements Module {
-    public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
-    public static final Item DIAMOND_ARROW = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "diamond_arrow"), new ArrowItem(new Item.Settings()) {
+public class Combat extends Module {
+    public final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, id("diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
+    public final Item DIAMOND_ARROW = Registry.register(Registries.ITEM, id("diamond_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new DiamondArrowEntity(DIAMOND_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -43,8 +41,8 @@ public class Combat implements Module {
             return arrowEntity;
         }
     });
-    public static final EntityType<IronArrowEntity> IRON_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "iron_arrow"), EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("iron_arrow"));
-    public static final Item IRON_ARROW = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "iron_arrow"), new ArrowItem(new Item.Settings()) {
+    public final EntityType<IronArrowEntity> IRON_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, id("iron_arrow"), EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("iron_arrow"));
+    public final Item IRON_ARROW = Registry.register(Registries.ITEM, id("iron_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new IronArrowEntity(IRON_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -55,8 +53,8 @@ public class Combat implements Module {
             return arrowEntity;
         }
     });
-    public static final EntityType<FlamingArrowEntity> FLAMING_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "flaming_arrow"), EntityType.Builder.<FlamingArrowEntity>create(FlamingArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("flaming_arrow"));
-    public static final Item FLAMING_ARROW = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "flaming_arrow"), new ArrowItem(new Item.Settings()) {
+    public final EntityType<FlamingArrowEntity> FLAMING_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, id("flaming_arrow"), EntityType.Builder.<FlamingArrowEntity>create(FlamingArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("flaming_arrow"));
+    public final Item FLAMING_ARROW = Registry.register(Registries.ITEM, id("flaming_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new FlamingArrowEntity(FLAMING_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -67,8 +65,8 @@ public class Combat implements Module {
             return arrowEntity;
         }
     });
-    public static final EntityType<CopperArrowEntity> COPPER_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "copper_arrow"), EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
-    public static final Item COPPER_ARROW = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "copper_arrow"), new ArrowItem(new Item.Settings()) {
+    public final EntityType<CopperArrowEntity> COPPER_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, id("copper_arrow"), EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
+    public final Item COPPER_ARROW = Registry.register(Registries.ITEM, id("copper_arrow"), new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new CopperArrowEntity(COPPER_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -79,53 +77,57 @@ public class Combat implements Module {
             return arrowEntity;
         }
     });
-    public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Registry.register(Registries.ENTITY_TYPE, Identifier.of(Beryllium.MOD_ID, "moving_end_crystal"), EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
-    public static final Item NETHERITE_GLAIVE = Registry.register(
+    public final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Registry.register(Registries.ENTITY_TYPE, id("moving_end_crystal"), EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
+    public final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "netherite_glaive"),
+            id("netherite_glaive"),
             new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 2, -3.4f)))
     );
-    public static final Item DIAMOND_GLAIVE = Registry.register(
+    public final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "diamond_glaive"),
+            id("diamond_glaive"),
             new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 2, -3.4f)))
     );
-    public static final Item IRON_GLAIVE = Registry.register(
+    public final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "iron_glaive"),
+            id("iron_glaive"),
             new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 2, -3.4f)))
     );
-    public static final Item GOLDEN_GLAIVE = Registry.register(
+    public final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "golden_glaive"),
+            id("golden_glaive"),
             new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 2, -3.4f)))
     );
-    public static final Item NETHERITE_SCYTHE = Registry.register(
+    public final Item NETHERITE_SCYTHE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "netherite_scythe"),
+            id("netherite_scythe"),
             new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.NETHERITE, 4, -3.4f)))
     );
-    public static final Item DIAMOND_SCYTHE = Registry.register(
+    public final Item DIAMOND_SCYTHE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "diamond_scythe"),
+            id("diamond_scythe"),
             new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.DIAMOND, 4, -3.4f)))
     );
-    public static final Item IRON_SCYTHE = Registry.register(
+    public final Item IRON_SCYTHE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "iron_scythe"),
+            id("iron_scythe"),
             new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.IRON, 4, -3.4f)))
     );
-    public static final Item GOLDEN_SCYTHE = Registry.register(
+    public final Item GOLDEN_SCYTHE = Registry.register(
             Registries.ITEM,
-            Identifier.of(Beryllium.MOD_ID, "golden_scythe"),
+            id("golden_scythe"),
             new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.GOLD, 4, -3.4f)))
     );
-    public static final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(Beryllium.MOD_ID, "wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
+    public final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, id("wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
     });
-    public static final RegistryKey<Enchantment> DASH_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Beryllium.MOD_ID, "dash"));
-    public static final RegistryKey<Enchantment> REEL_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, Identifier.of(Beryllium.MOD_ID, "reel"));
+    public final RegistryKey<Enchantment> DASH_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, id("dash"));
+    public final RegistryKey<Enchantment> REEL_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, id("reel"));
 
-    public static @Nullable EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance, double margin) {
+    public Combat(String name) {
+        super(name);
+    }
+
+    public @Nullable EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance, double margin) {
         World world = entity.getWorld();
         double distance = maxDistance;
         Entity found = null;

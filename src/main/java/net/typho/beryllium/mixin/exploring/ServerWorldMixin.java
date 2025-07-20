@@ -12,7 +12,7 @@ import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.structure.Structure;
-import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +29,7 @@ public abstract class ServerWorldMixin extends World {
 
     @Override
     public BlockPos getSpawnPos() {
-        BlockPos spawn = locateStructure(Exploring.SPAWN_KEY, super.getSpawnPos(), 500, false);
+        BlockPos spawn = locateStructure(Beryllium.EXPLORING.SPAWN_KEY, super.getSpawnPos(), 500, false);
 
         if (spawn != null) {
             properties.setSpawnPos(new BlockPos(spawn.getX(), getTopY(Heightmap.Type.WORLD_SURFACE, spawn.getX(), spawn.getZ()), spawn.getZ()), 0);

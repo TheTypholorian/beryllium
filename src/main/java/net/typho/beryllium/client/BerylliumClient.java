@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -25,8 +24,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Arm;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -35,55 +32,54 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Module;
 import net.typho.beryllium.building.MagicWandItem;
-import net.typho.beryllium.combat.*;
-import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.combat.CopperArrowEntity;
+import net.typho.beryllium.combat.DiamondArrowEntity;
+import net.typho.beryllium.combat.FlamingArrowEntity;
+import net.typho.beryllium.combat.IronArrowEntity;
 import net.typho.beryllium.exploring.MetalDetectorItem;
 import org.joml.Vector2i;
 
 import java.util.Objects;
 
-import static net.typho.beryllium.Module.id;
-
 public class BerylliumClient implements ClientModInitializer {
-    public static final Registry<DynamicSpriteLoader> DYNAMIC_TEXTURES = FabricRegistryBuilder.<DynamicSpriteLoader>createSimple(RegistryKey.ofRegistry(id("dynamic_textures"))).buildAndRegister();
+    //public static final Registry<DynamicSpriteLoader> DYNAMIC_TEXTURES = FabricRegistryBuilder.<DynamicSpriteLoader>createSimple(RegistryKey.ofRegistry(id("dynamic_textures"))).buildAndRegister();
 
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.register(Combat.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Beryllium.COMBAT.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(DiamondArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Combat.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Beryllium.COMBAT.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(IronArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Combat.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Beryllium.COMBAT.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(FlamingArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/flaming_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Combat.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Beryllium.COMBAT.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(CopperArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/copper_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Combat.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
-        ModelPredicateProviderRegistry.register(Exploring.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
+        EntityRendererRegistry.register(Beryllium.COMBAT.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
+        ModelPredicateProviderRegistry.register(Beryllium.EXPLORING.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
         ParticleFactoryRegistry.getInstance().register(
-                Exploring.FIREFLY_PARTICLE,
+                Beryllium.EXPLORING.FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
-                DyeColor color = stack.get(Exploring.COMPASS_NEEDLE_COMPONENT);
+                DyeColor color = stack.get(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT);
 
                 if (color == null) {
                     color = DyeColor.RED;
@@ -94,12 +90,12 @@ public class BerylliumClient implements ClientModInitializer {
 
             return 0xFFFFFFFF;
         }, Items.COMPASS);
-        BiomeModifications.create(Module.id("fireflies"))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Exploring.HAS_FIREFLIES), context -> {
-                    context.getEffects().setParticleConfig(new BiomeParticleConfig(Exploring.FIREFLY_PARTICLE, 0.008f));
+        BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {
+                    context.getEffects().setParticleConfig(new BiomeParticleConfig(Beryllium.EXPLORING.FIREFLY_PARTICLE, 0.008f));
                 });
         BlockRenderLayerMap.INSTANCE.putBlock(
-                Exploring.FIREFLY_BOTTLE,
+                Beryllium.EXPLORING.FIREFLY_BOTTLE,
                 RenderLayer.getTranslucent()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {

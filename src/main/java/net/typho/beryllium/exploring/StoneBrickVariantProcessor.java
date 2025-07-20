@@ -14,7 +14,7 @@ import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldView;
-import net.typho.beryllium.building.Building;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -45,7 +45,7 @@ public class StoneBrickVariantProcessor extends StructureProcessor {
             if (rng.nextInt(3) == 0) {
                 replace = BlockFamilies.MOSSY_STONE_BRICK.getVariants().getOrDefault(variant, replace);
             } else if (rng.nextInt(3) == 0) {
-                replace = Building.CRACKED_STONE_BRICKS.getVariants().getOrDefault(variant, replace);
+                replace = Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariants().getOrDefault(variant, replace);
             }
 
             BlockState state = replace.getDefaultState();
@@ -63,7 +63,7 @@ public class StoneBrickVariantProcessor extends StructureProcessor {
             if (rng.nextInt(3) == 0) {
                 replace = BlockFamilies.MOSSY_STONE_BRICK.getBaseBlock();
             } else if (rng.nextInt(3) == 0) {
-                replace = Building.CRACKED_STONE_BRICKS.getBaseBlock();
+                replace = Beryllium.BUILDING.CRACKED_STONE_BRICKS.getBaseBlock();
             }
 
             return new StructureTemplate.StructureBlockInfo(current.pos(), replace.getDefaultState(), current.nbt());
@@ -74,6 +74,6 @@ public class StoneBrickVariantProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return Exploring.STONE_BRICK_VARIANT_PROCESSOR;
+        return Beryllium.EXPLORING.STONE_BRICK_VARIANT_PROCESSOR;
     }
 }

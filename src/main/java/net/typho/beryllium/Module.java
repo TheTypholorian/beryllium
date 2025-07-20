@@ -1,5 +1,7 @@
 package net.typho.beryllium;
 
+import me.fzzyhmstrs.fzzy_config.api.FileType;
+import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -7,27 +9,46 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class Module implements ModInitializer {
-    public static final String MOD_ID = "beryllium";
-    public final String
+import static net.typho.beryllium.Beryllium.MOD_ID;
 
-    default boolean isEnabled() {
+public abstract class Module extends Config implements ModInitializer {
+    public final String name;
+    private boolean enabled = true;
+
+    public Module(String name) {
+        super(Identifier.of(MOD_ID, name));
+        this.name = name;
     }
 
-    static Identifier id(String name) {
-        return Identifier.of(MOD_ID, name);
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    static Item item(String id, Item item) {
+    @Override
+    public int defaultPermLevel() {
+        return 3;
+    }
+
+    @Override
+    public @NotNull FileType fileType() {
+        return FileType.JSON;
+    }
+
+    public Identifier id(String name) {
+        return Identifier.of(MOD_ID, this.name + "/" + name);
+    }
+
+    public Item item(String id, Item item) {
         return Registry.register(Registries.ITEM, id(id), item);
     }
 
-    static Block block(String id, Block block) {
+    public Block block(String id, Block block) {
         return Registry.register(Registries.BLOCK, id(id), block);
     }
 
-    static Block blockWithItem(String id, Block block, Item.Settings settings) {
+    public Block blockWithItem(String id, Block block, Item.Settings settings) {
         Block res = Registry.register(Registries.BLOCK, id(id), block);
         Registry.register(Registries.ITEM, id(id), new BlockItem(res, settings));
         return res;

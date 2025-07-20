@@ -38,11 +38,8 @@ import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnBlock;
-import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
-import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.mixin.client.VariantPoolFunctionsAccessor;
 import org.jetbrains.annotations.Nullable;
 
@@ -77,10 +74,10 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.ARROWS)
-                    .add(Combat.DIAMOND_ARROW)
-                    .add(Combat.IRON_ARROW)
-                    .add(Combat.FLAMING_ARROW)
-                    .add(Combat.COPPER_ARROW);
+                    .add(Beryllium.COMBAT.DIAMOND_ARROW)
+                    .add(Beryllium.COMBAT.IRON_ARROW)
+                    .add(Beryllium.COMBAT.FLAMING_ARROW)
+                    .add(Beryllium.COMBAT.COPPER_ARROW);
         }
     }
 
@@ -101,19 +98,19 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generateBlockStateModels(BlockStateModelGenerator gen) {
-            family(gen, Building.MOSSY_STONE);
-            family(gen, Building.CRACKED_STONE_BRICKS);
-            family(gen, Building.SMOOTH_STONE);
-            family(gen, Building.SNOW_BRICKS);
+            family(gen, Beryllium.BUILDING.MOSSY_STONE);
+            family(gen, Beryllium.BUILDING.CRACKED_STONE_BRICKS);
+            family(gen, Beryllium.BUILDING.SMOOTH_STONE);
+            family(gen, Beryllium.BUILDING.SNOW_BRICKS);
         }
 
         @Override
         public void generateItemModels(ItemModelGenerator gen) {
-            gen.register(Combat.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Combat.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Combat.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Combat.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Building.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.COMBAT.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.COMBAT.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.COMBAT.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
 
             /*
             int directions = 32;
@@ -211,22 +208,22 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate(RecipeExporter exporter) {
-            arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
-            arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
-            arrow(exporter, Combat.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
-            arrow(exporter, Combat.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
+            arrow(exporter, Beryllium.COMBAT.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
+            arrow(exporter, Beryllium.COMBAT.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
+            arrow(exporter, Beryllium.COMBAT.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
+            arrow(exporter, Beryllium.COMBAT.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
 
-            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_GLAIVE, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
-            glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
-            glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
-            glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
+            offerNetheriteUpgradeRecipe(exporter, Beryllium.COMBAT.DIAMOND_GLAIVE, RecipeCategory.COMBAT, Beryllium.COMBAT.NETHERITE_GLAIVE);
+            glaive(exporter, Beryllium.COMBAT.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
+            glaive(exporter, Beryllium.COMBAT.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
+            glaive(exporter, Beryllium.COMBAT.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
 
-            offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_SCYTHE, RecipeCategory.COMBAT, Combat.NETHERITE_SCYTHE);
-            scythe(exporter, Combat.DIAMOND_SCYTHE, Items.DIAMOND, "has_diamond");
-            scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
-            scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
+            offerNetheriteUpgradeRecipe(exporter, Beryllium.COMBAT.DIAMOND_SCYTHE, RecipeCategory.COMBAT, Beryllium.COMBAT.NETHERITE_SCYTHE);
+            scythe(exporter, Beryllium.COMBAT.DIAMOND_SCYTHE, Items.DIAMOND, "has_diamond");
+            scythe(exporter, Beryllium.COMBAT.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
+            scythe(exporter, Beryllium.COMBAT.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK, 1)
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.KILN_BLOCK, 1)
                     .pattern("AAA")
                     .pattern("A A")
                     .pattern("AAA")
@@ -234,7 +231,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
                     .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "kiln"));
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Exploring.METAL_DETECTOR_ITEM, 1)
+            ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Beryllium.EXPLORING.METAL_DETECTOR_ITEM, 1)
                     .pattern(" C ")
                     .pattern("CRC")
                     .pattern(" C ")
@@ -256,15 +253,15 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
             /*
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.MOSSY_STONE.getBaseBlock())
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
                     .input(Blocks.STONE)
                     .input(Blocks.VINE)
                     .group("mossy_stone")
                     .criterion("has_vine", conditionsFromItem(Blocks.VINE))
-                    .offerTo(exporter, convertBetween(Building.MOSSY_STONE.getBaseBlock(), Blocks.VINE));
+                    .offerTo(exporter, convertBetween(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock(), Blocks.VINE));
 
-            generateFamily(exporter, Building.MOSSY_STONE, FeatureSet.empty());
-            generateFamily(exporter, Building.CRACKED_STONE_BRICKS, FeatureSet.empty());
+            generateFamily(exporter, Beryllium.BUILDING.MOSSY_STONE, FeatureSet.empty());
+            generateFamily(exporter, Beryllium.BUILDING.CRACKED_STONE_BRICKS, FeatureSet.empty());
 
             BlockFamilies.STONE.getVariants().forEach((variant, stone) -> {
                 Block cobble = BlockFamilies.COBBLESTONE.getVariant(variant);
@@ -273,7 +270,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     firingStone(exporter, List.of(cobble), stone, "stone");
                 }
             });
-            Building.SMOOTH_STONE.getVariants().forEach((variant, smooth) -> {
+            Beryllium.BUILDING.SMOOTH_STONE.getVariants().forEach((variant, smooth) -> {
                 Block stone = BlockFamilies.STONE.getVariant(variant);
 
                 if (stone != null) {
@@ -291,26 +288,26 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate() {
-            addDrop(Building.KILN_BLOCK);
+            addDrop(Beryllium.BUILDING.KILN_BLOCK);
 
-            addDrop(Building.MOSSY_STONE.getBaseBlock());
-            addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL));
-            addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS));
-            addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB));
+            addDrop(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock());
+            addDrop(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB));
 
-            addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
-            addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-            addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+            addDrop(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
-            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
-            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
-            addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED));
+            addDrop(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED));
 
-            addDrop(Building.SNOW_BRICKS.getBaseBlock());
-            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED));
-            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
-            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+            addDrop(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock());
+            addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED));
+            addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
         }
     }
 
@@ -469,44 +466,44 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.PICKAXE_MINEABLE)
-                    .add(Building.MOSSY_STONE.getBaseBlock())
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
 
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
 
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
 
-                    .add(Building.KILN_BLOCK);
+                    .add(Beryllium.BUILDING.KILN_BLOCK);
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SHOVEL_MINEABLE)
-                    .add(Building.SNOW_BRICKS.getBaseBlock())
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
-                    .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
         }
     }
 

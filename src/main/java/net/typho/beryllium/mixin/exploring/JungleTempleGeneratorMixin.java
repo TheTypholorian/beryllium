@@ -18,7 +18,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
-import net.typho.beryllium.Module;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.ContainerContentsProcessor;
 import net.typho.beryllium.exploring.StoneBrickVariantProcessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,7 +45,7 @@ public abstract class JungleTempleGeneratorMixin extends ShiftableStructurePiece
         if (adjustToAverageHeight(world, chunkBox, -6)) {
             Objects.requireNonNull(world.getServer())
                     .getStructureTemplateManager()
-                    .getTemplate(Module.id("jungle_pyramid"))
+                    .getTemplate(Beryllium.EXPLORING.id("jungle_pyramid"))
                     .orElseThrow()
                     .place(
                         world,
