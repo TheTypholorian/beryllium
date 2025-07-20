@@ -1,6 +1,10 @@
 package net.typho.beryllium.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
@@ -19,7 +23,10 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Arm;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.biome.BiomeParticleConfig;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Module;
 import net.typho.beryllium.combat.*;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.MetalDetectorItem;
@@ -58,6 +65,10 @@ public class BerylliumClient implements ClientModInitializer {
         });
         EntityRendererRegistry.register(Combat.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
         ModelPredicateProviderRegistry.register(Exploring.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
+        ParticleFactoryRegistry.getInstance().register(
+                Exploring.FIREFLY_PARTICLE,
+                FireflyFactory::new
+        );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
                 DyeColor color = stack.get(Exploring.COMPASS_NEEDLE_COMPONENT);
@@ -71,6 +82,11 @@ public class BerylliumClient implements ClientModInitializer {
 
             return 0xFFFFFFFF;
         }, Items.COMPASS);
+        BiomeModifications.create(Module.id("fireflies"))
+                .add(ModificationPhase.ADDITIONS, context -> context.getBiomeKey().equals(BiomeKeys.BIRCH_FOREST), context -> {
+                    BiomeModificationContext.EffectsContext fx = context.getEffects();
+                    fx.setParticleConfig(new BiomeParticleConfig(Exploring.FIREFLY_PARTICLE, 0.008f));
+                });
         /*
         try {
             File dir = new File("C:/Users/Evan/IdeaProjects/beryllium/compass/");

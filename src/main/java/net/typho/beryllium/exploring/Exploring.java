@@ -2,11 +2,13 @@ package net.typho.beryllium.exploring;
 
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.loot.function.LootFunctionType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -27,6 +29,7 @@ public class Exploring implements Module {
     public static final StructureProcessorType<StoneBrickVariantProcessor> STONE_BRICK_VARIANT_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("stone_brick_variants"), () -> StoneBrickVariantProcessor.CODEC);
     public static final StructureProcessorType<SusSandProcessor> SUS_SAND_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("sus_sand"), () -> SusSandProcessor.CODEC);
     public static final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, Module.id("container_contents"), () -> ContainerContentsProcessor.CODEC);
+    public static final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, Module.id("firefly"), FabricParticleTypes.simple(false));
 
     @Override
     public void onInitialize() {
