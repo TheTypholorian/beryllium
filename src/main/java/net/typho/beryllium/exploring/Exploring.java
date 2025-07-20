@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.LanternBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
@@ -40,16 +40,18 @@ public class Exploring implements Module {
     public static final Block FIREFLY_BOTTLE =
             Module.blockWithItem(
                     "firefly_bottle",
-                    new LanternBlock(AbstractBlock.Settings.create()
+                    new FireflyBottleBlock(AbstractBlock.Settings.create()
                             .solid()
                             .strength(0f)
                             .pistonBehavior(PistonBehavior.DESTROY)
                             .emissiveLighting((state, world, pos) -> true)
-                            .luminance(state -> 7)
+                            .luminance(state -> 3)
                             .breakInstantly()
                             .noBlockBreakParticles()
                             .nonOpaque()
-                            .sounds(BlockSoundGroup.GLASS)),
+                            .sounds(BlockSoundGroup.GLASS)
+                            .suffocates(Blocks::never)
+                            .blockVision(Blocks::never)),
             new Item.Settings()
     );
 

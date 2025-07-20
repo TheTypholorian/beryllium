@@ -100,10 +100,6 @@ public class BerylliumClient implements ClientModInitializer {
                 });
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Exploring.FIREFLY_BOTTLE,
-                RenderLayer.getCutout()
-        );
-        BlockRenderLayerMap.INSTANCE.putBlock(
-                Exploring.FIREFLY_BOTTLE,
                 RenderLayer.getTranslucent()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {

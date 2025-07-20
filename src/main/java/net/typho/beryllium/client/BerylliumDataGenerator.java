@@ -105,7 +105,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             family(gen, Building.CRACKED_STONE_BRICKS);
             family(gen, Building.SMOOTH_STONE);
             family(gen, Building.SNOW_BRICKS);
-            gen.registerLantern(Exploring.FIREFLY_BOTTLE);
         }
 
         @Override
