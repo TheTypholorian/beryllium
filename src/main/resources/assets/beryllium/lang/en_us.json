@@ -54,5 +54,5 @@
   "container.beryllium.kiln": "Kiln",
   "stat.beryllium.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.fireable": "Fireable",
-  "tooltip.beryllium.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand"
+  "tooltip.beryllium.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed."
 }

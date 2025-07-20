@@ -1,5 +1,6 @@
 package net.typho.beryllium.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -7,12 +8,17 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,14 +29,20 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Arm;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockBox;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
+import net.typho.beryllium.building.MagicWandItem;
 import net.typho.beryllium.combat.*;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.MetalDetectorItem;
 import org.joml.Vector2i;
+
+import java.util.Objects;
 
 import static net.typho.beryllium.Module.id;
 
@@ -87,6 +99,40 @@ public class BerylliumClient implements ClientModInitializer {
                     BiomeModificationContext.EffectsContext fx = context.getEffects();
                     fx.setParticleConfig(new BiomeParticleConfig(Exploring.FIREFLY_PARTICLE, 0.008f));
                 });
+        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
+            PlayerEntity player = MinecraftClient.getInstance().player;
+
+            if (player != null) {
+                ItemStack held = player.getMainHandStack();
+
+                if (held.getItem() instanceof MagicWandItem && hit instanceof BlockHitResult blockHit) {
+                    MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
+                    Vec3d cam = context.camera().getPos();
+
+                    matrices.push();
+                    matrices.translate(-cam.x, -cam.y, -cam.z);
+                    RenderSystem.disableDepthTest();
+
+                    BlockBox box = MagicWandItem.getSelection(player, held, blockHit);
+
+                    WorldRenderer.drawBox(
+                            matrices,
+                            Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
+                            box.getMinX(), box.getMinY(), box.getMinZ(),
+                            box.getMaxX() + 1, box.getMaxY() + 1, box.getMaxZ() + 1,
+                            1, 1, 1, 1,
+                            0.5f, 0.5f, 0.5f
+                    );
+
+                    RenderSystem.enableDepthTest();
+                    matrices.pop();
+
+                    return false;
+                }
+            }
+
+            return true;
+        });
         /*
         try {
             File dir = new File("C:/Users/Evan/IdeaProjects/beryllium/compass/");
