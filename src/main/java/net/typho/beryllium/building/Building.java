@@ -1,5 +1,6 @@
 package net.typho.beryllium.building;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -7,6 +8,8 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -43,28 +46,48 @@ public class Building implements Module {
             .stairs(blockWithItem("smooth_stone_stairs", new StairsBlock(Blocks.SMOOTH_STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .build();
+    public static final BlockFamily SNOW_BRICKS = new BlockFamily.Builder(blockWithItem("snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .chiseled(blockWithItem("chiseled_snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .wall(blockWithItem("snow_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .stairs(blockWithItem("snow_brick_stairs", new StairsBlock(Blocks.SNOW_BLOCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .slab(blockWithItem("snow_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .build();
 
     @Override
     public void onInitialize() {
-        /*
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
                 .register(entries -> {
                     entries.addAfter(
                             Items.STONE_BUTTON,
-                            MOSSY_STONE.getBaseBlock().asItem(),
+                            MOSSY_STONE.getBaseBlock(),
                             MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS),
                             MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB),
-                            MOSSY_STONE.getVariant(BlockFamily.Variant.PRESSURE_PLATE),
-                            MOSSY_STONE.getVariant(BlockFamily.Variant.BUTTON)
+                            MOSSY_STONE.getVariant(BlockFamily.Variant.WALL)
                     );
                     entries.addAfter(
-                            Items.MOSSY_STONE_BRICKS,
-                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.CHISELED),
+                            CRACKED_STONE_BRICKS.getBaseBlock(),
                             CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB)
+                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
+                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL)
+                    );
+                    entries.addAfter(
+                            Items.SMOOTH_STONE,
+                            SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED),
+                            SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS)
+                    );
+                    entries.addAfter(
+                            Items.SMOOTH_STONE_SLAB,
+                            SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL)
+                    );
+                    entries.addAfter(
+                            Items.MUD_BRICK_WALL,
+                            SNOW_BRICKS.getBaseBlock(),
+                            SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED),
+                            SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
+                            SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB),
+                            SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL)
                     );
                 });
-         */
         HandledScreens.register(KilnBlock.SCREEN_HANDLER_TYPE, KilnBlock.Screen::new);
         /*
         CommandRegistrationCallback.EVENT.register(

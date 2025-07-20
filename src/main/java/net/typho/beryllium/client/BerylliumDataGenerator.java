@@ -101,6 +101,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             family(gen, Building.MOSSY_STONE);
             family(gen, Building.CRACKED_STONE_BRICKS);
             family(gen, Building.SMOOTH_STONE);
+            family(gen, Building.SNOW_BRICKS);
         }
 
         @Override
@@ -301,6 +302,12 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
             addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED));
+
+            addDrop(Building.SNOW_BRICKS.getBaseBlock());
+            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED));
+            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+            addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
         }
     }
 
@@ -474,19 +481,29 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
                     .add(Building.KILN_BLOCK);
 
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SHOVEL_MINEABLE)
+                    .add(Building.SNOW_BRICKS.getBaseBlock())
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL));
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
                     .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
+                    .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
                     .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                    .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
         }
     }
 

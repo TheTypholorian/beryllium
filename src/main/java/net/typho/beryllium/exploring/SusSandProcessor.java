@@ -13,7 +13,6 @@ import net.minecraft.structure.StructureTemplate;
 import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
@@ -36,22 +35,11 @@ public class SusSandProcessor extends StructureProcessor {
             Random random = data.getRandom(current.pos());
 
             if (random.nextInt(15) == 0) {
-                boolean exposed = false;
-
-                for (Direction dir : Direction.values()) {
-                    if (world.getBlockState(original.pos().offset(dir)).isAir()) {
-                        exposed = true;
-                        break;
-                    }
-                }
-
-                if (exposed) {
-                    BlockState state = Blocks.SUSPICIOUS_SAND.getDefaultState();
-                    NbtCompound nbt = new NbtCompound();
-                    nbt.putString("LootTable", loot.getValue().toString());
-                    nbt.putLong("LootTableSeed", random.nextLong());
-                    return new StructureTemplate.StructureBlockInfo(current.pos(), state, nbt);
-                }
+                BlockState state = Blocks.SUSPICIOUS_SAND.getDefaultState();
+                NbtCompound nbt = new NbtCompound();
+                nbt.putString("LootTable", loot.getValue().toString());
+                nbt.putLong("LootTableSeed", random.nextLong());
+                return new StructureTemplate.StructureBlockInfo(current.pos(), state, nbt);
             }
         }
 

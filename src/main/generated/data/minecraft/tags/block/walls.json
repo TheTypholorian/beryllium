@@ -2,6 +2,7 @@
   "values": [
     "beryllium:mossy_stone_wall",
     "beryllium:cracked_stone_brick_wall",
-    "beryllium:smooth_stone_wall"
+    "beryllium:smooth_stone_wall",
+    "beryllium:snow_brick_wall"
   ]
 }
