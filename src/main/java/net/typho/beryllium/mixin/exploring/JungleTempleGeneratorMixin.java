@@ -22,7 +22,9 @@ import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.ContainerContentsProcessor;
 import net.typho.beryllium.exploring.StoneBrickVariantProcessor;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
@@ -40,27 +42,35 @@ public abstract class JungleTempleGeneratorMixin extends ShiftableStructurePiece
      * @author The Typhothanian
      * @reason Custom jungle temple
      */
-    @Overwrite
-    public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
-        if (adjustToAverageHeight(world, chunkBox, -6)) {
-            Objects.requireNonNull(world.getServer())
-                    .getStructureTemplateManager()
-                    .getTemplate(Beryllium.EXPLORING.id("jungle_pyramid"))
-                    .orElseThrow()
-                    .place(
-                        world,
-                        new BlockPos(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ()),
-                        pivot,
-                        new StructurePlacementData()
-                                .setMirror(BlockMirror.NONE)
-                                .setRotation(BlockRotation.random(random))
-                                .addProcessor(new StoneBrickVariantProcessor())
-                                .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, Registries.BLOCK.getKey(Blocks.DISPENSER).orElseThrow()))
-                                .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
-                                .setRandom(random),
-                        random,
-                        2
-                );
+    @Inject(
+            method = "generate",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot, CallbackInfo ci) {
+        if (Beryllium.CONFIG.exploring.structures.junglePyramid) {
+            if (adjustToAverageHeight(world, chunkBox, -6)) {
+                Objects.requireNonNull(world.getServer())
+                        .getStructureTemplateManager()
+                        .getTemplate(Beryllium.EXPLORING.id("jungle_pyramid"))
+                        .orElseThrow()
+                        .place(
+                                world,
+                                new BlockPos(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ()),
+                                pivot,
+                                new StructurePlacementData()
+                                        .setMirror(BlockMirror.NONE)
+                                        .setRotation(BlockRotation.random(random))
+                                        .addProcessor(new StoneBrickVariantProcessor())
+                                        .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_DISPENSER_CHEST, Registries.BLOCK.getKey(Blocks.DISPENSER).orElseThrow()))
+                                        .addProcessor(new ContainerContentsProcessor(LootTables.JUNGLE_TEMPLE_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
+                                        .setRandom(random),
+                                random,
+                                2
+                        );
+            }
+
+            ci.cancel();
         }
     }
 }

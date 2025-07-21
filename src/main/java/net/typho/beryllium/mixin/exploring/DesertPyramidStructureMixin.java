@@ -1,6 +1,7 @@
 package net.typho.beryllium.mixin.exploring;
 
 import net.minecraft.world.gen.structure.DesertPyramidStructure;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -12,6 +13,10 @@ public class DesertPyramidStructureMixin {
             constant = {@Constant(intValue = 21)}
     )
     private static int init(int constant) {
-        return 23;
+        if (Beryllium.CONFIG.exploring.structures.desertPyramid) {
+            return 23;
+        }
+
+        return constant;
     }
 }

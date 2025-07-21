@@ -1,5 +1,6 @@
 package net.typho.beryllium.exploring;
 
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -70,5 +71,22 @@ public class Exploring extends Module {
             }
         });
         Registry.register(Registries.RECIPE_SERIALIZER, id("compass_dye"), CompassDyeRecipe.SERIALIZER);
+    }
+
+    public static class Config extends ConfigSection {
+        public MetalDetector metalDetector = new MetalDetector();
+
+        public static class MetalDetector extends ConfigSection {
+            public int tooltipRadius = 16, needleX = 16, needleY = 2;
+        }
+
+        public Structures structures = new Structures();
+
+        public static class Structures extends ConfigSection {
+            public boolean junglePyramid = true;
+            public boolean desertPyramid = true;
+        }
+
+        public boolean spawnInVillage = true;
     }
 }

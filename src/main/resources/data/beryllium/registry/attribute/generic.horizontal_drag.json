@@ -1,8 +1,0 @@
-{
-  "value": {
-    "name": "attribute.name.beryllium.generic.horizontal_drag",
-    "default": 0.91,
-    "min": 0,
-    "max": 1
-  }
-}

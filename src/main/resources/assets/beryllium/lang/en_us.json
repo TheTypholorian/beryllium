@@ -56,5 +56,19 @@
   "container.beryllium.building.kiln": "Kiln",
   "stat.beryllium.building.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.building.fireable": "Fireable",
-  "tooltip.beryllium.building.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed."
+  "tooltip.beryllium.building.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed.",
+  "beryllium.config.exploring.metalDetector": "Metal Detector",
+  "beryllium.config.exploring.metalDetector.tooltipRadius": "Tooltip Radius",
+  "beryllium.config.exploring.metalDetector.tooltipRadius.desc": "Cubic radius in all directions for blocks shown in the metal detector's tooltip",
+  "beryllium.config.exploring.metalDetector.needleX": "Needle X",
+  "beryllium.config.exploring.metalDetector.needleX.desc": "Cubic radius in X/Z axes which the metal detector needle points at",
+  "beryllium.config.exploring.metalDetector.needleY": "Needle Y",
+  "beryllium.config.exploring.metalDetector.needleY.desc": "Cubic radius in Y axis which the metal detector needle points at",
+  "beryllium.config.exploring.structures": "Structures",
+  "beryllium.config.exploring.structures.junglePyramid": "Jungle Temple",
+  "beryllium.config.exploring.structures.junglePyramid.desc": "Custom version of the Jungle Temple",
+  "beryllium.config.exploring.structures.desertPyramid": "Desert Pyramid",
+  "beryllium.config.exploring.structures.desertPyramid.desc": "Custom version of the Desert Pyramid",
+  "beryllium.config.exploring.structures.spawnInVillage": "Spawn in Village",
+  "beryllium.config.exploring.structures.spawnInVillage.desc": "Redirects the spawn point to the nearest village"
 }

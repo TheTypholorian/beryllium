@@ -18,30 +18,12 @@ import net.minecraft.util.Util;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 
-public abstract class Module /*extends Config*/ implements ModInitializer, Identifierifier {
+public abstract class Module implements ModInitializer, Identifierifier {
     public final String name;
-    private boolean enabled = true;
 
     public Module(String name) {
-        //super(Identifier.of(MOD_ID, name));
         this.name = name;
     }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /*
-    @Override
-    public int defaultPermLevel() {
-        return 3;
-    }
-
-    @Override
-    public @NotNull FileType fileType() {
-        return FileType.JSON;
-    }
-     */
 
     @Override
     public Identifier id(String name) {

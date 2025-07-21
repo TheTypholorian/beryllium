@@ -22,7 +22,9 @@ import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.ContainerContentsProcessor;
 import net.typho.beryllium.exploring.SusSandProcessor;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Objects;
 
@@ -40,26 +42,33 @@ public abstract class DesertTempleGeneratorMixin extends ShiftableStructurePiece
      * @author The Typhothanian
      * @reason Custom desert temple
      */
-    @Overwrite
-    public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot) {
-        if (adjustToAverageHeight(world, chunkBox, -15)) {
-            Objects.requireNonNull(world.getServer())
-                    .getStructureTemplateManager()
-                    .getTemplate(Beryllium.EXPLORING.id("desert_pyramid"))
-                    .orElseThrow()
-                    .place(
-                        world,
-                        new BlockPos(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ()),
-                        pivot,
-                        new StructurePlacementData()
-                                .setMirror(BlockMirror.NONE)
-                                .setRotation(BlockRotation.NONE)
-                                .addProcessor(new SusSandProcessor(LootTables.DESERT_PYRAMID_ARCHAEOLOGY))
-                                .addProcessor(new ContainerContentsProcessor(LootTables.DESERT_PYRAMID_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
-                                .setRandom(random),
-                        random,
-                        2
-                );
+    @Inject(
+            method = "generate",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void generate(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pivot, CallbackInfo ci) {
+        if (Beryllium.CONFIG.exploring.structures.desertPyramid) {
+            if (adjustToAverageHeight(world, chunkBox, -15)) {
+                Objects.requireNonNull(world.getServer())
+                        .getStructureTemplateManager()
+                        .getTemplate(Beryllium.EXPLORING.id("desert_pyramid"))
+                        .orElseThrow()
+                        .place(
+                                world,
+                                new BlockPos(boundingBox.getMinX(), boundingBox.getMinY(), boundingBox.getMinZ()),
+                                pivot,
+                                new StructurePlacementData()
+                                        .setMirror(BlockMirror.NONE)
+                                        .setRotation(BlockRotation.NONE)
+                                        .addProcessor(new SusSandProcessor(LootTables.DESERT_PYRAMID_ARCHAEOLOGY))
+                                        .addProcessor(new ContainerContentsProcessor(LootTables.DESERT_PYRAMID_CHEST, Registries.BLOCK.getKey(Blocks.CHEST).orElseThrow()))
+                                        .setRandom(random),
+                                random,
+                                2
+                        );
+                ci.cancel();
+            }
         }
     }
 }

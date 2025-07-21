@@ -1,6 +1,7 @@
 package net.typho.beryllium.mixin.exploring;
 
 import net.minecraft.world.gen.structure.JungleTempleStructure;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -12,6 +13,10 @@ public class JungleTempleStructureMixin {
             constant = {@Constant(intValue = 15), @Constant(intValue = 12)}
     )
     private static int init(int constant) {
-        return 16;
+        if (Beryllium.CONFIG.exploring.structures.junglePyramid) {
+            return 16;
+        }
+
+        return constant;
     }
 }

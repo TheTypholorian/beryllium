@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -80,13 +81,15 @@ public class MetalDetectorItem extends Item {
         BlockPos origin = entity.getBlockPos();
         Set<BlockPos> found = new HashSet<>();
 
-        for (int y = -2; y <= 2; y++) {
+        int xRad = Beryllium.CONFIG.exploring.metalDetector.needleX, yRad = Beryllium.CONFIG.exploring.metalDetector.needleY;
+
+        for (int y = -yRad; y <= yRad; y++) {
             int by = origin.getY() + y;
 
-            for (int x = -16; x <= 16; x++) {
+            for (int x = -xRad; x <= xRad; x++) {
                 int bx = origin.getX() + x;
 
-                for (int z = -16; z <= 16; z++) {
+                for (int z = -xRad; z <= xRad; z++) {
                     int bz = origin.getZ() + z;
                     BlockPos pos = new BlockPos(bx, by, bz);
 
@@ -127,7 +130,7 @@ public class MetalDetectorItem extends Item {
         if (player != null && player.getInventory().contains(stack)) {
             BlockPos playerPos = player.getBlockPos();
             World world = player.getWorld();
-            int radius = 16;
+            int radius = Beryllium.CONFIG.exploring.metalDetector.tooltipRadius;
             Map<Block, Integer> found = new HashMap<>();
 
             tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
