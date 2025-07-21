@@ -15,6 +15,7 @@ import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.world.gen.feature.Feature;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 
@@ -51,6 +52,10 @@ public abstract class Module implements ModInitializer, Identifierifier {
         Registry.register(Registries.CUSTOM_STAT, id, identifier);
         Stats.CUSTOM.getOrCreateStat(identifier, formatter);
         return identifier;
+    }
+
+    public <T extends Feature<?>> T feature(String name, T feature) {
+        return Registry.register(Registries.FEATURE, id(name), feature);
     }
 
     public <T extends net.minecraft.screen.ScreenHandler> ScreenHandlerType<T> screenHandler(String id, ScreenHandlerType.Factory<T> factory) {

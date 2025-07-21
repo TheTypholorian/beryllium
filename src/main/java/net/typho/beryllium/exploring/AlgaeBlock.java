@@ -84,6 +84,10 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
             }
         }
 
+        if (!bl) {
+            new NullPointerException().printStackTrace();
+        }
+
         return bl;
     }
 

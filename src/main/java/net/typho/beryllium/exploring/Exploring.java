@@ -1,6 +1,8 @@
 package net.typho.beryllium.exploring;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -18,12 +20,17 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.structure.Structure;
 import net.typho.beryllium.Module;
 
@@ -63,6 +70,8 @@ public class Exploring extends Module {
             .burnable()
             .pistonBehavior(PistonBehavior.DESTROY)));
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
+    public final RegistryKey<ConfiguredFeature<?, ?>> ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("algae"));
+    public final RegistryKey<PlacedFeature> ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("algae"));
 
     public Exploring(String name) {
         super(name);
@@ -82,6 +91,11 @@ public class Exploring extends Module {
             }
         });
         Registry.register(Registries.RECIPE_SERIALIZER, id("compass_dye"), CompassDyeRecipe.SERIALIZER);
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                ALGAE_PLACED
+        );
     }
 
     public static class Config extends ConfigSection {
