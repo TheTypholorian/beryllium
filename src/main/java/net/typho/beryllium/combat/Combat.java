@@ -81,42 +81,42 @@ public class Combat extends Module {
     public final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             id("netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.NETHERITE, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.NETHERITE, 2, -3.4f)))
     );
     public final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             id("diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.DIAMOND, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.DIAMOND, 2, -3.4f)))
     );
     public final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             id("iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.IRON, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.IRON, 2, -3.4f)))
     );
     public final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             id("golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(3, ToolMaterials.GOLD, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.GOLD, 2, -3.4f)))
     );
     public final Item NETHERITE_SCYTHE = Registry.register(
             Registries.ITEM,
             id("netherite_scythe"),
-            new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.NETHERITE, 4, -3.4f)))
+            new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.NETHERITE, 4, -3.4f)))
     );
     public final Item DIAMOND_SCYTHE = Registry.register(
             Registries.ITEM,
             id("diamond_scythe"),
-            new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.DIAMOND, 4, -3.4f)))
+            new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.DIAMOND, 4, -3.4f)))
     );
     public final Item IRON_SCYTHE = Registry.register(
             Registries.ITEM,
             id("iron_scythe"),
-            new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.IRON, 4, -3.4f)))
+            new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.IRON, 4, -3.4f)))
     );
     public final Item GOLDEN_SCYTHE = Registry.register(
             Registries.ITEM,
             id("golden_scythe"),
-            new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(ToolMaterials.GOLD, 4, -3.4f)))
+            new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.GOLD, 4, -3.4f)))
     );
     public final RegistryEntry<StatusEffect> WET_EFFECT = Registry.registerReference(Registries.STATUS_EFFECT, id("wet"), new StatusEffect(StatusEffectCategory.BENEFICIAL, 0x38BDE6) {
     });

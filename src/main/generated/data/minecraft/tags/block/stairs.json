@@ -1,8 +1,8 @@
 {
   "values": [
-    "beryllium:mossy_stone_stairs",
-    "beryllium:cracked_stone_brick_stairs",
-    "beryllium:smooth_stone_stairs",
-    "beryllium:snow_brick_stairs"
+    "beryllium:building/mossy_stone_stairs",
+    "beryllium:building/cracked_stone_brick_stairs",
+    "beryllium:building/smooth_stone_stairs",
+    "beryllium:building/snow_brick_stairs"
   ]
 }

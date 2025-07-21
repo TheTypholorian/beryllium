@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "beryllium:item/exploring/metal_detector/16"
+  },
+  "overrides": [
+    { "predicate": { "angle": 0.000000 }, "model": "beryllium:item/exploring/metal_detector" },
+    { "predicate": { "angle": 0.015625 }, "model": "beryllium:item/exploring/metal_detector/17" },
+    { "predicate": { "angle": 0.046875 }, "model": "beryllium:item/exploring/metal_detector/18" },
+    { "predicate": { "angle": 0.078125 }, "model": "beryllium:item/exploring/metal_detector/19" },
+    { "predicate": { "angle": 0.109375 }, "model": "beryllium:item/exploring/metal_detector/20" },
+    { "predicate": { "angle": 0.140625 }, "model": "beryllium:item/exploring/metal_detector/21" },
+    { "predicate": { "angle": 0.171875 }, "model": "beryllium:item/exploring/metal_detector/22" },
+    { "predicate": { "angle": 0.203125 }, "model": "beryllium:item/exploring/metal_detector/23" },
+    { "predicate": { "angle": 0.234375 }, "model": "beryllium:item/exploring/metal_detector/24" },
+    { "predicate": { "angle": 0.265625 }, "model": "beryllium:item/exploring/metal_detector/25" },
+    { "predicate": { "angle": 0.296875 }, "model": "beryllium:item/exploring/metal_detector/26" },
+    { "predicate": { "angle": 0.328125 }, "model": "beryllium:item/exploring/metal_detector/27" },
+    { "predicate": { "angle": 0.359375 }, "model": "beryllium:item/exploring/metal_detector/28" },
+    { "predicate": { "angle": 0.390625 }, "model": "beryllium:item/exploring/metal_detector/29" },
+    { "predicate": { "angle": 0.421875 }, "model": "beryllium:item/exploring/metal_detector/30" },
+    { "predicate": { "angle": 0.453125 }, "model": "beryllium:item/exploring/metal_detector/31" },
+    { "predicate": { "angle": 0.484375 }, "model": "beryllium:item/exploring/metal_detector/00" },
+    { "predicate": { "angle": 0.515625 }, "model": "beryllium:item/exploring/metal_detector/01" },
+    { "predicate": { "angle": 0.546875 }, "model": "beryllium:item/exploring/metal_detector/02" },
+    { "predicate": { "angle": 0.578125 }, "model": "beryllium:item/exploring/metal_detector/03" },
+    { "predicate": { "angle": 0.609375 }, "model": "beryllium:item/exploring/metal_detector/04" },
+    { "predicate": { "angle": 0.640625 }, "model": "beryllium:item/exploring/metal_detector/05" },
+    { "predicate": { "angle": 0.671875 }, "model": "beryllium:item/exploring/metal_detector/06" },
+    { "predicate": { "angle": 0.703125 }, "model": "beryllium:item/exploring/metal_detector/07" },
+    { "predicate": { "angle": 0.734375 }, "model": "beryllium:item/exploring/metal_detector/08" },
+    { "predicate": { "angle": 0.765625 }, "model": "beryllium:item/exploring/metal_detector/09" },
+    { "predicate": { "angle": 0.796875 }, "model": "beryllium:item/exploring/metal_detector/10" },
+    { "predicate": { "angle": 0.828125 }, "model": "beryllium:item/exploring/metal_detector/11" },
+    { "predicate": { "angle": 0.859375 }, "model": "beryllium:item/exploring/metal_detector/12" },
+    { "predicate": { "angle": 0.890625 }, "model": "beryllium:item/exploring/metal_detector/13" },
+    { "predicate": { "angle": 0.921875 }, "model": "beryllium:item/exploring/metal_detector/14" },
+    { "predicate": { "angle": 0.953125 }, "model": "beryllium:item/exploring/metal_detector/15" },
+    { "predicate": { "angle": 0.984375 }, "model": "beryllium:item/exploring/metal_detector" }
+  ]
+}

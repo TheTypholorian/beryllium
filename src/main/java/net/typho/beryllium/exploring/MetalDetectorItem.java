@@ -130,7 +130,7 @@ public class MetalDetectorItem extends Item {
             int radius = 16;
             Map<Block, Integer> found = new HashMap<>();
 
-            tooltip.add(Text.translatable("item.beryllium.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+            tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
 
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {

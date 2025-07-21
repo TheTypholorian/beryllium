@@ -82,7 +82,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
         addSlot(new Slot(inventory, 2, 41, 47) {
             @Override
             public @NotNull Pair<Identifier, Identifier> getBackgroundSprite() {
-                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, Identifier.of("item/empty_slot_amethyst_shard"));
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, Identifier.ofVanilla("item/empty_slot_amethyst_shard"));
             }
         });
     }

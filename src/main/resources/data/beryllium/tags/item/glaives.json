@@ -1,8 +1,8 @@
 {
   "values": [
-    "beryllium:netherite_glaive",
-    "beryllium:diamond_glaive",
-    "beryllium:iron_glaive",
-    "beryllium:golden_glaive"
+    "beryllium:combat/netherite_glaive",
+    "beryllium:combat/diamond_glaive",
+    "beryllium:combat/iron_glaive",
+    "beryllium:combat/golden_glaive"
   ]
 }

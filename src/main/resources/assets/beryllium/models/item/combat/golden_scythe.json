@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "beryllium:item/combat/golden_scythe_2d"
+  }
+}

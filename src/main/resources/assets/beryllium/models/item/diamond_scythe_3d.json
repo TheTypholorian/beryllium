@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "gui_light": "front",
-  "textures": {
-    "layer0": "beryllium:item/diamond_scythe_3d"
-  }
-}

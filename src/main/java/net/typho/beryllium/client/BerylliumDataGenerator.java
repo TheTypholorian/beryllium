@@ -38,7 +38,7 @@ import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.building.kiln.KilnBlock;
+import net.typho.beryllium.building.kiln.KilnRecipe;
 import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
 import net.typho.beryllium.mixin.client.VariantPoolFunctionsAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -111,6 +111,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Beryllium.COMBAT.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), net.minecraft.data.client.Models.GENERATED);
 
             /*
             int directions = 32;
@@ -199,7 +200,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                 int cookingTime,
                 String group
         ) {
-            offerMultipleOptions(exporter, KilnBlock.RECIPE_SERIALIZER, KilnBlock.Recipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
+            offerMultipleOptions(exporter, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
         }
 
         public static void firingStone(RecipeExporter gen, List<ItemConvertible> inputs, ItemConvertible output, String group) {
@@ -223,13 +224,13 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             scythe(exporter, Beryllium.COMBAT.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
             scythe(exporter, Beryllium.COMBAT.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
-            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.KILN_BLOCK, 1)
+            ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.KILN_BLOCK.asItem(), 1)
                     .pattern("AAA")
                     .pattern("A A")
                     .pattern("AAA")
                     .input('A', Items.BRICK)
                     .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
-                    .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "kiln"));
+                    .offerTo(exporter, Beryllium.BUILDING.id("kiln"));
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Beryllium.EXPLORING.METAL_DETECTOR_ITEM, 1)
                     .pattern(" C ")
@@ -238,7 +239,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .input('C', Items.COPPER_INGOT)
                     .input('R', Items.REDSTONE)
                     .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
-                    .offerTo(exporter, Identifier.of(Beryllium.MOD_ID, "metal_detector"));
+                    .offerTo(exporter, Beryllium.EXPLORING.id("metal_detector"));
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.LODESTONE, 1)
                     .pattern("AAA")
@@ -365,19 +366,19 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .rolls(ConstantLootNumberProvider.create(1))
                     .with(ItemEntry.builder(Items.COMPASS).weight(40)
                             .apply(new ExplorationCompassLootFunction.Builder()
-                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Identifier.of(Beryllium.MOD_ID, "on_bastion_maps")))
+                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_bastion_maps")))
                                     .searchRadius(100)
                                     .withSkipExistingChunks(false)
                             )
-                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
                     )
                     .with(ItemEntry.builder(Items.COMPASS).weight(40)
                             .apply(new ExplorationCompassLootFunction.Builder()
-                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Identifier.of(Beryllium.MOD_ID, "on_fortress_maps")))
+                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_fortress_maps")))
                                     .searchRadius(100)
                                     .withSkipExistingChunks(false)
                             )
-                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
                     )
                     .with(ItemEntry.builder(Items.BOOK).weight(5)
                             .apply(new EnchantRandomlyLootFunction.Builder()
@@ -514,11 +515,11 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "on_bastion_maps")))
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_bastion_maps")))
                     .add(StructureKeys.BASTION_REMNANT);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "on_fortress_maps")))
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_fortress_maps")))
                     .add(StructureKeys.FORTRESS);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "spawn")))
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("spawn")))
                     .add(StructureKeys.VILLAGE_PLAINS)
                     .add(StructureKeys.VILLAGE_DESERT)
                     .add(StructureKeys.VILLAGE_SAVANNA)
@@ -534,7 +535,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(TagKey.of(registryRef, Identifier.of(Beryllium.MOD_ID, "has_fireflies")))
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("has_fireflies")))
                     .add(BiomeKeys.BIRCH_FOREST)
                     .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
                     .add(BiomeKeys.SWAMP)

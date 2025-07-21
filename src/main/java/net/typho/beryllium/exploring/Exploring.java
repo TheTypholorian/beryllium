@@ -21,14 +21,12 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.Structure;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 
 public class Exploring extends Module {
-    public final Item METAL_DETECTOR_ITEM = Registry.register(Registries.ITEM, Identifier.of(Beryllium.MOD_ID, "metal_detector"), new MetalDetectorItem(new Item.Settings()));
+    public final Item METAL_DETECTOR_ITEM = item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
     public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
     public final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
@@ -41,7 +39,6 @@ public class Exploring extends Module {
             blockWithItem(
                     "firefly_bottle",
                     new FireflyBottleBlock(AbstractBlock.Settings.create()
-                            .solid()
                             .strength(0f)
                             .pistonBehavior(PistonBehavior.DESTROY)
                             .emissiveLighting((state, world, pos) -> true)
@@ -69,7 +66,7 @@ public class Exploring extends Module {
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
             @Override
             public String toString() {
-                return "compass_dye";
+                return "exploring/compass_dye";
             }
         });
         Registry.register(Registries.RECIPE_SERIALIZER, id("compass_dye"), CompassDyeRecipe.SERIALIZER);

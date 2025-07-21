@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "beryllium:block/exploring/firefly_bottle"
+    },
+    "hanging=true": {
+      "model": "beryllium:block/exploring/firefly_bottle_hanging"
+    }
+  }
+}

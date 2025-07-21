@@ -1,5 +1,8 @@
 {
   "values": [
-    "beryllium:netherite_scythe"
+    "beryllium:combat/netherite_scythe",
+    "beryllium:combat/diamond_scythe",
+    "beryllium:combat/iron_scythe",
+    "beryllium:combat/golden_scythe"
   ]
 }

@@ -1,9 +1,9 @@
 {
   "values": [
-    "beryllium:snow_bricks",
-    "beryllium:chiseled_snow_bricks",
-    "beryllium:snow_brick_wall",
-    "beryllium:snow_brick_stairs",
-    "beryllium:snow_brick_slab"
+    "beryllium:building/snow_bricks",
+    "beryllium:building/chiseled_snow_bricks",
+    "beryllium:building/snow_brick_wall",
+    "beryllium:building/snow_brick_stairs",
+    "beryllium:building/snow_brick_slab"
   ]
 }

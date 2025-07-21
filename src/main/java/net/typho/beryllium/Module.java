@@ -4,16 +4,24 @@ import me.fzzyhmstrs.fzzy_config.api.FileType;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.stat.StatFormatter;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import org.jetbrains.annotations.NotNull;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 
-public abstract class Module extends Config implements ModInitializer {
+public abstract class Module extends Config implements ModInitializer, Identifierifier {
     public final String name;
     private boolean enabled = true;
 
@@ -36,6 +44,7 @@ public abstract class Module extends Config implements ModInitializer {
         return FileType.JSON;
     }
 
+    @Override
     public Identifier id(String name) {
         return Identifier.of(MOD_ID, this.name + "/" + name);
     }
@@ -48,9 +57,27 @@ public abstract class Module extends Config implements ModInitializer {
         return Registry.register(Registries.BLOCK, id(id), block);
     }
 
-    public Block blockWithItem(String id, Block block, Item.Settings settings) {
-        Block res = Registry.register(Registries.BLOCK, id(id), block);
-        Registry.register(Registries.ITEM, id(id), new BlockItem(res, settings));
+    public Block blockWithItem(String name, Block block, Item.Settings settings) {
+        Identifier id = id(name);
+        Block res = Registry.register(Registries.BLOCK, id, block);
+        BlockItem item = new BlockItem(res, settings);
+        Registry.register(Registries.ITEM, id, item);
+        Item.BLOCK_ITEMS.put(res, item);
         return res;
+    }
+
+    public Identifier stat(String id, StatFormatter formatter) {
+        Identifier identifier = id(id);
+        Registry.register(Registries.CUSTOM_STAT, id, identifier);
+        Stats.CUSTOM.getOrCreateStat(identifier, formatter);
+        return identifier;
+    }
+
+    public <T extends net.minecraft.screen.ScreenHandler> ScreenHandlerType<T> screenHandler(String id, ScreenHandlerType.Factory<T> factory) {
+        return Registry.register(Registries.SCREEN_HANDLER, id(id), new ScreenHandlerType<>(factory, FeatureFlags.VANILLA_FEATURES));
+    }
+
+    public <T extends BlockEntity> BlockEntityType<T> blockEntity(String id, BlockEntityType.Builder<T> builder) {
+        return Registry.register(Registries.BLOCK_ENTITY_TYPE, id(id), builder.build(Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)));
     }
 }

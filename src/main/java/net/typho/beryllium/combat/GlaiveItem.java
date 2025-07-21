@@ -12,7 +12,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Identifierifier;
 import net.typho.beryllium.util.CustomPoseItem;
 import net.typho.beryllium.util.DualModelItem;
 
@@ -44,11 +44,11 @@ public class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelIt
         }
     }
 
-    public static AttributeModifiersComponent glaiveModifiers(double range, ToolMaterial material, float damage, float speed) {
+    public static AttributeModifiersComponent glaiveModifiers(Identifierifier id, double range, ToolMaterial material, float damage, float speed) {
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
         builder.add(
                         EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
-                        new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "entity_interaction_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
+                        new EntityAttributeModifier(id.id("entity_interaction_range"), range, EntityAttributeModifier.Operation.ADD_VALUE),
                         AttributeModifierSlot.MAINHAND
                 )
                 .add(

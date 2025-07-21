@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "beryllium:block/snow_bricks",
-    "side": "beryllium:block/snow_bricks",
-    "top": "beryllium:block/snow_bricks"
-  }
-}

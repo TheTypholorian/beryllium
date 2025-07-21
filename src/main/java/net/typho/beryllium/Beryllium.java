@@ -17,16 +17,16 @@ public class Beryllium implements ModInitializer {
     public static final RegistryEntry<EntityAttribute> GENERIC_HORIZONTAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "horizontal_drag"), new ClampedEntityAttribute("attribute.beryllium.name.generic.horizontal_drag", 0.91, 0, 1).setTracked(true));
     //public static final RegistryEntry<EntityAttribute> GENERIC_VERTICAL_DRAG = Registry.registerReference(Registries.ATTRIBUTE, Identifier.of(MOD_ID, "vertical_drag"), new ClampedEntityAttribute("attribute.beryllium.name.generic.vertical_drag", 0.098, 0, 1));
 
+    public static final Exploring EXPLORING = new Exploring("exploring");
     public static final Enchanting ENCHANTING = new Enchanting("enchanting");
     public static final Combat COMBAT = new Combat("combat");
     public static final Building BUILDING = new Building("building");
-    public static final Exploring EXPLORING = new Exploring("exploring");
 
     @Override
     public void onInitialize() {
         ENCHANTING.onInitialize();
         COMBAT.onInitialize();
-        BUILDING.onInitialize();
         EXPLORING.onInitialize();
+        BUILDING.onInitialize();
     }
 }

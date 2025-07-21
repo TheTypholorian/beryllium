@@ -4,7 +4,7 @@
     "translate": "enchantment.beryllium.dash"
   },
   "effects": {},
-  "exclusive_set": "#beryllium:exclusive_set/ability",
+  "exclusive_set": "#beryllium:enchanting/exclusive_set/ability",
   "max_cost": {
     "base": 25,
     "per_level_above_first": 8

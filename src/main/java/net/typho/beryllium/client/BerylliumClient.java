@@ -50,25 +50,25 @@ public class BerylliumClient implements ClientModInitializer {
         EntityRendererRegistry.register(Beryllium.COMBAT.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(DiamondArrowEntity entity) {
-                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/diamond_arrow.png");
+                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/diamond_arrow.png");
             }
         });
         EntityRendererRegistry.register(Beryllium.COMBAT.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(IronArrowEntity entity) {
-                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/iron_arrow.png");
+                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/iron_arrow.png");
             }
         });
         EntityRendererRegistry.register(Beryllium.COMBAT.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(FlamingArrowEntity entity) {
-                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/flaming_arrow.png");
+                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/flaming_arrow.png");
             }
         });
         EntityRendererRegistry.register(Beryllium.COMBAT.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(CopperArrowEntity entity) {
-                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/copper_arrow.png");
+                return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/copper_arrow.png");
             }
         });
         EntityRendererRegistry.register(Beryllium.COMBAT.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);

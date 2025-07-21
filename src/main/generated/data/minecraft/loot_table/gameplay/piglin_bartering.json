@@ -8,15 +8,15 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "destination": "beryllium:on_bastion_maps",
-              "function": "beryllium:exploration_compass",
+              "destination": "beryllium:exploring/on_bastion_maps",
+              "function": "beryllium:exploring/exploration_compass",
               "search_radius": 100,
               "skip_existing_chunks": false
             },
             {
               "function": "minecraft:set_name",
               "name": {
-                "translate": "item.beryllium.bastion_compass"
+                "translate": "item.beryllium.exploring.bastion_compass"
               },
               "target": "item_name"
             }
@@ -28,15 +28,15 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "destination": "beryllium:on_fortress_maps",
-              "function": "beryllium:exploration_compass",
+              "destination": "beryllium:exploring/on_fortress_maps",
+              "function": "beryllium:exploring/exploration_compass",
               "search_radius": 100,
               "skip_existing_chunks": false
             },
             {
               "function": "minecraft:set_name",
               "name": {
-                "translate": "item.beryllium.fortress_compass"
+                "translate": "item.beryllium.exploring.fortress_compass"
               },
               "target": "item_name"
             }

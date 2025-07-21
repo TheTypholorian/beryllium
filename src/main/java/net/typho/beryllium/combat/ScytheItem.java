@@ -13,7 +13,7 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.Identifierifier;
 import net.typho.beryllium.util.DualModelItem;
 import net.typho.beryllium.util.SweepingItem;
 
@@ -40,7 +40,7 @@ public class ScytheItem extends SwordItem implements DualModelItem, SweepingItem
         }
     }
 
-    public static AttributeModifiersComponent scytheModifiers(ToolMaterial material, float damage, float speed) {
+    public static AttributeModifiersComponent scytheModifiers(Identifierifier id, ToolMaterial material, float damage, float speed) {
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
         builder.add(
                         EntityAttributes.GENERIC_ATTACK_DAMAGE,
@@ -54,7 +54,7 @@ public class ScytheItem extends SwordItem implements DualModelItem, SweepingItem
                 )
                 .add(
                         EntityAttributes.GENERIC_ATTACK_KNOCKBACK,
-                        new EntityAttributeModifier(Identifier.of(Beryllium.MOD_ID, "attack_knockback"), -5, EntityAttributeModifier.Operation.ADD_VALUE),
+                        new EntityAttributeModifier(id.id("attack_knockback"), -5, EntityAttributeModifier.Operation.ADD_VALUE),
                         AttributeModifierSlot.MAINHAND
                 );
         return builder.build();
