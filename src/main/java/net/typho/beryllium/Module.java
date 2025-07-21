@@ -1,7 +1,5 @@
 package net.typho.beryllium;
 
-import me.fzzyhmstrs.fzzy_config.api.FileType;
-import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,16 +15,15 @@ import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import org.jetbrains.annotations.NotNull;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 
-public abstract class Module extends Config implements ModInitializer, Identifierifier {
+public abstract class Module /*extends Config*/ implements ModInitializer, Identifierifier {
     public final String name;
     private boolean enabled = true;
 
     public Module(String name) {
-        super(Identifier.of(MOD_ID, name));
+        //super(Identifier.of(MOD_ID, name));
         this.name = name;
     }
 
@@ -34,6 +31,7 @@ public abstract class Module extends Config implements ModInitializer, Identifie
         return enabled;
     }
 
+    /*
     @Override
     public int defaultPermLevel() {
         return 3;
@@ -43,6 +41,7 @@ public abstract class Module extends Config implements ModInitializer, Identifie
     public @NotNull FileType fileType() {
         return FileType.JSON;
     }
+     */
 
     @Override
     public Identifier id(String name) {
@@ -62,7 +61,6 @@ public abstract class Module extends Config implements ModInitializer, Identifie
         Block res = Registry.register(Registries.BLOCK, id, block);
         BlockItem item = new BlockItem(res, settings);
         Registry.register(Registries.ITEM, id, item);
-        Item.BLOCK_ITEMS.put(res, item);
         return res;
     }
 

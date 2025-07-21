@@ -3,7 +3,7 @@
     "translate": "enchantment.beryllium.encumbered"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
-  "exclusive_set": "#beryllium:enchanting/exclusive_set/gravity",
+  "exclusive_set": "#beryllium:exclusive_set/gravity",
   "weight": 1,
   "max_level": 2,
   "min_cost": {
