@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.enlarged"
+    "translate": "enchantment.beryllium.combat.enlarged"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
   "exclusive_set": "#beryllium:exclusive_set/scale",

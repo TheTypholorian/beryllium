@@ -1,9 +1,9 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.miniscule"
+    "translate": "enchantment.beryllium.combat.weightless"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
-  "exclusive_set": "#beryllium:exclusive_set/scale",
+  "exclusive_set": "#beryllium:exclusive_set/gravity",
   "weight": 1,
   "max_level": 2,
   "min_cost": {
@@ -21,18 +21,18 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "minecraft:generic.scale",
-        "id": "scale",
+        "attribute": "minecraft:generic.gravity",
+        "id": "gravity",
         "amount": {
           "type": "minecraft:linear",
-          "base": -0.2,
-          "per_level_above_first": -0.2
+          "base": -0.01,
+          "per_level_above_first": -0.01
         },
         "operation": "add_value"
       }
     ]
   },
-  "catalyst": "minecraft:rabbit_hide",
-  "catalyst_count": 4,
-  "capacity": 3
+  "catalyst": "minecraft:feather",
+  "catalyst_count": 8,
+  "capacity": 2
 }

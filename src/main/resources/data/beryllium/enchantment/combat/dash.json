@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.beryllium.dash"
+    "translate": "enchantment.beryllium.combat.dash"
   },
   "effects": {},
   "exclusive_set": "#beryllium:exclusive_set/ability",

@@ -1,6 +1,6 @@
 {
   "values": [
-    "beryllium:dash",
-    "beryllium:reel"
+    "beryllium:combat/dash",
+    "beryllium:combat/reel"
   ]
 }

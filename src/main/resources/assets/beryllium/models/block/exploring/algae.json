@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/glow_lichen",
+  "textures": {
+    "glow_lichen": "beryllium:block/exploring/algae",
+    "particle": "#glow_lichen"
+  }
+}

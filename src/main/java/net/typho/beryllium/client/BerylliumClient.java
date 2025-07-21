@@ -96,7 +96,11 @@ public class BerylliumClient implements ClientModInitializer {
                 });
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Beryllium.EXPLORING.FIREFLY_BOTTLE,
-                RenderLayer.getTranslucent()
+                RenderLayer.getCutout()
+        );
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Beryllium.EXPLORING.ALGAE_BLOCK,
+                RenderLayer.getCutout()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;

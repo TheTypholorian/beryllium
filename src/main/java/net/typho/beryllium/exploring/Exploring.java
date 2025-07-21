@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
@@ -52,6 +53,16 @@ public class Exploring extends Module {
                             .blockVision(Blocks::never)),
             new Item.Settings()
     );
+    public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
+            .mapColor(MapColor.DARK_GREEN)
+            .replaceable()
+            .noCollision()
+            .breakInstantly()
+            .sounds(BlockSoundGroup.GLOW_LICHEN)
+            .nonOpaque()
+            .burnable()
+            .pistonBehavior(PistonBehavior.DESTROY)));
+    public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
 
     public Exploring(String name) {
         super(name);

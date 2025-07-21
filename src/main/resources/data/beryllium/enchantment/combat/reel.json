@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.beryllium.reel"
+    "translate": "enchantment.beryllium.combat.reel"
   },
   "effects": {},
   "exclusive_set": "#beryllium:exclusive_set/ability",

@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.vitality"
+    "translate": "enchantment.beryllium.combat.vitality"
   },
   "supported_items": "#minecraft:enchantable/armor",
   "weight": 1,

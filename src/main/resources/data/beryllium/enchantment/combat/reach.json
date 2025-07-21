@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.reach"
+    "translate": "enchantment.beryllium.combat.reach"
   },
   "supported_items": "#minecraft:enchantable/mining",
   "weight": 1,

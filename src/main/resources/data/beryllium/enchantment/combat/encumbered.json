@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.encumbered"
+    "translate": "enchantment.beryllium.combat.encumbered"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
   "exclusive_set": "#beryllium:exclusive_set/gravity",
