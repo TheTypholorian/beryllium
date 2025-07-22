@@ -1,4 +1,4 @@
-package net.typho.beryllium;
+package net.typho.beryllium.util;
 
 import net.minecraft.util.Identifier;
 

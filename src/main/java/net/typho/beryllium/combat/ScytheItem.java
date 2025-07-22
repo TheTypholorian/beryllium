@@ -13,8 +13,8 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Identifierifier;
 import net.typho.beryllium.util.DualModelItem;
+import net.typho.beryllium.util.Identifierifier;
 import net.typho.beryllium.util.SweepingItem;
 
 public class ScytheItem extends SwordItem implements DualModelItem, SweepingItem {

@@ -7,6 +7,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -18,12 +19,13 @@ import net.minecraft.world.WorldView;
 import net.typho.beryllium.Beryllium;
 
 public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Waterloggable {
+    public static final BooleanProperty GENERATED = BooleanProperty.of("generated");
     public static final MapCodec<AlgaeBlock> CODEC = createCodec(AlgaeBlock::new);
     private final LichenGrower grower = new LichenGrower(this);
 
     public AlgaeBlock(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false));
+        setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(GENERATED, false));
     }
 
     @Override
@@ -69,6 +71,10 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
 
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        if (state.getOrEmpty(GENERATED).orElse(false)) {
+            return world.getBlockState(pos.offset(Direction.DOWN)).isOf(Blocks.WATER);
+        }
+
         boolean bl = false;
 
         for (Direction direction : DIRECTIONS) {
@@ -84,17 +90,13 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
             }
         }
 
-        if (!bl) {
-            new NullPointerException().printStackTrace();
-        }
-
         return bl;
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(Properties.WATERLOGGED);
+        builder.add(Properties.WATERLOGGED, GENERATED);
     }
 
     @Override

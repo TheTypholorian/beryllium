@@ -16,6 +16,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.gen.feature.Feature;
+import net.typho.beryllium.util.Identifierifier;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 

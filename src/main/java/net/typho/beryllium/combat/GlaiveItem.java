@@ -12,9 +12,9 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Identifierifier;
 import net.typho.beryllium.util.CustomPoseItem;
 import net.typho.beryllium.util.DualModelItem;
+import net.typho.beryllium.util.Identifierifier;
 
 public class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelItem {
     public GlaiveItem(ToolMaterial toolMaterial, Settings settings) {

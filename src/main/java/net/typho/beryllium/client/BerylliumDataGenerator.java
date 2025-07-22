@@ -26,19 +26,26 @@ import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
-import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.kiln.KilnRecipe;
+import net.typho.beryllium.exploring.AlgaeBlock;
 import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
 import net.typho.beryllium.mixin.client.VariantPoolFunctionsAccessor;
 import org.jetbrains.annotations.Nullable;
@@ -60,6 +67,27 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(BlockTags::new);
         pack.addProvider(StructureTags::new);
         pack.addProvider(BiomeTags::new);
+        pack.addProvider(Registries::new);
+    }
+
+    @Override
+    public void buildRegistry(RegistryBuilder builder) {
+        builder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, context -> {
+            context.register(Beryllium.EXPLORING.ALGAE_CONFIGURED,
+                    new ConfiguredFeature<>(
+                            Feature.RANDOM_PATCH,
+                            new RandomPatchFeatureConfig(
+                                    50, 10, 1, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(Beryllium.EXPLORING.ALGAE_BLOCK.getDefaultState().with(Properties.DOWN, true).with(AlgaeBlock.GENERATED, true))))
+                            )
+                    ));
+        });
+        builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
+            context.register(Beryllium.EXPLORING.ALGAE_PLACED, new PlacedFeature(
+                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+                            .getOrThrow(Beryllium.EXPLORING.ALGAE_CONFIGURED),
+                    List.of(CountPlacementModifier.of(4), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of())
+            ));
+        });
     }
 
     public static class ItemTags extends FabricTagProvider.ItemTagProvider {
@@ -188,8 +216,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .pattern("AAA")
                     .pattern("AAA")
                     .input('A', ingredient)
-                    .criterion("has_" + Registries.BLOCK.getId(ingredient).getPath(), FabricRecipeProvider.conditionsFromItem(ingredient))
-                    .offerTo(gen, Registries.BLOCK.getId(result));
+                    .criterion("has_" + net.minecraft.registry.Registries.BLOCK.getId(ingredient).getPath(), FabricRecipeProvider.conditionsFromItem(ingredient))
+                    .offerTo(gen, net.minecraft.registry.Registries.BLOCK.getId(result));
         }
 
         public static void offerFiring(
@@ -541,6 +569,23 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
                     .add(BiomeKeys.SWAMP)
                     .add(BiomeKeys.MANGROVE_SWAMP);
+        }
+    }
+
+    public static class Registries extends FabricDynamicRegistryProvider {
+        public Registries(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
+            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE));
+            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE));
+        }
+
+        @Override
+        public String getName() {
+            return "";
         }
     }
 }
