@@ -130,6 +130,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             family(gen, Beryllium.BUILDING.CRACKED_STONE_BRICKS);
             family(gen, Beryllium.BUILDING.SMOOTH_STONE);
             family(gen, Beryllium.BUILDING.SNOW_BRICKS);
+            gen.registerFlowerbed(Beryllium.EXPLORING.DAFFODILS);
             gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
         }
 

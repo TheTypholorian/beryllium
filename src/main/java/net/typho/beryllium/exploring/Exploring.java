@@ -7,10 +7,7 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
@@ -63,6 +60,7 @@ public class Exploring extends Module {
                             .blockVision(Blocks::never)),
             new Item.Settings()
     );
+    public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
             .replaceable()
@@ -85,6 +83,10 @@ public class Exploring extends Module {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
                 .register(entries -> {
                     entries.addAfter(Items.COMPASS, METAL_DETECTOR_ITEM);
+                });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL)
+                .register(entries -> {
+                    entries.addAfter(Items.PINK_PETALS, DAFFODILS);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
