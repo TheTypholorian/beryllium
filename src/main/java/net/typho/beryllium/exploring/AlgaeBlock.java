@@ -63,7 +63,7 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
         if (canHaveDirection(direction) && (!state.isOf(this) || !hasDirection(state, direction))) {
             BlockPos blockPos = pos.offset(direction);
             BlockState on = world.getBlockState(blockPos);
-            return ((state.isOf(Blocks.AIR) || !state.getOrEmpty(Properties.WATERLOGGED).orElse(false)) && direction == Direction.DOWN && on.isOf(Blocks.WATER)) || canGrowOn(world, direction, blockPos, on);
+            return (direction == Direction.DOWN && (on.isOf(Blocks.WATER) || (on.isOf(this) && on.getOrEmpty(Properties.WATERLOGGED).orElse(false)))) || canGrowOn(world, direction, blockPos, on);
         } else {
             return false;
         }
@@ -82,7 +82,7 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
                 BlockPos blockPos = pos.offset(direction);
                 BlockState wall = world.getBlockState(blockPos);
 
-                if (!(canGrowOn(world, direction, blockPos, wall) || ((state.isOf(Blocks.AIR) || !state.getOrEmpty(Properties.WATERLOGGED).orElse(false)) && wall.isOf(Blocks.WATER) && direction == Direction.DOWN))) {
+                if (!(canGrowOn(world, direction, blockPos, wall) || ((state.isOf(Blocks.AIR) || !state.getOrEmpty(Properties.WATERLOGGED).orElse(false)) && (wall.isOf(Blocks.WATER) || (wall.isOf(this) && wall.getOrEmpty(Properties.WATERLOGGED).orElse(false))) && direction == Direction.DOWN))) {
                     return false;
                 }
 
@@ -100,9 +100,7 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
     }
 
     @Override
-    protected BlockState getStateForNeighborUpdate(
-            BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos
-    ) {
+    protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(Properties.WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }

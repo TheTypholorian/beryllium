@@ -3,6 +3,7 @@ package net.typho.beryllium.exploring;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -28,10 +29,12 @@ import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.structure.Structure;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 
 public class Exploring extends Module {
@@ -96,6 +99,12 @@ public class Exploring extends Module {
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 ALGAE_PLACED
         );
+        BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {
+                    context.getEffects().setParticleConfig(new BiomeParticleConfig(Beryllium.EXPLORING.FIREFLY_PARTICLE, 0.008f));
+                    context.getEffects().setWaterColor(0x6D6D5C);
+                    context.getEffects().setWaterFogColor(0x6D6D5C);
+                });
     }
 
     public static class Config extends ConfigSection {

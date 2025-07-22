@@ -18,7 +18,9 @@ public class FireflyFactory implements ParticleFactory<SimpleParticleType> {
 
     @Override
     public Particle createParticle(SimpleParticleType type, ClientWorld world, double x, double y, double z, double dx, double dy, double dz) {
-        if (world.getAmbientDarkness() >= 4) {
+        float sky = world.getSkyAngle(1);
+
+        if (sky < 0.3 || sky > 0.7) {
             return null;
         }
 
