@@ -38,6 +38,7 @@ import net.typho.beryllium.combat.IronArrowEntity;
 import net.typho.beryllium.exploring.MetalDetectorItem;
 import org.joml.Vector2i;
 
+import java.awt.*;
 import java.util.Objects;
 
 public class BerylliumClient implements ClientModInitializer {
@@ -92,6 +93,16 @@ public class BerylliumClient implements ClientModInitializer {
 
             return -1;
         }, Items.COMPASS);
+        ColorProviderRegistry.ITEM.register((stack, index) -> {
+            float hue = (System.currentTimeMillis() % 10000) / 10000f;
+            float sat = (System.currentTimeMillis() % 7000) / 3500f - 1;
+            float b = (System.currentTimeMillis() % 5000) / 2500f - 1;
+
+            sat = sat * sat;
+            b = b * b;
+
+            return Color.HSBtoRGB(hue, Math.abs(sat), Math.abs(b));
+        }, Beryllium.EXPLORING.EXODINE_INGOT);
         ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
             if (index != 0) {
                 return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();

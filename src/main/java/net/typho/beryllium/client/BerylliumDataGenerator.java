@@ -169,6 +169,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.EXPLORING.EXODINE_INGOT, net.minecraft.data.client.Models.GENERATED);
 
             /*
             int directions = 32;
