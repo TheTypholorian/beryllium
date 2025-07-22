@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FlowerbedBlock;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.family.BlockFamily;
@@ -34,13 +36,17 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
 import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.NoiseThresholdCountPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
@@ -80,12 +86,33 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                                     50, 10, 1, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(Beryllium.EXPLORING.ALGAE_BLOCK.getDefaultState().with(Properties.DOWN, true).with(AlgaeBlock.GENERATED, true))))
                             )
                     ));
+
+            DataPool.Builder<BlockState> daffodils = DataPool.builder();
+
+            for (int i = 1; i <= 4; i++) {
+                for (Direction direction : Direction.Type.HORIZONTAL) {
+                    daffodils.add(Beryllium.EXPLORING.DAFFODILS.getDefaultState().with(FlowerbedBlock.FLOWER_AMOUNT, i).with(FlowerbedBlock.FACING, direction), 1);
+                }
+            }
+
+            context.register(Beryllium.EXPLORING.DAFFODILS_CONFIGURED,
+                    new ConfiguredFeature<>(
+                            Feature.FLOWER,
+                            new RandomPatchFeatureConfig(
+                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(daffodils)))
+                            )
+                    ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
             context.register(Beryllium.EXPLORING.ALGAE_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
                             .getOrThrow(Beryllium.EXPLORING.ALGAE_CONFIGURED),
                     List.of(CountPlacementModifier.of(4), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of())
+            ));
+            context.register(Beryllium.EXPLORING.DAFFODILS_PLACED, new PlacedFeature(
+                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+                            .getOrThrow(Beryllium.EXPLORING.DAFFODILS_CONFIGURED),
+                    List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
             ));
         });
     }
@@ -570,6 +597,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
                     .add(BiomeKeys.SWAMP)
                     .add(BiomeKeys.MANGROVE_SWAMP);
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("birch")))
+                    .add(BiomeKeys.BIRCH_FOREST)
+                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST);
         }
     }
 

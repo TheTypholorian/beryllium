@@ -43,6 +43,7 @@ public class Exploring extends Module {
     public final StructureProcessorType<SusSandProcessor> SUS_SAND_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("sus_sand"), () -> SusSandProcessor.CODEC);
     public final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("container_contents"), () -> ContainerContentsProcessor.CODEC);
     public final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("firefly"), FabricParticleTypes.simple(false));
+    public final SimpleParticleType BIRCH_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("birch_leaves"), FabricParticleTypes.simple(false));
     public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
@@ -60,6 +61,7 @@ public class Exploring extends Module {
                             .blockVision(Blocks::never)),
             new Item.Settings()
     );
+    public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
     public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
@@ -73,6 +75,8 @@ public class Exploring extends Module {
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
     public final RegistryKey<ConfiguredFeature<?, ?>> ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("algae"));
     public final RegistryKey<PlacedFeature> ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("algae"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
+    public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
 
     public Exploring(String name) {
         super(name);
@@ -101,9 +105,17 @@ public class Exploring extends Module {
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 ALGAE_PLACED
         );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(BIRCH_TAG),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                DAFFODILS_PLACED
+        );
         BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {
                     context.getEffects().setParticleConfig(new BiomeParticleConfig(Beryllium.EXPLORING.FIREFLY_PARTICLE, 0.008f));
+                });
+        BiomeModifications.create(Beryllium.EXPLORING.id("swamp_water"))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.includeByKey(BiomeKeys.SWAMP), context -> {
                     context.getEffects().setWaterColor(0x6D6D5C);
                     context.getEffects().setWaterFogColor(0x6D6D5C);
                 });

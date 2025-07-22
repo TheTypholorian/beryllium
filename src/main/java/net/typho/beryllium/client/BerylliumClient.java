@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
@@ -27,6 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.biome.GrassColors;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.MagicWandItem;
 import net.typho.beryllium.combat.CopperArrowEntity;
@@ -73,6 +75,10 @@ public class BerylliumClient implements ClientModInitializer {
                 Beryllium.EXPLORING.FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
+        ParticleFactoryRegistry.getInstance().register(
+                Beryllium.EXPLORING.BIRCH_LEAVES_PARTICLE,
+                spriteProvider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> new LeavesParticle(world, x, y, z, spriteProvider)
+        );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
                 DyeColor color = stack.get(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT);
@@ -84,14 +90,25 @@ public class BerylliumClient implements ClientModInitializer {
                 return color.getSignColor() | 0xFF000000;
             }
 
-            return 0xFFFFFFFF;
+            return -1;
         }, Items.COMPASS);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
+            if (index != 0) {
+                return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
+            } else {
+                return -1;
+            }
+        }, Beryllium.EXPLORING.DAFFODILS);
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Beryllium.EXPLORING.FIREFLY_BOTTLE,
                 RenderLayer.getCutout()
         );
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Beryllium.EXPLORING.ALGAE_BLOCK,
+                RenderLayer.getCutout()
+        );
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Beryllium.EXPLORING.DAFFODILS,
                 RenderLayer.getCutout()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {

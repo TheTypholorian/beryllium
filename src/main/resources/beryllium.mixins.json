@@ -32,6 +32,7 @@
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
     "enchanting.TradeOffersMixin",
+    "exploring.BlocksMixin",
     "exploring.DesertPyramidStructureMixin",
     "exploring.DesertTempleGeneratorMixin",
     "exploring.GlassBottleItemMixin",
