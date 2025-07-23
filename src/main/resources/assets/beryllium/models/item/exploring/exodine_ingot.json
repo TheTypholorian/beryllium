@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "beryllium:item/exploring/exodine_ingot",
+    "layer1": "beryllium:item/exploring/exodine_ingot_tint"
+  }
+}

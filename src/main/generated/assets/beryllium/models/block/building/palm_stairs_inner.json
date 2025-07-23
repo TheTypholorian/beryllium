@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "beryllium:block/building/palm_planks",
+    "side": "beryllium:block/building/palm_planks",
+    "top": "beryllium:block/building/palm_planks"
+  }
+}

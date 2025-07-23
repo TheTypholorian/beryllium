@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerbedBlock;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
@@ -33,6 +34,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -53,7 +55,6 @@ import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.kiln.KilnRecipe;
 import net.typho.beryllium.exploring.AlgaeBlock;
 import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
-import net.typho.beryllium.mixin.client.VariantPoolFunctionsAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -133,6 +134,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(Beryllium.COMBAT.IRON_ARROW)
                     .add(Beryllium.COMBAT.FLAMING_ARROW)
                     .add(Beryllium.COMBAT.COPPER_ARROW);
+            getOrCreateTagBuilder(Beryllium.BUILDING.PALM_LOGS)
+                    .add(Beryllium.BUILDING.PALM_LOG.asItem())
+                    .add(Beryllium.BUILDING.STRIPPED_PALM_LOG.asItem());
         }
     }
 
@@ -143,12 +147,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         public static void family(BlockStateModelGenerator gen, BlockFamily family) {
             BlockStateModelGenerator.BlockTexturePool pool = gen.registerCubeAllModelTexturePool(family.getBaseBlock());
-
-            family.getVariants().forEach((variant, block) -> {
-                if (variant != null && block != null && block.asItem() != Items.AIR) {
-                    VariantPoolFunctionsAccessor.getVariantPools().get(variant).accept(pool, block);
-                }
-            });
+            pool.family(family);
         }
 
         @Override
@@ -157,6 +156,10 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             family(gen, Beryllium.BUILDING.CRACKED_STONE_BRICKS);
             family(gen, Beryllium.BUILDING.SMOOTH_STONE);
             family(gen, Beryllium.BUILDING.SNOW_BRICKS);
+            gen.registerLog(Beryllium.BUILDING.PALM_LOG);
+            gen.registerLog(Beryllium.BUILDING.STRIPPED_PALM_LOG);
+            family(gen, Beryllium.BUILDING.PALM_FAMILY);
+
             gen.registerFlowerbed(Beryllium.EXPLORING.DAFFODILS);
             gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
         }
@@ -169,7 +172,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.EXPLORING.EXODINE_INGOT, net.minecraft.data.client.Models.GENERATED);
 
             /*
             int directions = 32;
@@ -311,6 +313,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
+            offerPlanksRecipe(exporter, Beryllium.BUILDING.PALM_FAMILY.getBaseBlock(), Beryllium.BUILDING.PALM_LOGS, 4);
+            generateFamily(exporter, Beryllium.BUILDING.PALM_FAMILY, FeatureSet.empty());
+
             /*
             ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
                     .input(Blocks.STONE)
@@ -367,6 +372,15 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
             addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+            addDrop(Beryllium.BUILDING.PALM_LOG);
+            addDrop(Beryllium.BUILDING.STRIPPED_PALM_LOG);
+
+            Beryllium.BUILDING.PALM_FAMILY.getVariants().forEach((variant, block) -> {
+                if (block != null && block != Blocks.AIR) {
+                    addDrop(block);
+                }
+            });
         }
     }
 
@@ -563,6 +577,42 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
                     .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
                     .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_SLABS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.SLAB));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_STAIRS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.STAIRS));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_BUTTONS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.BUTTON));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_FENCES)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.FENCE));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.FENCE_GATES)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.FENCE_GATE));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_PRESSURE_PLATES)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.PRESSURE_PLATE));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SIGNS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.SIGN));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALL_SIGNS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.WALL_SIGN));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.CEILING_HANGING_SIGNS)
+                    .add(Beryllium.BUILDING.PALM_HANGING_SIGN);
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALL_HANGING_SIGNS)
+                    .add(Beryllium.BUILDING.PALM_WALL_HANGING_SIGN);
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_DOORS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.DOOR));
+
+            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WOODEN_TRAPDOORS)
+                    .add(Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.TRAPDOOR));
         }
     }
 

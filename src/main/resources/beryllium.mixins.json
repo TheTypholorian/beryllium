@@ -7,7 +7,6 @@
     "building.CookingRecipeDataGenMixin",
     "client.CompassItemMixin",
     "client.StructureVoidBlockMixin",
-    "client.VariantPoolFunctionsAccessor",
     "combat.ElytraItemMixin",
     "combat.EndCrystalEntityMixin",
     "combat.EndCrystalItemMixin",
@@ -42,7 +41,6 @@
     "redstone.TntBlockMixin"
   ],
   "client": [
-    "client.AtlasLoaderMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin",

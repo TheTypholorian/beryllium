@@ -1,6 +1,8 @@
 package net.typho.beryllium.building;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.type.BlockSetTypeBuilder;
+import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -15,9 +17,12 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.typho.beryllium.Module;
 import net.typho.beryllium.building.kiln.*;
@@ -58,6 +63,32 @@ public class Building extends Module {
             .wall(blockWithItem("snow_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .stairs(blockWithItem("snow_brick_stairs", new StairsBlock(Blocks.SNOW_BLOCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .slab(blockWithItem("snow_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+            .build();
+    public final BlockSetType PALM_BLOCK_SET = BlockSetTypeBuilder.copyOf(BlockSetType.OAK).build(id("palm"));
+    public final WoodType PALM_WOOD_TYPE = WoodTypeBuilder.copyOf(WoodType.OAK).register(id("palm"), PALM_BLOCK_SET);
+    public final TagKey<Item> PALM_LOGS = TagKey.of(RegistryKeys.ITEM, id("palm_logs"));
+    public final Block PALM_LOG = blockWithItem("palm_log", Blocks.createLogBlock(MapColor.OAK_TAN, MapColor.SPRUCE_BROWN), new Item.Settings());
+    public final Block STRIPPED_PALM_LOG = blockWithItem("stripped_palm_log", Blocks.createLogBlock(MapColor.OAK_TAN, MapColor.OAK_TAN), new Item.Settings());
+    public final Block PALM_HANGING_SIGN = blockWithItem("palm_hanging_sign", new HangingSignBlock(PALM_WOOD_TYPE, AbstractBlock.Settings.copy(Blocks.OAK_SIGN)), new Item.Settings());
+    public final Block PALM_WALL_HANGING_SIGN = blockWithItem("palm_wall_hanging_sign", new WallHangingSignBlock(PALM_WOOD_TYPE, AbstractBlock.Settings.copy(Blocks.OAK_SIGN)), new Item.Settings());
+    public final BlockFamily PALM_FAMILY = new BlockFamily.Builder(blockWithItem("palm_planks", new Block(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)), new Item.Settings()))
+            .button(blockWithItem("palm_button", Blocks.createWoodenButtonBlock(PALM_BLOCK_SET), new Item.Settings()))
+            .fence(blockWithItem("palm_fence", new FenceBlock(AbstractBlock.Settings.copy(Blocks.OAK_FENCE)), new Item.Settings()))
+            .fenceGate(blockWithItem("palm_fence_gate", new FenceGateBlock(PALM_WOOD_TYPE, AbstractBlock.Settings.copy(Blocks.OAK_FENCE_GATE)), new Item.Settings()))
+            .pressurePlate(blockWithItem("palm_pressure_plate", new PressurePlateBlock(PALM_BLOCK_SET, AbstractBlock.Settings.copy(Blocks.OAK_PRESSURE_PLATE)), new Item.Settings()))
+            .sign(blockWithItem("palm_sign", new SignBlock(PALM_WOOD_TYPE, AbstractBlock.Settings.copy(Blocks.OAK_SIGN)), new Item.Settings()),
+                    blockWithItem("palm_wall_sign", new WallSignBlock(PALM_WOOD_TYPE, AbstractBlock.Settings.copy(Blocks.OAK_WALL_SIGN)) {
+                        @Override
+                        public String getTranslationKey() {
+                            return Util.createTranslationKey("block", Registries.BLOCK.getId(this));
+                        }
+                    }, new Item.Settings()))
+            .slab(blockWithItem("palm_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.OAK_SLAB)), new Item.Settings()))
+            .stairs(blockWithItem("palm_stairs", new StairsBlock(Blocks.OAK_PLANKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.OAK_STAIRS)), new Item.Settings()))
+            .door(blockWithItem("palm_door", new DoorBlock(PALM_BLOCK_SET, AbstractBlock.Settings.copy(Blocks.OAK_DOOR)), new Item.Settings()))
+            .trapdoor(blockWithItem("palm_trapdoor", new TrapdoorBlock(PALM_BLOCK_SET, AbstractBlock.Settings.copy(Blocks.OAK_TRAPDOOR)), new Item.Settings()))
+            .group("wooden")
+            .unlockCriterionName("has_planks")
             .build();
 
     public Building(String name) {
@@ -100,5 +131,7 @@ public class Building extends Module {
                     );
                 });
         HandledScreens.register(KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
+        BlockEntityType.SIGN.addSupportedBlock(PALM_FAMILY.getVariant(BlockFamily.Variant.SIGN));
+        BlockEntityType.SIGN.addSupportedBlock(PALM_FAMILY.getVariant(BlockFamily.Variant.WALL_SIGN));
     }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-22T12:30:31.0825189	Beryllium/Recipes
+// 1.21.1	2025-07-22T19:26:14.7116266	Beryllium/Recipes
 83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
 8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
 43b366ea2a464d18213cf0b2fb254a2a4068b834 data\beryllium\recipe\exploring\metal_detector.json
@@ -15,8 +15,10 @@ b56e47b524cd4edee37c2abbc0517859c49a76c5 data\beryllium\advancement\recipes\comb
 457e2857007ef91e6b503acfd683bbf566891a83 data\beryllium\recipe\combat\flaming_arrow.json
 efc4107c09054178d0efbecd7ecfaed049f9d77e data\beryllium\recipe\building\kiln.json
 7165f8d8fa3b116d6002534bf2ae8b84326e821c data\beryllium\recipe\combat\diamond_scythe.json
+332e927dc8496e8c8787911979a2bf5bb4e1b97f data\beryllium\recipe\building\palm_planks.json
 6caf6a956edf3857f4758c4203861489b9a4f95d data\beryllium\advancement\recipes\combat\combat\flaming_arrow.json
 4a3aae2267d2ae75ce820fe0aa0d6f485b349d9a data\beryllium\advancement\recipes\combat\combat\netherite_glaive_smithing.json
+c9e5cfb1b335a643b2e35830c4ca7c550a5c65ec data\beryllium\advancement\recipes\building_blocks\building\palm_planks.json
 4d0df0c0224a58dd9cc3d7c5bb95aecfcd6cd045 data\beryllium\recipe\combat\diamond_glaive.json
 b1d9623c97b5141ef2e9f018ae7af32392c19b46 data\beryllium\advancement\recipes\combat\combat\diamond_scythe.json
 8e76fb7079a9d58c5ba4d582217aed2dfa8b4171 data\beryllium\advancement\recipes\combat\combat\iron_scythe.json

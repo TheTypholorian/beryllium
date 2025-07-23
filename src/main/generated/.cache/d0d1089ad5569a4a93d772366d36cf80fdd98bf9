@@ -1,6 +1,18 @@
-// 1.21.1	2025-07-22T12:30:31.0865179	Beryllium/Tags for minecraft:block
+// 1.21.1	2025-07-22T19:26:14.7156246	Beryllium/Tags for minecraft:block
 bde1684f9bf1c17c8fcf9ac63cec1d8ead5ba800 data\minecraft\tags\block\mineable\shovel.json
-28ee12862c2f56777aa2301d84c69403d1e0d63a data\minecraft\tags\block\mineable\pickaxe.json
+4ee31711ab10d7dddf59e9dfee4aac40d7c18535 data\minecraft\tags\block\wooden_pressure_plates.json
+418ba9dcd3080414d6caf1edbdbf35a000491fbc data\minecraft\tags\block\wooden_slabs.json
+d97659f27a65bbfc1b2726353e80b6370c39b81a data\minecraft\tags\block\ceiling_hanging_signs.json
 3227a93ad93fd3ddb488386e12f13766a4671d2f data\minecraft\tags\block\stairs.json
-86b0eacf1a78b5250811e5f3976eb9658576f779 data\minecraft\tags\block\slabs.json
+28ee12862c2f56777aa2301d84c69403d1e0d63a data\minecraft\tags\block\mineable\pickaxe.json
+f12409057ada66b0fca6201e4081b80eb31d541a data\minecraft\tags\block\fence_gates.json
+dd3559f6b5506790ad690d345c83c3ca92e8cbd2 data\minecraft\tags\block\wooden_fences.json
+29282db2e43236cebc9ead9bc6194089703a864e data\minecraft\tags\block\wooden_buttons.json
+560be93509c5d79fe8836588eebddfb5a5ae8b2e data\minecraft\tags\block\wooden_trapdoors.json
 07cdbb54d11e142487c69280f3c5f5b823f850aa data\minecraft\tags\block\walls.json
+46c8154de263010d208fea797932d15bdf8dfb5f data\minecraft\tags\block\signs.json
+7cd9b19f80008eeebea9d4630d3c9073916f4441 data\minecraft\tags\block\wooden_stairs.json
+3f3be03f4ec26a20dce10edfc40cacede8ddf541 data\minecraft\tags\block\wall_signs.json
+86b0eacf1a78b5250811e5f3976eb9658576f779 data\minecraft\tags\block\slabs.json
+b4bedc210568c2fc6802de82a40df5818dd224c9 data\minecraft\tags\block\wooden_doors.json
+3c33adbfcce6143b83c6cf594d52ac7aa59aceea data\minecraft\tags\block\wall_hanging_signs.json

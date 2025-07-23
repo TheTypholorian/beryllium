@@ -17,6 +17,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -94,14 +95,17 @@ public class BerylliumClient implements ClientModInitializer {
             return -1;
         }, Items.COMPASS);
         ColorProviderRegistry.ITEM.register((stack, index) -> {
-            float hue = (System.currentTimeMillis() % 10000) / 10000f;
-            float sat = (System.currentTimeMillis() % 7000) / 3500f - 1;
-            float b = (System.currentTimeMillis() % 5000) / 2500f - 1;
+            if (index == 1) {
+                float hue = (System.currentTimeMillis() % 10000) / 5000f - 1;
+                float sat = (System.currentTimeMillis() % 7000) / 3500f - 1;
 
-            sat = sat * sat;
-            b = b * b;
+                hue = hue * hue;
+                sat = sat * sat;
 
-            return Color.HSBtoRGB(hue, Math.abs(sat), Math.abs(b));
+                return Color.HSBtoRGB(Math.abs(hue), sat / 4 + 0.5f, 1);
+            }
+
+            return -1;
         }, Beryllium.EXPLORING.EXODINE_INGOT);
         ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
             if (index != 0) {
@@ -120,6 +124,14 @@ public class BerylliumClient implements ClientModInitializer {
         );
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Beryllium.EXPLORING.DAFFODILS,
+                RenderLayer.getCutout()
+        );
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.DOOR),
+                RenderLayer.getCutout()
+        );
+        BlockRenderLayerMap.INSTANCE.putBlock(
+                Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.TRAPDOOR),
                 RenderLayer.getCutout()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
