@@ -17,7 +17,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -124,14 +123,6 @@ public class BerylliumClient implements ClientModInitializer {
         );
         BlockRenderLayerMap.INSTANCE.putBlock(
                 Beryllium.EXPLORING.DAFFODILS,
-                RenderLayer.getCutout()
-        );
-        BlockRenderLayerMap.INSTANCE.putBlock(
-                Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.DOOR),
-                RenderLayer.getCutout()
-        );
-        BlockRenderLayerMap.INSTANCE.putBlock(
-                Beryllium.BUILDING.PALM_FAMILY.getVariant(BlockFamily.Variant.TRAPDOOR),
                 RenderLayer.getCutout()
         );
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {

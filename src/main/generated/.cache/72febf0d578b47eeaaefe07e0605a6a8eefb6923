@@ -1,5 +1,7 @@
-// 1.21.1	2025-07-22T19:26:14.7146247	Beryllium/
-5dfe3c209c9ca0a0a623d46929a42597ccbeb909 data\beryllium\worldgen\configured_feature\exploring\algae.json
+// 1.21.1	2025-07-23T14:40:04.036907	Beryllium/
+17e5b0547027fd83038b79ece74214f73575444e data\beryllium\worldgen\placed_feature\exploring\swamp_algae.json
+c18b892caf55b99e5d14872aabbbec1eefd1bf53 data\beryllium\worldgen\configured_feature\exploring\river_algae.json
+5dfe3c209c9ca0a0a623d46929a42597ccbeb909 data\beryllium\worldgen\configured_feature\exploring\swamp_algae.json
 5b54904034f45e75cd3444fe707a42ec3fed17c2 data\beryllium\worldgen\placed_feature\exploring\daffodils.json
-b2e7298a00b51cb54263f00c396427a11717492b data\beryllium\worldgen\placed_feature\exploring\algae.json
+59a70277b04e22fd5c3c343cf86d3cb1210279e4 data\beryllium\worldgen\placed_feature\exploring\river_algae.json
 7168a40b0c81ebb0d401a0e1afc35df4314c383d data\beryllium\worldgen\configured_feature\exploring\daffodils.json

@@ -72,8 +72,14 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         if (state.getOrEmpty(GENERATED).orElse(false)) {
-            BlockState below = world.getBlockState(pos.offset(Direction.DOWN));
-            return below.isOf(Blocks.WATER) || (below.isOf(this) && below.getOrEmpty(Properties.WATERLOGGED).orElse(false));
+            BlockState below = world.getBlockState(pos.down());
+
+            if (state.getOrEmpty(Properties.WATERLOGGED).orElse(false)) {
+                return true;
+                //return below.isSolidBlock(world, pos.down());
+            } else {
+                return below.isOf(Blocks.WATER) || (below.isOf(this) && below.getOrEmpty(Properties.WATERLOGGED).orElse(false));
+            }
         }
 
         boolean bl = false;

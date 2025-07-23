@@ -81,10 +81,12 @@ public class Exploring extends Module {
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
     public final Item EXODINE_INGOT = item("exodine_ingot", new Item(new Item.Settings()));
 
-    public final RegistryKey<ConfiguredFeature<?, ?>> ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("algae"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("swamp_algae"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("river_algae"));
     public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
 
-    public final RegistryKey<PlacedFeature> ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("algae"));
+    public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
+    public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
     public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
 
     public Exploring(String name) {
@@ -112,7 +114,12 @@ public class Exploring extends Module {
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
                 GenerationStep.Feature.VEGETAL_DECORATION,
-                ALGAE_PLACED
+                SWAMP_ALGAE_PLACED
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.includeByKey(BiomeKeys.RIVER),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                RIVER_ALGAE_PLACED
         );
         BiomeModifications.addFeature(
                 BiomeSelectors.tag(BIRCH_TAG),
