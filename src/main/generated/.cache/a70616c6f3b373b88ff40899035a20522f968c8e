@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-24T11:23:38.7958045	Beryllium/Model Definitions
+// 1.21.1	2025-07-24T12:09:13.3613965	Beryllium/Model Definitions
 ab730711f65c74565df4e861ea4fe48cacd71c6a assets\beryllium\blockstates\building\cracked_stone_brick_wall.json
 bccb5f66df6b4102fc93ed1442c25e80d3f1b445 assets\beryllium\blockstates\building\cracked_stone_brick_stairs.json
 478ed10bb9b812d7ffc56d039c9084b791f10f57 assets\beryllium\models\item\building\smooth_stone_stairs.json
@@ -34,8 +34,8 @@ a244ee105b927d0c7259043881d82bfd5799e129 assets\beryllium\models\block\building\
 d2bea9e76638422271857258216581d271cd6e6f assets\beryllium\blockstates\exploring\daffodils.json
 6208f26f3cd7feca1b8f130fa6c3aebc3b9d2d0b assets\beryllium\models\item\building\chiseled_snow_bricks.json
 50ea1ac41eeafd99682bc1ae66486c53ea215cc5 assets\beryllium\models\block\building\snow_brick_slab_top.json
-cbdbc990cf82626949f74f687799003e13ca3e8f assets\beryllium\models\block\building\cracked_stone_brick_stairs.json
 f8fed57ad1200bdf58efe4321c269cba97c1eb2b assets\beryllium\models\item\building\mossy_stone.json
+cbdbc990cf82626949f74f687799003e13ca3e8f assets\beryllium\models\block\building\cracked_stone_brick_stairs.json
 1221349f4ab8252cec6c24916612df7994124351 assets\beryllium\models\block\building\cracked_stone_brick_wall_side.json
 96e5aeb8eee5fdf45fe66afb99b19b7e04ee1614 assets\beryllium\models\block\building\snow_brick_slab.json
 afb97c6b3348f94b5bc02e6e05a82008230a58d9 assets\beryllium\models\block\exploring\geraniums_1.json
@@ -57,8 +57,8 @@ fd4ea2298cb87ccef8f62b56d0fb1633c59cf950 assets\beryllium\models\item\building\c
 2091f0d46ca7b80a55bc01616f1e2eca59fec2bd assets\beryllium\models\block\building\cracked_stone_brick_wall_inventory.json
 05580c560162713cd3d9b621eb0cb268912f3c0c assets\beryllium\models\block\building\chiseled_snow_bricks.json
 951e1bc8e621ceafa95e52be85bf6c0f0c941eec assets\beryllium\models\block\building\mossy_stone.json
-ec59fd67b62cf098da480d796afea3b01f829c02 assets\beryllium\models\block\exploring\geraniums_3.json
 c02d2391fe3ed5d01931234d45bb6de6fdc93650 assets\beryllium\models\item\building\magic_wand.json
+ec59fd67b62cf098da480d796afea3b01f829c02 assets\beryllium\models\block\exploring\geraniums_3.json
 9bba9b1e4ec77f9f4b60b34e86c7ed6d0301dc7b assets\beryllium\blockstates\building\smooth_stone_wall.json
 ddb827fd4d37ed2e6b13d57a21b57a260c4ef4d3 assets\beryllium\blockstates\building\snow_brick_wall.json
 bf926de4ed97435c744fd9494bc8d90f403d4610 assets\minecraft\blockstates\smooth_stone_slab.json
@@ -79,6 +79,7 @@ f7c4938d9f02245f89218598626e9a9a046c2578 assets\beryllium\models\block\building\
 3bcdd75e28683b45aff526be62891f5a4194a23c assets\beryllium\models\item\building\smooth_stone_wall.json
 70a958aed4f8234028175e51733de0c56106e4a1 assets\beryllium\models\block\building\mossy_stone_wall_post.json
 2fe19a14d80dc42266baa251ae9f6bf88830410d assets\beryllium\blockstates\exploring\scilla.json
+18db3a4cd51db03b45a72b7897706300be4cb5ab assets\beryllium\models\item\food\croissant.json
 53a2e8840f5d1fc4239b6290934d1c8f2d9410ee assets\beryllium\models\item\exploring\daffodils.json
 f4bda3b2f9cef8d218e651a7fb1b592df49c8266 assets\beryllium\models\block\building\smooth_stone_wall_inventory.json
 f0b0791dd4662255c5f8b4b79a331e60119bf202 assets\beryllium\models\block\building\mossy_stone_slab.json

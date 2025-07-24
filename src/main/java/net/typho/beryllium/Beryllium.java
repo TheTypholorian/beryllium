@@ -8,6 +8,7 @@ import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.enchanting.Enchanting;
 import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.food.Food;
 
 public class Beryllium implements ModInitializer {
     public static final String MOD_ID = "beryllium";
@@ -17,6 +18,7 @@ public class Beryllium implements ModInitializer {
     public static final Enchanting ENCHANTING = new Enchanting("enchanting");
     public static final Combat COMBAT = new Combat("combat");
     public static final Building BUILDING = new Building("building");
+    public static final Food FOOD = new Food("food");
 
     @Override
     public void onInitialize() {
@@ -24,6 +26,7 @@ public class Beryllium implements ModInitializer {
         COMBAT.onInitialize();
         EXPLORING.onInitialize();
         BUILDING.onInitialize();
+        FOOD.onInitialize();
     }
 
     public static class BerylliumConfig extends Config {

@@ -193,6 +193,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
             gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), net.minecraft.data.client.Models.GENERATED);
+            gen.register(Beryllium.FOOD.CROISSANT, net.minecraft.data.client.Models.GENERATED);
 
             /*
             int directions = 32;
@@ -330,6 +331,15 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .input('B', Items.IRON_INGOT)
                     .criterion("has_chiseled_stone_bricks", FabricRecipeProvider.conditionsFromItem(Items.CHISELED_STONE_BRICKS))
                     .offerTo(exporter, Identifier.ofVanilla("lodestone"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Beryllium.FOOD.CROISSANT, 1)
+                    .pattern("   ")
+                    .pattern(" C ")
+                    .pattern("WWW")
+                    .input('C', Items.COCOA_BEANS)
+                    .input('W', Items.WHEAT)
+                    .criterion("has_cocoa_beans", FabricRecipeProvider.conditionsFromItem(Items.COCOA_BEANS))
+                    .offerTo(exporter, Beryllium.FOOD.id("croissant"));
 
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
