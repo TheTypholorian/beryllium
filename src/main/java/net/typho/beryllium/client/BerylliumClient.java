@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -111,19 +110,18 @@ public class BerylliumClient implements ClientModInitializer {
 
             return -1;
         }, Beryllium.EXPLORING.EXODINE_INGOT);
-        BlockColorProvider grassTintColorProvider = (state, world, pos, index) -> {
+        ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
             if (index != 0) {
                 return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
             } else {
                 return -1;
             }
-        };
-        ColorProviderRegistry.BLOCK.register(grassTintColorProvider, Beryllium.EXPLORING.DAFFODILS);
-        ColorProviderRegistry.BLOCK.register(grassTintColorProvider, Beryllium.EXPLORING.SCILLA);
+        }, Beryllium.EXPLORING.DAFFODILS, Beryllium.EXPLORING.SCILLA, Beryllium.EXPLORING.GERANIUMS);
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.FIREFLY_BOTTLE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.ALGAE_BLOCK, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.DAFFODILS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.SCILLA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.GERANIUMS, RenderLayer.getCutout());
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;
 

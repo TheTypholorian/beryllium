@@ -116,6 +116,13 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                                     96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Beryllium.EXPLORING.SCILLA.getDefaultState()))))
                             )
                     ));
+            context.register(Beryllium.EXPLORING.GERANIUMS_CONFIGURED,
+                    new ConfiguredFeature<>(
+                            Feature.FLOWER,
+                            new RandomPatchFeatureConfig(
+                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Beryllium.EXPLORING.GERANIUMS.getDefaultState()))))
+                            )
+                    ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
             context.register(Beryllium.EXPLORING.SWAMP_ALGAE_PLACED, new PlacedFeature(
@@ -136,6 +143,11 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             context.register(Beryllium.EXPLORING.SCILLA_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
                             .getOrThrow(Beryllium.EXPLORING.SCILLA_CONFIGURED),
+                    List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
+            ));
+            context.register(Beryllium.EXPLORING.GERANIUMS_PLACED, new PlacedFeature(
+                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+                            .getOrThrow(Beryllium.EXPLORING.GERANIUMS_CONFIGURED),
                     List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
             ));
         });
@@ -160,7 +172,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.FLOWERS)
                     .add(Beryllium.EXPLORING.DAFFODILS.asItem())
-                    .add(Beryllium.EXPLORING.SCILLA.asItem());
+                    .add(Beryllium.EXPLORING.SCILLA.asItem())
+                    .add(Beryllium.EXPLORING.GERANIUMS.asItem());
         }
     }
 
@@ -183,6 +196,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
             gen.registerFlowerbed(Beryllium.EXPLORING.DAFFODILS);
             gen.registerFlowerbed(Beryllium.EXPLORING.SCILLA);
+            gen.registerFlowerbed(Beryllium.EXPLORING.GERANIUMS);
             gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
         }
 
@@ -394,6 +408,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
             addDrop(Beryllium.EXPLORING.DAFFODILS);
             addDrop(Beryllium.EXPLORING.SCILLA);
+            addDrop(Beryllium.EXPLORING.GERANIUMS);
         }
     }
 
@@ -593,19 +608,23 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.INSIDE_STEP_SOUND_BLOCKS)
                     .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA);
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SWORD_EFFICIENT)
                     .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA);
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.HOE_MINEABLE)
                     .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA);
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
 
             getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.FLOWERS)
                     .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA);
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
         }
     }
 
@@ -648,6 +667,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(BiomeKeys.TAIGA)
                     .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
                     .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA);
+            getOrCreateTagBuilder(Beryllium.EXPLORING.OAK_TAG)
+                    .add(BiomeKeys.FOREST);
         }
     }
 

@@ -52,6 +52,7 @@ public class Exploring extends Module {
     public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
     public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
     public final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, id("spruce"));
+    public final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, id("oak"));
 
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
@@ -71,6 +72,7 @@ public class Exploring extends Module {
     );
     public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block SCILLA = blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public final Block GERANIUMS = blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
             .replaceable()
@@ -91,11 +93,13 @@ public class Exploring extends Module {
     public final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("river_algae"));
     public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
     public final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("scilla"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("geraniums"));
 
     public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
     public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
     public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
     public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
+    public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
 
     public Exploring(String name) {
         super(name);
@@ -105,13 +109,14 @@ public class Exploring extends Module {
     public void onInitialize() {
         FlammableBlockRegistry.getDefaultInstance().add(DAFFODILS, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(SCILLA, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(GERANIUMS, 60, 100);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
                 .register(entries -> {
                     entries.addAfter(Items.COMPASS, METAL_DETECTOR_ITEM);
                 });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL)
                 .register(entries -> {
-                    entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA);
+                    entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA, GERANIUMS);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
@@ -140,6 +145,11 @@ public class Exploring extends Module {
                 BiomeSelectors.tag(SPRUCE_TAG),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 SCILLA_PLACED
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(OAK_TAG),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                GERANIUMS_PLACED
         );
         BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {

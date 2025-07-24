@@ -1,17 +1,20 @@
-// 1.21.1	2025-07-23T17:32:41.7763718	Beryllium/Block Loot Tables
+// 1.21.1	2025-07-24T07:33:23.9130828	Beryllium/Block Loot Tables
 c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
 823aa2bd92314f665daf8b979a8f018b6bd29e49 data\beryllium\loot_table\blocks\building\snow_brick_slab.json
 7f7a4ab31069deea80394c2cf3f23c51b67b0494 data\beryllium\loot_table\blocks\building\mossy_stone_wall.json
 558fd949ef939859dfba3f884bc08ecdced4620d data\beryllium\loot_table\blocks\building\chiseled_smooth_stone.json
 6be5ec84890dc5ff99ec3e8c7c1e1e15b357cc85 data\beryllium\loot_table\blocks\building\cracked_stone_brick_slab.json
+f699cc7adbde84053a035b5dff5c9c56c8aa488f data\beryllium\loot_table\blocks\exploring\scilla.json
 23b21c36d3fb760c2195c7fff2c8744fd2e7dfe0 data\beryllium\loot_table\blocks\building\smooth_stone_stairs.json
 0c0906cadb74709b06fce4abba9b8d838ce1cdc1 data\beryllium\loot_table\blocks\building\cracked_stone_brick_wall.json
 8f5f9ff32a6732b69a09184e257dfa194f384bf5 data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
 6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
+eccf263c39148be1cff723848e7389f848978e14 data\beryllium\loot_table\blocks\exploring\daffodils.json
 ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 72dfe4cde86b15dfc442fdd0bd46ee383994f5cd data\beryllium\loot_table\blocks\building\mossy_stone_stairs.json
 4c58071aa05faaba12cdf1216c7579249bcbbe10 data\beryllium\loot_table\blocks\building\mossy_stone.json
 2159247837a583ee1e8a23cef2d7ff887112adda data\beryllium\loot_table\blocks\building\chiseled_snow_bricks.json
+090a6b6859f536f94dfcd0ab06fcdd5309ce3bc4 data\beryllium\loot_table\blocks\exploring\geraniums.json
 6333226e71ab63c990d08892d50ad4d6672d9586 data\beryllium\loot_table\blocks\building\snow_bricks.json
 7a180bdc8cb4d652e8e862802d9f89867d9d4b8a data\beryllium\loot_table\blocks\building\snow_brick_wall.json
