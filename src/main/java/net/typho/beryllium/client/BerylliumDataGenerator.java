@@ -4,24 +4,42 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowerbedBlock;
+import net.minecraft.block.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.Models;
+import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
+import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.ApplyBonusLootFunction;
+import net.minecraft.predicate.StatePredicate;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
+import net.minecraft.recipe.book.CookingRecipeCategory;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
@@ -50,14 +68,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator gen) {
         FabricDataGenerator.Pack pack = gen.createPack();
 
-        pack.addProvider(ItemTags::new);
-        pack.addProvider(Models::new);
-        pack.addProvider(Recipes::new);
-        pack.addProvider(BlockLootTables::new);
-        pack.addProvider(BlockTags::new);
-        pack.addProvider(StructureTags::new);
-        pack.addProvider(BiomeTags::new);
-        pack.addProvider(Registries::new);
+        pack.addProvider(GenItemTags::new);
+        pack.addProvider(GenBlockTags::new);
+        pack.addProvider(GenStructureTags::new);
+        pack.addProvider(GenBiomeTags::new);
+        pack.addProvider(GenModels::new);
+        pack.addProvider(GenRecipes::new);
+        pack.addProvider(GenBlockLootTables::new);
+        pack.addProvider(GenRegistries::new);
     }
 
     public static DataPool.Builder<BlockState> allFlowerbedStates(BlockState state) {
@@ -138,32 +156,145 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         });
     }
 
-    public static class ItemTags extends FabricTagProvider.ItemTagProvider {
-        public ItemTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture, @Nullable BlockTagProvider blockTagProvider) {
+    public static class GenItemTags extends FabricTagProvider.ItemTagProvider {
+        public GenItemTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture, @Nullable BlockTagProvider blockTagProvider) {
             super(output, completableFuture, blockTagProvider);
         }
 
-        public ItemTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+        public GenItemTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
             super(output, completableFuture);
         }
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.ARROWS)
+            getOrCreateTagBuilder(ItemTags.ARROWS)
                     .add(Beryllium.COMBAT.DIAMOND_ARROW)
                     .add(Beryllium.COMBAT.IRON_ARROW)
                     .add(Beryllium.COMBAT.FLAMING_ARROW)
                     .add(Beryllium.COMBAT.COPPER_ARROW);
 
-            getOrCreateTagBuilder(net.minecraft.registry.tag.ItemTags.FLOWERS)
+            getOrCreateTagBuilder(ItemTags.FLOWERS)
                     .add(Beryllium.EXPLORING.DAFFODILS.asItem())
                     .add(Beryllium.EXPLORING.SCILLA.asItem())
                     .add(Beryllium.EXPLORING.GERANIUMS.asItem());
         }
     }
 
-    public static class Models extends FabricModelProvider {
-        public Models(FabricDataOutput output) {
+    public static class GenBlockTags extends FabricTagProvider.BlockTagProvider {
+        public GenBlockTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
+
+                    .add(Beryllium.BUILDING.KILN_BLOCK);
+
+            getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+            getOrCreateTagBuilder(BlockTags.WALLS)
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+
+            getOrCreateTagBuilder(BlockTags.STAIRS)
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+
+            getOrCreateTagBuilder(BlockTags.SLABS)
+                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+            getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
+                    .add(Beryllium.EXPLORING.DAFFODILS)
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
+
+            getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
+                    .add(Beryllium.EXPLORING.DAFFODILS)
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
+
+            getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
+                    .add(Beryllium.EXPLORING.DAFFODILS)
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
+
+            getOrCreateTagBuilder(BlockTags.FLOWERS)
+                    .add(Beryllium.EXPLORING.DAFFODILS)
+                    .add(Beryllium.EXPLORING.SCILLA)
+                    .add(Beryllium.EXPLORING.GERANIUMS);
+        }
+    }
+
+    public static class GenStructureTags extends FabricTagProvider<Structure> {
+        public GenStructureTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.STRUCTURE, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_bastion_maps")))
+                    .add(StructureKeys.BASTION_REMNANT);
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_fortress_maps")))
+                    .add(StructureKeys.FORTRESS);
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("spawn")))
+                    .add(StructureKeys.VILLAGE_PLAINS)
+                    .add(StructureKeys.VILLAGE_DESERT)
+                    .add(StructureKeys.VILLAGE_SAVANNA)
+                    .add(StructureKeys.VILLAGE_SNOWY)
+                    .add(StructureKeys.VILLAGE_TAIGA);
+        }
+    }
+
+    public static class GenBiomeTags extends FabricTagProvider<Biome> {
+        public GenBiomeTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.BIOME, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup lookup) {
+            getOrCreateTagBuilder(Beryllium.EXPLORING.HAS_FIREFLIES)
+                    .add(BiomeKeys.BIRCH_FOREST)
+                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
+                    .add(BiomeKeys.SWAMP)
+                    .add(BiomeKeys.MANGROVE_SWAMP);
+            getOrCreateTagBuilder(Beryllium.EXPLORING.BIRCH_TAG)
+                    .add(BiomeKeys.BIRCH_FOREST)
+                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST);
+            getOrCreateTagBuilder(Beryllium.EXPLORING.SPRUCE_TAG)
+                    .add(BiomeKeys.TAIGA)
+                    .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
+                    .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA);
+            getOrCreateTagBuilder(Beryllium.EXPLORING.OAK_TAG)
+                    .add(BiomeKeys.FOREST);
+        }
+    }
+
+    public static class GenModels extends FabricModelProvider {
+        public GenModels(FabricDataOutput output) {
             super(output);
         }
 
@@ -183,49 +314,24 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.registerFlowerbed(Beryllium.EXPLORING.SCILLA);
             gen.registerFlowerbed(Beryllium.EXPLORING.GERANIUMS);
             gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
+
+            gen.registerCrop(Beryllium.FOOD.LETTUCE, Properties.AGE_7, 0, 1, 2, 3, 4, 5, 6, 7);
         }
 
         @Override
         public void generateItemModels(ItemModelGenerator gen) {
-            gen.register(Beryllium.COMBAT.DIAMOND_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.COMBAT.IRON_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.COMBAT.FLAMING_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.COMBAT.COPPER_ARROW, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), net.minecraft.data.client.Models.GENERATED);
-            gen.register(Beryllium.FOOD.CROISSANT, net.minecraft.data.client.Models.GENERATED);
-
-            /*
-            int directions = 32;
-
-            for (int i = 0; i < directions; i++) {
-                String si = i < 10 ? "0" + i : String.valueOf(i);
-                float f = (float) i / directions;
-
-                JsonObject needleModel = new JsonObject();
-                needleModel.addProperty("parent", "minecraft:item/generated");
-
-                JsonArray overrides = new JsonArray();
-
-                for (DyeColor color : DyeColor.values()) {
-                    JsonObject predicate = new JsonObject();
-                    JsonObject angle = new JsonObject();
-                    angle.addProperty("angle", f);
-                    predicate.add("predicate", angle);
-                    predicate.addProperty("model", "beryllium:item/compass/" + color + "/" + si);
-                    overrides.add(predicate);
-                }
-
-                needleModel.add("overrides", overrides);
-
-                gen.writer.accept(Identifier.ofVanilla("item/compass/" + si), () -> needleModel);
-            }
-             */
+            gen.register(Beryllium.COMBAT.DIAMOND_ARROW, Models.GENERATED);
+            gen.register(Beryllium.COMBAT.IRON_ARROW, Models.GENERATED);
+            gen.register(Beryllium.COMBAT.FLAMING_ARROW, Models.GENERATED);
+            gen.register(Beryllium.COMBAT.COPPER_ARROW, Models.GENERATED);
+            gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, Models.GENERATED);
+            gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
+            gen.register(Beryllium.FOOD.CROISSANT, Models.GENERATED);
         }
     }
 
-    public static class Recipes extends FabricRecipeProvider {
-        public Recipes(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public static class GenRecipes extends FabricRecipeProvider {
+        public GenRecipes(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
         }
 
@@ -283,6 +389,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                 String group
         ) {
             offerMultipleOptions(exporter, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
+        }
+
+        public static CookingRecipeCategory getSmeltingRecipeCategory(ItemConvertible output) {
+            if (output.asItem().getComponents().contains(DataComponentTypes.FOOD)) {
+                return CookingRecipeCategory.FOOD;
+            } else {
+                return output.asItem() instanceof BlockItem ? CookingRecipeCategory.BLOCKS : CookingRecipeCategory.MISC;
+            }
         }
 
         public static void firingStone(RecipeExporter gen, List<ItemConvertible> inputs, ItemConvertible output, String group) {
@@ -344,17 +458,19 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
-            /*
-            ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
-                    .input(Blocks.STONE)
-                    .input(Blocks.VINE)
-                    .group("mossy_stone")
-                    .criterion("has_vine", conditionsFromItem(Blocks.VINE))
-                    .offerTo(exporter, convertBetween(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock(), Blocks.VINE));
+            BlockFamilies.STONE.getVariants().forEach((variant, stone) -> {
+                Block mossy = Beryllium.BUILDING.MOSSY_STONE.getVariant(variant);
 
-            generateFamily(exporter, Beryllium.BUILDING.MOSSY_STONE, FeatureSet.empty());
-            generateFamily(exporter, Beryllium.BUILDING.CRACKED_STONE_BRICKS, FeatureSet.empty());
-
+                if (mossy != null) {
+                    ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, mossy)
+                            .input(stone)
+                            .input(Blocks.VINE)
+                            .group("mossy_stone")
+                            .criterion("has_vine", conditionsFromItem(Blocks.VINE))
+                            .offerTo(exporter, convertBetween(mossy, Blocks.VINE));
+                }
+            });
+            firingStone(exporter, List.of(Blocks.COBBLESTONE), Blocks.STONE, "stone");
             BlockFamilies.STONE.getVariants().forEach((variant, stone) -> {
                 Block cobble = BlockFamilies.COBBLESTONE.getVariant(variant);
 
@@ -362,6 +478,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     firingStone(exporter, List.of(cobble), stone, "stone");
                 }
             });
+            firingStone(exporter, List.of(Blocks.STONE), Blocks.SMOOTH_STONE, "stone");
             Beryllium.BUILDING.SMOOTH_STONE.getVariants().forEach((variant, smooth) -> {
                 Block stone = BlockFamilies.STONE.getVariant(variant);
 
@@ -369,17 +486,132 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     firingStone(exporter, List.of(stone), smooth, "smooth_stone");
                 }
             });
-             */
+
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Items.CLAY_BALL), RecipeCategory.MISC, Items.BRICK, 0.3f, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_clay_ball", conditionsFromItem(Items.CLAY_BALL))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.CLAY), RecipeCategory.BUILDING_BLOCKS, Blocks.TERRACOTTA.asItem(), 0.35f, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_clay_block", conditionsFromItem(Blocks.CLAY))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.LOGS_THAT_BURN), RecipeCategory.MISC, Items.CHARCOAL, 0.15f, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_log", conditionsFromTag(ItemTags.LOGS_THAT_BURN))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.NETHERRACK), RecipeCategory.MISC, Items.NETHER_BRICK, 0.1f, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_netherrack", conditionsFromItem(Blocks.NETHERRACK))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.SMELTS_TO_GLASS), RecipeCategory.BUILDING_BLOCKS, Blocks.GLASS, 0.1f, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_smelts_to_glass", conditionsFromTag(ItemTags.SMELTS_TO_GLASS))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_SANDSTONE.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_sandstone", conditionsFromItem(Blocks.SANDSTONE))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.RED_SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_RED_SANDSTONE.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_red_sandstone", conditionsFromItem(Blocks.RED_SANDSTONE))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.QUARTZ_BLOCK), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_QUARTZ.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_quartz_block", conditionsFromItem(Blocks.QUARTZ_BLOCK))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.BLACK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLACK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_black_terracotta", conditionsFromItem(Blocks.BLACK_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_blue_terracotta", conditionsFromItem(Blocks.BLUE_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.BROWN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BROWN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_brown_terracotta", conditionsFromItem(Blocks.BROWN_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.CYAN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.CYAN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_cyan_terracotta", conditionsFromItem(Blocks.CYAN_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_gray_terracotta", conditionsFromItem(Blocks.GRAY_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.GREEN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GREEN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_green_terracotta", conditionsFromItem(Blocks.GREEN_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.LIGHT_BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_light_blue_terracotta", conditionsFromItem(Blocks.LIGHT_BLUE_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.LIGHT_GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_light_gray_terracotta", conditionsFromItem(Blocks.LIGHT_GRAY_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.LIME_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIME_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_lime_terracotta", conditionsFromItem(Blocks.LIME_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.MAGENTA_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_magenta_terracotta", conditionsFromItem(Blocks.MAGENTA_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.ORANGE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.ORANGE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_orange_terracotta", conditionsFromItem(Blocks.ORANGE_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.PINK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PINK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_pink_terracotta", conditionsFromItem(Blocks.PINK_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.PURPLE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PURPLE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_purple_terracotta", conditionsFromItem(Blocks.PURPLE_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.RED_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.RED_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_red_terracotta", conditionsFromItem(Blocks.RED_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.WHITE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.WHITE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_white_terracotta", conditionsFromItem(Blocks.WHITE_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(
+                            Ingredient.ofItems(Blocks.YELLOW_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.YELLOW_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                    )
+                    .criterion("has_yellow_terracotta", conditionsFromItem(Blocks.YELLOW_TERRACOTTA))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.BASALT), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_BASALT, 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_basalt", conditionsFromItem(Blocks.BASALT))
+                    .offerTo(exporter);
+            CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.COBBLED_DEEPSLATE), RecipeCategory.BUILDING_BLOCKS, Blocks.DEEPSLATE, 0.1F, 100, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                    .criterion("has_cobbled_deepslate", conditionsFromItem(Blocks.COBBLED_DEEPSLATE))
+                    .offerTo(exporter);
+
+            generateFamily(exporter, Beryllium.BUILDING.MOSSY_STONE, FeatureSet.empty());
+            generateFamily(exporter, Beryllium.BUILDING.CRACKED_STONE_BRICKS, FeatureSet.empty());
         }
     }
 
-    public static class BlockLootTables extends FabricBlockLootTableProvider {
-        public BlockLootTables(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public static class GenBlockLootTables extends FabricBlockLootTableProvider {
+        public GenBlockLootTables(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
             super(dataOutput, registryLookup);
         }
 
         @Override
         public void generate() {
+            RegistryWrapper.Impl<Enchantment> enchantments = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+
             addDrop(Beryllium.BUILDING.KILN_BLOCK);
 
             addDrop(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock());
@@ -401,127 +633,22 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
             addDrop(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
-            addDrop(Beryllium.EXPLORING.DAFFODILS);
-            addDrop(Beryllium.EXPLORING.SCILLA);
-            addDrop(Beryllium.EXPLORING.GERANIUMS);
+            addDrop(Beryllium.EXPLORING.DAFFODILS, flowerbedDrops(Beryllium.EXPLORING.DAFFODILS));
+            addDrop(Beryllium.EXPLORING.SCILLA, flowerbedDrops(Beryllium.EXPLORING.SCILLA));
+            addDrop(Beryllium.EXPLORING.GERANIUMS, flowerbedDrops(Beryllium.EXPLORING.GERANIUMS));
+
+            LootCondition.Builder lettuce = BlockStatePropertyLootCondition.builder(Beryllium.FOOD.LETTUCE)
+                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
+
+            addDrop(Beryllium.FOOD.LETTUCE, new LootTable.Builder()
+                    .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)))
+                    .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)).apply(ApplyBonusLootFunction.binomialWithBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
+            );
         }
     }
 
-    public static class BlockTags extends FabricTagProvider.BlockTagProvider {
-        public BlockTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.PICKAXE_MINEABLE)
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-
-                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
-
-                    .add(Beryllium.BUILDING.KILN_BLOCK);
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SHOVEL_MINEABLE)
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
-                    .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                    .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.INSIDE_STEP_SOUND_BLOCKS)
-                    .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA)
-                    .add(Beryllium.EXPLORING.GERANIUMS);
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SWORD_EFFICIENT)
-                    .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA)
-                    .add(Beryllium.EXPLORING.GERANIUMS);
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.HOE_MINEABLE)
-                    .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA)
-                    .add(Beryllium.EXPLORING.GERANIUMS);
-
-            getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.FLOWERS)
-                    .add(Beryllium.EXPLORING.DAFFODILS)
-                    .add(Beryllium.EXPLORING.SCILLA)
-                    .add(Beryllium.EXPLORING.GERANIUMS);
-        }
-    }
-
-    public static class StructureTags extends FabricTagProvider<Structure> {
-        public StructureTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, RegistryKeys.STRUCTURE, registriesFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_bastion_maps")))
-                    .add(StructureKeys.BASTION_REMNANT);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_fortress_maps")))
-                    .add(StructureKeys.FORTRESS);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("spawn")))
-                    .add(StructureKeys.VILLAGE_PLAINS)
-                    .add(StructureKeys.VILLAGE_DESERT)
-                    .add(StructureKeys.VILLAGE_SAVANNA)
-                    .add(StructureKeys.VILLAGE_SNOWY)
-                    .add(StructureKeys.VILLAGE_TAIGA);
-        }
-    }
-
-    public static class BiomeTags extends FabricTagProvider<Biome> {
-        public BiomeTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, RegistryKeys.BIOME, registriesFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(Beryllium.EXPLORING.HAS_FIREFLIES)
-                    .add(BiomeKeys.BIRCH_FOREST)
-                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
-                    .add(BiomeKeys.SWAMP)
-                    .add(BiomeKeys.MANGROVE_SWAMP);
-            getOrCreateTagBuilder(Beryllium.EXPLORING.BIRCH_TAG)
-                    .add(BiomeKeys.BIRCH_FOREST)
-                    .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST);
-            getOrCreateTagBuilder(Beryllium.EXPLORING.SPRUCE_TAG)
-                    .add(BiomeKeys.TAIGA)
-                    .add(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA)
-                    .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA);
-            getOrCreateTagBuilder(Beryllium.EXPLORING.OAK_TAG)
-                    .add(BiomeKeys.FOREST);
-        }
-    }
-
-    public static class Registries extends FabricDynamicRegistryProvider {
-        public Registries(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public static class GenRegistries extends FabricDynamicRegistryProvider {
+        public GenRegistries(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
             super(output, registriesFuture);
         }
 

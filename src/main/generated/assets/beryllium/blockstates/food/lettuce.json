@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "beryllium:block/food/lettuce_stage0"
+    },
+    "age=1": {
+      "model": "beryllium:block/food/lettuce_stage1"
+    },
+    "age=2": {
+      "model": "beryllium:block/food/lettuce_stage2"
+    },
+    "age=3": {
+      "model": "beryllium:block/food/lettuce_stage3"
+    },
+    "age=4": {
+      "model": "beryllium:block/food/lettuce_stage4"
+    },
+    "age=5": {
+      "model": "beryllium:block/food/lettuce_stage5"
+    },
+    "age=6": {
+      "model": "beryllium:block/food/lettuce_stage6"
+    },
+    "age=7": {
+      "model": "beryllium:block/food/lettuce_stage7"
+    }
+  }
+}
