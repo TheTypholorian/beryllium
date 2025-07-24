@@ -2,6 +2,7 @@ package net.typho.beryllium.mixin.exploring;
 
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleUtil;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
@@ -10,26 +11,22 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.util.function.Supplier;
+
 @Mixin(Blocks.class)
 public class BlocksMixin {
-    @Redirect(
-            method = "<clinit>",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/Blocks;createLeavesBlock(Lnet/minecraft/sound/BlockSoundGroup;)Lnet/minecraft/block/Block;",
-                    ordinal = 2
-            )
-    )
-    private static Block createBirchLeaves(BlockSoundGroup soundGroup) {
+    @Unique
+    private static LeavesBlock createLeaves(BlockSoundGroup sounds, Supplier<ParticleEffect> particle) {
         return new LeavesBlock(
                 AbstractBlock.Settings.create()
                         .mapColor(MapColor.DARK_GREEN)
                         .strength(0.2F)
                         .ticksRandomly()
-                        .sounds(soundGroup)
+                        .sounds(sounds)
                         .nonOpaque()
                         .allowsSpawning(Blocks::canSpawnOnLeaves)
                         .suffocates(Blocks::never)
@@ -47,10 +44,34 @@ public class BlocksMixin {
                     BlockState blockState = world.getBlockState(blockPos);
 
                     if (!isFaceFullSquare(blockState.getCollisionShape(world, blockPos), Direction.UP)) {
-                        ParticleUtil.spawnParticle(world, pos, random, Beryllium.EXPLORING.BIRCH_LEAVES_PARTICLE);
+                        ParticleUtil.spawnParticle(world, pos, random, particle.get());
                     }
                 }
             }
         };
+    }
+
+    @Redirect(
+            method = "<clinit>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/Blocks;createLeavesBlock(Lnet/minecraft/sound/BlockSoundGroup;)Lnet/minecraft/block/Block;",
+                    ordinal = 1
+            )
+    )
+    private static Block createSpruceLeaves(BlockSoundGroup sounds) {
+        return createLeaves(sounds, () -> Beryllium.EXPLORING.SPRUCE_LEAVES_PARTICLE);
+    }
+
+    @Redirect(
+            method = "<clinit>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/Blocks;createLeavesBlock(Lnet/minecraft/sound/BlockSoundGroup;)Lnet/minecraft/block/Block;",
+                    ordinal = 2
+            )
+    )
+    private static Block createBirchLeaves(BlockSoundGroup sounds) {
+        return createLeaves(sounds, () -> Beryllium.EXPLORING.BIRCH_LEAVES_PARTICLE);
     }
 }

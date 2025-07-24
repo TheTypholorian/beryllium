@@ -1,5 +1,6 @@
 package net.typho.beryllium.exploring;
 
+import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
@@ -9,6 +10,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -18,7 +21,17 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import net.typho.beryllium.Beryllium;
 
+import java.util.Map;
+
 public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Waterloggable {
+    private static final Map<Direction, Property<Boolean>> PROPERTIES_FOR_DIRECTIONS = Util.make(Maps.newEnumMap(Direction.class), properties -> {
+        properties.put(Direction.NORTH, Properties.UP);
+        properties.put(Direction.EAST, Properties.EAST);
+        properties.put(Direction.SOUTH, Properties.SOUTH);
+        properties.put(Direction.WEST, Properties.WEST);
+        properties.put(Direction.UP, Properties.UP);
+        properties.put(Direction.DOWN, Properties.DOWN);
+    });
     public static final BooleanProperty GENERATED = BooleanProperty.of("generated");
     public static final MapCodec<AlgaeBlock> CODEC = createCodec(AlgaeBlock::new);
     private final LichenGrower grower = new LichenGrower(this);
@@ -26,6 +39,18 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
     public AlgaeBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState().with(Properties.WATERLOGGED, false).with(GENERATED, false));
+    }
+
+    public static BlockState createFullState(BlockState state, WorldAccess world, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighbor = pos.offset(direction);
+
+            if (canGrowOn(world, direction, neighbor, world.getBlockState(neighbor))) {
+                state = state.with(PROPERTIES_FOR_DIRECTIONS.get(direction), true);
+            }
+        }
+
+        return state;
     }
 
     @Override
@@ -75,8 +100,7 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
             BlockState below = world.getBlockState(pos.down());
 
             if (state.getOrEmpty(Properties.WATERLOGGED).orElse(false)) {
-                return true;
-                //return below.isSolidBlock(world, pos.down());
+                return below.isSolidBlock(world, pos.down());
             } else {
                 return below.isOf(Blocks.WATER) || (below.isOf(this) && below.getOrEmpty(Properties.WATERLOGGED).orElse(false));
             }

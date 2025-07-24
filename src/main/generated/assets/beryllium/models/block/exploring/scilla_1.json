@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/flowerbed_1",
+  "textures": {
+    "flowerbed": "beryllium:block/exploring/scilla",
+    "stem": "beryllium:block/exploring/scilla_stem"
+  }
+}

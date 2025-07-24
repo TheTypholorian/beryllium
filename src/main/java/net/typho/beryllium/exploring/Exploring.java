@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.ComponentType;
@@ -44,11 +45,13 @@ public class Exploring extends Module {
     public final StructureProcessorType<ContainerContentsProcessor> CONTAINER_CONTENTS_PROCESSOR = Registry.register(Registries.STRUCTURE_PROCESSOR, id("container_contents"), () -> ContainerContentsProcessor.CODEC);
 
     public final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("firefly"), FabricParticleTypes.simple(false));
+    public final SimpleParticleType SPRUCE_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("spruce_leaves"), FabricParticleTypes.simple(false));
     public final SimpleParticleType BIRCH_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("birch_leaves"), FabricParticleTypes.simple(false));
 
     public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
     public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
     public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
+    public final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, id("spruce"));
 
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
@@ -67,6 +70,7 @@ public class Exploring extends Module {
             new Item.Settings()
     );
     public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public final Block SCILLA = blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
             .replaceable()
@@ -81,13 +85,17 @@ public class Exploring extends Module {
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
     public final Item EXODINE_INGOT = item("exodine_ingot", new Item(new Item.Settings()));
 
+    public final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, id("river_algae"), new RiverAlgaeFeature());
+
     public final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("swamp_algae"));
     public final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("river_algae"));
     public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("scilla"));
 
     public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
     public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
     public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
+    public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
 
     public Exploring(String name) {
         super(name);
@@ -95,13 +103,15 @@ public class Exploring extends Module {
 
     @Override
     public void onInitialize() {
+        FlammableBlockRegistry.getDefaultInstance().add(DAFFODILS, 60, 100);
+        FlammableBlockRegistry.getDefaultInstance().add(SCILLA, 60, 100);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS)
                 .register(entries -> {
                     entries.addAfter(Items.COMPASS, METAL_DETECTOR_ITEM);
                 });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL)
                 .register(entries -> {
-                    entries.addAfter(Items.PINK_PETALS, DAFFODILS);
+                    entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
@@ -125,6 +135,11 @@ public class Exploring extends Module {
                 BiomeSelectors.tag(BIRCH_TAG),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 DAFFODILS_PLACED
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.tag(SPRUCE_TAG),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                SCILLA_PLACED
         );
         BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {
