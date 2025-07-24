@@ -74,6 +74,6 @@ public class MagicWandItem extends Item {
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add(Text.translatable("tooltip.beryllium.magic_wand"));
+        tooltip.add(Text.translatable("tooltip.beryllium.building.magic_wand"));
     }
 }

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
@@ -14,7 +15,13 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.LootFunctionType;
+import net.minecraft.loot.function.SetCountLootFunction;
+import net.minecraft.loot.function.SetNameLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
@@ -24,6 +31,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.structure.processor.StructureProcessorType;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
@@ -160,6 +168,116 @@ public class Exploring extends Module {
                     context.getEffects().setWaterColor(0x6D6D5C);
                     context.getEffects().setWaterFogColor(0x6D6D5C);
                 });
+        LootTableEvents.MODIFY.register((key, builder, source, registries) -> {
+            switch (key.getValue().toString()) {
+                case "minecraft:chests/village/village_armorer": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.IRON_CHESTPLATE))
+                            .with(ItemEntry.builder(Items.IRON_LEGGINGS))
+                            .with(ItemEntry.builder(Items.IRON_BOOTS))
+                            .with(ItemEntry.builder(Items.SHIELD))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_butcher", "minecraft:chests/village/village_shepherd", "minecraft:chests/village/village_tannery", "minecraft:chests/village/village_temple": {
+                    builder.modifyPools(pool -> pool.bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_cartographer": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Beryllium.EXPLORING.FIREFLY_BOTTLE))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_desert_house": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.APPLE).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3)))));
+                    break;
+                }
+                case "minecraft:chests/village/village_fisher": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.FISHING_ROD).weight(4))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_fletcher": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.IRON_INGOT).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 2))))
+                            .with(ItemEntry.builder(Items.GRAVEL).weight(4).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 8))))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_mason": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.BRICK).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(Items.CRACKED_STONE_BRICKS).weight(2))
+                            .with(ItemEntry.builder(Items.CHISELED_STONE_BRICKS).weight(2))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_plains_house": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.WHEAT_SEEDS).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
+                            .with(ItemEntry.builder(Beryllium.EXPLORING.GERANIUMS)));
+                    break;
+                }
+                case "minecraft:chests/village/village_savanna_house": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.APPLE).weight(7).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(Items.WATER_BUCKET)));
+                    break;
+                }
+                case "minecraft:chests/village/village_snowy_house": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.ICE).weight(5)));
+                    break;
+                }
+                case "minecraft:chests/village/village_taiga_house": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Beryllium.EXPLORING.SCILLA)));
+                    break;
+                }
+                case "minecraft:chests/village/village_toolsmith": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.IRON_AXE).weight(5))
+                            .with(ItemEntry.builder(Items.IRON_HOE).weight(5))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/village/village_weaponsmith": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.IRON_LEGGINGS).weight(5))
+                            .with(ItemEntry.builder(Items.OBSIDIAN).weight(5).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 7))))
+                            .bonusRolls(new ConstantLootNumberProvider(3)));
+                    break;
+                }
+                case "minecraft:chests/jungle_temple": {
+                    builder.pool(LootPool.builder()
+                            .rolls(new ConstantLootNumberProvider(1))
+                            .with(ItemEntry.builder(Items.GOLDEN_HELMET))
+                            .with(ItemEntry.builder(Items.GOLDEN_CHESTPLATE))
+                            .with(ItemEntry.builder(Items.GOLDEN_LEGGINGS))
+                            .with(ItemEntry.builder(Items.GOLDEN_BOOTS))
+                    );
+                    builder.pool(LootPool.builder()
+                            .rolls(new ConstantLootNumberProvider(2))
+                            .with(ItemEntry.builder(Items.DIAMOND).weight(2).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 3))))
+                            .with(ItemEntry.builder(Items.EMERALD).weight(4).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 4))))
+                            .with(ItemEntry.builder(Items.GOLD_INGOT).weight(6).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(2, 4))))
+                            .with(ItemEntry.builder(Items.IRON_INGOT).weight(8).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(3, 5))))
+                    );
+                    break;
+                }
+                case "minecraft:gameplay/piglin_bartering": {
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.COMPASS).weight(40)
+                                    .apply(new ExplorationCompassLootFunction.Builder()
+                                            .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_bastion_maps")))
+                                            .searchRadius(100)
+                                            .withSkipExistingChunks(false)
+                                    )
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                            )
+                            .with(ItemEntry.builder(Items.COMPASS).weight(40)
+                                    .apply(new ExplorationCompassLootFunction.Builder()
+                                            .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_fortress_maps")))
+                                            .searchRadius(100)
+                                            .withSkipExistingChunks(false)
+                                    )
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                            ));
+
+                    break;
+                }
+            }
+        });
     }
 
     public static class Config extends ConfigSection {

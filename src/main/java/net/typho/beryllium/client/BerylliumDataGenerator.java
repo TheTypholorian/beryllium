@@ -12,29 +12,17 @@ import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.*;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.potion.Potions;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DataPool;
 import net.minecraft.util.math.Direction;
@@ -52,12 +40,10 @@ import net.minecraft.world.gen.structure.StructureKeys;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.kiln.KilnRecipe;
 import net.typho.beryllium.exploring.AlgaeBlock;
-import net.typho.beryllium.exploring.ExplorationCompassLootFunction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -68,7 +54,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(Models::new);
         pack.addProvider(Recipes::new);
         pack.addProvider(BlockLootTables::new);
-        pack.addProvider(ChestLootTables::new);
         pack.addProvider(BlockTags::new);
         pack.addProvider(StructureTags::new);
         pack.addProvider(BiomeTags::new);
@@ -409,153 +394,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.EXPLORING.DAFFODILS);
             addDrop(Beryllium.EXPLORING.SCILLA);
             addDrop(Beryllium.EXPLORING.GERANIUMS);
-        }
-    }
-
-    public static class ChestLootTables extends SimpleFabricLootTableProvider {
-        protected final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup;
-
-        public ChestLootTables(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-            super(output, registryLookup, LootContextTypes.BARTER);
-            this.registryLookup = registryLookup;
-        }
-
-        @Override
-        public void accept(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> out) {
-            RegistryWrapper.WrapperLookup lookup = registryLookup.join();
-
-            out.accept(LootTables.JUNGLE_TEMPLE_CHEST, LootTable.builder()
-                    .pool(LootPool.builder()
-                            .rolls(ConstantLootNumberProvider.create(4))
-                            .with(ItemEntry.builder(Items.DIAMOND).weight(10)
-                                    .apply(SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(1, 3)
-                                    ))
-                            )
-                            .with(ItemEntry.builder(Items.IRON_INGOT).weight(15)
-                                    .apply(SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(1, 5)
-                                    ))
-                            )
-                            .with(ItemEntry.builder(Items.GOLD_INGOT).weight(15)
-                                    .apply(SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(2, 7)
-                                    ))
-                            )
-                            .with(ItemEntry.builder(Items.EMERALD).weight(5)
-                                    .apply(SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(1, 3)
-                                    ))
-                            )
-                            .with(ItemEntry.builder(Items.SADDLE).weight(5))
-                            .with(ItemEntry.builder(Items.IRON_HORSE_ARMOR).weight(5))
-                            .with(ItemEntry.builder(Items.GOLDEN_HORSE_ARMOR).weight(5))
-                            .with(ItemEntry.builder(Items.DIAMOND_HORSE_ARMOR).weight(5))
-                            .with(ItemEntry.builder(Items.BOOK).weight(5)
-                                    .apply(EnchantWithLevelsLootFunction.builder(lookup, UniformLootNumberProvider.create(25, 35)))
-                            )
-                            .with(ItemEntry.builder(Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE).weight(20)
-                                    .apply(SetCountLootFunction.builder(
-                                            UniformLootNumberProvider.create(1, 2)
-                                    ))
-                            )
-                    ));
-
-            out.accept(LootTables.PIGLIN_BARTERING_GAMEPLAY, LootTable.builder()
-                    .pool(LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1))
-                    .with(ItemEntry.builder(Items.COMPASS).weight(40)
-                            .apply(new ExplorationCompassLootFunction.Builder()
-                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_bastion_maps")))
-                                    .searchRadius(100)
-                                    .withSkipExistingChunks(false)
-                            )
-                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
-                    )
-                    .with(ItemEntry.builder(Items.COMPASS).weight(40)
-                            .apply(new ExplorationCompassLootFunction.Builder()
-                                    .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_fortress_maps")))
-                                    .searchRadius(100)
-                                    .withSkipExistingChunks(false)
-                            )
-                            .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
-                    )
-                    .with(ItemEntry.builder(Items.BOOK).weight(5)
-                            .apply(new EnchantRandomlyLootFunction.Builder()
-                                    .option(lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SOUL_SPEED))
-                            )
-                    )
-                    .with(ItemEntry.builder(Items.IRON_BOOTS).weight(8)
-                            .apply(EnchantRandomlyLootFunction.builder(lookup)
-                                    .option(lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.SOUL_SPEED))
-                            )
-                    )
-                    .with(ItemEntry.builder(Items.POTION).weight(8)
-                            .apply(SetPotionLootFunction.builder(Potions.FIRE_RESISTANCE))
-                    )
-                    .with(ItemEntry.builder(Items.SPLASH_POTION).weight(8)
-                            .apply(SetPotionLootFunction.builder(Potions.FIRE_RESISTANCE))
-                    )
-                    .with(ItemEntry.builder(Items.POTION).weight(10)
-                            .apply(SetPotionLootFunction.builder(Potions.WATER))
-                    )
-                    .with(ItemEntry.builder(Items.IRON_NUGGET).weight(10)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(10, 36)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.ENDER_PEARL).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(2, 4)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.STRING).weight(20)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(3, 9)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.QUARTZ).weight(20)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(5, 12)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.OBSIDIAN).weight(40))
-                    .with(ItemEntry.builder(Items.CRYING_OBSIDIAN).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(1, 3)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.FIRE_CHARGE).weight(40))
-                    .with(ItemEntry.builder(Items.LEATHER).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(2, 4)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.SOUL_SAND).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(2, 8)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.NETHER_BRICK).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(2, 8)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.SPECTRAL_ARROW).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(6, 12)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.GRAVEL).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(8, 16)
-                            ))
-                    )
-                    .with(ItemEntry.builder(Items.BLACKSTONE).weight(40)
-                            .apply(SetCountLootFunction.builder(
-                                    UniformLootNumberProvider.create(8, 16)
-                            ))
-                    )));
         }
     }
 
