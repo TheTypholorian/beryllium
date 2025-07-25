@@ -39,6 +39,8 @@
     "exploring.JungleTempleStructureMixin",
     "exploring.MinecraftServerMixin",
     "food.SugarCaneBlockMixin",
+    "redstone.DispenserBlockMixin",
+    "redstone.HopperBlockEntityMixin",
     "redstone.TntBlockMixin"
   ],
   "client": [

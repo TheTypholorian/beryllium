@@ -44,7 +44,7 @@ public class SugarCaneBlockMixin {
 
         if (top.canPlaceAt(world, placePos)) {
             world.setBlockState(placePos, top);
-            world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), top.with(AGE, 15), Block.NO_REDRAW);
+            world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), top.with(AGE, 0), Block.NO_REDRAW);
         }
     }
 }

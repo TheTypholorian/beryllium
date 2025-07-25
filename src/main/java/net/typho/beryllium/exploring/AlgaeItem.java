@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
@@ -17,12 +17,9 @@ import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 
-public class AlgaeItem extends Item {
-    public final Block block;
-
-    public AlgaeItem(Settings settings, Block block) {
-        super(settings);
-        this.block = block;
+public class AlgaeItem extends BlockItem {
+    public AlgaeItem(Block block, Settings settings) {
+        super(block, settings);
     }
 
     @Override
@@ -35,7 +32,7 @@ public class AlgaeItem extends Item {
         ItemPlacementContext placement = new ItemPlacementContext(user, hand, stack, place);
 
         if (placement.canPlace()) {
-            BlockState state = block.getPlacementState(placement);
+            BlockState state = getBlock().getPlacementState(placement);
 
             if (state != null && state.canPlaceAt(world, place.getBlockPos())) {
                 world.setBlockState(placement.getBlockPos(), state);

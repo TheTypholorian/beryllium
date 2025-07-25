@@ -92,7 +92,7 @@ public class Exploring extends Module {
             .pistonBehavior(PistonBehavior.DESTROY)));
 
     public final Item METAL_DETECTOR_ITEM = item("metal_detector", new MetalDetectorItem(new Item.Settings()));
-    public final Item ALGAE_ITEM = item("algae", new AlgaeItem(new Item.Settings(), ALGAE_BLOCK));
+    public final Item ALGAE_ITEM = item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
     public final Item EXODINE_INGOT = item("exodine_ingot", new Item(new Item.Settings()));
 
     public final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, id("river_algae"), new RiverAlgaeFeature());

@@ -43,7 +43,7 @@
   ],
   "supported_items": "#minecraft:enchantable/armor",
   "weight": 10,
-  "catalyst": "minecraft:iron_block",
+  "catalyst": "minecraft:iron_ingot",
   "catalyst_count": 4,
   "capacity": 4
 }
