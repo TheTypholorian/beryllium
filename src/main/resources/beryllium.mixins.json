@@ -38,6 +38,7 @@
     "exploring.JungleTempleGeneratorMixin",
     "exploring.JungleTempleStructureMixin",
     "exploring.MinecraftServerMixin",
+    "food.SugarCaneBlockMixin",
     "redstone.TntBlockMixin"
   ],
   "client": [

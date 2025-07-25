@@ -156,6 +156,23 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         });
     }
 
+    public static class GenRegistries extends FabricDynamicRegistryProvider {
+        public GenRegistries(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
+            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE));
+            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE));
+        }
+
+        @Override
+        public String getName() {
+            return "";
+        }
+    }
+
     public static class GenItemTags extends FabricTagProvider.ItemTagProvider {
         public GenItemTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture, @Nullable BlockTagProvider blockTagProvider) {
             super(output, completableFuture, blockTagProvider);
@@ -644,23 +661,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)))
                     .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)).apply(ApplyBonusLootFunction.binomialWithBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
             );
-        }
-    }
-
-    public static class GenRegistries extends FabricDynamicRegistryProvider {
-        public GenRegistries(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
-            super(output, registriesFuture);
-        }
-
-        @Override
-        protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE));
-            entries.addAll(registries.getWrapperOrThrow(RegistryKeys.PLACED_FEATURE));
-        }
-
-        @Override
-        public String getName() {
-            return "";
         }
     }
 }

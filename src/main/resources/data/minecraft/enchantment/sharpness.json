@@ -33,7 +33,7 @@
   ],
   "supported_items": "#minecraft:enchantable/sharp_weapon",
   "weight": 10,
-  "catalyst": "minecraft:diamond",
+  "catalyst": "minecraft:blaze_rod",
   "catalyst_count": 4,
   "capacity": 3
 }

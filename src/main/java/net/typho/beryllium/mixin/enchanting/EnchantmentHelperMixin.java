@@ -41,10 +41,8 @@ public class EnchantmentHelperMixin {
                     for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
                         if (entry.getKey().value() == enchantment) {
                             if (l < entry.getIntValue()) {
-                                System.err.println("x");
                                 return;
                             } else if (l == entry.getIntValue() && enchantment.getMaxLevel() == l) {
-                                System.err.println("y");
                                 return;
                             } else {
                                 break;

@@ -29,19 +29,32 @@ import java.util.Optional;
 
 @Mixin(EnchantmentScreen.class)
 public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentScreenHandler> {
-    @Shadow @Final private static Identifier TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier TEXTURE;
 
-    @Shadow protected abstract void drawBook(DrawContext context, int x, int y, float delta);
+    @Shadow
+    protected abstract void drawBook(DrawContext context, int x, int y, float delta);
 
-    @Shadow @Final private static Identifier ENCHANTMENT_SLOT_DISABLED_TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier ENCHANTMENT_SLOT_DISABLED_TEXTURE;
 
-    @Shadow @Final private static Identifier[] LEVEL_DISABLED_TEXTURES;
+    @Shadow
+    @Final
+    private static Identifier[] LEVEL_DISABLED_TEXTURES;
 
-    @Shadow @Final private static Identifier ENCHANTMENT_SLOT_HIGHLIGHTED_TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier ENCHANTMENT_SLOT_HIGHLIGHTED_TEXTURE;
 
-    @Shadow @Final private static Identifier ENCHANTMENT_SLOT_TEXTURE;
+    @Shadow
+    @Final
+    private static Identifier ENCHANTMENT_SLOT_TEXTURE;
 
-    @Shadow @Final private static Identifier[] LEVEL_TEXTURES;
+    @Shadow
+    @Final
+    private static Identifier[] LEVEL_TEXTURES;
 
     public EnchantmentScreenMixin(EnchantmentScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

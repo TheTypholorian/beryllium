@@ -3,6 +3,7 @@ package net.typho.beryllium.exploring;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
@@ -25,14 +26,17 @@ public class LogBlock extends PillarBlock {
                         for (int z = -1; z <= 1; z++) {
                             if (x != 0 || y != 0 || z != 0) {
                                 BlockPos adj = pos.add(x, y, z);
-                                BlockState log = world.getBlockState(adj);
 
-                                if (log.getBlock() instanceof LogBlock block) {
-                                    if (world.breakBlock(adj, true, player)) {
-                                        held.damage(1, player, EquipmentSlot.MAINHAND);
+                                if (adj.isWithinDistance(player.getPos(), player.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE) * 2)) {
+                                    BlockState log = world.getBlockState(adj);
 
-                                        if (!held.isEmpty()) {
-                                            block.onBreak(world, adj, log, player);
+                                    if (log.getBlock() == this) {
+                                        if (world.breakBlock(adj, true, player)) {
+                                            held.damage(1, player, EquipmentSlot.MAINHAND);
+
+                                            if (!held.isEmpty()) {
+                                                log.getBlock().onBreak(world, adj, log, player);
+                                            }
                                         }
                                     }
                                 }

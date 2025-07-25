@@ -39,15 +39,25 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     @Final
     private Inventory inventory;
 
-    @Shadow @Final public int[] enchantmentPower;
+    @Shadow
+    @Final
+    public int[] enchantmentPower;
 
-    @Shadow @Final private ScreenHandlerContext context;
+    @Shadow
+    @Final
+    private ScreenHandlerContext context;
 
-    @Shadow @Final private Property seed;
+    @Shadow
+    @Final
+    private Property seed;
 
-    @Shadow @Final public int[] enchantmentId;
+    @Shadow
+    @Final
+    public int[] enchantmentId;
 
-    @Shadow @Final public int[] enchantmentLevel;
+    @Shadow
+    @Final
+    public int[] enchantmentLevel;
 
     protected EnchantmentScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);
@@ -105,31 +115,32 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     )
     public void quickMove(PlayerEntity player, int slot, CallbackInfoReturnable<ItemStack> cir) {
         ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot2 = this.slots.get(slot);
+        Slot slot2 = slots.get(slot);
 
         if (slot2.hasStack()) {
             ItemStack itemStack2 = slot2.getStack();
             itemStack = itemStack2.copy();
+
             if (slot == 0 || slot == 1 || slot == 2) {
-                if (!this.insertItem(itemStack2, 3, 39, true)) {
+                if (!insertItem(itemStack2, 3, 39, true)) {
                     cir.setReturnValue(ItemStack.EMPTY);
                 }
             } else if (itemStack2.isOf(Items.LAPIS_LAZULI)) {
-                if (!this.insertItem(itemStack2, 1, 2, true)) {
+                if (!insertItem(itemStack2, 1, 2, true)) {
                     cir.setReturnValue(ItemStack.EMPTY);
                 }
             } else {
-                if (this.slots.get(0).hasStack() || !this.slots.get(0).canInsert(itemStack2)) {
-                    if (this.slots.get(2).hasStack() || !this.slots.get(2).canInsert(itemStack2)) {
-                        cir.setReturnValue(ItemStack.EMPTY);
-                    } else {
-                        this.slots.get(2).setStack(itemStack2);
-                        slot2.setStack(ItemStack.EMPTY);
-                    }
-                } else {
+                if (!slots.getFirst().hasStack() && slots.getFirst().canInsert(itemStack2)) {
                     ItemStack itemStack3 = itemStack2.copyWithCount(1);
                     itemStack2.decrement(1);
-                    this.slots.get(0).setStack(itemStack3);
+                    slots.getFirst().setStack(itemStack3);
+                } else {
+                    if (!slots.get(2).hasStack() && slots.get(2).canInsert(itemStack2)) {
+                        slots.get(2).setStack(itemStack2);
+                        slot2.setStack(ItemStack.EMPTY);
+                    } else {
+                        cir.setReturnValue(ItemStack.EMPTY);
+                    }
                 }
             }
 
@@ -217,7 +228,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
                             player.incrementStat(Stats.ENCHANT_ITEM);
                             if (player instanceof ServerPlayerEntity) {
-                                Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, itemStack3, i);
+                                Criteria.ENCHANTED_ITEM.trigger((ServerPlayerEntity) player, itemStack3, i);
                             }
 
                             this.inventory.markDirty();
