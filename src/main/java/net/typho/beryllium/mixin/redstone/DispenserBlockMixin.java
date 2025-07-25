@@ -57,7 +57,7 @@ public class DispenserBlockMixin {
                 if (hardness != -1 && (!targetState.isToolRequired() || stack.isSuitableFor(targetState))) {
                     float delta = stack.getMiningSpeedMultiplier(targetState) / hardness;
 
-                    if (delta >= 4) {
+                    if (delta >= 3) {
                         pointer.world().breakBlock(targetPos, true);
 
                         ItemStack[] r = {stack};
