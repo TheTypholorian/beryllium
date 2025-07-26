@@ -42,8 +42,7 @@
     "redstone.CropBlockMixin",
     "redstone.DispenserBlockMixin",
     "redstone.HopperBlockEntityMixin",
-    "redstone.TntBlockMixin",
-    "redstone.WorldMixin"
+    "redstone.TntBlockMixin"
   ],
   "client": [
     "client.InGameHudMixin",

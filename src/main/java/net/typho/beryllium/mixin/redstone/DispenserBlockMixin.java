@@ -1,6 +1,7 @@
 package net.typho.beryllium.mixin.redstone;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -31,8 +32,6 @@ public class DispenserBlockMixin {
             BlockState targetState = pointer.world().getBlockState(targetPos);
 
             if (stack.getItem() instanceof BlockItem blockItem) {
-                stack.split(1);
-
                 Block block = blockItem.getBlock();
                 BlockState placeState = block.getDefaultState();
 
@@ -48,6 +47,7 @@ public class DispenserBlockMixin {
                             sounds.getPitch() * 0.8f
                     );
                     pointer.world().emitGameEvent(GameEvent.BLOCK_PLACE, targetPos, GameEvent.Emitter.of(placeState));
+                    stack.split(1);
                 } else {
                     setSuccess(false);
                 }
@@ -55,16 +55,20 @@ public class DispenserBlockMixin {
                 float hardness = targetState.getHardness(pointer.world(), targetPos);
 
                 if (hardness != -1 && (!targetState.isToolRequired() || stack.isSuitableFor(targetState))) {
-                    float delta = stack.getMiningSpeedMultiplier(targetState) / hardness;
+                    float delta = stack.getMiningSpeedMultiplier(targetState) / hardness / 30;
 
-                    if (delta >= 3) {
-                        pointer.world().breakBlock(targetPos, true);
-
-                        ItemStack[] r = {stack};
-                        stack.damage(1, pointer.world(), null, broken -> r[0] = broken.getDefaultStack());
-                        return r[0];
+                    if (FabricLoader.getInstance().isModLoaded("multimine")) {
+                        pointer.world().setBlockBreakingInfo(-1, targetPos, (int) (delta * 10));
                     } else {
-                        setSuccess(false);
+                        if (delta >= 0.1) {
+                            pointer.world().breakBlock(targetPos, true);
+
+                            ItemStack[] r = {stack};
+                            stack.damage(1, pointer.world(), null, broken -> r[0] = broken.getDefaultStack());
+                            return r[0];
+                        } else {
+                            setSuccess(false);
+                        }
                     }
                 } else {
                     setSuccess(false);

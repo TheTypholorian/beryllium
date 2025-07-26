@@ -482,6 +482,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
                     .offerTo(exporter, Identifier.ofVanilla("dispenser"));
 
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SLIME_BALL, 1)
+                    .input(Items.SUGAR)
+                    .input(Items.LIME_DYE)
+                    .criterion("has_lime_dye", FabricRecipeProvider.conditionsFromItem(Items.LIME_DYE))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("slimeball"));
+
+            offerSmelting(exporter, List.of(Items.SUGAR_CANE), RecipeCategory.MISC, Items.LIME_DYE, 1, 200, "lime_dye");
+
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
             offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
