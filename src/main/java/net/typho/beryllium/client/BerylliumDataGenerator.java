@@ -488,6 +488,36 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .criterion("has_lime_dye", FabricRecipeProvider.conditionsFromItem(Items.LIME_DYE))
                     .offerTo(exporter, Beryllium.EXPLORING.id("slimeball"));
 
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 4)
+                    .input(ItemTags.WOOL)
+                    .input(Items.SHEARS)
+                    .criterion("has_wool", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("string_from_wool"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 2)
+                    .input(ItemTags.WOOL_CARPETS)
+                    .input(Items.SHEARS)
+                    .criterion("has_carpet", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL_CARPETS))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("string_from_carpet"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.GRAVEL, 1)
+                    .input(Items.WATER_BUCKET)
+                    .input(Items.COBBLESTONE)
+                    .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("gravel_from_washing"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SAND, 1)
+                    .input(Items.WATER_BUCKET)
+                    .input(Items.GRAVEL)
+                    .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("sand_from_washing"));
+
+            ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.IRON_NUGGET, 1)
+                    .input(Items.WATER_BUCKET)
+                    .input(Items.SAND)
+                    .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
+                    .offerTo(exporter, Beryllium.EXPLORING.id("iron_nugget_from_washing"));
+
             offerSmelting(exporter, List.of(Items.SUGAR_CANE), RecipeCategory.MISC, Items.LIME_DYE, 1, 200, "lime_dye");
 
             offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");

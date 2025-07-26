@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "building.CookingRecipeDataGenMixin",
+    "building.ShearsItemMixin",
     "client.CompassItemMixin",
     "client.StructureVoidBlockMixin",
     "combat.ElytraItemMixin",
