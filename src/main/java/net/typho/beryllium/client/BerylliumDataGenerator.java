@@ -207,7 +207,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
                     .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
 
-                    .add(Beryllium.BUILDING.KILN_BLOCK);
+                    .add(Beryllium.BUILDING.KILN_BLOCK)
+
+                    .add(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
 
             getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
                     .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())

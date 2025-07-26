@@ -3,7 +3,7 @@
   "textures": {
     "particle": "#side",
     "top": "beryllium:block/redstone/gold_hopper_top",
-    "side": "beryllium:block/redstone/gold_hopper_outside",
+    "side": "beryllium:block/redstone/gold_hopper_side",
     "inside": "beryllium:block/redstone/gold_hopper_inside"
   }
 }

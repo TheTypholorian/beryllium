@@ -60,6 +60,17 @@ public class GoldHopperBlockEntity extends HopperBlockEntity {
     }
 
     @Override
+    public ItemStack removeStack(int slot, int amount) {
+        if (slot == 5) {
+            if (Thread.currentThread().getStackTrace()[3].getClassName().equals(HopperBlockEntity.class.getName())) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        return super.removeStack(slot, amount);
+    }
+
+    @Override
     public boolean supports(BlockState state) {
         return getType().supports(state);
     }
