@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-26T12:09:37.2646742	Beryllium/Block Loot Tables
+// 1.21.1	2025-07-26T16:51:59.0309604	Beryllium/Block Loot Tables
 c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
 823aa2bd92314f665daf8b979a8f018b6bd29e49 data\beryllium\loot_table\blocks\building\snow_brick_slab.json
 7f7a4ab31069deea80394c2cf3f23c51b67b0494 data\beryllium\loot_table\blocks\building\mossy_stone_wall.json
@@ -16,6 +16,5 @@ ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\buildi
 4c58071aa05faaba12cdf1216c7579249bcbbe10 data\beryllium\loot_table\blocks\building\mossy_stone.json
 2159247837a583ee1e8a23cef2d7ff887112adda data\beryllium\loot_table\blocks\building\chiseled_snow_bricks.json
 e8109442699683dd0df739afa43860e61558220c data\beryllium\loot_table\blocks\exploring\geraniums.json
-73bb83a34efb60cc4a0becc8708a17812cf2f7e5 data\beryllium\loot_table\blocks\food\lettuce.json
 6333226e71ab63c990d08892d50ad4d6672d9586 data\beryllium\loot_table\blocks\building\snow_bricks.json
 7a180bdc8cb4d652e8e862802d9f89867d9d4b8a data\beryllium\loot_table\blocks\building\snow_brick_wall.json

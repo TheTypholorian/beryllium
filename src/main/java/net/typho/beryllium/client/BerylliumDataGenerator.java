@@ -4,34 +4,23 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.*;
-import net.minecraft.block.*;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Models;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowerbedBlock;
+import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.ApplyBonusLootFunction;
-import net.minecraft.predicate.StatePredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
-import net.minecraft.recipe.book.CookingRecipeCategory;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
@@ -332,7 +321,21 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             gen.registerFlowerbed(Beryllium.EXPLORING.GERANIUMS);
             gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
 
-            gen.registerCrop(Beryllium.FOOD.LETTUCE, Properties.AGE_7, 0, 1, 2, 3, 4, 5, 6, 7);
+            Identifier goldHopper = ModelIds.getBlockModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
+            Identifier goldHopperSide = ModelIds.getBlockSubModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK, "_side");
+            gen.registerItemModel(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK.asItem());
+            gen.blockStateCollector
+                    .accept(
+                            VariantsBlockStateSupplier.create(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK)
+                                    .coordinate(
+                                            BlockStateVariantMap.create(Properties.HOPPER_FACING)
+                                                    .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopper))
+                                                    .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide))
+                                                    .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R90))
+                                                    .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R180))
+                                                    .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R270))
+                                    )
+                    );
         }
 
         @Override
@@ -408,14 +411,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             offerMultipleOptions(exporter, Beryllium.BUILDING.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
         }
 
-        public static CookingRecipeCategory getSmeltingRecipeCategory(ItemConvertible output) {
-            if (output.asItem().getComponents().contains(DataComponentTypes.FOOD)) {
-                return CookingRecipeCategory.FOOD;
-            } else {
-                return output.asItem() instanceof BlockItem ? CookingRecipeCategory.BLOCKS : CookingRecipeCategory.MISC;
-            }
-        }
-
         public static void firingStone(RecipeExporter gen, List<ItemConvertible> inputs, ItemConvertible output, String group) {
             offerFiring(gen, inputs, RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 100, group);
         }
@@ -481,6 +476,16 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .input('R', Items.REDSTONE)
                     .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
                     .offerTo(exporter, Identifier.ofVanilla("dispenser"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Beryllium.REDSTONE.GOLD_HOPPER_BLOCK, 1)
+                    .pattern("GRG")
+                    .pattern("GCG")
+                    .pattern(" G ")
+                    .input('G', Items.GOLD_INGOT)
+                    .input('R', Items.REDSTONE)
+                    .input('C', Items.CHEST)
+                    .criterion("has_gold_ingot", FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
+                    .offerTo(exporter, Beryllium.REDSTONE.id("gold_hopper"));
 
             ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SLIME_BALL, 1)
                     .input(Items.SUGAR)
@@ -675,8 +680,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         public void generate() {
-            RegistryWrapper.Impl<Enchantment> enchantments = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
-
             addDrop(Beryllium.BUILDING.KILN_BLOCK);
 
             addDrop(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock());
@@ -701,14 +704,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.EXPLORING.DAFFODILS, flowerbedDrops(Beryllium.EXPLORING.DAFFODILS));
             addDrop(Beryllium.EXPLORING.SCILLA, flowerbedDrops(Beryllium.EXPLORING.SCILLA));
             addDrop(Beryllium.EXPLORING.GERANIUMS, flowerbedDrops(Beryllium.EXPLORING.GERANIUMS));
-
-            LootCondition.Builder lettuce = BlockStatePropertyLootCondition.builder(Beryllium.FOOD.LETTUCE)
-                    .properties(StatePredicate.Builder.create().exactMatch(CropBlock.AGE, 7));
-
-            addDrop(Beryllium.FOOD.LETTUCE, new LootTable.Builder()
-                    .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)))
-                    .pool(new LootPool.Builder().conditionally(lettuce).with(ItemEntry.builder(Beryllium.FOOD.LETTUCE)).apply(ApplyBonusLootFunction.binomialWithBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE), 0.5714286F, 3)))
-            );
         }
     }
 }

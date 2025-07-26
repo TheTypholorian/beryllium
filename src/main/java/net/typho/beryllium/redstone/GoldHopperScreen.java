@@ -7,14 +7,15 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.typho.beryllium.Beryllium;
 
 @Environment(EnvType.CLIENT)
 public class GoldHopperScreen extends HandledScreen<GoldHopperScreenHandler> {
-    private static final Identifier TEXTURE = Identifier.ofVanilla("textures/gui/container/hopper.png");
+    private static final Identifier TEXTURE = Identifier.of(Beryllium.MOD_ID, "textures/gui/container/redstone/gold_hopper.png");
 
     public GoldHopperScreen(GoldHopperScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundHeight = 133;
+        this.backgroundHeight = 151;
         this.playerInventoryTitleY = this.backgroundHeight - 94;
     }
 

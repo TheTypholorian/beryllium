@@ -1,14 +1,18 @@
 package net.typho.beryllium.redstone;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GoldHopperScreenHandler extends ScreenHandler {
@@ -39,16 +43,26 @@ public class GoldHopperScreenHandler extends ScreenHandler {
             });
         }
 
-        addSlot(new Slot(inventory, SLOT_COUNT - 1, 80, 38));
+        addSlot(new Slot(inventory, SLOT_COUNT - 1, 80, 38) {
+            @Override
+            public int getMaxItemCount() {
+                return 1;
+            }
+
+            @Override
+            public @NotNull Pair<Identifier, Identifier> getBackgroundSprite() {
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, Identifier.ofVanilla("item/empty_slot_redstone_dust"));
+            }
+        });
 
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 9; k++) {
-                addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, j * 18 + 51));
+                addSlot(new Slot(playerInventory, k + j * 9 + 9, 8 + k * 18, j * 18 + 51 + 18));
             }
         }
 
         for (int j = 0; j < 9; j++) {
-            addSlot(new Slot(playerInventory, j, 8 + j * 18, 109));
+            addSlot(new Slot(playerInventory, j, 8 + j * 18, 109 + 18));
         }
     }
 

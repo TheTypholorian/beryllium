@@ -8,6 +8,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.typho.beryllium.Beryllium;
 
@@ -71,5 +72,10 @@ public class GoldHopperBlockEntity extends HopperBlockEntity {
     @Override
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
         return new GoldHopperScreenHandler(Beryllium.REDSTONE.GOLD_HOPPER_SCREEN_HANDLER_TYPE, syncId, playerInventory, this);
+    }
+
+    @Override
+    protected Text getContainerName() {
+        return Text.translatable("container.beryllium.redstone.gold_hopper");
     }
 }

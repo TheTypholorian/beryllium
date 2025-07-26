@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "GRG",
+    "GCG",
+    " G "
+  ],
+  "result": {
+    "count": 1,
+    "id": "beryllium:redstone/gold_hopper"
+  }
+}

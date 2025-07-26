@@ -1,7 +1,7 @@
-// 1.21.1	2025-07-26T12:09:37.2591667	Beryllium/Recipes
-83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
-8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
+// 1.21.1	2025-07-26T16:51:59.0249593	Beryllium/Recipes
 43b366ea2a464d18213cf0b2fb254a2a4068b834 data\beryllium\recipe\exploring\metal_detector.json
+8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
+83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
 93c2b7c0d84b694b366bf0deb84de4b0f1a6dc34 data\beryllium\recipe\terracotta.json
 f3ef3075fc6defd6689f0a985c1a96e60abce5b8 data\beryllium\recipe\leather_from_smoking_rotten_flesh.json
 fb290635c6757a29ebb2a1d6ef8c2c0de4e137ef data\beryllium\advancement\recipes\building_blocks\smooth_quartz.json
@@ -57,6 +57,7 @@ b009a2fabedee52f7307b852e65cd79f96212802 data\beryllium\advancement\recipes\buil
 a34143ecd59df716ec03433d6110d7236e14e660 data\beryllium\advancement\recipes\misc\exploring\string_from_carpet.json
 c65dc22c7612dfd8e4e955c011895e27af5dc160 data\beryllium\advancement\recipes\redstone\dispenser.json
 9b3b8a4088282912f5a8edda1bd78ae448c98e1c data\beryllium\recipe\gray_glazed_terracotta.json
+7fc34e1c069d133bc3fae203d3a947262d9c49bf data\beryllium\advancement\recipes\redstone\redstone\gold_hopper.json
 9f992b28149f8b649afc5f4cee71761938e878b3 data\beryllium\advancement\recipes\misc\leather_from_smoking_rotten_flesh.json
 30292d5e168f681d9645ce72b7f441e0bb2b9844 data\beryllium\advancement\recipes\building_blocks\stone_stairs_from_firing_cobblestone_stairs.json
 6e5ca086e9b089be9b83d3ff300c2394e67a83cd data\beryllium\recipe\dispenser.json
@@ -84,6 +85,7 @@ b1d9623c97b5141ef2e9f018ae7af32392c19b46 data\beryllium\advancement\recipes\comb
 f53d6555e6d62152903eb1905b1dde7fb6fb759a data\beryllium\recipe\stone_slab_from_firing_cobblestone_slab.json
 8eac2cd15c6021f1b821bd8470bca8b2b3511b56 data\beryllium\recipe\combat\golden_glaive.json
 2b58394c255488e33e668a8dfa1ec7c5274c974b data\beryllium\recipe\building\smooth_stone_stairs_from_firing_stone_stairs.json
+31420275e62e16cb625a63182d05489d062fadb1 data\beryllium\recipe\redstone\gold_hopper.json
 85df333db70522f41e0a813f9bc8e9ef3614d051 data\beryllium\advancement\recipes\building_blocks\smooth_basalt.json
 d8f263e3177321cffcef3b79acc43acbc4b7e882 data\beryllium\recipe\combat\iron_glaive.json
 b04a69a89e3a22af2a72ca82d7b93d8bf000d554 data\beryllium\advancement\recipes\decorations\blue_glazed_terracotta.json

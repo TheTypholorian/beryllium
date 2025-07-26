@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/crop",
-  "textures": {
-    "crop": "beryllium:block/food/lettuce_stage3"
-  }
-}

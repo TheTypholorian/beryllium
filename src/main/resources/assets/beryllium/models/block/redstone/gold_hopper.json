@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/hopper",
+  "textures": {
+    "particle": "#side",
+    "top": "beryllium:block/redstone/gold_hopper_top",
+    "side": "beryllium:block/redstone/gold_hopper_outside",
+    "inside": "beryllium:block/redstone/gold_hopper_inside"
+  }
+}
