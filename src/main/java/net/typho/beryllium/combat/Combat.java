@@ -1,8 +1,6 @@
 package net.typho.beryllium.combat;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
@@ -11,19 +9,11 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.typho.beryllium.Module;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
-import java.util.function.Predicate;
 
 public class Combat extends Module {
     public final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Registry.register(Registries.ENTITY_TYPE, id("diamond_arrow"), EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
@@ -115,47 +105,9 @@ public class Combat extends Module {
             id("golden_scythe"),
             new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.GOLD, 4, -3.4f)))
     );
-    public final RegistryKey<Enchantment> DASH_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, id("dash"));
-    public final RegistryKey<Enchantment> REEL_ENCHANTMENT = RegistryKey.of(RegistryKeys.ENCHANTMENT, id("reel"));
 
     public Combat(String name) {
         super(name);
-    }
-
-    public @Nullable EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance, double margin) {
-        World world = entity.getWorld();
-        double distance = maxDistance;
-        Entity found = null;
-        Vec3d foundPos = null;
-
-        for (Entity entity3 : world.getOtherEntities(entity, box, predicate)) {
-            Box box2 = entity3.getBoundingBox().expand(entity3.getTargetingMargin() + margin);
-            Optional<Vec3d> optional = box2.raycast(min, max);
-            if (box2.contains(min)) {
-                if (distance >= 0.0) {
-                    found = entity3;
-                    foundPos = optional.orElse(min);
-                    distance = 0.0;
-                }
-            } else if (optional.isPresent()) {
-                Vec3d vec3d2 = optional.get();
-                double e = min.squaredDistanceTo(vec3d2);
-                if (e < distance || distance == 0.0) {
-                    if (entity3.getRootVehicle() == entity.getRootVehicle()) {
-                        if (distance == 0.0) {
-                            found = entity3;
-                            foundPos = vec3d2;
-                        }
-                    } else {
-                        found = entity3;
-                        foundPos = vec3d2;
-                        distance = e;
-                    }
-                }
-            }
-        }
-
-        return found == null ? null : new EntityHitResult(found, foundPos);
     }
 
     @Override

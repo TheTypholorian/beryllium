@@ -9,7 +9,6 @@
     "beryllium:combat/vitality",
     "beryllium:combat/weightless",
     "beryllium:combat/cannibal",
-    "beryllium:combat/reel",
-    "beryllium:combat/dash"
+    "beryllium:combat/reeling"
   ]
 }

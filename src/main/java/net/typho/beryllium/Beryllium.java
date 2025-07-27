@@ -30,6 +30,27 @@ public class Beryllium implements ModInitializer {
         BUILDING.onInitialize();
         FOOD.onInitialize();
         REDSTONE.onInitialize();
+
+        /*
+        try {
+            Path projectRoot = Paths.get(System.getProperty("user.dir")).getParent();
+            Path srcJava = projectRoot.resolve("src").resolve("main").resolve("java");
+            try (Stream<Path> paths = Files.walk(srcJava)) {
+                System.out.println(paths
+                        .filter(Files::isRegularFile)
+                        .mapToLong(path -> {
+                            try {
+                                return Files.lines(path).count();
+                            } catch (IOException e) {
+                                return 0L;
+                            }
+                        })
+                        .sum());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+         */
     }
 
     public static class BerylliumConfig extends Config {

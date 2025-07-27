@@ -1,0 +1,23 @@
+{
+  "description": {
+    "translate": "enchantment.beryllium.combat.reeling"
+  },
+  "supported_items": "minecraft:trident",
+  "weight": 1,
+  "max_level": 3,
+  "min_cost": {
+    "base": 3,
+    "per_level_above_first": 4
+  },
+  "max_cost": {
+    "base": 10,
+    "per_level_above_first": 5
+  },
+  "anvil_cost": 10,
+  "slots": [
+    "mainhand"
+  ],
+  "catalyst": "minecraft:chain",
+  "catalyst_count": 4,
+  "capacity": 4
+}
