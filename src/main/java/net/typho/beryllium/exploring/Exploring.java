@@ -65,8 +65,8 @@ public class Exploring extends Module {
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
                     "firefly_bottle",
-                    new FireflyBottleBlock(AbstractBlock.Settings.create()
-                            .strength(0f)
+                    new Block(AbstractBlock.Settings.create()
+                            .strength(0)
                             .pistonBehavior(PistonBehavior.DESTROY)
                             .emissiveLighting((state, world, pos) -> true)
                             .luminance(state -> 3)
