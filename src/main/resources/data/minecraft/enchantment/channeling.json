@@ -110,7 +110,7 @@
   ],
   "supported_items": "#minecraft:enchantable/trident",
   "weight": 1,
-  "catalyst": "minecraft:lightning_rod",
+  "catalyst": "minecraft:copper_ingot",
   "catalyst_count": 4,
   "capacity": 4
 }

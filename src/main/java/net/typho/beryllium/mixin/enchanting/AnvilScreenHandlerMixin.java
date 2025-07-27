@@ -12,6 +12,7 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.enchanting.BalancedEnchantment;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -97,7 +98,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
             int srcLevel = EnchantmentHelper.getLevel(enchant, output);
 
             if (srcLevel == level) {
-                if (level != enchant.value().getMaxLevel()) {
+                if (level != enchant.value().getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(output)) {
                     cost += level++;
                 }
             } else if (srcLevel > level) {

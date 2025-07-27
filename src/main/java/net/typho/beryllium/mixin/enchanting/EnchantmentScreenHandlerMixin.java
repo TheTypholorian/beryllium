@@ -1,17 +1,21 @@
 package net.typho.beryllium.mixin.enchanting;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.screen.*;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,6 +24,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.random.Random;
 import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,6 +36,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mixin(EnchantmentScreenHandler.class)
@@ -58,6 +64,8 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     @Shadow
     @Final
     public int[] enchantmentLevel;
+
+    @Shadow @Final private Random random;
 
     protected EnchantmentScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);
@@ -204,7 +212,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                             boolean hasApplied = false;
                             for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(itemStack3).getEnchantmentEntries()) {
                                 if (entry.getKey() == enchant) {
-                                    if (level == entry.getIntValue() && level != enchant.value().getMaxLevel()) {
+                                    if (level == entry.getIntValue() && level != enchant.value().getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(itemStack3)) {
                                         itemStack3.addEnchantment(enchant, level + 1);
                                         hasApplied = true;
                                         break;
@@ -255,6 +263,24 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     )
     public boolean isEnchantableRedirect(ItemStack stack) {
         return stack.getItem().isEnchantable(stack);
+    }
+
+    /**
+     * @author The Typhothanian
+     * @reason Bugfix for possible enchantments that are locked out by seed
+     */
+    @Inject(
+            method = "generateEnchantments",
+            at = @At(
+                    value = "RETURN",
+                    ordinal = 1
+            ),
+            cancellable = true
+    )
+    private void generateEnchantments(DynamicRegistryManager registryManager, ItemStack stack, int slot, int level, CallbackInfoReturnable<List<EnchantmentLevelEntry>> cir, @Local Optional<RegistryEntryList.Named<Enchantment>> optional) {
+        if (cir.getReturnValue().isEmpty()) {
+            cir.setReturnValue(Beryllium.ENCHANTING.getAnyPossibleEntries(stack, optional.orElseThrow().stream()));
+        }
     }
 
     @Mixin(targets = "net.minecraft.screen.EnchantmentScreenHandler$2")

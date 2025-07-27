@@ -1,14 +1,17 @@
 package net.typho.beryllium.enchanting;
 
+import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -56,6 +59,47 @@ public class Enchanting extends Module {
         }
 
         return builder.toString();
+    }
+
+    public List<EnchantmentLevelEntry> getAnyPossibleEntries(ItemStack stack, Stream<RegistryEntry<Enchantment>> possibleEnchantments) {
+        List<EnchantmentLevelEntry> list = Lists.newArrayList();
+        boolean bl = stack.isOf(Items.BOOK);
+
+        possibleEnchantments.filter(enchantment -> (enchantment.value().isPrimaryItem(stack) || bl) && enchantment.value().isAcceptableItem(stack)).forEach(enchantmentx -> {
+            Enchantment enchantment = enchantmentx.value();
+
+            for (int l = enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
+                for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
+                    if (entry.getKey().value() == enchantment) {
+                        if (l < entry.getIntValue()) {
+                            return;
+                        } else if (l == entry.getIntValue() && enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack) == l) {
+                            return;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                list.add(new EnchantmentLevelEntry(enchantmentx, l));
+            }
+        });
+
+        return list;
+    }
+
+    public int getExtraLevels(ItemStack stack) {
+        if (stack.getItem() instanceof ToolItem tool) {
+            if (tool.getMaterial() == ToolMaterials.GOLD) {
+                return 1;
+            }
+        } else if (stack.getItem() instanceof ArmorItem armor) {
+            if (armor.getMaterial() == ArmorMaterials.GOLD) {
+                return 1;
+            }
+        }
+
+        return 0;
     }
 
     public int getMaxEnchCapacity(ItemStack stack) {

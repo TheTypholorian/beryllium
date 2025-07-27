@@ -10,6 +10,7 @@
     "beryllium:building/smooth_stone_wall",
     "beryllium:building/smooth_stone_stairs",
     "beryllium:building/chiseled_smooth_stone",
-    "beryllium:building/kiln"
+    "beryllium:building/kiln",
+    "beryllium:redstone/gold_hopper"
   ]
 }

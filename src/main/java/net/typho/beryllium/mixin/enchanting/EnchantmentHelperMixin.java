@@ -36,13 +36,13 @@ public class EnchantmentHelperMixin {
         possibleEnchantments.filter(enchantment -> (enchantment.value().isPrimaryItem(stack) || bl) && enchantment.value().isAcceptableItem(stack)).forEach(enchantmentx -> {
             Enchantment enchantment = enchantmentx.value();
 
-            for (int l = enchantment.getMaxLevel(); l >= enchantment.getMinLevel(); l--) {
+            for (int l = enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
                 if (level >= enchantment.getMinPower(l) && level <= enchantment.getMaxPower(l)) {
                     for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
                         if (entry.getKey().value() == enchantment) {
                             if (l < entry.getIntValue()) {
                                 return;
-                            } else if (l == entry.getIntValue() && enchantment.getMaxLevel() == l) {
+                            } else if (l == entry.getIntValue() && enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack) == l) {
                                 return;
                             } else {
                                 break;
