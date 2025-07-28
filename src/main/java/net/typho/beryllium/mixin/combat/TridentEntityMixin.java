@@ -57,10 +57,10 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 byte loyalty = dataTracker.get(LOYALTY);
 
                 if (loyalty > 0) {
-                    hit.getEntity().setVelocity(getOwner().getPos().subtract(getPos()).normalize().multiply(reeling));
+                    hit.getEntity().addVelocity(getOwner().getPos().subtract(getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierLoyal));
                     hit.getEntity().velocityModified = true;
                 } else {
-                    getOwner().setVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * 2));
+                    getOwner().addVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierNotLoyal));
                     getOwner().velocityModified = true;
                 }
             }
@@ -83,7 +83,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 byte loyalty = dataTracker.get(LOYALTY);
 
                 if (loyalty <= 0) {
-                    getOwner().setVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * 2));
+                    getOwner().addVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierNotLoyal));
                     getOwner().velocityModified = true;
                 }
             }

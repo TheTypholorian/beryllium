@@ -1,9 +1,12 @@
 package net.typho.beryllium.mixin.combat;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.combat.ScytheItem;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +22,8 @@ public abstract class LivingEntityMixin {
     @Shadow
     @NotNull
     public abstract ItemStack getWeaponStack();
+
+    @Shadow protected ItemStack activeItemStack;
 
     @Redirect(
             method = "damage",
@@ -68,5 +73,46 @@ public abstract class LivingEntityMixin {
         if (getWeaponStack().getItem() instanceof ScytheItem) {
             cir.setReturnValue(true);
         }
+    }
+
+    @Redirect(
+            method = "damage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;takeShieldHit(Lnet/minecraft/entity/LivingEntity;)V"
+            )
+    )
+    private void damageShieldHit(LivingEntity instance, LivingEntity attacker, @Local(ordinal = 2) float amount) {
+        ItemStack shield = activeItemStack;
+        float durability = shield.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue() - amount;
+
+        if (durability <= 0) {
+            durability = Beryllium.CONFIG.combat.shieldMaxDurability;
+
+            if ((Object) this instanceof PlayerEntity player) {
+                player.disableShield();
+            }
+        }
+
+        shield.set(Beryllium.COMBAT.SHIELD_DURABILITY, durability);
+    }
+
+    @Inject(
+            method = "takeShieldHit",
+            at = @At("HEAD")
+    )
+    private void takeShieldHit(LivingEntity attacker, CallbackInfo ci) {
+        ItemStack shield = activeItemStack;
+        float durability = shield.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue() - 1;
+
+        if (durability <= 0) {
+            durability = Beryllium.CONFIG.combat.shieldMaxDurability;
+
+            if ((Object) this instanceof PlayerEntity player) {
+                player.disableShield();
+            }
+        }
+
+        shield.set(Beryllium.COMBAT.SHIELD_DURABILITY, durability);
     }
 }

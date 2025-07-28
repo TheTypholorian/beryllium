@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.MaceItem;
 import net.minecraft.server.world.ServerWorld;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,20 +22,22 @@ public class MaceItemMixin {
             cancellable = true
     )
     private void getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource, CallbackInfoReturnable<Float> cir) {
-        if (damageSource.getSource() instanceof LivingEntity livingEntity) {
-            if (!shouldDealAdditionalDamage(livingEntity)) {
-                cir.setReturnValue(0f);
-            } else {
-                float height = livingEntity.fallDistance;
+        if (Beryllium.CONFIG.combat.maceRebalance) {
+            if (damageSource.getSource() instanceof LivingEntity livingEntity) {
+                if (!shouldDealAdditionalDamage(livingEntity)) {
+                    cir.setReturnValue(0f);
+                } else {
+                    float height = livingEntity.fallDistance;
 
-                if (livingEntity.getWorld() instanceof ServerWorld serverWorld) {
-                    height += EnchantmentHelper.getSmashDamagePerFallenBlock(serverWorld, livingEntity.getWeaponStack(), target, damageSource, 0);
+                    if (livingEntity.getWorld() instanceof ServerWorld serverWorld) {
+                        height += EnchantmentHelper.getSmashDamagePerFallenBlock(serverWorld, livingEntity.getWeaponStack(), target, damageSource, 0);
+                    }
+
+                    cir.setReturnValue((float) (15 * Math.cbrt(height / 20)));
                 }
-
-                cir.setReturnValue((float) (15 * Math.cbrt(height / 20)));
+            } else {
+                cir.setReturnValue(0f);
             }
-        } else {
-            cir.setReturnValue(0f);
         }
     }
 }

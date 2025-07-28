@@ -6,6 +6,7 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -26,7 +27,7 @@ public class RangedWeaponItemMixin {
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void onClassInit(CallbackInfo ci) {
-        CROSSBOW_HELD_PROJECTILES = CROSSBOW_HELD_PROJECTILES.or(stack -> stack.isOf(Items.END_CRYSTAL)); //  || stack.isOf(Items.WIND_CHARGE)
+        CROSSBOW_HELD_PROJECTILES = CROSSBOW_HELD_PROJECTILES.or(stack -> Beryllium.CONFIG.combat.crossbowEndCrystals && stack.isOf(Items.END_CRYSTAL));
     }
 
     @Inject(method = "createArrowEntity", at = @At("HEAD"), cancellable = true)

@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-26T17:36:24.3914523	Beryllium/Block Loot Tables
+// 1.21.1	2025-07-27T11:16:29.7947412	Beryllium/Block Loot Tables
 c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
 823aa2bd92314f665daf8b979a8f018b6bd29e49 data\beryllium\loot_table\blocks\building\snow_brick_slab.json
 7f7a4ab31069deea80394c2cf3f23c51b67b0494 data\beryllium\loot_table\blocks\building\mossy_stone_wall.json
@@ -12,6 +12,7 @@ c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\buildi
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
 ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
+d5e9be84fd7ffd07a7014fcb9a4b9148a53809ac data\beryllium\loot_table\blocks\redstone\gold_hopper.json
 72dfe4cde86b15dfc442fdd0bd46ee383994f5cd data\beryllium\loot_table\blocks\building\mossy_stone_stairs.json
 4c58071aa05faaba12cdf1216c7579249bcbbe10 data\beryllium\loot_table\blocks\building\mossy_stone.json
 2159247837a583ee1e8a23cef2d7ff887112adda data\beryllium\loot_table\blocks\building\chiseled_snow_bricks.json

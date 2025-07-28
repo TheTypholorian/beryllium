@@ -706,6 +706,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.EXPLORING.DAFFODILS, flowerbedDrops(Beryllium.EXPLORING.DAFFODILS));
             addDrop(Beryllium.EXPLORING.SCILLA, flowerbedDrops(Beryllium.EXPLORING.SCILLA));
             addDrop(Beryllium.EXPLORING.GERANIUMS, flowerbedDrops(Beryllium.EXPLORING.GERANIUMS));
+
+            addDrop(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
         }
     }
 }

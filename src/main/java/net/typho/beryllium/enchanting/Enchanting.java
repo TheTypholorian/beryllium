@@ -6,7 +6,8 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
@@ -88,7 +89,11 @@ public class Enchanting extends Module {
         return list;
     }
 
+    /**
+     * This is an old system meant to buff gold gear, but I removed it cus it was unbalanced (tho you can still mixin and use it)
+     */
     public int getExtraLevels(ItemStack stack) {
+        /*
         if (stack.getItem() instanceof ToolItem tool) {
             if (tool.getMaterial() == ToolMaterials.GOLD) {
                 return 1;
@@ -98,6 +103,7 @@ public class Enchanting extends Module {
                 return 1;
             }
         }
+         */
 
         return 0;
     }

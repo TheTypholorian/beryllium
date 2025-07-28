@@ -1,14 +1,18 @@
 package net.typho.beryllium.combat;
 
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
@@ -68,22 +72,22 @@ public class Combat extends Module {
     public final Item NETHERITE_GLAIVE = Registry.register(
             Registries.ITEM,
             id("netherite_glaive"),
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.NETHERITE, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.NETHERITE, 2, -3.2f)))
     );
     public final Item DIAMOND_GLAIVE = Registry.register(
             Registries.ITEM,
             id("diamond_glaive"),
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.DIAMOND, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.DIAMOND, 2, -3.2f)))
     );
     public final Item IRON_GLAIVE = Registry.register(
             Registries.ITEM,
             id("iron_glaive"),
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.IRON, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.IRON, 2, -3.2f)))
     );
     public final Item GOLDEN_GLAIVE = Registry.register(
             Registries.ITEM,
             id("golden_glaive"),
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.GOLD, 2, -3.4f)))
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(this, 3, ToolMaterials.GOLD, 2, -3.2f)))
     );
     public final Item NETHERITE_SCYTHE = Registry.register(
             Registries.ITEM,
@@ -105,6 +109,7 @@ public class Combat extends Module {
             id("golden_scythe"),
             new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.GOLD, 4, -3.4f)))
     );
+    public final ComponentType<Float> SHIELD_DURABILITY = component("shield_damage", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
 
     public Combat(String name) {
         super(name);
@@ -120,5 +125,23 @@ public class Combat extends Module {
                     entries.addAfter(Items.IRON_SWORD, IRON_GLAIVE, IRON_SCYTHE);
                     entries.addAfter(Items.GOLDEN_SWORD, GOLDEN_GLAIVE, GOLDEN_SCYTHE);
                 });
+    }
+
+    public static class Config extends ConfigSection {
+        public int enderPearlCooldown = 300;
+        public float enderPearlSpeed = 1;
+        public int endCrystalCooldown = 30;
+        public float endCrystalPower = 4;
+        public boolean maceRebalance = true;
+        public boolean sweepingMargin = true;
+        public boolean crossbowEndCrystals = true;
+        public boolean respawnAnchorsDontExplode = true;
+        public int shieldMaxDurability = 30;
+        public int shieldLowerCooldown = 60;
+        public boolean shieldDurability = true;
+        public float swordSweepMarginMultiplier = 0.05f;
+        public int potionCooldown = 100;
+        public float reelingMultiplierLoyal = 1;
+        public float reelingMultiplierNotLoyal = 2;
     }
 }

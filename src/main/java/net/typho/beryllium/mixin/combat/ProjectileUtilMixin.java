@@ -8,30 +8,30 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.util.SweepingItem;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Overwrite;
 
 import java.util.Optional;
 import java.util.function.Predicate;
 
 @Mixin(ProjectileUtil.class)
 public class ProjectileUtilMixin {
-    @Inject(
-            method = "raycast",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private static void raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance, CallbackInfoReturnable<EntityHitResult> cir) {
+    /**
+     * @author The Typhothanian
+     * @reason Sweeping margin
+     */
+    @Overwrite
+    public static @Nullable EntityHitResult raycast(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double maxDistance) {
         World world = entity.getWorld();
         double d = maxDistance;
         Entity entity2 = null;
         Vec3d vec3d = null;
         float margin = 0;
 
-        if (entity instanceof PlayerEntity player) {
+        if (Beryllium.CONFIG.combat.sweepingMargin && entity instanceof PlayerEntity player) {
             ItemStack held = player.getWeaponStack();
 
             if (held.getItem() instanceof SweepingItem sweep) {
@@ -66,6 +66,6 @@ public class ProjectileUtilMixin {
             }
         }
 
-        cir.setReturnValue(entity2 == null ? null : new EntityHitResult(entity2, vec3d));
+        return entity2 == null ? null : new EntityHitResult(entity2, vec3d);
     }
 }

@@ -55,6 +55,8 @@ public class Beryllium implements ModInitializer {
 
     public static class BerylliumConfig extends Config {
         public Exploring.Config exploring = new Exploring.Config();
+        public Combat.Config combat = new Combat.Config();
+        public boolean durabilityRemoval = true;
 
         public BerylliumConfig() {
             super(Identifier.of(MOD_ID, "config"));

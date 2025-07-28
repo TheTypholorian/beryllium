@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.combat;
+package net.typho.beryllium.mixin;
 
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
