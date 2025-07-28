@@ -49,6 +49,7 @@
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin",
+    "combat.TridentEntityRendererMixin",
     "enchanting.EnchantmentScreenMixin"
   ],
   "injectors": {

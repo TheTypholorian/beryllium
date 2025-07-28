@@ -28,6 +28,11 @@ repositories {
         name = "FzzyMaven"
         url = "https://maven.fzzyhmstrs.me/"
     }
+
+    maven {
+        name = "Ladysnake Mods"
+        url = 'https://maven.ladysnake.org/releases'
+    }
 }
 
 dependencies {
@@ -39,6 +44,12 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation("me.fzzyhmstrs:fzzy_config:${project.fzzy_config}")
+
+    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+
+    include "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+    include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 }
 
 processResources {

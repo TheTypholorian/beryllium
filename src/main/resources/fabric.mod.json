@@ -23,6 +23,9 @@
     ],
     "main": [
       "net.typho.beryllium.Beryllium"
+    ],
+    "cardinal-components": [
+      "net.typho.beryllium.combat.CombatComponents"
     ]
   },
   "mixins": [
@@ -36,5 +39,10 @@
   },
   "recommends": {
     "modmenu": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "beryllium:combat/reeling"
+    ]
   }
 }
