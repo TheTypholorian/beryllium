@@ -29,7 +29,6 @@ public class GoldHopperScreenHandler extends ScreenHandler {
 
     protected GoldHopperScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory inventory) {
         super(type, syncId);
-        System.out.println(inventory.getClass());
         this.inventory = inventory;
         checkSize(inventory, SLOT_COUNT);
         inventory.onOpen(playerInventory.player);

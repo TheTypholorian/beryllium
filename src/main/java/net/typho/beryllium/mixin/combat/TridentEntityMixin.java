@@ -98,7 +98,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
 
                 if (ownerDistance >= 0) {
                     if (d > (ownerDistance * 1.1f)) {
-                        dataTracker.set(LOYALTY, (byte) 3);
+                        dataTracker.set(LOYALTY, (byte) 16);
                     }
                 }
 

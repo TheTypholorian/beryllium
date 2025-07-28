@@ -55,10 +55,6 @@ public class EnchantmentHelperMixin {
             }
         });
 
-        if (list.size() <= 5) {
-            System.out.println(level + " " + list.stream().map(entry -> entry.enchantment.value().description().getLiteralString() + " " + entry.level).toList());
-        }
-
         return list;
     }
 

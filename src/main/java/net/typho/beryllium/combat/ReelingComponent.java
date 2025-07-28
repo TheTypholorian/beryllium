@@ -19,7 +19,6 @@ public class ReelingComponent implements ComponentV3, AutoSyncedComponent {
     }
 
     public void setReeling(float reeling) {
-        System.out.println(trident.getWorld().isClient + " " + reeling);
         this.reeling = reeling;
         CombatComponents.REELING.sync(trident);
     }

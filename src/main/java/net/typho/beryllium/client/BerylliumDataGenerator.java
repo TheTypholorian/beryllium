@@ -15,6 +15,8 @@ import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
@@ -27,6 +29,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
@@ -60,6 +63,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenBlockTags::new);
         pack.addProvider(GenStructureTags::new);
         pack.addProvider(GenBiomeTags::new);
+        pack.addProvider(GenDamageTypeTags::new);
         pack.addProvider(GenModels::new);
         pack.addProvider(GenRecipes::new);
         pack.addProvider(GenBlockLootTables::new);
@@ -297,6 +301,18 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA);
             getOrCreateTagBuilder(Beryllium.EXPLORING.OAK_TAG)
                     .add(BiomeKeys.FOREST);
+        }
+    }
+
+    public static class GenDamageTypeTags extends FabricTagProvider<DamageType> {
+        public GenDamageTypeTags(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+            super(output, RegistryKeys.DAMAGE_TYPE, registriesFuture);
+        }
+
+        @Override
+        protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("kinetic")))
+                    .add(DamageTypes.FLY_INTO_WALL);
         }
     }
 
