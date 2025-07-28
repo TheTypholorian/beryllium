@@ -1,7 +1,6 @@
 package net.typho.beryllium.enchanting;
 
-import com.google.common.collect.Lists;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -12,7 +11,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 
-import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -62,33 +60,6 @@ public class Enchanting extends Module {
         return builder.toString();
     }
 
-    public List<EnchantmentLevelEntry> getAnyPossibleEntries(ItemStack stack, Stream<RegistryEntry<Enchantment>> possibleEnchantments) {
-        List<EnchantmentLevelEntry> list = Lists.newArrayList();
-        boolean bl = stack.isOf(Items.BOOK);
-
-        possibleEnchantments.filter(enchantment -> (enchantment.value().isPrimaryItem(stack) || bl) && enchantment.value().isAcceptableItem(stack)).forEach(enchantmentx -> {
-            Enchantment enchantment = enchantmentx.value();
-
-            for (int l = enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
-                for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
-                    if (entry.getKey().value() == enchantment) {
-                        if (l < entry.getIntValue()) {
-                            return;
-                        } else if (l == entry.getIntValue() && enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack) == l) {
-                            return;
-                        } else {
-                            break;
-                        }
-                    }
-                }
-
-                list.add(new EnchantmentLevelEntry(enchantmentx, l));
-            }
-        });
-
-        return list;
-    }
-
     /**
      * This is an old system meant to buff gold gear, but I removed it cus it was unbalanced (tho you can still mixin and use it)
      */
@@ -129,6 +100,10 @@ public class Enchanting extends Module {
     }
 
     public boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
+        if (!Beryllium.CONFIG.enchanting.capacity) {
+            return true;
+        }
+
         if (stack.isOf(Items.BOOK) || stack.isOf(Items.ENCHANTED_BOOK)) {
             return enchantments.get().findAny().isEmpty();
         }
@@ -141,7 +116,7 @@ public class Enchanting extends Module {
     }
 
     public boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
-        if (player.getAbilities().creativeMode) {
+        if (player.getAbilities().creativeMode || !Beryllium.CONFIG.enchanting.catalysts) {
             return true;
         }
 
@@ -151,7 +126,16 @@ public class Enchanting extends Module {
     }
 
     public ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
+        if (!Beryllium.CONFIG.enchanting.catalysts) {
+            return ItemStack.EMPTY;
+        }
+
         BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
         return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
+    }
+
+    public static class Config extends ConfigSection {
+        public boolean catalysts = true;
+        public boolean capacity = true;
     }
 }

@@ -24,6 +24,7 @@ import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.client.BerylliumClient;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -133,7 +134,9 @@ public class MetalDetectorItem extends Item {
             int radius = Beryllium.CONFIG.exploring.metalDetector.tooltipRadius;
             Map<Block, Integer> found = new HashMap<>();
 
-            tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+            if (BerylliumClient.CONFIG.compassCoords) {
+                tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
+            }
 
             for (int x = -radius; x <= radius; x++) {
                 for (int y = -radius; y <= radius; y++) {

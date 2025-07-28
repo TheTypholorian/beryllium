@@ -218,9 +218,10 @@ public class BerylliumClient implements ClientModInitializer {
 
     public static class ClientConfig extends Config {
         public boolean hudItemTooltips = true;
+        public boolean compassCoords = true;
 
         public ClientConfig() {
-            super(Identifier.of(MOD_ID, "client"));
+            super(Identifier.of(Beryllium.MOD_ID, "client"));
         }
     }
 }

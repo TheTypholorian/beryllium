@@ -32,13 +32,15 @@ public abstract class ItemStackMixin {
             )
     )
     private void appendTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> text) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        if (Beryllium.CONFIG.enchanting.capacity) {
+            MinecraftClient client = MinecraftClient.getInstance();
 
-        if (client.currentScreen instanceof EnchantmentScreen || client.currentScreen instanceof AnvilScreen || client.currentScreen instanceof GrindstoneScreen) {
-            ItemStack stack = (ItemStack) (Object) this;
+            if (client.currentScreen instanceof EnchantmentScreen || client.currentScreen instanceof AnvilScreen || client.currentScreen instanceof GrindstoneScreen) {
+                ItemStack stack = (ItemStack) (Object) this;
 
-            if (stack.getItem().getEnchantability() != 0) {
-                text.add(Text.literal(Beryllium.ENCHANTING.getUsedEnchCapacity(stack) + " / " + Beryllium.ENCHANTING.getMaxEnchCapacity(stack)).setStyle(Style.EMPTY.withColor(new Color(167, 85, 255).getRGB())));
+                if (stack.getItem().getEnchantability() != 0) {
+                    text.add(Text.literal(Beryllium.ENCHANTING.getUsedEnchCapacity(stack) + " / " + Beryllium.ENCHANTING.getMaxEnchCapacity(stack)).setStyle(Style.EMPTY.withColor(new Color(167, 85, 255).getRGB())));
+                }
             }
         }
     }

@@ -33,8 +33,9 @@ public class Beryllium implements ModInitializer {
     }
 
     public static class BerylliumConfig extends Config {
-        public Exploring.Config exploring = new Exploring.Config();
         public Combat.Config combat = new Combat.Config();
+        public Enchanting.Config enchanting = new Enchanting.Config();
+        public Exploring.Config exploring = new Exploring.Config();
         public boolean durabilityRemoval = true;
 
         public BerylliumConfig() {

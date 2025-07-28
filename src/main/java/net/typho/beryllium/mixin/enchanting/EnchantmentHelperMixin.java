@@ -37,7 +37,7 @@ public class EnchantmentHelperMixin {
             Enchantment enchantment = enchantmentx.value();
 
             for (int l = enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
-                if (level >= enchantment.getMinPower(l) && level <= enchantment.getMaxPower(l)) {
+                if (level >= enchantment.getMinPower(l) && (level >= 25 || level <= enchantment.getMaxPower(l))) {
                     for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
                         if (entry.getKey().value() == enchantment) {
                             if (l < entry.getIntValue()) {
@@ -51,10 +51,13 @@ public class EnchantmentHelperMixin {
                     }
 
                     list.add(new EnchantmentLevelEntry(enchantmentx, l));
-                    break;
                 }
             }
         });
+
+        if (list.size() <= 5) {
+            System.out.println(level + " " + list.stream().map(entry -> entry.enchantment.value().description().getLiteralString() + " " + entry.level).toList());
+        }
 
         return list;
     }
