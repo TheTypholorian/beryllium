@@ -49,38 +49,36 @@ public abstract class TridentEntityRendererMixin extends EntityRenderer<TridentE
             at = @At("TAIL")
     )
     private void render(TridentEntity trident, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (trident.getItemStack() != null && trident.getOwner() != null) {
-            if (trident.getComponent(CombatComponents.REELING).getReeling() > 0) {
-                matrices.push();
-                Vec3d vec3d = trident.getOwner().getLeashPos(tickDelta);
-                double d = trident.lerpYaw(tickDelta) * (float) (Math.PI / 180.0) + (Math.PI / 2);
-                Vec3d vec3d2 = trident.getLeashOffset(tickDelta);
-                double e = Math.cos(d) * vec3d2.z + Math.sin(d) * vec3d2.x;
-                double f = Math.sin(d) * vec3d2.z - Math.cos(d) * vec3d2.x;
-                double g = MathHelper.lerp(tickDelta, trident.prevX, trident.getX()) + e;
-                double h = MathHelper.lerp(tickDelta, trident.prevY, trident.getY()) + vec3d2.y;
-                double i = MathHelper.lerp(tickDelta, trident.prevZ, trident.getZ()) + f;
-                matrices.translate(e, vec3d2.y, f);
-                float j = (float)(vec3d.x - g);
-                float k = (float)(vec3d.y - h);
-                float l = (float)(vec3d.z - i);
-                float m = 0.025F;
-                VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getLeash());
-                Matrix4f matrix4f = matrices.peek().getPositionMatrix();
-                float n = MathHelper.inverseSqrt(j * j + l * l) * m / 2.0F;
-                float o = l * n;
-                float p = j * n;
+        if (trident.getOwner() != null && trident.getComponent(CombatComponents.REELING).getReeling() > 0) {
+            matrices.push();
+            Vec3d vec3d = trident.getOwner().getLeashPos(tickDelta);
+            double d = trident.lerpYaw(tickDelta) * (float) (Math.PI / 180.0) + (Math.PI / 2);
+            Vec3d vec3d2 = trident.getLeashOffset(tickDelta);
+            double e = Math.cos(d) * vec3d2.z + Math.sin(d) * vec3d2.x;
+            double f = Math.sin(d) * vec3d2.z - Math.cos(d) * vec3d2.x;
+            double g = MathHelper.lerp(tickDelta, trident.prevX, trident.getX()) + e;
+            double h = MathHelper.lerp(tickDelta, trident.prevY, trident.getY()) + vec3d2.y;
+            double i = MathHelper.lerp(tickDelta, trident.prevZ, trident.getZ()) + f;
+            matrices.translate(e, vec3d2.y, f);
+            float j = (float) (vec3d.x - g);
+            float k = (float) (vec3d.y - h);
+            float l = (float) (vec3d.z - i);
+            float m = 0.025F;
+            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getLeash());
+            Matrix4f matrix4f = matrices.peek().getPositionMatrix();
+            float n = MathHelper.inverseSqrt(j * j + l * l) * m / 2.0F;
+            float o = l * n;
+            float p = j * n;
 
-                for (int u = 0; u <= 24; u++) {
-                    renderChainSegment(vertexConsumer, matrix4f, j, k, l, m, m, o, p, u, false, light);
-                }
-
-                for (int u = 24; u >= 0; u--) {
-                    renderChainSegment(vertexConsumer, matrix4f, j, k, l, m, 0.0F, o, p, u, true, light);
-                }
-
-                matrices.pop();
+            for (int u = 0; u <= 24; u++) {
+                renderChainSegment(vertexConsumer, matrix4f, j, k, l, m, m, o, p, u, false, light);
             }
+
+            for (int u = 24; u >= 0; u--) {
+                renderChainSegment(vertexConsumer, matrix4f, j, k, l, m, 0.0F, o, p, u, true, light);
+            }
+
+            matrices.pop();
         }
     }
 

@@ -103,61 +103,11 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                 }
 
                 ownerDistance = d;
-            }
-        }
-    }
 
-    /*
-    @Inject(
-            method = "onEntityHit",
-            at = @At("TAIL")
-    )
-    private void onEntityHit(EntityHitResult hit, CallbackInfo ci) {
-        if (getOwner() != null && getItemStack() != null) {
-            int reeling = EnchantmentHelper.getLevel(
-                    getWorld()
-                            .getRegistryManager()
-                            .get(RegistryKeys.ENCHANTMENT)
-                            .getEntry(Beryllium.COMBAT.id("reeling"))
-                            .orElseThrow(),
-                    getItemStack()
-            );
-
-            if (reeling > 0) {
-                byte loyalty = dataTracker.get(LOYALTY);
-
-                if (loyalty > 0) {
-                    hit.getEntity().addVelocity(getOwner().getPos().subtract(getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierLoyal));
-                    hit.getEntity().velocityModified = true;
-                } else {
-                    getOwner().addVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierNotLoyal));
-                    getOwner().velocityModified = true;
+                if (age >= 200) {
+                    dataTracker.set(LOYALTY, (byte) 16);
                 }
             }
         }
     }
-
-    @Override
-    protected void onBlockHit(BlockHitResult hit) {
-        if (getOwner() != null && getItemStack() != null) {
-            int reeling = EnchantmentHelper.getLevel(
-                    getWorld()
-                            .getRegistryManager()
-                            .get(RegistryKeys.ENCHANTMENT)
-                            .getEntry(Beryllium.COMBAT.id("reeling"))
-                            .orElseThrow(),
-                    getItemStack()
-            );
-
-            if (reeling > 0) {
-                byte loyalty = dataTracker.get(LOYALTY);
-
-                if (loyalty <= 0) {
-                    getOwner().addVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling * Beryllium.CONFIG.combat.reelingMultiplierNotLoyal));
-                    getOwner().velocityModified = true;
-                }
-            }
-        }
-    }
-     */
 }
