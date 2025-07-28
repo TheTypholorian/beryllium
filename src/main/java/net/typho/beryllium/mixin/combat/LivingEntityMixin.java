@@ -84,7 +84,7 @@ public abstract class LivingEntityMixin {
     )
     private void damageShieldHit(LivingEntity instance, LivingEntity attacker, @Local(ordinal = 2) float amount) {
         ItemStack shield = activeItemStack;
-        float durability = shield.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue() - amount;
+        float durability = Beryllium.COMBAT.shieldDurability(shield) - amount;
 
         if (durability <= 0) {
             durability = Beryllium.CONFIG.combat.shieldMaxDurability;
@@ -103,7 +103,7 @@ public abstract class LivingEntityMixin {
     )
     private void takeShieldHit(LivingEntity attacker, CallbackInfo ci) {
         ItemStack shield = activeItemStack;
-        float durability = shield.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue() - 1;
+        float durability = Beryllium.COMBAT.shieldDurability(shield) - 1;
 
         if (durability <= 0) {
             durability = Beryllium.CONFIG.combat.shieldMaxDurability;

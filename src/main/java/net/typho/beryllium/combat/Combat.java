@@ -16,6 +16,7 @@ import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 import org.jetbrains.annotations.Nullable;
 
@@ -113,6 +114,10 @@ public class Combat extends Module {
 
     public Combat(String name) {
         super(name);
+    }
+
+    public float shieldDurability(ItemStack shield) {
+        return shield.getOrDefault(SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue();
     }
 
     @Override

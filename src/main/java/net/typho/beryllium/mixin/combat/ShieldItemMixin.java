@@ -35,7 +35,13 @@ public abstract class ShieldItemMixin extends Item {
             return super.isItemBarVisible(stack);
         }
 
-        return stack.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability) < Beryllium.CONFIG.combat.shieldMaxDurability;
+        float d = Beryllium.COMBAT.shieldDurability(stack);
+
+        if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+            return super.isItemBarVisible(stack);
+        }
+
+        return d < Beryllium.CONFIG.combat.shieldMaxDurability;
     }
 
     @Override
@@ -44,7 +50,13 @@ public abstract class ShieldItemMixin extends Item {
             return super.getItemBarColor(stack);
         }
 
-        return MathHelper.hsvToRgb(Math.max(0, stack.getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability) / (float) Beryllium.CONFIG.combat.shieldMaxDurability) / 3, 1, 1);
+        float d = Beryllium.COMBAT.shieldDurability(stack);
+
+        if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+            return super.getItemBarColor(stack);
+        }
+
+        return MathHelper.hsvToRgb(Math.max(0, d / (float) Beryllium.CONFIG.combat.shieldMaxDurability) / 3, 1, 1);
     }
 
     @Override
@@ -54,6 +66,11 @@ public abstract class ShieldItemMixin extends Item {
         }
 
         float durability = Beryllium.CONFIG.combat.shieldMaxDurability - stack.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
+
+        if (!Beryllium.CONFIG.durabilityRemoval && durability <= 0) {
+            return super.getItemBarColor(stack);
+        }
+
         return MathHelper.clamp(Math.round(13f - durability * 13f / Beryllium.CONFIG.combat.shieldMaxDurability), 0, 13);
     }
 }
