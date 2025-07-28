@@ -1,6 +1,9 @@
 package net.typho.beryllium.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
+import me.fzzyhmstrs.fzzy_config.api.RegisterType;
+import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -42,6 +45,8 @@ import java.awt.*;
 import java.util.Objects;
 
 public class BerylliumClient implements ClientModInitializer {
+    public static final ClientConfig CONFIG = ConfigApiJava.registerAndLoadConfig(ClientConfig::new, RegisterType.CLIENT);
+
     //public static final Registry<DynamicSpriteLoader> DYNAMIC_TEXTURES = FabricRegistryBuilder.<DynamicSpriteLoader>createSimple(RegistryKey.ofRegistry(id("dynamic_textures"))).buildAndRegister();
 
     @Override
@@ -209,5 +214,13 @@ public class BerylliumClient implements ClientModInitializer {
                 x,
                 y
         );
+    }
+
+    public static class ClientConfig extends Config {
+        public boolean hudItemTooltips = true;
+
+        public ClientConfig() {
+            super(Identifier.of(MOD_ID, "client"));
+        }
     }
 }

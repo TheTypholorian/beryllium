@@ -51,6 +51,7 @@ public class ProjectileUtilMixin {
             } else if (optional.isPresent()) {
                 Vec3d vec3d2 = optional.get();
                 double e = min.squaredDistanceTo(vec3d2);
+
                 if (e < d || d == 0.0) {
                     if (entity3.getRootVehicle() == entity.getRootVehicle()) {
                         if (d == 0.0) {

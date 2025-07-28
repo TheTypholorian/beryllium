@@ -10,7 +10,6 @@ import net.minecraft.util.Arm;
 import net.typho.beryllium.client.BerylliumClient;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,28 +29,33 @@ public abstract class InGameHudMixin {
             at = @At("TAIL")
     )
     private void renderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        PlayerEntity player = getCameraPlayer();
+        if (BerylliumClient.CONFIG.hudItemTooltips) {
+            PlayerEntity player = getCameraPlayer();
 
-        if (player != null) {
-            ItemStack main = player.getMainHandStack();
+            if (player != null) {
+                ItemStack main = player.getMainHandStack();
 
-            if (!main.isEmpty()) {
-                BerylliumClient.drawTooltip(context, main, Arm.RIGHT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.RIGHT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
-            }
+                if (!main.isEmpty()) {
+                    BerylliumClient.drawTooltip(context, main, Arm.RIGHT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.RIGHT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
+                }
 
-            ItemStack off = player.getOffHandStack();
+                ItemStack off = player.getOffHandStack();
 
-            if (!off.isEmpty()) {
-                BerylliumClient.drawTooltip(context, off, Arm.LEFT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.LEFT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
+                if (!off.isEmpty()) {
+                    BerylliumClient.drawTooltip(context, off, Arm.LEFT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.LEFT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
+                }
             }
         }
     }
 
-    /**
-     * @author The Typhothanian
-     * @reason Held item tooltips already renderer
-     */
-    @Overwrite
-    private void renderHeldItemTooltip(DrawContext context) {
+    @Inject(
+            method = "renderHeldItemTooltip",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private void renderHeldItemTooltip(DrawContext context, CallbackInfo ci) {
+        if (BerylliumClient.CONFIG.hudItemTooltips) {
+            ci.cancel();
+        }
     }
 }

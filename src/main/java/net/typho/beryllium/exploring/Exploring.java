@@ -56,6 +56,8 @@ public class Exploring extends Module {
     public final SimpleParticleType SPRUCE_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("spruce_leaves"), FabricParticleTypes.simple(false));
     public final SimpleParticleType BIRCH_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("birch_leaves"), FabricParticleTypes.simple(false));
 
+    public final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_bastion_maps"));
+    public final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_fortress_maps"));
     public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
     public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
     public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
@@ -259,7 +261,7 @@ public class Exploring extends Module {
                 case "minecraft:gameplay/piglin_bartering": {
                     builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
-                                            .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_bastion_maps")))
+                                            .withDestination(Beryllium.EXPLORING.ON_BASTION_MAPS)
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
@@ -267,7 +269,7 @@ public class Exploring extends Module {
                             )
                             .with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
-                                            .withDestination(TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING.id("on_fortress_maps")))
+                                            .withDestination(Beryllium.EXPLORING.ON_FORTRESS_MAPS)
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )

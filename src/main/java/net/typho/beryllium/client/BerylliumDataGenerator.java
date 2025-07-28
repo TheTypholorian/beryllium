@@ -27,7 +27,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
@@ -264,11 +263,11 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup lookup) {
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_bastion_maps")))
+            getOrCreateTagBuilder(Beryllium.EXPLORING.ON_BASTION_MAPS)
                     .add(StructureKeys.BASTION_REMNANT);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("on_fortress_maps")))
+            getOrCreateTagBuilder(Beryllium.EXPLORING.ON_FORTRESS_MAPS)
                     .add(StructureKeys.FORTRESS);
-            getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("spawn")))
+            getOrCreateTagBuilder(Beryllium.EXPLORING.SPAWN_KEY)
                     .add(StructureKeys.VILLAGE_PLAINS)
                     .add(StructureKeys.VILLAGE_DESERT)
                     .add(StructureKeys.VILLAGE_SAVANNA)
@@ -478,6 +477,50 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .input('R', Items.REDSTONE)
                     .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
                     .offerTo(exporter, Identifier.ofVanilla("dispenser"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SADDLE, 1)
+                    .pattern(" L ")
+                    .pattern("LIL")
+                    .input('L', Items.LEATHER)
+                    .input('I', Items.IRON_INGOT)
+                    .criterion("has_leather", FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                    .offerTo(exporter, Identifier.ofVanilla("saddle"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.LEATHER_HORSE_ARMOR, 1)
+                    .pattern("M  ")
+                    .pattern("MLM")
+                    .pattern("M M")
+                    .input('M', Items.LEATHER)
+                    .input('L', Items.LEATHER)
+                    .criterion("has_leather", FabricRecipeProvider.conditionsFromItem(Items.LEATHER))
+                    .offerTo(exporter, Identifier.ofVanilla("leather_horse_armor"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.IRON_HORSE_ARMOR, 1)
+                    .pattern("M  ")
+                    .pattern("MLM")
+                    .pattern("M M")
+                    .input('M', Items.IRON_INGOT)
+                    .input('L', Items.LEATHER)
+                    .criterion("has_iron_ingot", FabricRecipeProvider.conditionsFromItem(Items.IRON_INGOT))
+                    .offerTo(exporter, Identifier.ofVanilla("iron_horse_armor"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.GOLDEN_HORSE_ARMOR, 1)
+                    .pattern("M  ")
+                    .pattern("MLM")
+                    .pattern("M M")
+                    .input('M', Items.GOLD_INGOT)
+                    .input('L', Items.LEATHER)
+                    .criterion("has_gold_ingot", FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
+                    .offerTo(exporter, Identifier.ofVanilla("golden_horse_armor"));
+
+            ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.DIAMOND_HORSE_ARMOR, 1)
+                    .pattern("M  ")
+                    .pattern("MLM")
+                    .pattern("M M")
+                    .input('M', Items.DIAMOND)
+                    .input('L', Items.LEATHER)
+                    .criterion("has_diamond", FabricRecipeProvider.conditionsFromItem(Items.DIAMOND))
+                    .offerTo(exporter, Identifier.ofVanilla("diamond_horse_armor"));
 
             ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Beryllium.REDSTONE.GOLD_HOPPER_BLOCK, 1)
                     .pattern("GRG")
