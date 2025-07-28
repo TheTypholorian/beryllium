@@ -1,7 +1,6 @@
 package net.typho.beryllium.mixin.exploring;
 
 import net.minecraft.block.*;
-import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleUtil;
@@ -11,9 +10,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.exploring.LogBlock;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -76,30 +73,5 @@ public class BlocksMixin {
     )
     private static Block createBirchLeaves(BlockSoundGroup sounds) {
         return createLeaves(sounds, () -> Beryllium.EXPLORING.BIRCH_LEAVES_PARTICLE);
-    }
-
-    /**
-     * @author The Typhothanian
-     * @reason Falling logs
-     */
-    @Overwrite
-    public static Block createLogBlock(MapColor topMapColor, MapColor sideMapColor) {
-        return createLogBlock(topMapColor, sideMapColor, BlockSoundGroup.WOOD);
-    }
-
-    /**
-     * @author The Typhothanian
-     * @reason Falling logs
-     */
-    @Overwrite
-    public static Block createLogBlock(MapColor topMapColor, MapColor sideMapColor, BlockSoundGroup soundGroup) {
-        return new LogBlock(
-                AbstractBlock.Settings.create()
-                        .mapColor(state -> state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topMapColor : sideMapColor)
-                        .instrument(NoteBlockInstrument.BASS)
-                        .strength(2.0F)
-                        .sounds(soundGroup)
-                        .burnable()
-        );
     }
 }

@@ -1,8 +1,8 @@
 package net.typho.beryllium.mixin.redstone;
 
 import net.minecraft.block.entity.HopperBlockEntity;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -30,25 +30,18 @@ public abstract class HopperBlockEntityMixin {
             method = "<init>",
             constant = @Constant(intValue = 5)
     )
-    private int size(int constant) {
+    private int size(int cooldown) {
         return size();
     }
 
-    /**
-     * @author The Typhothanian
-     * @reason Faster hoppers
-     */
-    @Overwrite
-    private boolean needsCooldown() {
-        return false;
-    }
-
-    /**
-     * @author The Typhothanian
-     * @reason Faster hoppers
-     */
-    @Overwrite
-    private boolean isDisabled() {
-        return false;
+    @ModifyConstant(
+            method = {"insertAndExtract",
+                    "transfer(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/item/ItemStack;ILnet/minecraft/util/math/Direction;)Lnet/minecraft/item/ItemStack;",
+                    "isDisabled"
+            },
+            constant = @Constant(intValue = 8)
+    )
+    private static int cooldown(int cooldown) {
+        return Beryllium.CONFIG.redstone.hopperCooldown;
     }
 }

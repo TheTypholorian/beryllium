@@ -139,13 +139,13 @@ public class Combat extends Module {
         public float endCrystalPower = 4;
         public boolean maceRebalance = true;
         public boolean sweepingMargin = true;
+        public float sweepMarginMultiplier = 0.05f;
         public boolean crossbowEndCrystals = true;
         public boolean respawnAnchorsDontExplode = true;
+        public boolean shieldDurability = true;
         public int shieldMaxDurability = 30;
         public int shieldLowerCooldown = 60;
-        public boolean shieldDurability = true;
-        public float swordSweepMarginMultiplier = 0.05f;
-        public int potionCooldown = 100;
+        public int splashPotionCooldown = 100;
         public float reelingMultiplierLoyal = 1;
         public float reelingMultiplierNotLoyal = 2;
     }

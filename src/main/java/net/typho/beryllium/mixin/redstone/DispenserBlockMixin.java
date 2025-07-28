@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.Map;
@@ -31,7 +32,7 @@ public class DispenserBlockMixin {
             BlockPos targetPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
             BlockState targetState = pointer.world().getBlockState(targetPos);
 
-            if (stack.getItem() instanceof BlockItem blockItem) {
+            if (stack.getItem() instanceof BlockItem blockItem && Beryllium.CONFIG.redstone.dispensersPlaceBlocks) {
                 Block block = blockItem.getBlock();
                 BlockState placeState = block.getDefaultState();
 
@@ -51,7 +52,7 @@ public class DispenserBlockMixin {
                 } else {
                     setSuccess(false);
                 }
-            } else if (stack.getItem() instanceof ToolItem) {
+            } else if (stack.getItem() instanceof ToolItem && Beryllium.CONFIG.redstone.dispensersUseTools) {
                 float hardness = targetState.getHardness(pointer.world(), targetPos);
 
                 if (hardness != -1 && (!targetState.isToolRequired() || stack.isSuitableFor(targetState))) {

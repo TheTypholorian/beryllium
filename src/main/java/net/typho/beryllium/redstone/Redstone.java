@@ -1,5 +1,6 @@
 package net.typho.beryllium.redstone;
 
+import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -21,5 +22,13 @@ public class Redstone extends Module {
     @Override
     public void onInitialize() {
         HandledScreens.register(GOLD_HOPPER_SCREEN_HANDLER_TYPE, GoldHopperScreen::new);
+    }
+
+    public static class Config extends ConfigSection {
+        public boolean cropComparatorOutput = true;
+        public boolean dispensersPlaceBlocks = true;
+        public boolean dispensersUseTools = true;
+        public int hopperCooldown = 1;
+        public boolean instantChainTNT = true;
     }
 }

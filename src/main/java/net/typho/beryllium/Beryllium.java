@@ -36,6 +36,8 @@ public class Beryllium implements ModInitializer {
         public Combat.Config combat = new Combat.Config();
         public Enchanting.Config enchanting = new Enchanting.Config();
         public Exploring.Config exploring = new Exploring.Config();
+        public Food.Config food = new Food.Config();
+        public Redstone.Config redstone = new Redstone.Config();
         public boolean durabilityRemoval = true;
 
         public BerylliumConfig() {
