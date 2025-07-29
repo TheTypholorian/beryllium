@@ -38,6 +38,7 @@
     "exploring.AbstractFireBlockMixin",
     "exploring.BlocksMixin",
     "exploring.DragonFireballEntityMixin",
+    "exploring.EndCrystalEntityMixin",
     "exploring.EnderDragonEntityMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
