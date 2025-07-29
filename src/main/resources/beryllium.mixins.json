@@ -37,6 +37,8 @@
     "enchanting.TradeOffersMixin",
     "exploring.AbstractFireBlockMixin",
     "exploring.BlocksMixin",
+    "exploring.DragonFireballEntityMixin",
+    "exploring.EnderDragonEntityMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
     "food.SugarCaneBlockMixin",
