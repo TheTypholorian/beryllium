@@ -20,11 +20,7 @@
             "tags": [
               {
                 "expected": true,
-                "id": "beryllium:exploring/kinetic"
-              },
-              {
-                "expected": false,
-                "id": "minecraft:bypasses_invulnerability"
+                "id": "minecraft:fly_into_wall"
               }
             ]
           }

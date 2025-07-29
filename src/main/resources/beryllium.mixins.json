@@ -35,6 +35,7 @@
     "enchanting.FishingRodItemMixin",
     "enchanting.ItemStackMixin",
     "enchanting.TradeOffersMixin",
+    "exploring.AbstractFireBlockMixin",
     "exploring.BlocksMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",

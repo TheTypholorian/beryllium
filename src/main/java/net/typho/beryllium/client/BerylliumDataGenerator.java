@@ -257,6 +257,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .add(Beryllium.EXPLORING.DAFFODILS)
                     .add(Beryllium.EXPLORING.SCILLA)
                     .add(Beryllium.EXPLORING.GERANIUMS);
+
+            getOrCreateTagBuilder(Beryllium.EXPLORING.VOID_FIRE_BASE_BLOCKS)
+                    .add(Blocks.END_STONE)
+                    .add(Blocks.OBSIDIAN)
+                    .add(Blocks.BEDROCK);
+
+            getOrCreateTagBuilder(BlockTags.FIRE)
+                    .add(Beryllium.EXPLORING.VOID_FIRE);
         }
     }
 
@@ -352,6 +360,18 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                                                     .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R180))
                                                     .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R270))
                                     )
+                    );
+
+            List<Identifier> voidFireFloor = gen.getFireFloorModels(Beryllium.EXPLORING.VOID_FIRE);
+            List<Identifier> voidFireSide = gen.getFireSideModels(Beryllium.EXPLORING.VOID_FIRE);
+            gen.blockStateCollector
+                    .accept(
+                            MultipartBlockStateSupplier.create(Beryllium.EXPLORING.VOID_FIRE)
+                                    .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireFloor, v -> v))
+                                    .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v))
+                                    .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R90)))
+                                    .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R180)))
+                                    .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R270)))
                     );
         }
 
@@ -767,6 +787,8 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             addDrop(Beryllium.EXPLORING.GERANIUMS, flowerbedDrops(Beryllium.EXPLORING.GERANIUMS));
 
             addDrop(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
+
+            addDrop(Beryllium.EXPLORING.VOID_FIRE, dropsNothing());
         }
     }
 }

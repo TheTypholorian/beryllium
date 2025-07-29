@@ -58,6 +58,7 @@ public class Exploring extends Module {
     public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
     public final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, id("spruce"));
     public final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, id("oak"));
+    public final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("void_fire_base_blocks"));
 
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
@@ -87,6 +88,7 @@ public class Exploring extends Module {
             .nonOpaque()
             .burnable()
             .pistonBehavior(PistonBehavior.DESTROY)));
+    public final Block VOID_FIRE = block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
 
     public final Item METAL_DETECTOR_ITEM = item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
