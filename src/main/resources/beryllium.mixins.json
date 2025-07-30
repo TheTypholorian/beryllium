@@ -51,6 +51,7 @@
   ],
   "client": [
     "PlayerEntityRendererMixin",
+    "client.CreateWorldScreenMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin",
