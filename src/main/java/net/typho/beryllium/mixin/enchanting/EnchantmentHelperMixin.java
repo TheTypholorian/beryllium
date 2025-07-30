@@ -55,6 +55,8 @@ public class EnchantmentHelperMixin {
             }
         });
 
+        System.out.println("possible " + stack + " " + list);
+
         return list;
     }
 
@@ -101,6 +103,8 @@ public class EnchantmentHelperMixin {
                 }
             }
         }
+
+        System.out.println("gen " + stack + " " + list);
 
         return list;
     }

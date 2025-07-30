@@ -2,8 +2,6 @@
   "replace": false,
   "values": [
     "beryllium:combat/encumbered",
-    "beryllium:combat/enlarged",
-    "beryllium:combat/miniscule",
     "beryllium:combat/reach",
     "beryllium:combat/step",
     "beryllium:combat/vitality",

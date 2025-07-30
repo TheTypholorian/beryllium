@@ -54,8 +54,6 @@ public class Exploring extends Module {
     public final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
 
     public final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("firefly"), FabricParticleTypes.simple(false));
-    public final SimpleParticleType SPRUCE_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("spruce_leaves"), FabricParticleTypes.simple(false));
-    public final SimpleParticleType BIRCH_LEAVES_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("birch_leaves"), FabricParticleTypes.simple(false));
 
     public final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_bastion_maps"));
     public final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_fortress_maps"));
@@ -143,6 +141,7 @@ public class Exploring extends Module {
                 .register(entries -> {
                     entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA, GERANIUMS);
                 });
+
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
             @Override

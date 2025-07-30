@@ -48,7 +48,7 @@ public class AlgaeItem extends BlockItem {
                 );
                 world.emitGameEvent(GameEvent.BLOCK_PLACE, placement.getBlockPos(), GameEvent.Emitter.of(user, state));
 
-                return new TypedActionResult<>(ActionResult.CONSUME, stack);
+                return new TypedActionResult<>(ActionResult.SUCCESS, stack);
             }
         }
 

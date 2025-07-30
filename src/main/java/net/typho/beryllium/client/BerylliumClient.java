@@ -81,14 +81,6 @@ public class BerylliumClient implements ClientModInitializer {
                 Beryllium.EXPLORING.FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
-        ParticleFactoryRegistry.getInstance().register(
-                Beryllium.EXPLORING.BIRCH_LEAVES_PARTICLE,
-                spriteProvider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> new LeavesParticle(world, x, y, z, spriteProvider)
-        );
-        ParticleFactoryRegistry.getInstance().register(
-                Beryllium.EXPLORING.SPRUCE_LEAVES_PARTICLE,
-                spriteProvider -> (parameters, world, x, y, z, velocityX, velocityY, velocityZ) -> new LeavesParticle(world, x, y, z, spriteProvider)
-        );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
                 DyeColor color = stack.get(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT);

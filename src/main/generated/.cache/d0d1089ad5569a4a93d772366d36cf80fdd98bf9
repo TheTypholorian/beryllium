@@ -1,8 +1,8 @@
-// 1.21.1	2025-07-28T18:01:44.5367418	Beryllium/Tags for minecraft:block
+// 1.21.1	2025-07-29T20:01:33.7466512	Beryllium/Tags for minecraft:block
 bde1684f9bf1c17c8fcf9ac63cec1d8ead5ba800 data\minecraft\tags\block\mineable\shovel.json
 3f0b1251139b1377841dd7c1edfb7988da0d4a77 data\beryllium\tags\block\exploring\void_fire_base_blocks.json
-3738e79042a58a2d7d4111073d1c8671b06e5768 data\minecraft\tags\block\mineable\pickaxe.json
 3227a93ad93fd3ddb488386e12f13766a4671d2f data\minecraft\tags\block\stairs.json
+3738e79042a58a2d7d4111073d1c8671b06e5768 data\minecraft\tags\block\mineable\pickaxe.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\sword_efficient.json
 e5957e0da5128fa348a6af5e66335f19855076ce data\minecraft\tags\block\fire.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\inside_step_sound_blocks.json
