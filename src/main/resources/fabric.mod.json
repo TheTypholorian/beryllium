@@ -44,5 +44,6 @@
     "cardinal-components": [
       "beryllium:exploring/reeling"
     ]
-  }
+  },
+  "accessWidener": "beryllium.accesswidener"
 }
