@@ -42,7 +42,7 @@
   },
   "custom": {
     "cardinal-components": [
-      "beryllium:combat/reeling"
+      "beryllium:exploring/reeling"
     ]
   }
 }

@@ -75,10 +75,10 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                     getWorld()
                             .getRegistryManager()
                             .get(RegistryKeys.ENCHANTMENT)
-                            .getEntry(Beryllium.COMBAT.id("reeling"))
+                            .getEntry(Beryllium.EXPLORING.id("reeling"))
                             .orElseThrow(),
                     getItemStack()
-            ) / 10f);
+            ) / 16f);
         }
     }
 

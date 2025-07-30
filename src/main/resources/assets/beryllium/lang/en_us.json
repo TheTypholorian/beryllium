@@ -62,7 +62,10 @@
   "enchantment.beryllium.combat.step": "Step",
   "enchantment.beryllium.combat.cannibal": "Cannibal",
   "enchantment.beryllium.combat.lightweight": "Lightweight",
-  "enchantment.beryllium.combat.reeling": "Reeling",
+  "enchantment.beryllium.exploring.reeling": "Reeling",
+  "enchantment.beryllium.exploring.kinetic_protection": "Kinetic Protection",
+  "enchantment.beryllium.exploring.traction": "Traction",
+  "enchantment.beryllium.exploring.stable_footing": "Stable Footing",
   "tag.item.beryllium.combat.glaives": "Glaives",
   "tag.item.beryllium.combat.scythes": "Scythes",
   "tag.enchantment.beryllium.exclusive_set.gravity": "Gravity",
@@ -73,6 +76,7 @@
   "stat.beryllium.building.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.building.fireable": "Fireable",
   "tooltip.beryllium.building.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed.",
+  "attribute.beryllium.exploring.name.generic.stable_footing": "In-Air Block Breaking Efficiency",
 
   "beryllium.common": "Common",
 

@@ -38,7 +38,7 @@ public abstract class TridentEntityRendererMixin extends EntityRenderer<TridentE
                 trident.getWorld()
                         .getRegistryManager()
                         .get(RegistryKeys.ENCHANTMENT)
-                        .getEntry(Beryllium.COMBAT.id("reeling"))
+                        .getEntry(Beryllium.EXPLORING.id("reeling"))
                         .orElseThrow(),
                 trident.getItemStack()
         ) > 0;

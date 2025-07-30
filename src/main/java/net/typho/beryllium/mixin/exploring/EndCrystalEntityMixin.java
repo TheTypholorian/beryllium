@@ -21,7 +21,7 @@ public abstract class EndCrystalEntityMixin extends Entity {
             at = @At("HEAD")
     )
     public void tick(CallbackInfo ci) {
-        for (Entity projectile : getWorld().getOtherEntities(this, getBoundingBox().expand(16), e -> e instanceof ProjectileEntity)) {
+        for (Entity projectile : getWorld().getOtherEntities(this, getBoundingBox().expand(8), e -> e instanceof ProjectileEntity)) {
             projectile.setVelocity(projectile.getPos().subtract(getPos()).normalize());
             projectile.velocityModified = true;
         }

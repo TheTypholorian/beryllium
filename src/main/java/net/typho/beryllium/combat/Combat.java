@@ -146,7 +146,5 @@ public class Combat extends Module {
         public int shieldMaxDurability = 30;
         public int shieldLowerCooldown = 60;
         public int splashPotionCooldown = 100;
-        public float reelingMultiplierLoyal = 1;
-        public float reelingMultiplierNotLoyal = 2;
     }
 }

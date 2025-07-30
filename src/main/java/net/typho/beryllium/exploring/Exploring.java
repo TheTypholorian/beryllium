@@ -12,6 +12,8 @@ import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.component.ComponentType;
+import net.minecraft.entity.attribute.ClampedEntityAttribute;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.item.Item;
@@ -31,6 +33,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
@@ -123,6 +126,8 @@ public class Exploring extends Module {
     public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
     public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
     public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
+
+    public final RegistryEntry<EntityAttribute> STABLE_FOOTING = attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
 
     public Exploring(String name) {
         super(name);

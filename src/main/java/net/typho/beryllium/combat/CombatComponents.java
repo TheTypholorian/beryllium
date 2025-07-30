@@ -8,7 +8,7 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 
 public class CombatComponents implements EntityComponentInitializer {
-    public static final ComponentKey<ReelingComponent> REELING = ComponentRegistryV3.INSTANCE.getOrCreate(Beryllium.COMBAT.id("reeling"), ReelingComponent.class);
+    public static final ComponentKey<ReelingComponent> REELING = ComponentRegistryV3.INSTANCE.getOrCreate(Beryllium.EXPLORING.id("reeling"), ReelingComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

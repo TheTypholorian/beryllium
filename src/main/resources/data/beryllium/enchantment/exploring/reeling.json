@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.combat.reeling"
+    "translate": "enchantment.beryllium.exploring.reeling"
   },
   "supported_items": "minecraft:trident",
   "exclusive_set": "#minecraft:exclusive_set/riptide",
