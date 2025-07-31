@@ -1,7 +1,7 @@
-// 1.21.1	2025-07-31T13:11:07.4513448	Beryllium/Tags for minecraft:item
+// 1.21.1	2025-07-31T16:38:46.9704913	Beryllium/Tags for minecraft:item
 af378507c1fed70a416e3dd938fd3a95e9d9fe64 data\minecraft\tags\item\enchantable\head_armor.json
-cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\item\flowers.json
 03d01aa8d73c111ec71c7fc0a5f4b31967c6b5f5 data\minecraft\tags\item\arrows.json
+cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\item\flowers.json
 af378507c1fed70a416e3dd938fd3a95e9d9fe64 data\minecraft\tags\item\enchantable\chest_armor.json
 af378507c1fed70a416e3dd938fd3a95e9d9fe64 data\minecraft\tags\item\enchantable\leg_armor.json
 af378507c1fed70a416e3dd938fd3a95e9d9fe64 data\minecraft\tags\item\enchantable\foot_armor.json

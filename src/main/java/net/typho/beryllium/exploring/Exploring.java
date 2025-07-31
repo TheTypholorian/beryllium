@@ -49,7 +49,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.BiomeParticleConfig;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.structure.Structure;
 import net.typho.beryllium.Beryllium;
@@ -132,12 +134,22 @@ public class Exploring extends Module {
     public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
     public final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("scilla"));
     public final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("geraniums"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("magma_delta"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> SMALL_BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("small_bone_spikes"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> LARGE_BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("large_bone_spikes"));
 
     public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
     public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
     public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
     public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
     public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
+    public final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("magma_delta"));
+    public final RegistryKey<PlacedFeature> SMALL_BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("small_bone_spikes"));
+    public final RegistryKey<PlacedFeature> LARGE_BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("large_bone_spikes"));
+
+    public final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
+
+    public final RegistryKey<Biome> BONE_FOREST = RegistryKey.of(RegistryKeys.BIOME, id("bone_forest"));
 
     public final RegistryEntry<EntityAttribute> STABLE_FOOTING = attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
 

@@ -1,0 +1,12 @@
+{
+  "feature": "beryllium:exploring/large_bone_spikes",
+  "placement": [
+    {
+      "type": "minecraft:count_on_every_layer",
+      "count": 40
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
