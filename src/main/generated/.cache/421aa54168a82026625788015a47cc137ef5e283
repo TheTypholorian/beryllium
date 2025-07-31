@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-31T07:28:23.5943157	Beryllium/Block Loot Tables
+// 1.21.1	2025-07-31T11:55:27.7714991	Beryllium/Block Loot Tables
 1d4929d7d6176f60e5ea991a577527ed251ef375 data\beryllium\loot_table\blocks\exploring\void_fire.json
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data\beryllium\loot_table\blocks\combat\potion_cauldron.json
 c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
@@ -9,6 +9,7 @@ c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\buildi
 6e99f191d314f2814f4c06573784caaecb72c2b5 data\beryllium\loot_table\blocks\exploring\scilla.json
 23b21c36d3fb760c2195c7fff2c8744fd2e7dfe0 data\beryllium\loot_table\blocks\building\smooth_stone_stairs.json
 0c0906cadb74709b06fce4abba9b8d838ce1cdc1 data\beryllium\loot_table\blocks\building\cracked_stone_brick_wall.json
+d7f8d437610385f93af7524b313ae9c6db3166b3 data\beryllium\loot_table\blocks\exploring\pointed_bone.json
 8f5f9ff32a6732b69a09184e257dfa194f384bf5 data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
 6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json

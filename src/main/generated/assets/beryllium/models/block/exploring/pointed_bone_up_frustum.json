@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pointed_dripstone",
+  "textures": {
+    "cross": "beryllium:block/exploring/pointed_bone_up_frustum"
+  }
+}

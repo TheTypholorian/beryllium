@@ -65,11 +65,14 @@ public class Exploring extends Module {
     public final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_bastion_maps"));
     public final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_fortress_maps"));
     public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
+
     public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
     public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
     public final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, id("spruce"));
     public final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, id("oak"));
+
     public final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("void_fire_base_blocks"));
+    public final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("pointed_blocks"));
 
     public final Block FIREFLY_BOTTLE =
             blockWithItem(
@@ -100,6 +103,11 @@ public class Exploring extends Module {
             .burnable()
             .pistonBehavior(PistonBehavior.DESTROY)));
     public final Block VOID_FIRE = block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
+    public final Block POINTED_BONE = blockWithItem("pointed_bone", new PointedBoneBlock(AbstractBlock.Settings.copy(Blocks.POINTED_DRIPSTONE)
+            .mapColor(MapColor.PALE_YELLOW)
+            .requiresTool()
+            .strength(2)
+            .sounds(BlockSoundGroup.BONE)), new Item.Settings());
 
     public final Item METAL_DETECTOR_ITEM = item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public final Item ALGAE_ITEM = item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));

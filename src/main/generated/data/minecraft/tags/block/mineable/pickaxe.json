@@ -11,6 +11,8 @@
     "beryllium:building/smooth_stone_stairs",
     "beryllium:building/chiseled_smooth_stone",
     "beryllium:building/kiln",
-    "beryllium:redstone/gold_hopper"
+    "beryllium:redstone/gold_hopper",
+    "beryllium:combat/potion_cauldron",
+    "beryllium:exploring/pointed_bone"
   ]
 }

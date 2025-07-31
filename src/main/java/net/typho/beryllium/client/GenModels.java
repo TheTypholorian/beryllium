@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
+import net.minecraft.block.enums.Thickness;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.state.property.Properties;
@@ -97,6 +98,26 @@ public class GenModels extends FabricModelProvider {
                                                 )
                                 )
                 );
+
+        gen.excludeFromSimpleItemModelGeneration(Beryllium.EXPLORING.POINTED_BONE);
+        BlockStateVariantMap.DoubleProperty<Direction, Thickness> doubleProperty = BlockStateVariantMap.create(Properties.VERTICAL_DIRECTION, Properties.THICKNESS);
+
+        for (Thickness thickness : Thickness.values()) {
+            doubleProperty.register(Direction.UP, thickness, getBoneVariant(gen, Direction.UP, thickness));
+        }
+
+        for (Thickness thickness : Thickness.values()) {
+            doubleProperty.register(Direction.DOWN, thickness, getBoneVariant(gen, Direction.DOWN, thickness));
+        }
+
+        gen.blockStateCollector.accept(VariantsBlockStateSupplier.create(Beryllium.EXPLORING.POINTED_BONE).coordinate(doubleProperty));
+    }
+
+    public BlockStateVariant getBoneVariant(BlockStateModelGenerator gen, Direction direction, Thickness thickness) {
+        String string = "_" + direction.asString() + "_" + thickness.asString();
+        TextureMap textureMap = TextureMap.cross(TextureMap.getSubId(Beryllium.EXPLORING.POINTED_BONE, string));
+        return BlockStateVariant.create()
+                .put(VariantSettings.MODEL, Models.POINTED_DRIPSTONE.upload(Beryllium.EXPLORING.POINTED_BONE, string, textureMap, gen.modelCollector));
     }
 
     @Override

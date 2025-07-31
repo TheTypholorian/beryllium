@@ -33,7 +33,11 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
 
                 .add(Beryllium.BUILDING.KILN_BLOCK)
 
-                .add(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
+                .add(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK)
+
+                .add(Beryllium.COMBAT.POTION_CAULDRON)
+
+                .add(Beryllium.EXPLORING.POINTED_BONE);
 
         getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
                 .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())
@@ -83,6 +87,10 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.END_STONE)
                 .add(Blocks.OBSIDIAN)
                 .add(Blocks.BEDROCK);
+
+        getOrCreateTagBuilder(Beryllium.EXPLORING.POINTED_BLOCKS)
+                .add(Blocks.POINTED_DRIPSTONE)
+                .add(Beryllium.EXPLORING.POINTED_BONE);
 
         getOrCreateTagBuilder(BlockTags.FIRE)
                 .add(Beryllium.EXPLORING.VOID_FIRE);

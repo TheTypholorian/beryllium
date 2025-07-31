@@ -46,5 +46,7 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Beryllium.EXPLORING.VOID_FIRE, dropsNothing());
 
         addDrop(Beryllium.COMBAT.POTION_CAULDRON, Blocks.CAULDRON);
+
+        addDrop(Beryllium.EXPLORING.POINTED_BONE);
     }
 }
