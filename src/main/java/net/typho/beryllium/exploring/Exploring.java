@@ -1,5 +1,8 @@
 package net.typho.beryllium.exploring;
 
+import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -40,6 +43,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.village.TradeOffers;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
@@ -81,8 +85,8 @@ public class Exploring extends Module {
                             .sounds(BlockSoundGroup.GLASS)
                             .suffocates(Blocks::never)
                             .blockVision(Blocks::never)),
-            new Item.Settings()
-    );
+                    new Item.Settings()
+            );
     public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block SCILLA = blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
     public final Block GERANIUMS = blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
@@ -128,6 +132,13 @@ public class Exploring extends Module {
     public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
 
     public final RegistryEntry<EntityAttribute> STABLE_FOOTING = attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
+
+    public final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
+            1, new TradeOffers.Factory[]{
+            },
+            2, new TradeOffers.Factory[]{
+            }
+    ));
 
     public Exploring(String name) {
         super(name);
@@ -199,7 +210,8 @@ public class Exploring extends Module {
                             .bonusRolls(new ConstantLootNumberProvider(3)));
                     break;
                 }
-                case "minecraft:chests/village/village_butcher", "minecraft:chests/village/village_shepherd", "minecraft:chests/village/village_tannery", "minecraft:chests/village/village_temple": {
+                case "minecraft:chests/village/village_butcher", "minecraft:chests/village/village_shepherd",
+                     "minecraft:chests/village/village_tannery", "minecraft:chests/village/village_temple": {
                     builder.modifyPools(pool -> pool.bonusRolls(new ConstantLootNumberProvider(3)));
                     break;
                 }
@@ -306,13 +318,6 @@ public class Exploring extends Module {
 
         public static class MetalDetector extends ConfigSection {
             public int tooltipRadius = 16, needleX = 16, needleY = 2;
-        }
-
-        public Structures structures = new Structures();
-
-        public static class Structures extends ConfigSection {
-            public boolean junglePyramid = true;
-            public boolean desertPyramid = true;
         }
 
         public boolean spawnInVillage = true;

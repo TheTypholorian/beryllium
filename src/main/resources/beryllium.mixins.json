@@ -42,6 +42,7 @@
     "exploring.DragonFireballEntityMixin",
     "exploring.EndCrystalEntityMixin",
     "exploring.EnderDragonEntityMixin",
+    "exploring.EndermanEntityMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
     "exploring.PlayerEntityMixin",
