@@ -1,4 +1,4 @@
-package net.typho.beryllium.client;
+package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;

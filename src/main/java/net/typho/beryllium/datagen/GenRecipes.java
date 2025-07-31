@@ -1,4 +1,4 @@
-package net.typho.beryllium.client;
+package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -242,6 +242,8 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input(Items.SAND)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
                 .offerTo(exporter, Beryllium.EXPLORING.id("iron_nugget_from_washing"));
+
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BONE_BLOCK, Beryllium.EXPLORING.POINTED_BONE);
 
         offerSmelting(exporter, List.of(Items.SUGAR_CANE), RecipeCategory.MISC, Items.LIME_DYE, 1, 200, "lime_dye");
 

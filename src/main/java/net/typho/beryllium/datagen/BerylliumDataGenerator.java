@@ -1,4 +1,4 @@
-package net.typho.beryllium.client;
+package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;

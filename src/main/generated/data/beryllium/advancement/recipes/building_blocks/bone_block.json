@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_exploring/pointed_bone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beryllium:exploring/pointed_bone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beryllium:bone_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_exploring/pointed_bone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beryllium:bone_block"
+    ]
+  }
+}

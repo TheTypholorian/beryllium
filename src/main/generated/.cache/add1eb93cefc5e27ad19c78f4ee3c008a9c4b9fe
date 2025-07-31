@@ -1,8 +1,9 @@
-// 1.21.1	2025-07-31T11:55:27.7644622	Beryllium/Recipes
+// 1.21.1	2025-07-31T13:11:07.4493461	Beryllium/Recipes
 43b366ea2a464d18213cf0b2fb254a2a4068b834 data\beryllium\recipe\exploring\metal_detector.json
 8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
 83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
 93c2b7c0d84b694b366bf0deb84de4b0f1a6dc34 data\beryllium\recipe\terracotta.json
+a5c77782c9418d883f25d4ca2bf53fae7fb17b88 data\beryllium\advancement\recipes\building_blocks\bone_block.json
 f3ef3075fc6defd6689f0a985c1a96e60abce5b8 data\beryllium\recipe\leather_from_smoking_rotten_flesh.json
 fb290635c6757a29ebb2a1d6ef8c2c0de4e137ef data\beryllium\advancement\recipes\building_blocks\smooth_quartz.json
 fd09f8dd2a5f544a60a0cfaa13f39e63c0ba4112 data\beryllium\advancement\recipes\decorations\light_blue_glazed_terracotta.json
@@ -120,6 +121,7 @@ c3d6f0bccbf589d51cebd4ea5be13641b04bf38e data\beryllium\advancement\recipes\deco
 bc531d98aa97d417ccdf6d4f4a842f1d72b08b3a data\beryllium\recipe\exploring\gravel_from_washing.json
 8e76fb7079a9d58c5ba4d582217aed2dfa8b4171 data\beryllium\advancement\recipes\combat\combat\iron_scythe.json
 58f75fea34f7c2582a1f43e93cc5bc84624bb5bd data\beryllium\advancement\recipes\misc\exploring\iron_nugget_from_washing.json
+1e11307335f94ee408229c428978b0e418e74258 data\beryllium\recipe\bone_block.json
 4bbdc2b876cb99316851aadb182e969fa0a5e77b data\beryllium\advancement\recipes\redstone\diamond_horse_armor.json
 3312a4b05ea2a4c4e238fa0bf363294c1c815259 data\beryllium\recipe\combat\netherite_scythe_smithing.json
 7aa33f5429516adb7f9aa2f2f9f98790d82bfe26 data\beryllium\advancement\recipes\decorations\purple_glazed_terracotta.json

@@ -40,6 +40,7 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+@SuppressWarnings("deprecation")
 public class PointedBoneBlock extends Block implements LandingBlock, Waterloggable {
     public static final MapCodec<PointedBoneBlock> CODEC = createCodec(PointedBoneBlock::new);
     public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;

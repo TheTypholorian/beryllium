@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "net.typho.beryllium.client.BerylliumDataGenerator"
+      "net.typho.beryllium.datagen.BerylliumDataGenerator"
     ],
     "client": [
       "net.typho.beryllium.client.BerylliumClient"
