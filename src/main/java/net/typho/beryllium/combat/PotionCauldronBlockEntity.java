@@ -1,5 +1,6 @@
 package net.typho.beryllium.combat;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
@@ -11,12 +12,17 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.typho.beryllium.Beryllium;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -46,6 +52,11 @@ public class PotionCauldronBlockEntity extends BlockEntity {
                     compound.getInt("duration")
             ), compound.getFloat("scale"));
         }
+
+        if (world != null && world.isClient) {
+            BlockState state = world.getBlockState(pos);
+            world.updateListeners(pos, state, state, Block.NOTIFY_ALL_AND_REDRAW);
+        }
     }
 
     @Override
@@ -58,9 +69,29 @@ public class PotionCauldronBlockEntity extends BlockEntity {
             compound.putInt("amplifier", entry.getKey().amplifier);
             compound.putInt("duration", entry.getKey().duration);
             compound.putFloat("scale", entry.getValue());
+            list.add(compound);
         }
 
         nbt.put("contents", list);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registries) {
+        return createNbt(registries);
+    }
+
+    @Override
+    public @Nullable Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public void markDirty() {
+        super.markDirty();
+
+        if (world instanceof ServerWorld serverWorld) {
+            serverWorld.getChunkManager().markForUpdate(pos);
+        }
     }
 
     public boolean addPotion(Iterable<StatusEffectInstance> it, boolean addLevel) {
@@ -76,11 +107,11 @@ public class PotionCauldronBlockEntity extends BlockEntity {
             contents.compute(new Level(effect.getEffectType(), effect.getAmplifier(), effect.getDuration()), (k, v) -> v == null ? 1 : v + 1);
         }
 
-        markDirty();
-
         if (addLevel) {
             world.setBlockState(pos, state.with(LEVEL, level + 1));
         }
+
+        markDirty();
 
         return true;
     }
@@ -100,26 +131,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
             world.setBlockState(pos, state.with(LEVEL, level - 1));
         }
 
-        int red = 0, green = 0, blue = 0;
-        float denom = 0;
-
-        for (Map.Entry<Level, Float> entry : contents.entrySet()) {
-            denom += entry.getValue() / level;
-            int color = entry.getKey().effect.value().getColor();
-            red += (color >> 16) & 0xFF;
-            green += (color >> 8) & 0xFF;
-            blue += color & 0xFF;
-        }
-
-        int color = 0;
-
-        if (denom > 0) {
-            red = (int) (red / denom);
-            green = (int) (green / denom);
-            blue = (int) (blue / denom);
-
-            color = (((red << 8) | green) << 8) | blue;
-        }
+        int color = getColor();
 
         List<StatusEffectInstance> effects = new LinkedList<>();
 
@@ -127,21 +139,43 @@ public class PotionCauldronBlockEntity extends BlockEntity {
             effects.add(new StatusEffectInstance(entry.getKey().effect, (int) (entry.getKey().duration * entry.getValue() / level), entry.getKey().amplifier));
         }
 
-        Map<Level, Float> newContents = new LinkedHashMap<>();
-
         for (Map.Entry<Level, Float> entry : contents.entrySet()) {
-            newContents.put(entry.getKey(), entry.getValue() * (level - 1) / level);
+            entry.setValue(entry.getValue() * (level - 1) / level);
         }
 
-        contents.clear();
-        contents.putAll(newContents);
         markDirty();
 
         return new PotionContentsComponent(
-                Optional.of(Beryllium.COMBAT.COCKTAIL),
+                Optional.empty(),
                 Optional.of(color),
                 effects
         );
+    }
+
+    public int getColor() {
+        float red = 0, green = 0, blue = 0;
+        float denom = 0;
+
+        for (Map.Entry<Level, Float> entry : contents.entrySet()) {
+            denom += entry.getValue();
+            int color = entry.getKey().effect.value().getColor();
+            red += ((color >> 16) & 0xFF) * entry.getValue();
+            green += ((color >> 8) & 0xFF) * entry.getValue();
+            blue += (color & 0xFF) * entry.getValue();
+        }
+
+        int color = -1;
+
+        if (denom > 0) {
+            color = ((((int) (red / denom) << 8) | (int) (green / denom)) << 8) | (int) (blue / denom);
+        }
+
+        return color;
+    }
+
+    @Override
+    public @Nullable Object getRenderData() {
+        return getColor();
     }
 
     public record Level(RegistryEntry<StatusEffect> effect, int amplifier, int duration) {

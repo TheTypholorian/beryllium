@@ -2,6 +2,8 @@ package net.typho.beryllium.client;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.state.property.Properties;
@@ -59,6 +61,41 @@ public class GenModels extends FabricModelProvider {
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R90)))
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R180)))
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R270)))
+                );
+
+        gen.blockStateCollector
+                .accept(
+                        VariantsBlockStateSupplier.create(Beryllium.COMBAT.POTION_CAULDRON)
+                                .coordinate(
+                                        BlockStateVariantMap.create(LeveledCauldronBlock.LEVEL)
+                                                .register(
+                                                        1,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_LEVEL1
+                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_level1", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        2,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_LEVEL2
+                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_level2", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        3,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.TEMPLATE_CAULDRON_FULL
+                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_full", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                )
+                                                )
+                                )
                 );
     }
 

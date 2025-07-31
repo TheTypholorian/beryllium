@@ -86,5 +86,8 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
 
         getOrCreateTagBuilder(BlockTags.FIRE)
                 .add(Beryllium.EXPLORING.VOID_FIRE);
+
+        getOrCreateTagBuilder(BlockTags.CAULDRONS)
+                .add(Beryllium.COMBAT.POTION_CAULDRON);
     }
 }

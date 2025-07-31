@@ -1,4 +1,8 @@
 {
   "item.minecraft.arrow": "Flint Arrow",
-  "entity.minecraft.arrow": "Flint Arrow"
+  "entity.minecraft.arrow": "Flint Arrow",
+  "item.minecraft.lingering_potion.effect.empty": "Lingering Cocktail",
+  "item.minecraft.potion.effect.empty": "Cocktail",
+  "item.minecraft.splash_potion.effect.empty": "Splash Cocktail",
+  "item.minecraft.tipped_arrow.effect.empty": "Cocktail Tipped Arrow"
 }

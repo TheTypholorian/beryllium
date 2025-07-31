@@ -114,6 +114,7 @@ public class BerylliumClient implements ClientModInitializer {
                 return -1;
             }
         }, Beryllium.EXPLORING.DAFFODILS, Beryllium.EXPLORING.SCILLA, Beryllium.EXPLORING.GERANIUMS);
+        ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> view != null && view.getBlockEntityRenderData(pos) instanceof Integer color ? color : -1, Beryllium.COMBAT.POTION_CAULDRON);
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.FIREFLY_BOTTLE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.ALGAE_BLOCK, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.DAFFODILS, RenderLayer.getCutout());

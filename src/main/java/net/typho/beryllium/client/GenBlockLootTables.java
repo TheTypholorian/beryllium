@@ -2,6 +2,7 @@ package net.typho.beryllium.client;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.registry.RegistryWrapper;
 import net.typho.beryllium.Beryllium;
@@ -43,5 +44,7 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
 
         addDrop(Beryllium.EXPLORING.VOID_FIRE, dropsNothing());
+
+        addDrop(Beryllium.COMBAT.POTION_CAULDRON, Blocks.CAULDRON);
     }
 }

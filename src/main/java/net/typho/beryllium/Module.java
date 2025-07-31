@@ -9,7 +9,6 @@ import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -79,9 +78,5 @@ public abstract class Module implements ModInitializer, Identifierifier {
 
     public RegistryEntry<EntityAttribute> attribute(String id, EntityAttribute attribute) {
         return Registry.registerReference(Registries.ATTRIBUTE, id(id), attribute);
-    }
-
-    public RegistryEntry<Potion> potion(String id, Potion potion) {
-        return Registry.registerReference(Registries.POTION, id(id), potion);
     }
 }
