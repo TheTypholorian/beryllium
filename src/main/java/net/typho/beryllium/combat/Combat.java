@@ -2,6 +2,9 @@ package net.typho.beryllium.combat;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,12 +13,15 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.potion.Potion;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.Module;
 import org.jetbrains.annotations.Nullable;
@@ -111,6 +117,9 @@ public class Combat extends Module {
             new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(this, ToolMaterials.GOLD, 4, -3.4f)))
     );
     public final ComponentType<Float> SHIELD_DURABILITY = component("shield_damage", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
+    public final Block POTION_CAULDRON = block("potion_cauldron", new PotionCauldronBlock(Biome.Precipitation.NONE, AbstractBlock.Settings.create()));
+    public final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
+    public final RegistryEntry<Potion> COCKTAIL = potion("cocktail", new Potion());
 
     public Combat(String name) {
         super(name);

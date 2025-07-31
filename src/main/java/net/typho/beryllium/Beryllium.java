@@ -3,7 +3,6 @@ package net.typho.beryllium;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
@@ -31,11 +30,6 @@ public class Beryllium implements ModInitializer {
         BUILDING.onInitialize();
         FOOD.onInitialize();
         REDSTONE.onInitialize();
-
-        ServerWorldEvents.LOAD.register((server, world) -> {
-            BerylliumServerConfig config = BerylliumServerConfig.get(world);
-            System.out.println("Spawn in village? " + config.spawnInVillage);
-        });
     }
 
     public static class BerylliumConfig extends Config {
