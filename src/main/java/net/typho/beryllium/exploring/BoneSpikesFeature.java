@@ -42,26 +42,23 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
         StructureWorldAccess structureWorldAccess = context.getWorld();
         Random random = context.getRandom();
         BasaltColumnsFeatureConfig basaltColumnsFeatureConfig = context.getConfig();
-        if (!canPlaceAt(structureWorldAccess, i, blockPos.mutableCopy())) {
-            return false;
-        } else {
-            int j = basaltColumnsFeatureConfig.getHeight().get(random);
-            boolean bl = random.nextFloat() < 0.9F;
-            int k = Math.min(j, bl ? 5 : 8);
-            int l = bl ? 50 : 15;
-            boolean bl2 = false;
 
-            for (BlockPos blockPos2 : BlockPos.iterateRandomly(
-                    random, l, blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k
-            )) {
-                int m = j - blockPos2.getManhattanDistance(blockPos);
-                if (m >= 0) {
-                    bl2 |= this.placeBasaltColumn(structureWorldAccess, i, blockPos2, m, basaltColumnsFeatureConfig.getReach().get(random));
-                }
+        int j = basaltColumnsFeatureConfig.getHeight().get(random);
+        boolean bl = random.nextFloat() < 0.9F;
+        int k = Math.min(j, bl ? 5 : 8);
+        int l = bl ? 50 : 15;
+        boolean bl2 = false;
+
+        for (BlockPos blockPos2 : BlockPos.iterateRandomly(
+                random, l, blockPos.getX() - k, blockPos.getY(), blockPos.getZ() - k, blockPos.getX() + k, blockPos.getY(), blockPos.getZ() + k
+        )) {
+            int m = j - blockPos2.getManhattanDistance(blockPos);
+            if (m >= 0) {
+                bl2 |= this.placeBasaltColumn(structureWorldAccess, i, blockPos2, m, basaltColumnsFeatureConfig.getReach().get(random));
             }
-
-            return bl2;
         }
+
+        return bl2;
     }
 
     private boolean placeBasaltColumn(WorldAccess world, int seaLevel, BlockPos pos, int height, int reach) {
@@ -70,8 +67,8 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
         for (BlockPos blockPos : BlockPos.iterate(pos.getX() - reach, pos.getY(), pos.getZ() - reach, pos.getX() + reach, pos.getY(), pos.getZ() + reach)) {
             int i = blockPos.getManhattanDistance(pos);
             BlockPos blockPos2 = isAirOrLavaOcean(world, seaLevel, blockPos)
-                    ? moveDownToGround(world, seaLevel, blockPos.mutableCopy(), i)
-                    : moveUpToAir(world, blockPos.mutableCopy(), i);
+                    ? moveUpToGround(world, seaLevel, blockPos.mutableCopy(), i)
+                    : moveDownToAir(world, blockPos.mutableCopy(), i);
             if (blockPos2 != null) {
                 int j = height - i / 2;
 
@@ -80,29 +77,29 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
                         BlockState place = world.getBlockState(mutable).isOf(Blocks.LAVA) ? Blocks.BONE_BLOCK.getDefaultState() :
                                 switch (j) {
                                     case 0 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
-                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.UP)
+                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.TIP);
                                     case 1 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
-                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.UP)
+                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.FRUSTUM);
                                     case 2 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
-                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.UP)
+                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.MIDDLE);
                                     case 3 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
-                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.UP)
+                                            .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.BASE);
                                     default -> Blocks.BONE_BLOCK.getDefaultState();
                                 };
 
                         this.setBlockState(world, mutable, place);
-                        mutable.move(Direction.UP);
+                        mutable.move(Direction.DOWN);
                         bl = true;
                     } else {
                         if (!world.getBlockState(mutable).isOf(Blocks.BONE_BLOCK)) {
                             break;
                         }
 
-                        mutable.move(Direction.UP);
+                        mutable.move(Direction.DOWN);
                     }
                 }
             }
@@ -112,14 +109,13 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
     }
 
     @Nullable
-    private static BlockPos moveDownToGround(WorldAccess world, int seaLevel, BlockPos.Mutable mutablePos, int distance) {
-        while (mutablePos.getY() > world.getBottomY() + 1 && distance > 0) {
-            distance--;
+    private static BlockPos moveUpToGround(WorldAccess world, int seaLevel, BlockPos.Mutable mutablePos, int distance) {
+        while (mutablePos.getY() < world.getTopY()) {
             if (canPlaceAt(world, seaLevel, mutablePos)) {
                 return mutablePos;
             }
 
-            mutablePos.move(Direction.DOWN);
+            mutablePos.move(Direction.UP);
         }
 
         return null;
@@ -129,16 +125,15 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
         if (!isAirOrLavaOcean(world, seaLevel, mutablePos)) {
             return false;
         } else {
-            BlockState blockState = world.getBlockState(mutablePos.move(Direction.DOWN));
-            mutablePos.move(Direction.UP);
+            BlockState blockState = world.getBlockState(mutablePos.move(Direction.UP));
+            mutablePos.move(Direction.DOWN);
             return !blockState.isAir() && !(CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Beryllium.EXPLORING.POINTED_BONE));
         }
     }
 
     @Nullable
-    private static BlockPos moveUpToAir(WorldAccess world, BlockPos.Mutable mutablePos, int distance) {
-        while (mutablePos.getY() < world.getTopY() && distance > 0) {
-            distance--;
+    private static BlockPos moveDownToAir(WorldAccess world, BlockPos.Mutable mutablePos, int distance) {
+        while (mutablePos.getY() > world.getBottomY() + 1) {
             BlockState blockState = world.getBlockState(mutablePos);
             if (CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Beryllium.EXPLORING.POINTED_BONE)) {
                 return null;
@@ -148,7 +143,7 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
                 return mutablePos;
             }
 
-            mutablePos.move(Direction.UP);
+            mutablePos.move(Direction.DOWN);
         }
 
         return null;

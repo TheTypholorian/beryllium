@@ -135,8 +135,7 @@ public class Exploring extends Module {
     public final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("scilla"));
     public final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("geraniums"));
     public final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("magma_delta"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> SMALL_BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("small_bone_spikes"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> LARGE_BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("large_bone_spikes"));
+    public final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("bone_spikes"));
 
     public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
     public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
@@ -144,12 +143,9 @@ public class Exploring extends Module {
     public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
     public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
     public final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("magma_delta"));
-    public final RegistryKey<PlacedFeature> SMALL_BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("small_bone_spikes"));
-    public final RegistryKey<PlacedFeature> LARGE_BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("large_bone_spikes"));
+    public final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("bone_spikes"));
 
     public final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
-
-    public final RegistryKey<Biome> BONE_FOREST = RegistryKey.of(RegistryKeys.BIOME, id("bone_forest"));
 
     public final RegistryEntry<EntityAttribute> STABLE_FOOTING = attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
 
@@ -177,7 +173,6 @@ public class Exploring extends Module {
                 .register(entries -> {
                     entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA, GERANIUMS);
                 });
-
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
         Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
             @Override
@@ -210,6 +205,11 @@ public class Exploring extends Module {
                 BiomeSelectors.tag(OAK_TAG),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 GERANIUMS_PLACED
+        );
+        BiomeModifications.addFeature(
+                BiomeSelectors.foundInTheNether(),
+                GenerationStep.Feature.UNDERGROUND_DECORATION,
+                BONE_SPIKES_PLACED
         );
         BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {

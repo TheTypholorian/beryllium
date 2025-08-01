@@ -6,7 +6,6 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -21,7 +20,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,7 +31,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.biome.GrassColors;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.MagicWandItem;
@@ -84,20 +81,6 @@ public class BerylliumClient implements ClientModInitializer {
                 Beryllium.EXPLORING.FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
-        ClientPlayNetworking.registerGlobalReceiver(Beryllium.SyncGameRuleS2CPayload.ID, (payload, context) -> {
-            ClientWorld world = context.client().world;
-
-            if (world != null) {
-                GameRules.Key<?> key = GameRules.RULE_TYPES.keySet().stream()
-                        .filter(k -> Objects.equals(k.getName(), payload.rule()))
-                        .findAny()
-                        .orElseThrow();
-
-                world.getGameRules().get(
-                        key
-                ).deserialize(payload.value());
-            }
-        });
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
                 DyeColor color = stack.get(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT);

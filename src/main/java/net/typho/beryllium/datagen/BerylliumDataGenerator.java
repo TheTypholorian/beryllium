@@ -5,25 +5,16 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerbedBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.BiomeAdditionsSound;
-import net.minecraft.sound.BiomeMoodSound;
-import net.minecraft.sound.MusicType;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.collection.DataPool;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.intprovider.BiasedToBottomIntProvider;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.biome.*;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.carver.ConfiguredCarvers;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placementmodifier.*;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -103,15 +94,10 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             Feature.DELTA_FEATURE,
                             new DeltaFeatureConfig(Blocks.MAGMA_BLOCK.getDefaultState(), Blocks.MAGMA_BLOCK.getDefaultState(), UniformIntProvider.create(3, 7), UniformIntProvider.create(0, 2))
                     ));
-            context.register(Beryllium.EXPLORING.SMALL_BONE_SPIKES_CONFIGURED,
+            context.register(Beryllium.EXPLORING.BONE_SPIKES_CONFIGURED,
                     new ConfiguredFeature<>(
                             Beryllium.EXPLORING.BONE_SPIKES,
-                            new BasaltColumnsFeatureConfig(ConstantIntProvider.create(1), UniformIntProvider.create(1, 4))
-                    ));
-            context.register(Beryllium.EXPLORING.LARGE_BONE_SPIKES_CONFIGURED,
-                    new ConfiguredFeature<>(
-                            Beryllium.EXPLORING.BONE_SPIKES,
-                            new BasaltColumnsFeatureConfig(UniformIntProvider.create(2, 3), UniformIntProvider.create(5, 10))
+                            new BasaltColumnsFeatureConfig(ConstantIntProvider.create(1), UniformIntProvider.create(1, 3))
                     ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
@@ -145,21 +131,22 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             .getOrThrow(Beryllium.EXPLORING.MAGMA_DELTA_CONFIGURED),
                     List.of(CountMultilayerPlacementModifier.of(4), BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.SMALL_BONE_SPIKES_PLACED, new PlacedFeature(
+            context.register(Beryllium.EXPLORING.BONE_SPIKES_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.SMALL_BONE_SPIKES_CONFIGURED),
-                    List.of(CountMultilayerPlacementModifier.of(4), BiomePlacementModifier.of())
-            ));
-            context.register(Beryllium.EXPLORING.LARGE_BONE_SPIKES_PLACED, new PlacedFeature(
-                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.LARGE_BONE_SPIKES_CONFIGURED),
-                    List.of(CountMultilayerPlacementModifier.of(40), BiomePlacementModifier.of())
+                            .getOrThrow(Beryllium.EXPLORING.BONE_SPIKES_CONFIGURED),
+                    List.of(
+                            CountPlacementModifier.of(BiasedToBottomIntProvider.create(0, 4)),
+                            SquarePlacementModifier.of(),
+                            PlacedFeatures.FOUR_ABOVE_AND_BELOW_RANGE,
+                            BiomePlacementModifier.of()
+                    )
             ));
         });
         builder.addRegistry(RegistryKeys.BIOME, context -> {
             RegistryEntryLookup<PlacedFeature> featureLookup = context.getRegistryLookup(RegistryKeys.PLACED_FEATURE);
             RegistryEntryLookup<ConfiguredCarver<?>> carverLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER);
 
+            /*
             SpawnSettings spawnSettings = new SpawnSettings.Builder()
                     .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.GHAST, 40, 1, 1))
                     .spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.MAGMA_CUBE, 100, 2, 5))
@@ -202,6 +189,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .spawnSettings(spawnSettings)
                     .generationSettings(lookupBackedBuilder.build())
                     .build());
+             */
         });
     }
 }

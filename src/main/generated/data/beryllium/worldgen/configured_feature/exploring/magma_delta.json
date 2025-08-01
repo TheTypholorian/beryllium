@@ -5,10 +5,7 @@
       "Name": "minecraft:magma_block"
     },
     "rim": {
-      "Name": "minecraft:magma_block",
-      "Properties": {
-        "axis": "y"
-      }
+      "Name": "minecraft:magma_block"
     },
     "rim_size": {
       "type": "minecraft:uniform",

@@ -6,8 +6,9 @@
     "beryllium:combat/step",
     "beryllium:combat/vitality",
     "beryllium:combat/weightless",
-    "beryllium:combat/cannibal",
     "beryllium:exploring/reeling",
-    "beryllium:exploring/kinetic_protection"
+    "beryllium:exploring/kinetic_protection",
+    "beryllium:exploring/stable_footing",
+    "beryllium:exploring/traction"
   ]
 }
