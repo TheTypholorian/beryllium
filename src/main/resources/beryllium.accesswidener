@@ -3,3 +3,6 @@ accessWidener v2 named
 accessible class net/minecraft/client/gui/screen/world/WorldScreenOptionGrid
 accessible class net/minecraft/recipe/BrewingRecipeRegistry$Recipe
 accessible method net/minecraft/block/AbstractCauldronBlock canBeFilledByDripstone (Lnet/minecraft/fluid/Fluid;)Z
+accessible field net/minecraft/world/GameRules RULE_TYPES Ljava/util/Map;
+accessible method net/minecraft/world/GameRules$Rule deserialize (Ljava/lang/String;)V
+accessible method net/minecraft/util/collection/DefaultedList <init> (Ljava/util/List;Ljava/lang/Object;)V

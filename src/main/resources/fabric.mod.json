@@ -38,7 +38,8 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
-    "fzzy_config": "*"
+    "fzzy_config": "*",
+    "terrablender": "*"
   },
   "recommends": {
     "modmenu": "*"

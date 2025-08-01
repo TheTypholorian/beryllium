@@ -23,7 +23,8 @@ public abstract class LivingEntityMixin {
     @NotNull
     public abstract ItemStack getWeaponStack();
 
-    @Shadow protected ItemStack activeItemStack;
+    @Shadow
+    protected ItemStack activeItemStack;
 
     @Redirect(
             method = "damage",
