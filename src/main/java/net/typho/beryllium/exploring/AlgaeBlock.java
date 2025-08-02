@@ -19,7 +19,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.typho.beryllium.Beryllium;
 
 import java.util.Map;
 
@@ -65,7 +64,7 @@ public class AlgaeBlock extends MultifaceGrowthBlock implements Fertilizable, Wa
 
     @Override
     public Item asItem() {
-        return Beryllium.EXPLORING.ALGAE_ITEM;
+        return Exploring.ALGAE_ITEM;
     }
 
     @Override

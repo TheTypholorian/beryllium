@@ -14,7 +14,6 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
@@ -76,16 +75,16 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
                     if (isAirOrLavaOcean(world, seaLevel, mutable)) {
                         BlockState place = world.getBlockState(mutable).isOf(Blocks.LAVA) ? Blocks.BONE_BLOCK.getDefaultState() :
                                 switch (j) {
-                                    case 0 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
+                                    case 0 -> Exploring.POINTED_BONE.getDefaultState()
                                             .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.TIP);
-                                    case 1 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
+                                    case 1 -> Exploring.POINTED_BONE.getDefaultState()
                                             .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.FRUSTUM);
-                                    case 2 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
+                                    case 2 -> Exploring.POINTED_BONE.getDefaultState()
                                             .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.MIDDLE);
-                                    case 3 -> Beryllium.EXPLORING.POINTED_BONE.getDefaultState()
+                                    case 3 -> Exploring.POINTED_BONE.getDefaultState()
                                             .with(PointedBoneBlock.VERTICAL_DIRECTION, Direction.DOWN)
                                             .with(PointedBoneBlock.THICKNESS, Thickness.BASE);
                                     default -> Blocks.BONE_BLOCK.getDefaultState();
@@ -127,7 +126,7 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
         } else {
             BlockState blockState = world.getBlockState(mutablePos.move(Direction.UP));
             mutablePos.move(Direction.DOWN);
-            return !blockState.isAir() && !(CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Beryllium.EXPLORING.POINTED_BONE));
+            return !blockState.isAir() && !(CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Exploring.POINTED_BONE));
         }
     }
 
@@ -135,7 +134,7 @@ public class BoneSpikesFeature extends Feature<BasaltColumnsFeatureConfig> {
     private static BlockPos moveDownToAir(WorldAccess world, BlockPos.Mutable mutablePos, int distance) {
         while (mutablePos.getY() > world.getBottomY() + 1) {
             BlockState blockState = world.getBlockState(mutablePos);
-            if (CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Beryllium.EXPLORING.POINTED_BONE)) {
+            if (CANNOT_REPLACE_BLOCKS.contains(blockState.getBlock()) || blockState.isOf(Exploring.POINTED_BONE)) {
                 return null;
             }
 

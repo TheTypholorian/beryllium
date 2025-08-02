@@ -22,13 +22,18 @@
       "net.typho.beryllium.client.BerylliumClient"
     ],
     "main": [
-      "net.typho.beryllium.Beryllium"
+      "net.typho.beryllium.building.Building",
+      "net.typho.beryllium.combat.Combat",
+      "net.typho.beryllium.enchanting.Enchanting",
+      "net.typho.beryllium.exploring.Exploring",
+      "net.typho.beryllium.food.Food",
+      "net.typho.beryllium.redstone.Redstone"
     ],
     "cardinal-components": [
-      "net.typho.beryllium.combat.CombatComponents"
+      "net.typho.beryllium.exploring.Exploring"
     ],
     "terrablender": [
-      "net.typho.beryllium.exploring.BiomeInit"
+      "net.typho.beryllium.exploring.Exploring"
     ]
   },
   "mixins": [

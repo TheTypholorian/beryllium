@@ -18,7 +18,7 @@ import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.enchanting.Enchanting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -94,7 +94,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                         .get(RegistryKeys.ENCHANTMENT)
                         .getEntry(handler.enchantmentId[id]);
 
-                if (enchOptional.isEmpty() || (lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || !Beryllium.ENCHANTING.hasEnoughCatalysts(catalystSlot, enchOptional.get(), handler.enchantmentLevel[id], client.player)) {
+                if (enchOptional.isEmpty() || (lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || !Enchanting.hasEnoughCatalysts(catalystSlot, enchOptional.get(), handler.enchantmentLevel[id], client.player)) {
                     RenderSystem.enableBlend();
                     context.drawGuiTexture(ENCHANTMENT_SLOT_DISABLED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
                     context.drawGuiTexture(LEVEL_DISABLED_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
@@ -147,7 +147,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                 if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0 && optional != null) {
                     List<Text> list = Lists.newArrayList();
                     list.add(Text.translatable("container.enchant.clue", Enchantment.getName(optional.get(), l)).formatted(Formatting.WHITE));
-                    ItemStack catalyst = Beryllium.ENCHANTING.getEnchantmentCatalyst(optional.get(), l);
+                    ItemStack catalyst = Enchanting.getEnchantmentCatalyst(optional.get(), l);
                     if (!bl) {
                         list.add(ScreenTexts.EMPTY);
                         if (this.client.player.experienceLevel < k) {
@@ -161,7 +161,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                             }
 
                             list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
-                            list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Beryllium.ENCHANTING.hasEnoughCatalysts(handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
+                            list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Enchanting.hasEnoughCatalysts(handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
                             MutableText mutableText3;
                             if (m == 1) {
                                 mutableText3 = Text.translatable("container.enchant.level.one");

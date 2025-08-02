@@ -8,6 +8,7 @@ import net.minecraft.item.ShieldItem;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.Combat;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(ShieldItem.class)
@@ -23,7 +24,7 @@ public abstract class ShieldItemMixin extends Item {
         }
 
         if (Beryllium.CONFIG.combat.shieldDurability) {
-            stack.set(Beryllium.COMBAT.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
+            stack.set(Combat.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
         }
 
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
@@ -35,7 +36,7 @@ public abstract class ShieldItemMixin extends Item {
             return super.isItemBarVisible(stack);
         }
 
-        float d = Beryllium.COMBAT.shieldDurability(stack);
+        float d = Combat.shieldDurability(stack);
 
         if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
             return super.isItemBarVisible(stack);
@@ -50,7 +51,7 @@ public abstract class ShieldItemMixin extends Item {
             return super.getItemBarColor(stack);
         }
 
-        float d = Beryllium.COMBAT.shieldDurability(stack);
+        float d = Combat.shieldDurability(stack);
 
         if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
             return super.getItemBarColor(stack);
@@ -65,7 +66,7 @@ public abstract class ShieldItemMixin extends Item {
             return super.getItemBarStep(stack);
         }
 
-        float durability = Beryllium.CONFIG.combat.shieldMaxDurability - stack.getComponents().getOrDefault(Beryllium.COMBAT.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
+        float durability = Beryllium.CONFIG.combat.shieldMaxDurability - stack.getComponents().getOrDefault(Combat.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
 
         if (!Beryllium.CONFIG.durabilityRemoval && durability <= 0) {
             return super.getItemBarColor(stack);

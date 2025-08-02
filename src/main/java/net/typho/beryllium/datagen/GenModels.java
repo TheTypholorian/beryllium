@@ -10,7 +10,11 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
+import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.food.Food;
+import net.typho.beryllium.redstone.Redstone;
 
 import java.util.List;
 
@@ -26,27 +30,27 @@ public class GenModels extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
-        family(gen, Beryllium.BUILDING.MOSSY_STONE);
-        family(gen, Beryllium.BUILDING.CRACKED_STONE_BRICKS);
-        family(gen, Beryllium.BUILDING.SMOOTH_STONE);
-        family(gen, Beryllium.BUILDING.SNOW_BRICKS);
+        family(gen, Building.MOSSY_STONE);
+        family(gen, Building.CRACKED_STONE_BRICKS);
+        family(gen, Building.SMOOTH_STONE);
+        family(gen, Building.SNOW_BRICKS);
 
-        gen.registerFlowerbed(Beryllium.EXPLORING.DAFFODILS);
-        gen.registerFlowerbed(Beryllium.EXPLORING.SCILLA);
-        gen.registerFlowerbed(Beryllium.EXPLORING.GERANIUMS);
-        gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
+        gen.registerFlowerbed(Exploring.DAFFODILS);
+        gen.registerFlowerbed(Exploring.SCILLA);
+        gen.registerFlowerbed(Exploring.GERANIUMS);
+        gen.registerWallPlant(Exploring.ALGAE_BLOCK);
 
-        gen.registerLog(Beryllium.EXPLORING.CORRUPTED_LOG)
-                .log(Beryllium.EXPLORING.CORRUPTED_LOG);
+        gen.registerLog(Exploring.CORRUPTED_LOG)
+                .log(Exploring.CORRUPTED_LOG);
 
-        gen.registerSingleton(Beryllium.EXPLORING.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
+        gen.registerSingleton(Exploring.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
 
-        Identifier goldHopper = ModelIds.getBlockModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
-        Identifier goldHopperSide = ModelIds.getBlockSubModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK, "_side");
-        gen.registerItemModel(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK.asItem());
+        Identifier goldHopper = ModelIds.getBlockModelId(Redstone.GOLD_HOPPER_BLOCK);
+        Identifier goldHopperSide = ModelIds.getBlockSubModelId(Redstone.GOLD_HOPPER_BLOCK, "_side");
+        gen.registerItemModel(Redstone.GOLD_HOPPER_BLOCK.asItem());
         gen.blockStateCollector
                 .accept(
-                        VariantsBlockStateSupplier.create(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK)
+                        VariantsBlockStateSupplier.create(Redstone.GOLD_HOPPER_BLOCK)
                                 .coordinate(
                                         BlockStateVariantMap.create(Properties.HOPPER_FACING)
                                                 .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopper))
@@ -57,11 +61,11 @@ public class GenModels extends FabricModelProvider {
                                 )
                 );
 
-        List<Identifier> voidFireFloor = gen.getFireFloorModels(Beryllium.EXPLORING.VOID_FIRE);
-        List<Identifier> voidFireSide = gen.getFireSideModels(Beryllium.EXPLORING.VOID_FIRE);
+        List<Identifier> voidFireFloor = gen.getFireFloorModels(Exploring.VOID_FIRE);
+        List<Identifier> voidFireSide = gen.getFireSideModels(Exploring.VOID_FIRE);
         gen.blockStateCollector
                 .accept(
-                        MultipartBlockStateSupplier.create(Beryllium.EXPLORING.VOID_FIRE)
+                        MultipartBlockStateSupplier.create(Exploring.VOID_FIRE)
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireFloor, v -> v))
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v))
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R90)))
@@ -71,7 +75,7 @@ public class GenModels extends FabricModelProvider {
 
         gen.blockStateCollector
                 .accept(
-                        VariantsBlockStateSupplier.create(Beryllium.COMBAT.POTION_CAULDRON)
+                        VariantsBlockStateSupplier.create(Combat.POTION_CAULDRON)
                                 .coordinate(
                                         BlockStateVariantMap.create(LeveledCauldronBlock.LEVEL)
                                                 .register(
@@ -80,7 +84,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.TEMPLATE_CAULDRON_LEVEL1
-                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_level1", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                                .upload(Combat.POTION_CAULDRON, "_level1", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
                                                                 )
                                                 )
                                                 .register(
@@ -89,7 +93,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.TEMPLATE_CAULDRON_LEVEL2
-                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_level2", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                                .upload(Combat.POTION_CAULDRON, "_level2", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
                                                                 )
                                                 )
                                                 .register(
@@ -98,13 +102,13 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.TEMPLATE_CAULDRON_FULL
-                                                                                .upload(Beryllium.COMBAT.POTION_CAULDRON, "_full", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
+                                                                                .upload(Combat.POTION_CAULDRON, "_full", TextureMap.cauldron(TextureMap.getSubId(Blocks.WATER, "_still")), gen.modelCollector)
                                                                 )
                                                 )
                                 )
                 );
 
-        gen.excludeFromSimpleItemModelGeneration(Beryllium.EXPLORING.POINTED_BONE);
+        gen.excludeFromSimpleItemModelGeneration(Exploring.POINTED_BONE);
         BlockStateVariantMap.DoubleProperty<Direction, Thickness> doubleProperty = BlockStateVariantMap.create(Properties.VERTICAL_DIRECTION, Properties.THICKNESS);
 
         for (Thickness thickness : Thickness.values()) {
@@ -115,24 +119,24 @@ public class GenModels extends FabricModelProvider {
             doubleProperty.register(Direction.DOWN, thickness, getBoneVariant(gen, Direction.DOWN, thickness));
         }
 
-        gen.blockStateCollector.accept(VariantsBlockStateSupplier.create(Beryllium.EXPLORING.POINTED_BONE).coordinate(doubleProperty));
+        gen.blockStateCollector.accept(VariantsBlockStateSupplier.create(Exploring.POINTED_BONE).coordinate(doubleProperty));
     }
 
     public BlockStateVariant getBoneVariant(BlockStateModelGenerator gen, Direction direction, Thickness thickness) {
         String string = "_" + direction.asString() + "_" + thickness.asString();
-        TextureMap textureMap = TextureMap.cross(TextureMap.getSubId(Beryllium.EXPLORING.POINTED_BONE, string));
+        TextureMap textureMap = TextureMap.cross(TextureMap.getSubId(Exploring.POINTED_BONE, string));
         return BlockStateVariant.create()
-                .put(VariantSettings.MODEL, Models.POINTED_DRIPSTONE.upload(Beryllium.EXPLORING.POINTED_BONE, string, textureMap, gen.modelCollector));
+                .put(VariantSettings.MODEL, Models.POINTED_DRIPSTONE.upload(Exploring.POINTED_BONE, string, textureMap, gen.modelCollector));
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator gen) {
-        gen.register(Beryllium.COMBAT.DIAMOND_ARROW, Models.GENERATED);
-        gen.register(Beryllium.COMBAT.IRON_ARROW, Models.GENERATED);
-        gen.register(Beryllium.COMBAT.FLAMING_ARROW, Models.GENERATED);
-        gen.register(Beryllium.COMBAT.COPPER_ARROW, Models.GENERATED);
-        gen.register(Beryllium.BUILDING.MAGIC_WAND_ITEM, Models.GENERATED);
-        gen.register(Beryllium.EXPLORING.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
-        gen.register(Beryllium.FOOD.CROISSANT, Models.GENERATED);
+        gen.register(Combat.DIAMOND_ARROW, Models.GENERATED);
+        gen.register(Combat.IRON_ARROW, Models.GENERATED);
+        gen.register(Combat.FLAMING_ARROW, Models.GENERATED);
+        gen.register(Combat.COPPER_ARROW, Models.GENERATED);
+        gen.register(Building.FILLING_WAND_ITEM, Models.GENERATED);
+        gen.register(Exploring.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
+        gen.register(Food.CROISSANT, Models.GENERATED);
     }
 }

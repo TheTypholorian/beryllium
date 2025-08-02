@@ -11,7 +11,6 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +19,7 @@ public class GoldHopperScreenHandler extends ScreenHandler {
     private final Inventory inventory;
 
     protected GoldHopperScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(Beryllium.REDSTONE.GOLD_HOPPER_SCREEN_HANDLER_TYPE, syncId, playerInventory);
+        this(Redstone.GOLD_HOPPER_SCREEN_HANDLER_TYPE, syncId, playerInventory);
     }
 
     protected GoldHopperScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory) {

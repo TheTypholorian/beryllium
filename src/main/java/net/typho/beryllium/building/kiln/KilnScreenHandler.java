@@ -5,14 +5,14 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.screen.AbstractFurnaceScreenHandler;
 import net.minecraft.screen.PropertyDelegate;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
 
 public class KilnScreenHandler extends AbstractFurnaceScreenHandler {
     public KilnScreenHandler(int syncId, PlayerInventory playerInventory) {
-        super(Beryllium.BUILDING.KILN_SCREEN_HANDLER_TYPE, Beryllium.BUILDING.KILN_RECIPE_TYPE, RecipeBookCategory.FURNACE, syncId, playerInventory);
+        super(Building.KILN_SCREEN_HANDLER_TYPE, Building.KILN_RECIPE_TYPE, RecipeBookCategory.FURNACE, syncId, playerInventory);
     }
 
     public KilnScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-        super(Beryllium.BUILDING.KILN_SCREEN_HANDLER_TYPE, Beryllium.BUILDING.KILN_RECIPE_TYPE, RecipeBookCategory.FURNACE, syncId, playerInventory, inventory, propertyDelegate);
+        super(Building.KILN_SCREEN_HANDLER_TYPE, Building.KILN_RECIPE_TYPE, RecipeBookCategory.FURNACE, syncId, playerInventory, inventory, propertyDelegate);
     }
 }

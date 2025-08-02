@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
@@ -19,6 +20,7 @@ import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DragonFireballEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -59,56 +61,66 @@ import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules;
 import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Module;
+import net.typho.beryllium.Constructor;
+import net.typho.beryllium.combat.ReelingComponent;
+import org.ladysnake.cca.api.v3.component.ComponentKey;
+import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
+import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
+import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
+import terrablender.api.EndBiomeRegistry;
+import terrablender.api.SurfaceRuleManager;
+import terrablender.api.TerraBlenderApi;
 
 import java.util.Optional;
 
-public class Exploring extends Module {
-    public final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
+public class Exploring implements ModInitializer, EntityComponentInitializer, TerraBlenderApi {
+    public static final Constructor CONSTRUCTOR = new Constructor("exploring");
 
-    public final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
+    public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, CONSTRUCTOR.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
 
-    public final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, id("firefly"), FabricParticleTypes.simple(false));
+    public static final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, CONSTRUCTOR.id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
 
-    public final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_bastion_maps"));
-    public final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, id("on_fortress_maps"));
-    public final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, id("spawn"));
+    public static final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, CONSTRUCTOR.id("firefly"), FabricParticleTypes.simple(false));
 
-    public final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, id("has_fireflies"));
-    public final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, id("birch"));
-    public final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, id("spruce"));
-    public final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, id("oak"));
+    public static final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("on_bastion_maps"));
+    public static final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("on_fortress_maps"));
+    public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("spawn"));
 
-    public final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("void_fire_base_blocks"));
-    public final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, id("pointed_blocks"));
+    public static final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("has_fireflies"));
+    public static final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("birch"));
+    public static final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("spruce"));
+    public static final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("oak"));
 
-    public final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, id("river_algae"), new RiverAlgaeFeature());
-    public final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
+    public static final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, CONSTRUCTOR.id("void_fire_base_blocks"));
+    public static final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, CONSTRUCTOR.id("pointed_blocks"));
 
-    public final RegistryKey<Biome> CORRUPTED_FOREST = RegistryKey.of(RegistryKeys.BIOME, id("corrupted_forest"));
+    public static final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, CONSTRUCTOR.id("river_algae"), new RiverAlgaeFeature());
+    public static final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = CONSTRUCTOR.feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
 
-    public final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("swamp_algae"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("river_algae"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("daffodils"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("scilla"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("geraniums"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("magma_delta"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("bone_spikes"));
-    public final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, id("corrupted_tree"));
+    public static final RegistryKey<Biome> CORRUPTED_FOREST = RegistryKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("corrupted_forest"));
 
-    public final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("swamp_algae"));
-    public final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("river_algae"));
-    public final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("daffodils"));
-    public final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("scilla"));
-    public final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("geraniums"));
-    public final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("magma_delta"));
-    public final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("bone_spikes"));
-    public final RegistryKey<PlacedFeature> CORRUPTED_TREE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, id("corrupted_tree"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("swamp_algae"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("river_algae"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("daffodils"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("scilla"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("geraniums"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("magma_delta"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("bone_spikes"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("corrupted_tree"));
 
-    public final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
+    public static final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("swamp_algae"));
+    public static final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("river_algae"));
+    public static final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("daffodils"));
+    public static final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("scilla"));
+    public static final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("geraniums"));
+    public static final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("magma_delta"));
+    public static final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("bone_spikes"));
+    public static final RegistryKey<PlacedFeature> CORRUPTED_TREE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("corrupted_tree"));
 
-    public final Block CORRUPTED_END_STONE = blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
-    public final Block CONGEALED_VOID = blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
+    public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
+
+    public static final Block CORRUPTED_END_STONE = CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
+    public static final Block CONGEALED_VOID = CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.MAGENTA)
             .sounds(BlockSoundGroup.SLIME)
             .noCollision()
@@ -118,19 +130,19 @@ public class Exploring extends Module {
             .solidBlock(Blocks::never)
             .suffocates(Blocks::never)
             .blockVision(Blocks::never)), new Item.Settings());
-    public final Block CORRUPTED_LOG = blockWithItem("corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_STEM)), new Item.Settings());
-    public final Block CORRUPTED_WOOD = blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
-    public final Block STRIPPED_CORRUPTED_LOG = blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
-    public final Block STRIPPED_CORRUPTED_WOOD = blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
-    public final Block CORRUPTED_PLANKS = blockWithItem("corrupted_planks", new Block(AbstractBlock.Settings.copy(Blocks.CRIMSON_PLANKS)), new Item.Settings());
-    public final Block CORRUPTED_SAPLING = blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
+    public static final Block CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_STEM)), new Item.Settings());
+    public static final Block CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
+    public static final Block STRIPPED_CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
+    public static final Block STRIPPED_CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
+    public static final Block CORRUPTED_PLANKS = CONSTRUCTOR.blockWithItem("corrupted_planks", new Block(AbstractBlock.Settings.copy(Blocks.CRIMSON_PLANKS)), new Item.Settings());
+    public static final Block CORRUPTED_SAPLING = CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
         @Override
         protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
             return floor.isOf(CORRUPTED_END_STONE) || floor.isOf(Blocks.END_STONE);
         }
     }, new Item.Settings());
-    public final Block FIREFLY_BOTTLE =
-            blockWithItem(
+    public static final Block FIREFLY_BOTTLE =
+            CONSTRUCTOR.blockWithItem(
                     "firefly_bottle",
                     new Block(AbstractBlock.Settings.create()
                             .strength(0)
@@ -145,10 +157,10 @@ public class Exploring extends Module {
                             .blockVision(Blocks::never)),
                     new Item.Settings()
             );
-    public final Block DAFFODILS = blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public final Block SCILLA = blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public final Block GERANIUMS = blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public final Block ALGAE_BLOCK = block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
+    public static final Block DAFFODILS = CONSTRUCTOR.blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block SCILLA = CONSTRUCTOR.blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block GERANIUMS = CONSTRUCTOR.blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block ALGAE_BLOCK = CONSTRUCTOR.block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
             .replaceable()
             .noCollision()
@@ -157,17 +169,17 @@ public class Exploring extends Module {
             .nonOpaque()
             .burnable()
             .pistonBehavior(PistonBehavior.DESTROY)));
-    public final Block VOID_FIRE = block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
-    public final Block POINTED_BONE = blockWithItem("pointed_bone", new PointedBoneBlock(AbstractBlock.Settings.copy(Blocks.POINTED_DRIPSTONE)
+    public static final Block VOID_FIRE = CONSTRUCTOR.block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
+    public static final Block POINTED_BONE = CONSTRUCTOR.blockWithItem("pointed_bone", new PointedBoneBlock(AbstractBlock.Settings.copy(Blocks.POINTED_DRIPSTONE)
             .mapColor(MapColor.PALE_YELLOW)
             .requiresTool()
             .strength(2)
             .sounds(BlockSoundGroup.BONE)), new Item.Settings());
 
-    public final Item METAL_DETECTOR_ITEM = item("metal_detector", new MetalDetectorItem(new Item.Settings()));
-    public final Item ALGAE_ITEM = item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
-    public final Item EXODINE_INGOT = item("exodine_ingot", new Item(new Item.Settings()));
-    public final Item TEST_STICK = item("test_stick", new Item(new Item.Settings()) {
+    public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
+    public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
+    public static final Item EXODINE_INGOT = CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));
+    public static final Item TEST_STICK = CONSTRUCTOR. item("test_stick", new Item(new Item.Settings()) {
         @Override
         public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
             if (!world.isClient) {
@@ -180,17 +192,26 @@ public class Exploring extends Module {
         }
     });
 
-    public final RegistryEntry<EntityAttribute> STABLE_FOOTING = attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> STABLE_FOOTING = CONSTRUCTOR.attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
 
-    public final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
+    public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{
             },
             2, new TradeOffers.Factory[]{
             }
     ));
 
-    public Exploring(String name) {
-        super(name);
+    public static final ComponentKey<ReelingComponent> REELING = ComponentRegistryV3.INSTANCE.getOrCreate(CONSTRUCTOR.id("reeling"), ReelingComponent.class);
+
+    @Override
+    public void onTerraBlenderInitialized() {
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.END, Beryllium.MOD_ID, createEndRule());
+        EndBiomeRegistry.registerHighlandsBiome(CORRUPTED_FOREST, 3);
+    }
+
+    @Override
+    public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
+        registry.registerFor(TridentEntity.class, REELING, ReelingComponent::new);
     }
 
     @Override
@@ -207,13 +228,13 @@ public class Exploring extends Module {
                     entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA, GERANIUMS);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
-        Registry.register(Registries.RECIPE_TYPE, id("compass_dye"), new RecipeType<>() {
+        Registry.register(Registries.RECIPE_TYPE, CONSTRUCTOR.id("compass_dye"), new RecipeType<>() {
             @Override
             public String toString() {
                 return "exploring/compass_dye";
             }
         });
-        Registry.register(Registries.RECIPE_SERIALIZER, id("compass_dye"), CompassDyeRecipe.SERIALIZER);
+        Registry.register(Registries.RECIPE_SERIALIZER, CONSTRUCTOR.id("compass_dye"), CompassDyeRecipe.SERIALIZER);
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
                 GenerationStep.Feature.VEGETAL_DECORATION,
@@ -244,11 +265,11 @@ public class Exploring extends Module {
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
                 BONE_SPIKES_PLACED
         );
-        BiomeModifications.create(Beryllium.EXPLORING.id("fireflies"))
-                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(Beryllium.EXPLORING.HAS_FIREFLIES), context -> {
-                    context.getEffects().setParticleConfig(new BiomeParticleConfig(Beryllium.EXPLORING.FIREFLY_PARTICLE, 0.008f));
+        BiomeModifications.create(CONSTRUCTOR.id("fireflies"))
+                .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(HAS_FIREFLIES), context -> {
+                    context.getEffects().setParticleConfig(new BiomeParticleConfig(FIREFLY_PARTICLE, 0.008f));
                 });
-        BiomeModifications.create(Beryllium.EXPLORING.id("swamp_water"))
+        BiomeModifications.create(CONSTRUCTOR.id("swamp_water"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.includeByKey(BiomeKeys.SWAMP), context -> {
                     context.getEffects().setWaterColor(0x6D6D5C);
                     context.getEffects().setWaterFogColor(0x6D6D5C);
@@ -269,7 +290,7 @@ public class Exploring extends Module {
                     break;
                 }
                 case "minecraft:chests/village/village_cartographer": {
-                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Beryllium.EXPLORING.FIREFLY_BOTTLE))
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(FIREFLY_BOTTLE))
                             .bonusRolls(new ConstantLootNumberProvider(3)));
                     break;
                 }
@@ -297,7 +318,7 @@ public class Exploring extends Module {
                 }
                 case "minecraft:chests/village/village_plains_house": {
                     builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.WHEAT_SEEDS).weight(3).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1, 5))))
-                            .with(ItemEntry.builder(Beryllium.EXPLORING.GERANIUMS)));
+                            .with(ItemEntry.builder(GERANIUMS)));
                     break;
                 }
                 case "minecraft:chests/village/village_savanna_house": {
@@ -310,7 +331,7 @@ public class Exploring extends Module {
                     break;
                 }
                 case "minecraft:chests/village/village_taiga_house": {
-                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(Beryllium.EXPLORING.SCILLA)));
+                    builder.modifyPools(pool -> pool.with(ItemEntry.builder(SCILLA)));
                     break;
                 }
                 case "minecraft:chests/village/village_toolsmith": {
@@ -345,7 +366,7 @@ public class Exploring extends Module {
                 case "minecraft:gameplay/piglin_bartering": {
                     builder.modifyPools(pool -> pool.with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
-                                            .withDestination(Beryllium.EXPLORING.ON_BASTION_MAPS)
+                                            .withDestination(ON_BASTION_MAPS)
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
@@ -353,7 +374,7 @@ public class Exploring extends Module {
                             )
                             .with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
-                                            .withDestination(Beryllium.EXPLORING.ON_FORTRESS_MAPS)
+                                            .withDestination(ON_FORTRESS_MAPS)
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
@@ -366,7 +387,7 @@ public class Exploring extends Module {
         });
     }
 
-    public MaterialRules.MaterialRule createEndRule() {
+    public static MaterialRules.MaterialRule createEndRule() {
         return MaterialRules.sequence(
                 MaterialRules.condition(
                         MaterialRules.biome(CORRUPTED_FOREST),

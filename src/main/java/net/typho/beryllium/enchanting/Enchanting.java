@@ -1,6 +1,7 @@
 package net.typho.beryllium.enchanting;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.api.ModInitializer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -9,21 +10,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Module;
+import net.typho.beryllium.Constructor;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class Enchanting extends Module {
-    public Enchanting(String name) {
-        super(name);
-    }
+public class Enchanting implements ModInitializer {
+    public static final Constructor CONSTRUCTOR = new Constructor("enchanting");
 
-    @Override
-    public void onInitialize() {
-    }
-
-    public String toRomanNumeral(int n) {
+    public static String toRomanNumeral(int n) {
         enum Letter {
             M(1000), D(500), C(100), L(50), X(10), V(5), I(1);
 
@@ -63,7 +58,7 @@ public class Enchanting extends Module {
     /**
      * This is an old system meant to buff gold gear, but I removed it cus it was unbalanced (tho you can still mixin and use it)
      */
-    public int getExtraLevels(ItemStack stack) {
+    public static int getExtraLevels(ItemStack stack) {
         /*
         if (stack.getItem() instanceof ToolItem tool) {
             if (tool.getMaterial() == ToolMaterials.GOLD) {
@@ -79,27 +74,27 @@ public class Enchanting extends Module {
         return 0;
     }
 
-    public int getMaxEnchCapacity(ItemStack stack) {
+    public static int getMaxEnchCapacity(ItemStack stack) {
         return stack.getItem().getEnchantability();
     }
 
-    public int getUsedEnchCapacity(ItemStack stack) {
+    public static int getUsedEnchCapacity(ItemStack stack) {
         return getUsedEnchCapacity(EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
+    public static int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
         return stream.mapToInt(entry -> getEnchantmentCapacity(entry.enchantment.value())).sum();
     }
 
-    public int getEnchantmentCapacity(Enchantment enchant) {
+    public static int getEnchantmentCapacity(Enchantment enchant) {
         return BalancedEnchantment.cast(enchant.definition()).getCapacity();
     }
 
-    public boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
         return canFitEnchantment(stack, enchant, () -> EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
         if (!Beryllium.CONFIG.enchanting.capacity) {
             return true;
         }
@@ -115,7 +110,7 @@ public class Enchanting extends Module {
         return getUsedEnchCapacity(enchantments.get()) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
     }
 
-    public boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
+    public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
         if (player.getAbilities().creativeMode || !Beryllium.CONFIG.enchanting.catalysts) {
             return true;
         }
@@ -125,13 +120,17 @@ public class Enchanting extends Module {
         return source.getItem() == req.getItem() && source.getCount() >= req.getCount();
     }
 
-    public ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
+    public static ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
         if (!Beryllium.CONFIG.enchanting.catalysts) {
             return ItemStack.EMPTY;
         }
 
         BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
         return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
+    }
+
+    @Override
+    public void onInitialize() {
     }
 
     public static class Config extends ConfigSection {

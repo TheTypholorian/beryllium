@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.exploring.Exploring;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             cancellable = true
     )
     private static void createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        cir.setReturnValue(cir.getReturnValue().add(Beryllium.EXPLORING.STABLE_FOOTING));
+        cir.setReturnValue(cir.getReturnValue().add(Exploring.STABLE_FOOTING));
     }
 
     @ModifyConstant(
@@ -33,6 +33,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             constant = @Constant(floatValue = 5)
     )
     private float stableFooting(float constant) {
-        return 1 / (float) getAttributeValue(Beryllium.EXPLORING.STABLE_FOOTING);
+        return 1 / (float) getAttributeValue(Exploring.STABLE_FOOTING);
     }
 }

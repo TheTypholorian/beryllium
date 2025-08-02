@@ -3,6 +3,7 @@ package net.typho.beryllium.combat;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
+import net.typho.beryllium.exploring.Exploring;
 import org.ladysnake.cca.api.v3.component.ComponentV3;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 
@@ -20,7 +21,7 @@ public class ReelingComponent implements ComponentV3, AutoSyncedComponent {
 
     public void setReeling(float reeling) {
         this.reeling = reeling;
-        CombatComponents.REELING.sync(trident);
+        Exploring.REELING.sync(trident);
     }
 
     @Override

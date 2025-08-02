@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 public class CopperArrowEntity extends PersistentProjectileEntity {
@@ -46,6 +45,6 @@ public class CopperArrowEntity extends PersistentProjectileEntity {
 
     @Override
     protected ItemStack getDefaultItemStack() {
-        return new ItemStack(Beryllium.COMBAT.COPPER_ARROW);
+        return new ItemStack(Combat.COPPER_ARROW);
     }
 }

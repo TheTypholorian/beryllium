@@ -7,7 +7,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureKeys;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.exploring.Exploring;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,12 +18,12 @@ public class GenStructureTags extends FabricTagProvider<Structure> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
-        getOrCreateTagBuilder(Beryllium.EXPLORING.ON_BASTION_MAPS)
+        getOrCreateTagBuilder(Exploring.ON_BASTION_MAPS)
                 .add(StructureKeys.BASTION_REMNANT);
-        getOrCreateTagBuilder(Beryllium.EXPLORING.ON_FORTRESS_MAPS)
+        getOrCreateTagBuilder(Exploring.ON_FORTRESS_MAPS)
                 .add(StructureKeys.FORTRESS)
                 .addOptionalTag(Identifier.of("betterfortresses", "better_fortresses"));
-        getOrCreateTagBuilder(Beryllium.EXPLORING.SPAWN_KEY)
+        getOrCreateTagBuilder(Exploring.SPAWN_KEY)
                 .add(StructureKeys.VILLAGE_PLAINS)
                 .add(StructureKeys.VILLAGE_DESERT)
                 .add(StructureKeys.VILLAGE_SAVANNA)

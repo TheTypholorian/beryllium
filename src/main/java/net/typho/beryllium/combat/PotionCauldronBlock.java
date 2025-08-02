@@ -18,7 +18,6 @@ import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.event.GameEvent;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 public class PotionCauldronBlock extends LeveledCauldronBlock implements BlockEntityProvider {
@@ -29,10 +28,10 @@ public class PotionCauldronBlock extends LeveledCauldronBlock implements BlockEn
             player.incrementStat(Stats.FILL_CAULDRON);
             player.incrementStat(Stats.USED.getOrCreateStat(item));
 
-            if (state.isOf(Beryllium.COMBAT.POTION_CAULDRON)) {
+            if (state.isOf(Combat.POTION_CAULDRON)) {
                 world.setBlockState(pos, state.with(LEVEL, state.getOrEmpty(LEVEL).orElse(1) + 1));
             } else {
-                world.setBlockState(pos, Beryllium.COMBAT.POTION_CAULDRON.getDefaultState());
+                world.setBlockState(pos, Combat.POTION_CAULDRON.getDefaultState());
             }
 
             ((PotionCauldronBlockEntity) world.getBlockEntity(pos)).addPotion(stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getEffects(), false);

@@ -1,6 +1,5 @@
 package net.typho.beryllium;
 
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -25,10 +24,10 @@ import java.util.function.UnaryOperator;
 
 import static net.typho.beryllium.Beryllium.MOD_ID;
 
-public abstract class Module implements ModInitializer, Identifierifier {
+public class Constructor implements Identifierifier {
     public final String name;
 
-    public Module(String name) {
+    public Constructor(String name) {
         this.name = name;
     }
 

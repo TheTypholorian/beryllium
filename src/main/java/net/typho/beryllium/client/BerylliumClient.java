@@ -33,11 +33,9 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.GrassColors;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.building.MagicWandItem;
-import net.typho.beryllium.combat.CopperArrowEntity;
-import net.typho.beryllium.combat.DiamondArrowEntity;
-import net.typho.beryllium.combat.FlamingArrowEntity;
-import net.typho.beryllium.combat.IronArrowEntity;
+import net.typho.beryllium.building.FillingWandItem;
+import net.typho.beryllium.combat.*;
+import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.MetalDetectorItem;
 import org.joml.Vector2i;
 
@@ -51,39 +49,39 @@ public class BerylliumClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        EntityRendererRegistry.register(Beryllium.COMBAT.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.DIAMOND_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(DiamondArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/diamond_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.COMBAT.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.IRON_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(IronArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/iron_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.COMBAT.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.FLAMING_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(FlamingArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/flaming_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.COMBAT.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
+        EntityRendererRegistry.register(Combat.COPPER_ARROW_TYPE, ctx -> new ProjectileEntityRenderer<>(ctx) {
             @Override
             public Identifier getTexture(CopperArrowEntity entity) {
                 return Identifier.of(Beryllium.MOD_ID, "textures/entity/projectiles/combat/copper_arrow.png");
             }
         });
-        EntityRendererRegistry.register(Beryllium.COMBAT.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
-        ModelPredicateProviderRegistry.register(Beryllium.EXPLORING.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
+        EntityRendererRegistry.register(Combat.END_CRYSTAL_PROJECTILE_ENTITY, EndCrystalProjectileEntityRenderer::new);
+        ModelPredicateProviderRegistry.register(Exploring.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
         ParticleFactoryRegistry.getInstance().register(
-                Beryllium.EXPLORING.FIREFLY_PARTICLE,
+                Exploring.FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
-                DyeColor color = stack.get(Beryllium.EXPLORING.COMPASS_NEEDLE_COMPONENT);
+                DyeColor color = stack.get(Exploring.COMPASS_NEEDLE_COMPONENT);
 
                 if (color == null) {
                     color = DyeColor.RED;
@@ -106,30 +104,30 @@ public class BerylliumClient implements ClientModInitializer {
             }
 
             return -1;
-        }, Beryllium.EXPLORING.EXODINE_INGOT);
+        }, Exploring.EXODINE_INGOT);
         ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
             if (index != 0) {
                 return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
             } else {
                 return -1;
             }
-        }, Beryllium.EXPLORING.DAFFODILS, Beryllium.EXPLORING.SCILLA, Beryllium.EXPLORING.GERANIUMS);
-        ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> view != null && view.getBlockEntityRenderData(pos) instanceof Integer color ? color : -1, Beryllium.COMBAT.POTION_CAULDRON);
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.FIREFLY_BOTTLE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.ALGAE_BLOCK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.DAFFODILS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.SCILLA, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.GERANIUMS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.VOID_FIRE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.POINTED_BONE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.CONGEALED_VOID, RenderLayer.getTranslucent());
+        }, Exploring.DAFFODILS, Exploring.SCILLA, Exploring.GERANIUMS);
+        ColorProviderRegistry.BLOCK.register((state, view, pos, tintIndex) -> view != null && view.getBlockEntityRenderData(pos) instanceof Integer color ? color : -1, Combat.POTION_CAULDRON);
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.FIREFLY_BOTTLE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.ALGAE_BLOCK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.DAFFODILS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.SCILLA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.GERANIUMS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.VOID_FIRE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.POINTED_BONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.CONGEALED_VOID, RenderLayer.getTranslucent());
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;
 
             if (player != null) {
                 ItemStack held = player.getMainHandStack();
 
-                if (held.getItem() instanceof MagicWandItem && hit instanceof BlockHitResult blockHit) {
+                if (held.getItem() instanceof FillingWandItem && hit instanceof BlockHitResult blockHit) {
                     MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
                     Vec3d cam = context.camera().getPos();
 
@@ -137,7 +135,7 @@ public class BerylliumClient implements ClientModInitializer {
                     matrices.translate(-cam.x, -cam.y, -cam.z);
                     RenderSystem.disableDepthTest();
 
-                    BlockBox box = MagicWandItem.getSelection(player, held, blockHit);
+                    BlockBox box = FillingWandItem.getSelection(player, held, blockHit);
 
                     WorldRenderer.drawBox(
                             matrices,

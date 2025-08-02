@@ -5,7 +5,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.Exploring;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,15 +23,15 @@ public class GenItemTags extends FabricTagProvider.ItemTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(ItemTags.ARROWS)
-                .add(Beryllium.COMBAT.DIAMOND_ARROW)
-                .add(Beryllium.COMBAT.IRON_ARROW)
-                .add(Beryllium.COMBAT.FLAMING_ARROW)
-                .add(Beryllium.COMBAT.COPPER_ARROW);
+                .add(Combat.DIAMOND_ARROW)
+                .add(Combat.IRON_ARROW)
+                .add(Combat.FLAMING_ARROW)
+                .add(Combat.COPPER_ARROW);
 
         getOrCreateTagBuilder(ItemTags.FLOWERS)
-                .add(Beryllium.EXPLORING.DAFFODILS.asItem())
-                .add(Beryllium.EXPLORING.SCILLA.asItem())
-                .add(Beryllium.EXPLORING.GERANIUMS.asItem());
+                .add(Exploring.DAFFODILS.asItem())
+                .add(Exploring.SCILLA.asItem())
+                .add(Exploring.GERANIUMS.asItem());
 
         getOrCreateTagBuilder(ItemTags.HEAD_ARMOR_ENCHANTABLE)
                 .add(Items.LEATHER_HORSE_ARMOR)

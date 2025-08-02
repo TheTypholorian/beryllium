@@ -1,16 +1,15 @@
 package net.typho.beryllium.food;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.api.ModInitializer;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
-import net.typho.beryllium.Module;
+import net.typho.beryllium.Constructor;
 
-public class Food extends Module {
-    public final Item CROISSANT = item("croissant", new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F).build())));
+public class Food implements ModInitializer {
+    public static final Constructor CONSTRUCTOR = new Constructor("food");
 
-    public Food(String name) {
-        super(name);
-    }
+    public static final Item CROISSANT = CONSTRUCTOR.item("croissant", new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.6F).build())));
 
     @Override
     public void onInitialize() {

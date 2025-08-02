@@ -21,7 +21,6 @@ import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.gen.structure.Structure;
-import net.typho.beryllium.Beryllium;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +45,7 @@ public class ExplorationCompassLootFunction extends ConditionalLootFunction {
 
     @Override
     public LootFunctionType<? extends ConditionalLootFunction> getType() {
-        return Beryllium.EXPLORING.EXPLORATION_COMPASS;
+        return Exploring.EXPLORATION_COMPASS;
     }
 
     @Override

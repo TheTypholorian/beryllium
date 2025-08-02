@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-02T07:51:14.9746622	Beryllium/Model Definitions
+// 1.21.1	2025-08-02T09:12:09.866624	Beryllium/Model Definitions
 75cc512fbb9094a26435cd5c5ed53df07a4fdbd2 assets\beryllium\models\block\exploring\void_fire_side0.json
 39c9599350190a9d180699ec92d55b34bc506b16 assets\beryllium\models\block\exploring\pointed_bone_down_tip.json
 bd665b4a28defd0babf4b38b2540374748e0c834 assets\beryllium\models\block\combat\potion_cauldron_level2.json
@@ -34,6 +34,7 @@ f030610b634ad5699b4bb80ff52904c66e6dd0ba assets\beryllium\models\item\building\c
 a083041ac6291d92cbe192f34bbeb35a69c43c68 assets\beryllium\blockstates\combat\potion_cauldron.json
 4fd4e64f410a7812253921df9b5aa7088eb8003e assets\beryllium\models\block\exploring\pointed_bone_up_tip.json
 06966c03454f911cb4cc23e97e70e0ce54b09b1a assets\beryllium\models\item\exploring\corrupted_log.json
+8748881e26376df68ff7fa74009f2a2e60583943 assets\beryllium\models\item\building\filling_wand.json
 e4e3661f6d0daf056eab32ed88da77932009f1ad assets\beryllium\models\block\exploring\corrupted_log.json
 ed82a7eee920a7dfa7871a394d410c5e90841582 assets\beryllium\models\block\exploring\pointed_bone_up_tip_merge.json
 5cbd0fd854c9846b713674328fbead28f100c9d0 assets\beryllium\models\item\exploring\firefly_bottle.json
@@ -78,7 +79,6 @@ fa7aad6158ec7bd534cde8b4af47681408db3141 assets\beryllium\models\block\exploring
 05580c560162713cd3d9b621eb0cb268912f3c0c assets\beryllium\models\block\building\chiseled_snow_bricks.json
 951e1bc8e621ceafa95e52be85bf6c0f0c941eec assets\beryllium\models\block\building\mossy_stone.json
 e10e8d139f51f2e1c6003b4ed243b382532f84fc assets\beryllium\blockstates\exploring\corrupted_end_stone.json
-c02d2391fe3ed5d01931234d45bb6de6fdc93650 assets\beryllium\models\item\building\magic_wand.json
 ec59fd67b62cf098da480d796afea3b01f829c02 assets\beryllium\models\block\exploring\geraniums_3.json
 9bba9b1e4ec77f9f4b60b34e86c7ed6d0301dc7b assets\beryllium\blockstates\building\smooth_stone_wall.json
 1c26398a8b9a381917172b4d15b3e2198084e100 assets\beryllium\models\block\exploring\pointed_bone_down_frustum.json

@@ -7,7 +7,7 @@ import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.exploring.Exploring;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,7 +18,7 @@ public class GenDamageTypeTags extends FabricTagProvider<DamageType> {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        getOrCreateTagBuilder(TagKey.of(registryRef, Beryllium.EXPLORING.id("kinetic")))
+        getOrCreateTagBuilder(TagKey.of(registryRef, Exploring.CONSTRUCTOR.id("kinetic")))
                 .add(DamageTypes.FLY_INTO_WALL);
     }
 }

@@ -12,29 +12,28 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.Beryllium;
 
 import java.util.List;
 
-public class MagicWandItem extends Item {
-    public MagicWandItem(Settings settings) {
+public class FillingWandItem extends Item {
+    public FillingWandItem(Settings settings) {
         super(settings);
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        BlockPos first = context.getStack().get(Beryllium.BUILDING.MAGIC_WAND_COMPONENT_TYPE);
+        BlockPos first = context.getStack().get(Building.MAGIC_WAND_COMPONENT_TYPE);
         BlockPos target = context.getPlayer().isSneaking() ? context.getBlockPos() : context.getBlockPos().offset(context.getSide());
 
         if (first == null) {
             if (context.getPlayer() != null) {
-                context.getStack().set(Beryllium.BUILDING.MAGIC_WAND_COMPONENT_TYPE, target);
+                context.getStack().set(Building.MAGIC_WAND_COMPONENT_TYPE, target);
             }
 
             return ActionResult.SUCCESS_NO_ITEM_USED;
         } else {
             if (context.getPlayer() != null) {
-                context.getStack().set(Beryllium.BUILDING.MAGIC_WAND_COMPONENT_TYPE, null);
+                context.getStack().set(Building.MAGIC_WAND_COMPONENT_TYPE, null);
                 ItemPlacementContext placement = new ItemPlacementContext(context);
                 BlockState def;
                 ItemStack offStack = context.getPlayer().getOffHandStack();
@@ -61,7 +60,7 @@ public class MagicWandItem extends Item {
     }
 
     public static BlockBox getSelection(PlayerEntity player, ItemStack wand, BlockHitResult hit) {
-        BlockPos first = wand.get(Beryllium.BUILDING.MAGIC_WAND_COMPONENT_TYPE);
+        BlockPos first = wand.get(Building.MAGIC_WAND_COMPONENT_TYPE);
         BlockPos target = player.isSneaking() ? hit.getBlockPos() : hit.getBlockPos().offset(hit.getSide());
 
         if (first == null) {

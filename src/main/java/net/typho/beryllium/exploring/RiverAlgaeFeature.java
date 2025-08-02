@@ -11,7 +11,6 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import net.typho.beryllium.Beryllium;
 
 public class RiverAlgaeFeature extends Feature<DefaultFeatureConfig> {
     public RiverAlgaeFeature() {
@@ -30,7 +29,7 @@ public class RiverAlgaeFeature extends Feature<DefaultFeatureConfig> {
         BlockPos place = new BlockPos(origin.getX() + x, y, origin.getZ() + z);
 
         if (world.getBlockState(place).isOf(Blocks.WATER)) {
-            BlockState placeState = AlgaeBlock.createFullState(Beryllium.EXPLORING.ALGAE_BLOCK.getDefaultState(), world, place).with(Properties.WATERLOGGED, true);
+            BlockState placeState = AlgaeBlock.createFullState(Exploring.ALGAE_BLOCK.getDefaultState(), world, place).with(Properties.WATERLOGGED, true);
 
             if (placeState.canPlaceAt(world, place)) {
                 world.setBlockState(place, placeState, Block.NOTIFY_LISTENERS);

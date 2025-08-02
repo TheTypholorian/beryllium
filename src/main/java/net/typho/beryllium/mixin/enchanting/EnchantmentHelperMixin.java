@@ -13,7 +13,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.collection.Weighting;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.enchanting.Enchanting;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -36,13 +36,13 @@ public class EnchantmentHelperMixin {
         possibleEnchantments.filter(enchantment -> (enchantment.value().isPrimaryItem(stack) || bl) && enchantment.value().isAcceptableItem(stack)).forEach(enchantmentx -> {
             Enchantment enchantment = enchantmentx.value();
 
-            for (int l = enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
+            for (int l = enchantment.getMaxLevel() + Enchanting.getExtraLevels(stack); l >= enchantment.getMinLevel(); l--) {
                 if (level >= enchantment.getMinPower(l) && (level >= 25 || level <= enchantment.getMaxPower(l))) {
                     for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries()) {
                         if (entry.getKey().value() == enchantment) {
                             if (l < entry.getIntValue()) {
                                 return;
-                            } else if (l == entry.getIntValue() && enchantment.getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(stack) == l) {
+                            } else if (l == entry.getIntValue() && enchantment.getMaxLevel() + Enchanting.getExtraLevels(stack) == l) {
                                 return;
                             } else {
                                 break;
@@ -80,7 +80,7 @@ public class EnchantmentHelperMixin {
 
             if (!list2.isEmpty()) {
                 Weighting.getRandom(random, list2).ifPresent(add -> {
-                    if (Beryllium.ENCHANTING.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                    if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                         list.add(add);
                     }
                 });
@@ -95,7 +95,7 @@ public class EnchantmentHelperMixin {
                     }
 
                     Weighting.getRandom(random, list2).ifPresent(add -> {
-                        if (Beryllium.ENCHANTING.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                        if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
                             list.add(add);
                         }
                     });

@@ -6,7 +6,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
+import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.redstone.Redstone;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,84 +21,84 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(Beryllium.BUILDING.MOSSY_STONE.getBaseBlock())
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.MOSSY_STONE.getBaseBlock())
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
 
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
 
-                .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
+                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
 
-                .add(Beryllium.BUILDING.KILN_BLOCK)
+                .add(Building.KILN_BLOCK)
 
-                .add(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK)
+                .add(Redstone.GOLD_HOPPER_BLOCK)
 
-                .add(Beryllium.COMBAT.POTION_CAULDRON)
+                .add(Combat.POTION_CAULDRON)
 
-                .add(Beryllium.EXPLORING.POINTED_BONE);
+                .add(Exploring.POINTED_BONE);
 
         getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getBaseBlock())
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                .add(Building.SNOW_BRICKS.getBaseBlock())
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
         getOrCreateTagBuilder(BlockTags.WALLS)
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
 
         getOrCreateTagBuilder(BlockTags.SLABS)
-                .add(Beryllium.BUILDING.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                .add(Beryllium.BUILDING.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Beryllium.BUILDING.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
-                .add(Beryllium.EXPLORING.DAFFODILS)
-                .add(Beryllium.EXPLORING.SCILLA)
-                .add(Beryllium.EXPLORING.GERANIUMS);
+                .add(Exploring.DAFFODILS)
+                .add(Exploring.SCILLA)
+                .add(Exploring.GERANIUMS);
 
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
-                .add(Beryllium.EXPLORING.DAFFODILS)
-                .add(Beryllium.EXPLORING.SCILLA)
-                .add(Beryllium.EXPLORING.GERANIUMS);
+                .add(Exploring.DAFFODILS)
+                .add(Exploring.SCILLA)
+                .add(Exploring.GERANIUMS);
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
-                .add(Beryllium.EXPLORING.DAFFODILS)
-                .add(Beryllium.EXPLORING.SCILLA)
-                .add(Beryllium.EXPLORING.GERANIUMS);
+                .add(Exploring.DAFFODILS)
+                .add(Exploring.SCILLA)
+                .add(Exploring.GERANIUMS);
 
         getOrCreateTagBuilder(BlockTags.FLOWERS)
-                .add(Beryllium.EXPLORING.DAFFODILS)
-                .add(Beryllium.EXPLORING.SCILLA)
-                .add(Beryllium.EXPLORING.GERANIUMS);
+                .add(Exploring.DAFFODILS)
+                .add(Exploring.SCILLA)
+                .add(Exploring.GERANIUMS);
 
-        getOrCreateTagBuilder(Beryllium.EXPLORING.VOID_FIRE_BASE_BLOCKS)
+        getOrCreateTagBuilder(Exploring.VOID_FIRE_BASE_BLOCKS)
                 .add(Blocks.END_STONE)
                 .add(Blocks.OBSIDIAN)
                 .add(Blocks.BEDROCK);
 
-        getOrCreateTagBuilder(Beryllium.EXPLORING.POINTED_BLOCKS)
+        getOrCreateTagBuilder(Exploring.POINTED_BLOCKS)
                 .add(Blocks.POINTED_DRIPSTONE)
-                .add(Beryllium.EXPLORING.POINTED_BONE);
+                .add(Exploring.POINTED_BONE);
 
         getOrCreateTagBuilder(BlockTags.FIRE)
-                .add(Beryllium.EXPLORING.VOID_FIRE);
+                .add(Exploring.VOID_FIRE);
 
         getOrCreateTagBuilder(BlockTags.CAULDRONS)
-                .add(Beryllium.COMBAT.POTION_CAULDRON);
+                .add(Combat.POTION_CAULDRON);
     }
 }

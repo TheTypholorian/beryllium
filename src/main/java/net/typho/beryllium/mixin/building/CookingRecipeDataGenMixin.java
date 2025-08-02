@@ -6,7 +6,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.book.CookingRecipeCategory;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ public class CookingRecipeDataGenMixin {
             cancellable = true
     )
     private static void getCookingRecipeCategory(RecipeSerializer<? extends AbstractCookingRecipe> serializer, ItemConvertible output, CallbackInfoReturnable<CookingRecipeCategory> cir) {
-        if (serializer == Beryllium.BUILDING.KILN_RECIPE_SERIALIZER) {
+        if (serializer == Building.KILN_RECIPE_SERIALIZER) {
             cir.setReturnValue(output.asItem() instanceof BlockItem ? CookingRecipeCategory.BLOCKS : CookingRecipeCategory.MISC);
         }
     }

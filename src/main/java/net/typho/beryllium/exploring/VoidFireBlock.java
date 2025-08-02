@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.typho.beryllium.Beryllium;
 
 public class VoidFireBlock extends AbstractFireBlock {
     public static final MapCodec<VoidFireBlock> CODEC = createCodec(VoidFireBlock::new);
@@ -36,7 +35,7 @@ public class VoidFireBlock extends AbstractFireBlock {
     }
 
     public static boolean isVoidBase(BlockState state) {
-        return state.isIn(Beryllium.EXPLORING.VOID_FIRE_BASE_BLOCKS);
+        return state.isIn(Exploring.VOID_FIRE_BASE_BLOCKS);
     }
 
     @Override

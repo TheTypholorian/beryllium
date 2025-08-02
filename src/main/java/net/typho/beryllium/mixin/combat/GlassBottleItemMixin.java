@@ -13,7 +13,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.combat.PotionCauldronBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -32,7 +32,7 @@ public abstract class GlassBottleItemMixin extends Item {
         Hand hand = context.getHand();
         BlockState blockState = world.getBlockState(pos);
 
-        if (blockState.isOf(Beryllium.COMBAT.POTION_CAULDRON)) {
+        if (blockState.isOf(Combat.POTION_CAULDRON)) {
             if (!world.isClient) {
                 PotionContentsComponent contents = ((PotionCauldronBlockEntity) world.getBlockEntity(pos)).takePotion();
 

@@ -21,7 +21,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -36,7 +35,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
     }
 
     public PotionCauldronBlockEntity(BlockPos pos, BlockState state) {
-        super(Beryllium.COMBAT.POTION_CAULDRON_BLOCK_ENTITY, pos, state);
+        super(Combat.POTION_CAULDRON_BLOCK_ENTITY, pos, state);
     }
 
     @Override
@@ -99,7 +98,7 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         BlockState state = world.getBlockState(pos);
         int level = state.getOrEmpty(LEVEL).orElse(0);
 
-        if (level > LeveledCauldronBlock.MAX_LEVEL || !state.isOf(Beryllium.COMBAT.POTION_CAULDRON)) {
+        if (level > LeveledCauldronBlock.MAX_LEVEL || !state.isOf(Combat.POTION_CAULDRON)) {
             return false;
         }
 

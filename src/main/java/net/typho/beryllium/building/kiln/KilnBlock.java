@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
 import org.jetbrains.annotations.Nullable;
 
 public class KilnBlock extends AbstractFurnaceBlock {
@@ -38,7 +38,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return validateTicker(world, type, Beryllium.BUILDING.KILN_BLOCK_ENTITY_TYPE);
+        return validateTicker(world, type, Building.KILN_BLOCK_ENTITY_TYPE);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof KilnEntity) {
             player.openHandledScreen((NamedScreenHandlerFactory)blockEntity);
-            player.incrementStat(Beryllium.BUILDING.KILN_INTERACT_STAT);
+            player.incrementStat(Building.KILN_INTERACT_STAT);
         }
     }
 

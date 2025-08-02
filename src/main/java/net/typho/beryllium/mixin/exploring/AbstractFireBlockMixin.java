@@ -5,7 +5,7 @@ import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.VoidFireBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +21,7 @@ public class AbstractFireBlockMixin {
     )
     private static void getState(BlockView world, BlockPos pos, CallbackInfoReturnable<BlockState> cir, @Local BlockState blockState) {
         if (VoidFireBlock.isVoidBase(blockState)) {
-            cir.setReturnValue(Beryllium.EXPLORING.VOID_FIRE.getDefaultState());
+            cir.setReturnValue(Exploring.VOID_FIRE.getDefaultState());
         }
     }
 }

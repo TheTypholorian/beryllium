@@ -10,7 +10,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.VoidFireBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -56,7 +56,7 @@ public abstract class DragonFireballEntityMixin extends ExplosiveProjectileEntit
                                         VoidFireBlock.isVoidBase(getWorld().getBlockState(place.down())) &&
                                         getWorld().getRandom().nextFloat() > 0.5f
                         ) {
-                            getWorld().setBlockState(place, Beryllium.EXPLORING.VOID_FIRE.getDefaultState());
+                            getWorld().setBlockState(place, Exploring.VOID_FIRE.getDefaultState());
                         }
                     }
                 }

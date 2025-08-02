@@ -33,7 +33,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
-import net.typho.beryllium.Beryllium;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -350,7 +349,7 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
     }
 
     private static void place(WorldAccess world, BlockPos pos, Direction direction, Thickness thickness) {
-        BlockState blockState = Beryllium.EXPLORING.POINTED_BONE
+        BlockState blockState = Exploring.POINTED_BONE
                 .getDefaultState()
                 .with(VERTICAL_DIRECTION, direction)
                 .with(THICKNESS, thickness)
@@ -394,7 +393,7 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
             return pos;
         } else {
             Direction direction = state.get(VERTICAL_DIRECTION);
-            BiPredicate<BlockPos, BlockState> biPredicate = (posx, statex) -> statex.isOf(Beryllium.EXPLORING.POINTED_BONE) && statex.get(VERTICAL_DIRECTION) == direction;
+            BiPredicate<BlockPos, BlockState> biPredicate = (posx, statex) -> statex.isOf(Exploring.POINTED_BONE) && statex.get(VERTICAL_DIRECTION) == direction;
             return searchInDirection(world, pos, direction.getDirection(), biPredicate, statex -> isTip(statex, allowMerged), range).orElse(null);
         }
     }
@@ -450,8 +449,8 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
 
     private static Optional<BlockPos> getSupportingPos(World world, BlockPos pos, BlockState state, int range) {
         Direction direction = state.get(VERTICAL_DIRECTION);
-        BiPredicate<BlockPos, BlockState> biPredicate = (posx, statex) -> statex.isOf(Beryllium.EXPLORING.POINTED_BONE) && statex.get(VERTICAL_DIRECTION) == direction;
-        return searchInDirection(world, pos, direction.getOpposite().getDirection(), biPredicate, statex -> !statex.isOf(Beryllium.EXPLORING.POINTED_BONE), range);
+        BiPredicate<BlockPos, BlockState> biPredicate = (posx, statex) -> statex.isOf(Exploring.POINTED_BONE) && statex.get(VERTICAL_DIRECTION) == direction;
+        return searchInDirection(world, pos, direction.getOpposite().getDirection(), biPredicate, statex -> !statex.isOf(Exploring.POINTED_BONE), range);
     }
 
     private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
@@ -461,7 +460,7 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
     }
 
     private static boolean isTip(BlockState state, boolean allowMerged) {
-        if (!state.isOf(Beryllium.EXPLORING.POINTED_BONE)) {
+        if (!state.isOf(Exploring.POINTED_BONE)) {
             return false;
         } else {
             Thickness thickness = state.get(THICKNESS);
@@ -482,7 +481,7 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
     }
 
     private static boolean isHeldByPointedBone(BlockState state, WorldView world, BlockPos pos) {
-        return isPointingDown(state) && !world.getBlockState(pos.up()).isOf(Beryllium.EXPLORING.POINTED_BONE);
+        return isPointingDown(state) && !world.getBlockState(pos.up()).isOf(Exploring.POINTED_BONE);
     }
 
     @Override
@@ -491,7 +490,7 @@ public class PointedBoneBlock extends Block implements LandingBlock, Waterloggab
     }
 
     private static boolean isPointedBoneFacingDirection(BlockState state, Direction direction) {
-        return state.isOf(Beryllium.EXPLORING.POINTED_BONE) && state.get(VERTICAL_DIRECTION) == direction;
+        return state.isOf(Exploring.POINTED_BONE) && state.get(VERTICAL_DIRECTION) == direction;
     }
 
     @Nullable

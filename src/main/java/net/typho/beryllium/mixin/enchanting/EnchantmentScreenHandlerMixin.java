@@ -24,7 +24,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.random.Random;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.enchanting.Enchanting;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -201,7 +201,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                         RegistryEntry<Enchantment> enchant = enchOptional.get();
                         int level = enchantmentLevel[id];
 
-                        if (Beryllium.ENCHANTING.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
+                        if (Enchanting.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
                             player.applyEnchantmentCosts(enchantSlot, i);
                             if (enchantSlot.isOf(Items.BOOK)) {
                                 itemStack3 = enchantSlot.withItem(Items.ENCHANTED_BOOK);
@@ -211,7 +211,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                             boolean hasApplied = false;
                             for (Object2IntMap.Entry<RegistryEntry<Enchantment>> entry : EnchantmentHelper.getEnchantments(itemStack3).getEnchantmentEntries()) {
                                 if (entry.getKey() == enchant) {
-                                    if (level == entry.getIntValue() && level != enchant.value().getMaxLevel() + Beryllium.ENCHANTING.getExtraLevels(itemStack3)) {
+                                    if (level == entry.getIntValue() && level != enchant.value().getMaxLevel() + Enchanting.getExtraLevels(itemStack3)) {
                                         itemStack3.addEnchantment(enchant, level + 1);
                                         hasApplied = true;
                                         break;
@@ -228,7 +228,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                             }
 
-                            catalystSlot.decrementUnlessCreative(Beryllium.ENCHANTING.getEnchantmentCatalyst(enchant, level).getCount(), player);
+                            catalystSlot.decrementUnlessCreative(Enchanting.getEnchantmentCatalyst(enchant, level).getCount(), player);
                             if (catalystSlot.isEmpty()) {
                                 this.inventory.setStack(2, ItemStack.EMPTY);
                             }

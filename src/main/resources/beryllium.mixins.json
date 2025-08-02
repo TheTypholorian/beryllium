@@ -47,6 +47,8 @@
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
     "exploring.PlayerEntityMixin",
+    "food.BucketItemMixin",
+    "food.MilkBucketItemMixin",
     "food.SugarCaneBlockMixin",
     "redstone.CropBlockMixin",
     "redstone.DispenserBlockMixin",

@@ -28,8 +28,8 @@ import net.minecraft.world.gen.placementmodifier.*;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
 import net.minecraft.world.gen.trunk.CherryTrunkPlacer;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.AlgaeBlock;
+import net.typho.beryllium.exploring.Exploring;
 
 import java.util.List;
 
@@ -65,57 +65,57 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
     @Override
     public void buildRegistry(RegistryBuilder builder) {
         builder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, context -> {
-            context.register(Beryllium.EXPLORING.SWAMP_ALGAE_CONFIGURED,
+            context.register(Exploring.SWAMP_ALGAE_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.RANDOM_PATCH,
                             new RandomPatchFeatureConfig(
-                                    50, 10, 1, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(Beryllium.EXPLORING.ALGAE_BLOCK.getDefaultState().with(Properties.DOWN, true).with(AlgaeBlock.GENERATED, true))))
+                                    50, 10, 1, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(Exploring.ALGAE_BLOCK.getDefaultState().with(Properties.DOWN, true).with(AlgaeBlock.GENERATED, true))))
                             )
                     ));
-            context.register(Beryllium.EXPLORING.RIVER_ALGAE_CONFIGURED,
+            context.register(Exploring.RIVER_ALGAE_CONFIGURED,
                     new ConfiguredFeature<>(
-                            Beryllium.EXPLORING.RIVER_ALGAE_FEATURE,
+                            Exploring.RIVER_ALGAE_FEATURE,
                             new DefaultFeatureConfig()
                     ));
-            context.register(Beryllium.EXPLORING.DAFFODILS_CONFIGURED,
+            context.register(Exploring.DAFFODILS_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.FLOWER,
                             new RandomPatchFeatureConfig(
-                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Beryllium.EXPLORING.DAFFODILS.getDefaultState()))))
+                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Exploring.DAFFODILS.getDefaultState()))))
                             )
                     ));
-            context.register(Beryllium.EXPLORING.SCILLA_CONFIGURED,
+            context.register(Exploring.SCILLA_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.FLOWER,
                             new RandomPatchFeatureConfig(
-                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Beryllium.EXPLORING.SCILLA.getDefaultState()))))
+                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Exploring.SCILLA.getDefaultState()))))
                             )
                     ));
-            context.register(Beryllium.EXPLORING.GERANIUMS_CONFIGURED,
+            context.register(Exploring.GERANIUMS_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.FLOWER,
                             new RandomPatchFeatureConfig(
-                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Beryllium.EXPLORING.GERANIUMS.getDefaultState()))))
+                                    96, 6, 2, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(new WeightedBlockStateProvider(allFlowerbedStates(Exploring.GERANIUMS.getDefaultState()))))
                             )
                     ));
-            context.register(Beryllium.EXPLORING.MAGMA_DELTA_CONFIGURED,
+            context.register(Exploring.MAGMA_DELTA_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.DELTA_FEATURE,
                             new DeltaFeatureConfig(Blocks.MAGMA_BLOCK.getDefaultState(), Blocks.MAGMA_BLOCK.getDefaultState(), UniformIntProvider.create(3, 7), UniformIntProvider.create(0, 2))
                     ));
-            context.register(Beryllium.EXPLORING.BONE_SPIKES_CONFIGURED,
+            context.register(Exploring.BONE_SPIKES_CONFIGURED,
                     new ConfiguredFeature<>(
-                            Beryllium.EXPLORING.BONE_SPIKES,
+                            Exploring.BONE_SPIKES,
                             new BasaltColumnsFeatureConfig(ConstantIntProvider.create(1), UniformIntProvider.create(1, 3))
                     ));
-            context.register(Beryllium.EXPLORING.CORRUPTED_TREE_CONFIGURED,
+            context.register(Exploring.CORRUPTED_TREE_CONFIGURED,
                     new ConfiguredFeature<>(
                             Feature.TREE,
                             new TreeFeatureConfig.Builder(
-                                    BlockStateProvider.of(Beryllium.EXPLORING.CORRUPTED_LOG),
+                                    BlockStateProvider.of(Exploring.CORRUPTED_LOG),
                                     new CherryTrunkPlacer(5, 6, 5, UniformIntProvider.create(1, 3), UniformIntProvider.create(3, 7), UniformIntProvider.create(-4, -3), UniformIntProvider.create(-1, 0)),
 
-                                    BlockStateProvider.of(Beryllium.EXPLORING.CONGEALED_VOID),
+                                    BlockStateProvider.of(Exploring.CONGEALED_VOID),
                                     new CherryFoliagePlacer(ConstantIntProvider.create(6), ConstantIntProvider.create(0), ConstantIntProvider.create(4), 0.25F, 0.5F, 0, 0),
 
                                     new TwoLayersFeatureSize(1, 0, 2)
@@ -123,39 +123,39 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
-            context.register(Beryllium.EXPLORING.SWAMP_ALGAE_PLACED, new PlacedFeature(
+            context.register(Exploring.SWAMP_ALGAE_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.SWAMP_ALGAE_CONFIGURED),
+                            .getOrThrow(Exploring.SWAMP_ALGAE_CONFIGURED),
                     List.of(CountPlacementModifier.of(4), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.RIVER_ALGAE_PLACED, new PlacedFeature(
+            context.register(Exploring.RIVER_ALGAE_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.RIVER_ALGAE_CONFIGURED),
+                            .getOrThrow(Exploring.RIVER_ALGAE_CONFIGURED),
                     List.of(CountPlacementModifier.of(40), SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.DAFFODILS_PLACED, new PlacedFeature(
+            context.register(Exploring.DAFFODILS_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.DAFFODILS_CONFIGURED),
+                            .getOrThrow(Exploring.DAFFODILS_CONFIGURED),
                     List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.SCILLA_PLACED, new PlacedFeature(
+            context.register(Exploring.SCILLA_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.SCILLA_CONFIGURED),
+                            .getOrThrow(Exploring.SCILLA_CONFIGURED),
                     List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.GERANIUMS_PLACED, new PlacedFeature(
+            context.register(Exploring.GERANIUMS_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.GERANIUMS_CONFIGURED),
+                            .getOrThrow(Exploring.GERANIUMS_CONFIGURED),
                     List.of(NoiseThresholdCountPlacementModifier.of(-0.8, 5, 10), SquarePlacementModifier.of(), PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP, BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.MAGMA_DELTA_PLACED, new PlacedFeature(
+            context.register(Exploring.MAGMA_DELTA_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.MAGMA_DELTA_CONFIGURED),
+                            .getOrThrow(Exploring.MAGMA_DELTA_CONFIGURED),
                     List.of(CountMultilayerPlacementModifier.of(4), BiomePlacementModifier.of())
             ));
-            context.register(Beryllium.EXPLORING.BONE_SPIKES_PLACED, new PlacedFeature(
+            context.register(Exploring.BONE_SPIKES_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.BONE_SPIKES_CONFIGURED),
+                            .getOrThrow(Exploring.BONE_SPIKES_CONFIGURED),
                     List.of(
                             CountPlacementModifier.of(BiasedToBottomIntProvider.create(0, 4)),
                             SquarePlacementModifier.of(),
@@ -163,12 +163,12 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             BiomePlacementModifier.of()
                     )
             ));
-            context.register(Beryllium.EXPLORING.CORRUPTED_TREE_PLACED, new PlacedFeature(
+            context.register(Exploring.CORRUPTED_TREE_PLACED, new PlacedFeature(
                     context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
-                            .getOrThrow(Beryllium.EXPLORING.CORRUPTED_TREE_CONFIGURED),
+                            .getOrThrow(Exploring.CORRUPTED_TREE_CONFIGURED),
                     VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                             PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
-                            Beryllium.EXPLORING.CORRUPTED_SAPLING
+                            Exploring.CORRUPTED_SAPLING
                     )
             ));
         });
@@ -179,14 +179,14 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
             SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
             DefaultBiomeFeatures.addEndMobs(spawnSettings);
 
-            context.register(Beryllium.EXPLORING.CORRUPTED_FOREST, new Biome.Builder()
+            context.register(Exploring.CORRUPTED_FOREST, new Biome.Builder()
                     .precipitation(false)
                     .temperature(0.5F)
                     .downfall(0.5F)
                     .effects(new BiomeEffects.Builder().waterColor(4159204).waterFogColor(329011).fogColor(10518688).skyColor(0).moodSound(BiomeMoodSound.CAVE).build())
                     .spawnSettings(spawnSettings.build())
                     .generationSettings(new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup)
-                            .feature(GenerationStep.Feature.VEGETAL_DECORATION, Beryllium.EXPLORING.CORRUPTED_TREE_PLACED)
+                            .feature(GenerationStep.Feature.VEGETAL_DECORATION, Exploring.CORRUPTED_TREE_PLACED)
                             .feature(GenerationStep.Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
                             .feature(GenerationStep.Feature.VEGETAL_DECORATION, EndPlacedFeatures.CHORUS_PLANT)
                             .build())
@@ -200,9 +200,9 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .build();
             GenerationSettings.LookupBackedBuilder lookupBackedBuilder = new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup)
                     .carver(GenerationStep.Carver.AIR, ConfiguredCarvers.NETHER_CAVE)
-                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Beryllium.EXPLORING.MAGMA_DELTA_PLACED)
-                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Beryllium.EXPLORING.SMALL_BONE_SPIKES_PLACED)
-                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Beryllium.EXPLORING.LARGE_BONE_SPIKES_PLACED)
+                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Exploring.MAGMA_DELTA_PLACED)
+                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Exploring.SMALL_BONE_SPIKES_PLACED)
+                    .feature(GenerationStep.Feature.SURFACE_STRUCTURES, Exploring.LARGE_BONE_SPIKES_PLACED)
                     .feature(GenerationStep.Feature.UNDERGROUND_DECORATION, NetherPlacedFeatures.SPRING_DELTA)
                     .feature(GenerationStep.Feature.UNDERGROUND_DECORATION, NetherPlacedFeatures.PATCH_FIRE)
                     .feature(GenerationStep.Feature.UNDERGROUND_DECORATION, NetherPlacedFeatures.PATCH_SOUL_FIRE)
@@ -215,7 +215,7 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     .feature(GenerationStep.Feature.UNDERGROUND_DECORATION, OrePlacedFeatures.ORE_GOLD_DELTAS)
                     .feature(GenerationStep.Feature.UNDERGROUND_DECORATION, OrePlacedFeatures.ORE_QUARTZ_DELTAS);
             DefaultBiomeFeatures.addAncientDebris(lookupBackedBuilder);
-            context.register(Beryllium.EXPLORING.BONE_FOREST, new Biome.Builder()
+            context.register(Exploring.BONE_FOREST, new Biome.Builder()
                     .precipitation(false)
                     .temperature(1.5F)
                     .downfall(0.0F)

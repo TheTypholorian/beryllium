@@ -13,8 +13,7 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.combat.CombatComponents;
+import net.typho.beryllium.exploring.Exploring;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,7 +37,7 @@ public abstract class TridentEntityRendererMixin extends EntityRenderer<TridentE
                 trident.getWorld()
                         .getRegistryManager()
                         .get(RegistryKeys.ENCHANTMENT)
-                        .getEntry(Beryllium.EXPLORING.id("reeling"))
+                        .getEntry(Exploring.CONSTRUCTOR.id("reeling"))
                         .orElseThrow(),
                 trident.getItemStack()
         ) > 0;
@@ -49,7 +48,7 @@ public abstract class TridentEntityRendererMixin extends EntityRenderer<TridentE
             at = @At("TAIL")
     )
     private void render(TridentEntity trident, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        if (trident.getOwner() != null && trident.getComponent(CombatComponents.REELING).getReeling() > 0) {
+        if (trident.getOwner() != null && trident.getComponent(Exploring.REELING).getReeling() > 0) {
             matrices.push();
             Vec3d vec3d = trident.getOwner().getLeashPos(tickDelta);
             double d = trident.lerpYaw(tickDelta) * (float) (Math.PI / 180.0) + (Math.PI / 2);

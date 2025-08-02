@@ -9,8 +9,7 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.combat.CombatComponents;
+import net.typho.beryllium.exploring.Exploring;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -71,11 +70,11 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     @Unique
     private void initReeling() {
         if (!getWorld().isClient) {
-            getComponent(CombatComponents.REELING).setReeling(EnchantmentHelper.getLevel(
+            getComponent(Exploring.REELING).setReeling(EnchantmentHelper.getLevel(
                     getWorld()
                             .getRegistryManager()
                             .get(RegistryKeys.ENCHANTMENT)
-                            .getEntry(Beryllium.EXPLORING.id("reeling"))
+                            .getEntry(Exploring.CONSTRUCTOR.id("reeling"))
                             .orElseThrow(),
                     getItemStack()
             ) / 16f);
@@ -88,7 +87,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
     )
     public void age(CallbackInfo ci) {
         if (getOwner() != null && getWeaponStack() != null) {
-            float reeling = getComponent(CombatComponents.REELING).getReeling();
+            float reeling = getComponent(Exploring.REELING).getReeling();
 
             if (reeling > 0) {
                 getOwner().addVelocity(getPos().subtract(getOwner().getPos()).normalize().multiply(reeling));

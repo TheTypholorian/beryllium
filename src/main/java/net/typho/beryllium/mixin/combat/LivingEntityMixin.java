@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.combat.ScytheItem;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -85,7 +86,7 @@ public abstract class LivingEntityMixin {
     )
     private void damageShieldHit(LivingEntity instance, LivingEntity attacker, @Local(ordinal = 2) float amount) {
         ItemStack shield = activeItemStack;
-        float durability = Beryllium.COMBAT.shieldDurability(shield) - amount;
+        float durability = Combat.shieldDurability(shield) - amount;
 
         if (durability <= 0) {
             durability = Beryllium.CONFIG.combat.shieldMaxDurability;
@@ -95,7 +96,7 @@ public abstract class LivingEntityMixin {
             }
         }
 
-        shield.set(Beryllium.COMBAT.SHIELD_DURABILITY, durability);
+        shield.set(Combat.SHIELD_DURABILITY, durability);
     }
 
     @Inject(
@@ -104,7 +105,7 @@ public abstract class LivingEntityMixin {
     )
     private void takeShieldHit(LivingEntity attacker, CallbackInfo ci) {
         ItemStack shield = activeItemStack;
-        float durability = Beryllium.COMBAT.shieldDurability(shield) - 1;
+        float durability = Combat.shieldDurability(shield) - 1;
 
         if (durability <= 0) {
             durability = Beryllium.CONFIG.combat.shieldMaxDurability;
@@ -114,6 +115,6 @@ public abstract class LivingEntityMixin {
             }
         }
 
-        shield.set(Beryllium.COMBAT.SHIELD_DURABILITY, durability);
+        shield.set(Combat.SHIELD_DURABILITY, durability);
     }
 }

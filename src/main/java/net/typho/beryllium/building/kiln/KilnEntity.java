@@ -6,11 +6,11 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
 
 public class KilnEntity extends AbstractFurnaceBlockEntity {
     public KilnEntity(BlockPos pos, BlockState state) {
-        super(Beryllium.BUILDING.KILN_BLOCK_ENTITY_TYPE, pos, state, Beryllium.BUILDING.KILN_RECIPE_TYPE);
+        super(Building.KILN_BLOCK_ENTITY_TYPE, pos, state, Building.KILN_RECIPE_TYPE);
     }
 
     @Override
