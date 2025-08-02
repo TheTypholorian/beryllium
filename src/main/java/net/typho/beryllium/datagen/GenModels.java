@@ -36,6 +36,11 @@ public class GenModels extends FabricModelProvider {
         gen.registerFlowerbed(Beryllium.EXPLORING.GERANIUMS);
         gen.registerWallPlant(Beryllium.EXPLORING.ALGAE_BLOCK);
 
+        gen.registerLog(Beryllium.EXPLORING.CORRUPTED_LOG)
+                .log(Beryllium.EXPLORING.CORRUPTED_LOG);
+
+        gen.registerSingleton(Beryllium.EXPLORING.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
+
         Identifier goldHopper = ModelIds.getBlockModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK);
         Identifier goldHopperSide = ModelIds.getBlockSubModelId(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK, "_side");
         gen.registerItemModel(Beryllium.REDSTONE.GOLD_HOPPER_BLOCK.asItem());

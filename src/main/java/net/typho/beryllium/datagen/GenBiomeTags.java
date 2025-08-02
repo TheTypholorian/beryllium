@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.typho.beryllium.Beryllium;
@@ -31,5 +32,7 @@ public class GenBiomeTags extends FabricTagProvider<Biome> {
                 .add(BiomeKeys.OLD_GROWTH_PINE_TAIGA);
         getOrCreateTagBuilder(Beryllium.EXPLORING.OAK_TAG)
                 .add(BiomeKeys.FOREST);
+        getOrCreateTagBuilder(BiomeTags.IS_END)
+                .add(Beryllium.EXPLORING.CORRUPTED_FOREST);
     }
 }

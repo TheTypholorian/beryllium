@@ -6,3 +6,5 @@ accessible method net/minecraft/block/AbstractCauldronBlock canBeFilledByDripsto
 accessible field net/minecraft/world/GameRules RULE_TYPES Ljava/util/Map;
 accessible method net/minecraft/world/GameRules$Rule deserialize (Ljava/lang/String;)V
 accessible method net/minecraft/util/collection/DefaultedList <init> (Ljava/util/List;Ljava/lang/Object;)V
+accessible field net/minecraft/world/gen/chunk/GenerationShapeConfig END Lnet/minecraft/world/gen/chunk/GenerationShapeConfig;
+accessible method net/minecraft/world/gen/densityfunction/DensityFunctions createEndNoiseRouter (Lnet/minecraft/registry/RegistryEntryLookup;)Lnet/minecraft/world/gen/noise/NoiseRouter;

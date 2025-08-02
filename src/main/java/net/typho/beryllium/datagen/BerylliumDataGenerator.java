@@ -8,17 +8,26 @@ import net.minecraft.block.FlowerbedBlock;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BiomeMoodSound;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.collection.DataPool;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.BiasedToBottomIntProvider;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeEffects;
+import net.minecraft.world.biome.GenerationSettings;
+import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.carver.ConfiguredCarver;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.size.TwoLayersFeatureSize;
+import net.minecraft.world.gen.foliage.CherryFoliagePlacer;
 import net.minecraft.world.gen.placementmodifier.*;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.minecraft.world.gen.stateprovider.WeightedBlockStateProvider;
+import net.minecraft.world.gen.trunk.CherryTrunkPlacer;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.AlgaeBlock;
 
@@ -99,6 +108,19 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             Beryllium.EXPLORING.BONE_SPIKES,
                             new BasaltColumnsFeatureConfig(ConstantIntProvider.create(1), UniformIntProvider.create(1, 3))
                     ));
+            context.register(Beryllium.EXPLORING.CORRUPTED_TREE_CONFIGURED,
+                    new ConfiguredFeature<>(
+                            Feature.TREE,
+                            new TreeFeatureConfig.Builder(
+                                    BlockStateProvider.of(Beryllium.EXPLORING.CORRUPTED_LOG),
+                                    new CherryTrunkPlacer(5, 6, 5, UniformIntProvider.create(1, 3), UniformIntProvider.create(3, 7), UniformIntProvider.create(-4, -3), UniformIntProvider.create(-1, 0)),
+
+                                    BlockStateProvider.of(Beryllium.EXPLORING.CONGEALED_VOID),
+                                    new CherryFoliagePlacer(ConstantIntProvider.create(6), ConstantIntProvider.create(0), ConstantIntProvider.create(4), 0.25F, 0.5F, 0, 0),
+
+                                    new TwoLayersFeatureSize(1, 0, 2)
+                            ).dirtProvider(BlockStateProvider.of(Blocks.END_STONE)).build()
+                    ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
             context.register(Beryllium.EXPLORING.SWAMP_ALGAE_PLACED, new PlacedFeature(
@@ -141,10 +163,34 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                             BiomePlacementModifier.of()
                     )
             ));
+            context.register(Beryllium.EXPLORING.CORRUPTED_TREE_PLACED, new PlacedFeature(
+                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+                            .getOrThrow(Beryllium.EXPLORING.CORRUPTED_TREE_CONFIGURED),
+                    VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
+                            PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
+                            Beryllium.EXPLORING.CORRUPTED_SAPLING
+                    )
+            ));
         });
         builder.addRegistry(RegistryKeys.BIOME, context -> {
             RegistryEntryLookup<PlacedFeature> featureLookup = context.getRegistryLookup(RegistryKeys.PLACED_FEATURE);
             RegistryEntryLookup<ConfiguredCarver<?>> carverLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER);
+
+            SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder();
+            DefaultBiomeFeatures.addEndMobs(spawnSettings);
+
+            context.register(Beryllium.EXPLORING.CORRUPTED_FOREST, new Biome.Builder()
+                    .precipitation(false)
+                    .temperature(0.5F)
+                    .downfall(0.5F)
+                    .effects(new BiomeEffects.Builder().waterColor(4159204).waterFogColor(329011).fogColor(10518688).skyColor(0).moodSound(BiomeMoodSound.CAVE).build())
+                    .spawnSettings(spawnSettings.build())
+                    .generationSettings(new GenerationSettings.LookupBackedBuilder(featureLookup, carverLookup)
+                            .feature(GenerationStep.Feature.VEGETAL_DECORATION, Beryllium.EXPLORING.CORRUPTED_TREE_PLACED)
+                            .feature(GenerationStep.Feature.SURFACE_STRUCTURES, EndPlacedFeatures.END_GATEWAY_RETURN)
+                            .feature(GenerationStep.Feature.VEGETAL_DECORATION, EndPlacedFeatures.CHORUS_PLANT)
+                            .build())
+                    .build());
 
             /*
             SpawnSettings spawnSettings = new SpawnSettings.Builder()

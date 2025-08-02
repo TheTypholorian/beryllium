@@ -1,16 +1,14 @@
 package net.typho.beryllium.exploring;
 
+import net.typho.beryllium.Beryllium;
+import terrablender.api.EndBiomeRegistry;
+import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
 public class BiomeInit implements TerraBlenderApi {
-    //private static final MaterialRules.MaterialRule BONE_BLOCK = MaterialRules.block(Blocks.BONE_BLOCK.getDefaultState());
-
     @Override
     public void onTerraBlenderInitialized() {
-        //Regions.register(new NetherRegion(Beryllium.EXPLORING.id("nether"), RegionType.NETHER, 4));
-
-        //SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.NETHER, Beryllium.MOD_ID, MaterialRules.sequence(
-        //        BONE_BLOCK
-        //));
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.END, Beryllium.MOD_ID, Beryllium.EXPLORING.createEndRule());
+        EndBiomeRegistry.registerHighlandsBiome(Beryllium.EXPLORING.CORRUPTED_FOREST, 3);
     }
 }

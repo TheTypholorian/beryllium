@@ -122,6 +122,7 @@ public class BerylliumClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.GERANIUMS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.VOID_FIRE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.POINTED_BONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Beryllium.EXPLORING.CONGEALED_VOID, RenderLayer.getTranslucent());
         WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;
 
@@ -156,43 +157,6 @@ public class BerylliumClient implements ClientModInitializer {
 
             return true;
         });
-        /*
-        try {
-            File dir = new File("C:/Users/Evan/IdeaProjects/beryllium/compass/");
-            for (File imgFile : Objects.requireNonNull(dir.listFiles((d, n) -> n.endsWith(".png")))) {
-                BufferedImage img = ImageIO.read(imgFile);
-                BufferedImage out = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-                for (int x = 0; x < img.getWidth(); x++) {
-                    for (int y = 0; y < img.getHeight(); y++) {
-                        int src = img.getRGB(x, y);
-
-                        if (src != 0) {
-                            int red = (src & 0xFF0000) >> 16;
-                            int rgb = new Color(red, red, red).getRGB();
-                            out.setRGB(x, y, rgb);
-                        }
-                    }
-                }
-                File outFile = new File(imgFile.getParentFile().toString() + "/compass/" + imgFile.getName().substring("compass_".length()));
-                Files.createDirectories(outFile.toPath());
-                ImageIO.write(out, "PNG", outFile);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-         */
-        /*
-                                    color = switch (color) {
-                                case 0xFFFFFFFF -> 0xFFB6C3FB;
-                                case 0xFFD8D8D8 -> 0xFF8299FC;
-                                case 0xFFA8A8A8 -> 0xFF567CE7;
-                                case 0xFF828282 -> 0xFF365AC1;
-                                case 0xFF5E5E5E, 0xFF646464 -> 0xFF314E9C;
-                                case 0xFF353535 -> 0xFF29418A;
-                                case 0xFF2F2F2F, 0xFF171718, 0xFF4D4D4F -> 0xFF21346D;
-                                default -> color;
-                            };
-         */
     }
 
     public static void drawTooltip(DrawContext context, ItemStack stack, Arm arm, int x, int y, PlayerEntity player, TextRenderer renderer) {
