@@ -8,3 +8,4 @@ accessible method net/minecraft/world/GameRules$Rule deserialize (Ljava/lang/Str
 accessible method net/minecraft/util/collection/DefaultedList <init> (Ljava/util/List;Ljava/lang/Object;)V
 accessible field net/minecraft/world/gen/chunk/GenerationShapeConfig END Lnet/minecraft/world/gen/chunk/GenerationShapeConfig;
 accessible method net/minecraft/world/gen/densityfunction/DensityFunctions createEndNoiseRouter (Lnet/minecraft/registry/RegistryEntryLookup;)Lnet/minecraft/world/gen/noise/NoiseRouter;
+accessible field net/minecraft/server/MinecraftServer session Lnet/minecraft/world/level/storage/LevelStorage$Session;

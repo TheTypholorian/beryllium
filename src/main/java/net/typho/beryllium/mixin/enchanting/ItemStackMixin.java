@@ -1,14 +1,15 @@
 package net.typho.beryllium.mixin.enchanting;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.AnvilScreen;
-import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
-import net.minecraft.client.gui.screen.ingame.GrindstoneScreen;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.screen.AnvilScreenHandler;
+import net.minecraft.screen.EnchantmentScreenHandler;
+import net.minecraft.screen.GrindstoneScreenHandler;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.typho.beryllium.Beryllium;
@@ -32,11 +33,10 @@ public abstract class ItemStackMixin {
                     ordinal = 4
             )
     )
+    @Environment(EnvType.CLIENT)
     private void appendTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> text) {
-        if (Beryllium.CONFIG.enchanting.capacity) {
-            MinecraftClient client = MinecraftClient.getInstance();
-
-            if (client.currentScreen instanceof EnchantmentScreen || client.currentScreen instanceof AnvilScreen || client.currentScreen instanceof GrindstoneScreen) {
+        if (Beryllium.CONFIG.enchanting.capacity && player != null) {
+            if (player.currentScreenHandler instanceof EnchantmentScreenHandler || player.currentScreenHandler instanceof AnvilScreenHandler || player.currentScreenHandler instanceof GrindstoneScreenHandler) {
                 ItemStack stack = (ItemStack) (Object) this;
 
                 if (stack.getItem().getEnchantability() != 0) {

@@ -228,7 +228,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                             }
 
-                            catalystSlot.decrementUnlessCreative(Enchanting.getEnchantmentCatalyst(enchant, level).getCount(), player);
+                            catalystSlot.decrementUnlessCreative(Enchanting.getCatalyst(enchant, level).getCount(), player);
                             if (catalystSlot.isEmpty()) {
                                 this.inventory.setStack(2, ItemStack.EMPTY);
                             }

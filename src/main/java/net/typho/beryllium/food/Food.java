@@ -4,7 +4,7 @@ import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
-import net.typho.beryllium.Constructor;
+import net.typho.beryllium.util.Constructor;
 
 public class Food implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("food");

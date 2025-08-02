@@ -1,4 +1,4 @@
-package net.typho.beryllium;
+package net.typho.beryllium.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,14 +18,16 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.gen.feature.Feature;
-import net.typho.beryllium.util.Identifierifier;
+import net.typho.beryllium.Beryllium;
 
 import java.util.function.UnaryOperator;
 
-import static net.typho.beryllium.Beryllium.MOD_ID;
-
 public class Constructor implements Identifierifier {
     public final String name;
+
+    public Constructor() {
+        this(null);
+    }
 
     public Constructor(String name) {
         this.name = name;
@@ -33,7 +35,7 @@ public class Constructor implements Identifierifier {
 
     @Override
     public Identifier id(String name) {
-        return Identifier.of(MOD_ID, this.name + "/" + name);
+        return Identifier.of(Beryllium.MOD_ID, this.name == null ? name : this.name + "/" + name);
     }
 
     public Item item(String id, Item item) {

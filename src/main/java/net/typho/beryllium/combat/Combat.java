@@ -22,7 +22,7 @@ import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Constructor;
+import net.typho.beryllium.util.Constructor;
 import org.jetbrains.annotations.Nullable;
 
 public class Combat implements ModInitializer {

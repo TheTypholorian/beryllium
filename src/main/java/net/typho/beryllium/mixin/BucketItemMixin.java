@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.food;
+package net.typho.beryllium.mixin;
 
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;

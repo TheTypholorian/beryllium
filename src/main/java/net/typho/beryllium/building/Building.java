@@ -4,7 +4,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
@@ -20,8 +19,11 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.Constructor;
-import net.typho.beryllium.building.kiln.*;
+import net.typho.beryllium.building.kiln.KilnBlock;
+import net.typho.beryllium.building.kiln.KilnEntity;
+import net.typho.beryllium.building.kiln.KilnRecipe;
+import net.typho.beryllium.building.kiln.KilnScreenHandler;
+import net.typho.beryllium.util.Constructor;
 
 public class Building implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("building");
@@ -98,6 +100,5 @@ public class Building implements ModInitializer {
                             SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL)
                     );
                 });
-        HandledScreens.register(KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
     }
 }

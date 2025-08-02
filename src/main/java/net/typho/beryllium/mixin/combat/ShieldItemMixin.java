@@ -38,7 +38,7 @@ public abstract class ShieldItemMixin extends Item {
 
         float d = Combat.shieldDurability(stack);
 
-        if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
             return super.isItemBarVisible(stack);
         }
 
@@ -53,7 +53,7 @@ public abstract class ShieldItemMixin extends Item {
 
         float d = Combat.shieldDurability(stack);
 
-        if (!Beryllium.CONFIG.durabilityRemoval && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
             return super.getItemBarColor(stack);
         }
 
@@ -68,7 +68,7 @@ public abstract class ShieldItemMixin extends Item {
 
         float durability = Beryllium.CONFIG.combat.shieldMaxDurability - stack.getComponents().getOrDefault(Combat.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
 
-        if (!Beryllium.CONFIG.durabilityRemoval && durability <= 0) {
+        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && durability <= 0) {
             return super.getItemBarColor(stack);
         }
 

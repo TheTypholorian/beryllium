@@ -6,6 +6,7 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -14,6 +15,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
@@ -33,10 +35,15 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.biome.GrassColors;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.FillingWandItem;
+import net.typho.beryllium.building.kiln.KilnScreen;
 import net.typho.beryllium.combat.*;
+import net.typho.beryllium.config.SyncServerConfigS2C;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.exploring.MetalDetectorItem;
+import net.typho.beryllium.redstone.GoldHopperScreen;
+import net.typho.beryllium.redstone.Redstone;
 import org.joml.Vector2i;
 
 import java.awt.*;
@@ -155,6 +162,9 @@ public class BerylliumClient implements ClientModInitializer {
 
             return true;
         });
+        ClientPlayNetworking.registerGlobalReceiver(SyncServerConfigS2C.ID, (payload, context) -> Beryllium.SERVER_CONFIG = payload.config());
+        HandledScreens.register(Redstone.GOLD_HOPPER_SCREEN_HANDLER_TYPE, GoldHopperScreen::new);
+        HandledScreens.register(Building.KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
     }
 
     public static void drawTooltip(DrawContext context, ItemStack stack, Arm arm, int x, int y, PlayerEntity player, TextRenderer renderer) {

@@ -1,29 +1,74 @@
 package net.typho.beryllium;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
-import me.fzzyhmstrs.fzzy_config.config.Config;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.combat.Combat;
-import net.typho.beryllium.enchanting.Enchanting;
-import net.typho.beryllium.exploring.Exploring;
-import net.typho.beryllium.food.Food;
-import net.typho.beryllium.redstone.Redstone;
+import net.typho.beryllium.config.BerylliumConfig;
+import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.SyncServerConfigS2C;
+import net.typho.beryllium.util.Constructor;
 
-public class Beryllium {
+public class Beryllium implements ModInitializer {
     public static final String MOD_ID = "beryllium";
+    public static final Constructor CONSTRUCTOR = new Constructor();
+
+    public static final Identifier SYNC_SERVER_CONFIG_ID = CONSTRUCTOR.id("sync_server_config");
 
     public static final BerylliumConfig CONFIG = ConfigApiJava.registerAndLoadConfig(BerylliumConfig::new);
+    public static ServerConfig SERVER_CONFIG = new ServerConfig();
 
-    public static class BerylliumConfig extends Config {
-        public Combat.Config combat = new Combat.Config();
-        public Enchanting.Config enchanting = new Enchanting.Config();
-        public Exploring.Config exploring = new Exploring.Config();
-        public Food.Config food = new Food.Config();
-        public Redstone.Config redstone = new Redstone.Config();
-        public boolean durabilityRemoval = true;
+    @Override
+    public void onInitialize() {
+        PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.CODEC);
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new SyncServerConfigS2C()));
+        ArgumentTypeRegistry.registerArgumentType(CONSTRUCTOR.id("config_key"), ServerConfig.KeyArgumentType.class, SERVER_CONFIG.new KeyArgumentSerializer());
+        CommandRegistrationCallback.EVENT.register((dispatcher, registries, environment) -> {
+            dispatcher.register(
+                    CommandManager.literal(MOD_ID)
+                            .executes(context -> {
+                                context.getSource().sendFeedback(() -> Text.literal("Beryllium v" + FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata().getVersion()), false);
+                                return 1;
+                            })
+                            .then(
+                                    CommandManager.literal("config")
+                                            .executes(context -> {
+                                                context.getSource().sendFeedback(() -> SERVER_CONFIG.print(), false);
+                                                return 1;
+                                            })
+                                            .then(
+                                                    LiteralArgumentBuilder.<ServerCommandSource>literal("get")
+                                                            .then(
+                                                                    CommandManager.argument("key", SERVER_CONFIG.keyArgumentType())
+                                                                            .executes(context -> {
+                                                                                String key = context.getArgument("key", String.class);
+                                                                                ServerConfig.Property<?> property = SERVER_CONFIG.properties.get(key);
 
-        public BerylliumConfig() {
-            super(Identifier.of(MOD_ID, "common"));
-        }
+                                                                                if (property == null) {
+                                                                                    context.getSource().sendFeedback(() -> Text.literal("No config value " + key).styled(style -> style.withColor(Formatting.RED)), false);
+                                                                                    return 0;
+                                                                                } else {
+                                                                                    context.getSource().sendFeedback(() -> property.display().copy().append(" = ").append(property.get().toString()), false);
+                                                                                    return 1;
+                                                                                }
+                                                                            })
+                                                            )
+                                            )
+                                            .then(
+                                                    SERVER_CONFIG.setCommandBuilder()
+                                            )
+                                            .build()
+                            )
+            );
+        });
     }
 }

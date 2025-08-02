@@ -2,7 +2,6 @@ package net.typho.beryllium.mixin;
 
 import net.minecraft.item.ElytraItem;
 import net.minecraft.item.ItemStack;
-import net.typho.beryllium.Beryllium;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,10 +15,8 @@ public class ElytraItemMixin {
             cancellable = true
     )
     private static void isUsable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if (Beryllium.CONFIG.durabilityRemoval) {
-            if (!stack.isDamageable()) {
-                cir.setReturnValue(true);
-            }
+        if (!stack.isDamageable()) {
+            cir.setReturnValue(true);
         }
     }
 }

@@ -22,6 +22,7 @@
       "net.typho.beryllium.client.BerylliumClient"
     ],
     "main": [
+      "net.typho.beryllium.Beryllium",
       "net.typho.beryllium.building.Building",
       "net.typho.beryllium.combat.Combat",
       "net.typho.beryllium.enchanting.Enchanting",

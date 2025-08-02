@@ -12,8 +12,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
-import net.typho.beryllium.enchanting.BalancedEnchantment;
 import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.enchanting.EnchantmentInfo;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -107,7 +107,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 cost += level;
             }
 
-            cost += BalancedEnchantment.cast(enchant.value().definition()).getCapacity();
+            cost += EnchantmentInfo.get(enchant.getKey().orElseThrow().getValue()).capacity();
 
             builder.add(enchant, level);
         }

@@ -147,7 +147,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                 if (this.isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0 && optional != null) {
                     List<Text> list = Lists.newArrayList();
                     list.add(Text.translatable("container.enchant.clue", Enchantment.getName(optional.get(), l)).formatted(Formatting.WHITE));
-                    ItemStack catalyst = Enchanting.getEnchantmentCatalyst(optional.get(), l);
+                    ItemStack catalyst = Enchanting.getCatalyst(optional.get(), l);
                     if (!bl) {
                         list.add(ScreenTexts.EMPTY);
                         if (this.client.player.experienceLevel < k) {

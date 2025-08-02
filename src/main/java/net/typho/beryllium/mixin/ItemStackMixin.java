@@ -21,7 +21,7 @@ public abstract class ItemStackMixin {
             cancellable = true
     )
     private void isDamageable(CallbackInfoReturnable<Boolean> cir) {
-        if (Beryllium.CONFIG.durabilityRemoval || getItem() instanceof ShieldItem) {
+        if (Beryllium.SERVER_CONFIG.durabilityRemoval.get() || getItem() instanceof ShieldItem) {
             cir.setReturnValue(false);
         }
     }

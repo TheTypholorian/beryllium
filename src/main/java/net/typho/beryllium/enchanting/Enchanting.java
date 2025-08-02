@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.Constructor;
+import net.typho.beryllium.util.Constructor;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -87,7 +87,8 @@ public class Enchanting implements ModInitializer {
     }
 
     public static int getEnchantmentCapacity(Enchantment enchant) {
-        return BalancedEnchantment.cast(enchant.definition()).getCapacity();
+        // TODO
+        return 2;//BalancedEnchantment.cast(enchant.definition()).getCapacity();
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
@@ -110,23 +111,24 @@ public class Enchanting implements ModInitializer {
         return getUsedEnchCapacity(enchantments.get()) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
     }
 
+    public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
+        if (!Beryllium.CONFIG.enchanting.catalysts) {
+            return ItemStack.EMPTY;
+        }
+
+        //BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
+        //return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
+        return EnchantmentInfo.get(enchant.getKey().orElseThrow().getValue()).catalyst(level);
+    }
+
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
         if (player.getAbilities().creativeMode || !Beryllium.CONFIG.enchanting.catalysts) {
             return true;
         }
 
-        ItemStack req = getEnchantmentCatalyst(enchant, level);
+        ItemStack req = getCatalyst(enchant, level);
 
         return source.getItem() == req.getItem() && source.getCount() >= req.getCount();
-    }
-
-    public static ItemStack getEnchantmentCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        if (!Beryllium.CONFIG.enchanting.catalysts) {
-            return ItemStack.EMPTY;
-        }
-
-        BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
-        return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
     }
 
     @Override

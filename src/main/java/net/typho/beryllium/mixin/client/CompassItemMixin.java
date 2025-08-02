@@ -1,7 +1,5 @@
 package net.typho.beryllium.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.CompassItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,10 +24,8 @@ public abstract class CompassItemMixin extends Item {
         super.appendTooltip(stack, context, tooltip, type);
 
         if (BerylliumClient.CONFIG.compassCoords) {
-            ClientPlayerEntity player = MinecraftClient.getInstance().player;
-
-            if (player != null && player.getInventory().contains(stack)) {
-                BlockPos playerPos = player.getBlockPos();
+            if (stack.getHolder() != null) {
+                BlockPos playerPos = stack.getHolder().getBlockPos();
                 tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
             }
         }

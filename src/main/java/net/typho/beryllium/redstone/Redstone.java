@@ -6,10 +6,9 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandlerType;
-import net.typho.beryllium.Constructor;
+import net.typho.beryllium.util.Constructor;
 
 public class Redstone implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("redstone");
@@ -20,7 +19,6 @@ public class Redstone implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        HandledScreens.register(GOLD_HOPPER_SCREEN_HANDLER_TYPE, GoldHopperScreen::new);
     }
 
     public static class Config extends ConfigSection {

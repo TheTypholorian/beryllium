@@ -123,5 +123,6 @@
   "beryllium.common.exploring.structures.spawnInVillage.prefix": "Redirects the spawn point to the nearest village",
 
   "beryllium.client": "Client",
-  "createWorld.tab.beryllium.title": "Beryllium"
+  "createWorld.tab.beryllium.title": "Beryllium",
+  "config.beryllium.title": "Beryllium Config:"
 }
