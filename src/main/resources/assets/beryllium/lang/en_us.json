@@ -116,15 +116,13 @@
   "beryllium.common.exploring.metalDetector.needleX.prefix": "Cubic radius in X/Z axes which the metal detector needle points at",
   "beryllium.common.exploring.metalDetector.needleY": "Needle Y",
   "beryllium.common.exploring.metalDetector.needleY.prefix": "Cubic radius in Y axis which the metal detector needle points at",
-  "beryllium.common.exploring.structures": "Structures",
-  "beryllium.common.exploring.structures.junglePyramid": "Jungle Temple",
-  "beryllium.common.exploring.structures.junglePyramid.prefix": "Custom version of the Jungle Temple",
-  "beryllium.common.exploring.structures.desertPyramid": "Desert Pyramid",
-  "beryllium.common.exploring.structures.desertPyramid.prefix": "Custom version of the Desert Pyramid",
   "beryllium.common.exploring.structures.spawnInVillage": "Spawn in Village",
   "beryllium.common.exploring.structures.spawnInVillage.prefix": "Redirects the spawn point to the nearest village",
 
   "beryllium.client": "Client",
   "createWorld.tab.beryllium.title": "Beryllium",
-  "config.beryllium.title": "Beryllium Config"
+  "config.beryllium.title": "Beryllium Config",
+
+  "pack.name.beryllium.looting_axes": "Looting Axes",
+  "pack.description.beryllium.looting_axes": "Put sword-only enchantments on axes"
 }

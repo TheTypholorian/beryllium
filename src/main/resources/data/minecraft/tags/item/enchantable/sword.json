@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:axes",
     "#beryllium:combat/glaives",
     "#beryllium:combat/scythes"
   ]

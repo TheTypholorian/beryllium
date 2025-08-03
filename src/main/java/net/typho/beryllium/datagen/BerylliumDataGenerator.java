@@ -64,15 +64,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void buildRegistry(RegistryBuilder builder) {
-        builder.addRegistry(RegistryKeys.ENCHANTMENT, context -> {
-            /*
-            context.register(Enchanting.ENCUMBERED, new Enchantment(
-                    Text.translatable("enchantment.beryllium.combat.encumbered"),
-                    new Enchantment.Definition(
-                    )
-            ));
-             */
-        });
         builder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, context -> {
             context.register(Exploring.SWAMP_ALGAE_CONFIGURED,
                     new ConfiguredFeature<>(

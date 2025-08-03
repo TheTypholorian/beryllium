@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -68,5 +70,6 @@ public class Beryllium implements ModInitializer {
                             )
             );
         });
+        ResourceManagerHelper.registerBuiltinResourcePack(CONSTRUCTOR.id("looting_axes"), FabricLoader.getInstance().getModContainer(MOD_ID).get(), Text.translatable("pack.name.beryllium.looting_axes"), ResourcePackActivationType.DEFAULT_ENABLED);
     }
 }

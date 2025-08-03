@@ -35,7 +35,7 @@ public class Constructor implements Identifierifier {
 
     @Override
     public Identifier id(String name) {
-        return Identifier.of(Beryllium.MOD_ID, this.name == null ? name : this.name + "/" + name);
+        return Identifier.of(Beryllium.MOD_ID, this.name == null ? name : (this.name + "/" + name));
     }
 
     public Item item(String id, Item item) {
