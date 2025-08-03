@@ -124,5 +124,7 @@
   "config.beryllium.title": "Beryllium Config",
 
   "pack.name.beryllium.looting_axes": "Looting Axes",
-  "pack.description.beryllium.looting_axes": "Put sword-only enchantments on axes"
+  "pack.description.beryllium.looting_axes": "Put sword-only enchantments on axes",
+  "pack.name.beryllium.no_armor": "No Armor",
+  "pack.description.beryllium.no_armor": "Removes all crafting recipes for armor"
 }

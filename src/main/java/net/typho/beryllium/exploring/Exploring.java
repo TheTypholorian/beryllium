@@ -4,10 +4,14 @@ import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -15,6 +19,10 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.item.CompassAnglePredicateProvider;
+import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.component.ComponentType;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -44,6 +52,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.TradeOffers;
@@ -52,6 +61,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.BiomeParticleConfig;
+import net.minecraft.world.biome.GrassColors;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.BasaltColumnsFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -61,6 +71,7 @@ import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.surfacebuilder.MaterialRules;
 import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.client.FireflyFactory;
 import net.typho.beryllium.combat.ReelingComponent;
 import net.typho.beryllium.util.Constructor;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
@@ -71,9 +82,10 @@ import terrablender.api.EndBiomeRegistry;
 import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
+import java.awt.*;
 import java.util.Optional;
 
-public class Exploring implements ModInitializer, EntityComponentInitializer, TerraBlenderApi {
+public class Exploring implements ModInitializer, ClientModInitializer, EntityComponentInitializer, TerraBlenderApi {
     public static final Constructor CONSTRUCTOR = new Constructor("exploring");
 
     public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, CONSTRUCTOR.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
@@ -385,6 +397,56 @@ public class Exploring implements ModInitializer, EntityComponentInitializer, Te
                 }
             }
         });
+    }
+
+    @Override
+    public void onInitializeClient() {
+        ModelPredicateProviderRegistry.register(Exploring.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
+        ParticleFactoryRegistry.getInstance().register(
+                Exploring.FIREFLY_PARTICLE,
+                FireflyFactory::new
+        );
+        ColorProviderRegistry.ITEM.register((stack, index) -> {
+            if (index == 1) {
+                DyeColor color = stack.get(Exploring.COMPASS_NEEDLE_COMPONENT);
+
+                if (color == null) {
+                    color = DyeColor.RED;
+                }
+
+                return color.getSignColor() | 0xFF000000;
+            }
+
+            return -1;
+        }, Items.COMPASS);
+        ColorProviderRegistry.ITEM.register((stack, index) -> {
+            if (index == 1) {
+                float hue = (System.currentTimeMillis() % 10000) / 5000f - 1;
+                float sat = (System.currentTimeMillis() % 7000) / 3500f - 1;
+
+                hue = hue * hue;
+                sat = sat * sat;
+
+                return Color.HSBtoRGB(Math.abs(hue), sat / 4 + 0.5f, 1);
+            }
+
+            return -1;
+        }, Exploring.EXODINE_INGOT);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
+            if (index != 0) {
+                return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
+            } else {
+                return -1;
+            }
+        }, Exploring.DAFFODILS, Exploring.SCILLA, Exploring.GERANIUMS);
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.FIREFLY_BOTTLE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.ALGAE_BLOCK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.DAFFODILS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.SCILLA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.GERANIUMS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.VOID_FIRE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.POINTED_BONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.CONGEALED_VOID, RenderLayer.getTranslucent());
     }
 
     public static MaterialRules.MaterialRule createEndRule() {

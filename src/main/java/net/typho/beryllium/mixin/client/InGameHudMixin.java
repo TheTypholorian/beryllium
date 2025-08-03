@@ -5,12 +5,16 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.util.Arm;
 import net.typho.beryllium.client.BerylliumClient;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2i;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -36,13 +40,13 @@ public abstract class InGameHudMixin {
                 ItemStack main = player.getMainHandStack();
 
                 if (!main.isEmpty()) {
-                    BerylliumClient.drawTooltip(context, main, Arm.RIGHT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.RIGHT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
+                    drawTooltip(context, main, Arm.RIGHT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.RIGHT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
                 }
 
                 ItemStack off = player.getOffHandStack();
 
                 if (!off.isEmpty()) {
-                    BerylliumClient.drawTooltip(context, off, Arm.LEFT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.LEFT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
+                    drawTooltip(context, off, Arm.LEFT, context.getScaledWindowWidth() / 2 + (player.getMainArm() == Arm.LEFT ? 127 : -127), context.getScaledWindowHeight(), player, getTextRenderer());
                 }
             }
         }
@@ -57,5 +61,22 @@ public abstract class InGameHudMixin {
         if (BerylliumClient.CONFIG.hudItemTooltips) {
             ci.cancel();
         }
+    }
+
+    @Unique
+    private static void drawTooltip(DrawContext context, ItemStack stack, Arm arm, int x, int y, PlayerEntity player, TextRenderer renderer) {
+        context.drawTooltip(
+                renderer,
+                stack.getTooltip(Item.TooltipContext.DEFAULT, player, TooltipType.BASIC)
+                        .stream()
+                        .flatMap(t -> renderer.wrapLines(t, 160).stream())
+                        .toList(),
+                (screenWidth, screenHeight, x1, y1, width1, height1) -> new Vector2i(
+                        player.getMainArm() != arm ? x1 - width1 : x1,
+                        y1 - height1 - 8
+                ),
+                x,
+                y
+        );
     }
 }

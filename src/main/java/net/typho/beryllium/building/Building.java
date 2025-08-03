@@ -1,13 +1,23 @@
 package net.typho.beryllium.building;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.CookingRecipeSerializer;
@@ -18,14 +28,16 @@ import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.building.kiln.KilnBlock;
-import net.typho.beryllium.building.kiln.KilnEntity;
-import net.typho.beryllium.building.kiln.KilnRecipe;
-import net.typho.beryllium.building.kiln.KilnScreenHandler;
+import net.minecraft.util.math.Vec3d;
+import net.typho.beryllium.building.kiln.*;
 import net.typho.beryllium.util.Constructor;
 
-public class Building implements ModInitializer {
+import java.util.Objects;
+
+public class Building implements ModInitializer, ClientModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("building");
 
     public static final RecipeType<KilnRecipe> KILN_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, CONSTRUCTOR.id("firing"), new RecipeType<>() {
@@ -100,5 +112,44 @@ public class Building implements ModInitializer {
                             SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL)
                     );
                 });
+    }
+
+    @Override
+    public void onInitializeClient() {
+        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
+            PlayerEntity player = MinecraftClient.getInstance().player;
+
+            if (player != null) {
+                ItemStack held = player.getMainHandStack();
+
+                if (held.getItem() instanceof FillingWandItem && hit instanceof BlockHitResult blockHit) {
+                    MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
+                    Vec3d cam = context.camera().getPos();
+
+                    matrices.push();
+                    matrices.translate(-cam.x, -cam.y, -cam.z);
+                    RenderSystem.disableDepthTest();
+
+                    BlockBox box = FillingWandItem.getSelection(player, held, blockHit);
+
+                    WorldRenderer.drawBox(
+                            matrices,
+                            Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
+                            box.getMinX(), box.getMinY(), box.getMinZ(),
+                            box.getMaxX() + 1, box.getMaxY() + 1, box.getMaxZ() + 1,
+                            1, 1, 1, 1,
+                            0.5f, 0.5f, 0.5f
+                    );
+
+                    RenderSystem.enableDepthTest();
+                    matrices.pop();
+
+                    return false;
+                }
+            }
+
+            return true;
+        });
+        HandledScreens.register(Building.KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
     }
 }

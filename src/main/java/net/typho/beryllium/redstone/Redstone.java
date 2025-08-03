@@ -1,16 +1,18 @@
 package net.typho.beryllium.redstone;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandlerType;
 import net.typho.beryllium.util.Constructor;
 
-public class Redstone implements ModInitializer {
+public class Redstone implements ModInitializer, ClientModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("redstone");
 
     public static final Block GOLD_HOPPER_BLOCK = CONSTRUCTOR.blockWithItem("gold_hopper", new GoldHopperBlock(AbstractBlock.Settings.copy(Blocks.HOPPER)), new Item.Settings());
@@ -19,6 +21,11 @@ public class Redstone implements ModInitializer {
 
     @Override
     public void onInitialize() {
+    }
+
+    @Override
+    public void onInitializeClient() {
+        HandledScreens.register(Redstone.GOLD_HOPPER_SCREEN_HANDLER_TYPE, GoldHopperScreen::new);
     }
 
     public static class Config extends ConfigSection {

@@ -23,7 +23,7 @@ public class EndCrystalProjectileEntityRenderer extends EntityRenderer<EndCrysta
     private final ModelPart core;
     private final ModelPart frame;
 
-    protected EndCrystalProjectileEntityRenderer(EntityRendererFactory.Context context) {
+    public EndCrystalProjectileEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
         this.shadowRadius = 0.5F;
         ModelPart modelPart = context.getPart(EntityModelLayers.END_CRYSTAL);
