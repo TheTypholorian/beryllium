@@ -13,9 +13,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.config.BerylliumConfig;
-import net.typho.beryllium.config.ServerConfig;
-import net.typho.beryllium.config.SyncServerConfigS2C;
+import net.typho.beryllium.config.*;
 import net.typho.beryllium.util.Constructor;
 
 public class Beryllium implements ModInitializer {
@@ -31,7 +29,7 @@ public class Beryllium implements ModInitializer {
     public void onInitialize() {
         PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> sender.sendPacket(new SyncServerConfigS2C()));
-        ArgumentTypeRegistry.registerArgumentType(CONSTRUCTOR.id("config_key"), ServerConfig.KeyArgumentType.class, SERVER_CONFIG.new KeyArgumentSerializer());
+        ArgumentTypeRegistry.registerArgumentType(CONSTRUCTOR.id("config_key"), KeyArgumentType.class, new KeyArgumentSerializer(SERVER_CONFIG));
         CommandRegistrationCallback.EVENT.register((dispatcher, registries, environment) -> {
             dispatcher.register(
                     CommandManager.literal(MOD_ID)
@@ -51,7 +49,7 @@ public class Beryllium implements ModInitializer {
                                                                     CommandManager.argument("key", SERVER_CONFIG.keyArgumentType())
                                                                             .executes(context -> {
                                                                                 String key = context.getArgument("key", String.class);
-                                                                                ServerConfig.Property<?> property = SERVER_CONFIG.properties.get(key);
+                                                                                Property<?> property = SERVER_CONFIG.properties.get(key);
 
                                                                                 if (property == null) {
                                                                                     context.getSource().sendFeedback(() -> Text.literal("No config value " + key).styled(style -> style.withColor(Formatting.RED)), false);

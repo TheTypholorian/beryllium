@@ -7,6 +7,6 @@ import net.typho.beryllium.Beryllium;
 
 public interface SweepingItem {
     default float sweep(PlayerEntity player, ItemStack stack) {
-        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) * Beryllium.CONFIG.combat.sweepMarginMultiplier;
+        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) * Beryllium.SERVER_CONFIG.sweepMarginMultiplier.get();
     }
 }

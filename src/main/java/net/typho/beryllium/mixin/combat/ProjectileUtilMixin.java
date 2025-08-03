@@ -31,7 +31,7 @@ public class ProjectileUtilMixin {
         Vec3d vec3d = null;
         float margin = 0;
 
-        if (Beryllium.CONFIG.combat.sweepingMargin && entity instanceof PlayerEntity player) {
+        if (Beryllium.SERVER_CONFIG.sweepingMargin.get() && entity instanceof PlayerEntity player) {
             ItemStack held = player.getWeaponStack();
 
             if (held.getItem() instanceof SweepingItem sweep) {

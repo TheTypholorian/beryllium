@@ -13,7 +13,7 @@ public class EnderPearlItemMixin {
             constant = @Constant(intValue = 20)
     )
     private int getCooldown(int original) {
-        return Beryllium.CONFIG.combat.enderPearlCooldown;
+        return Beryllium.SERVER_CONFIG.enderPearlCooldown.get();
     }
 
     @ModifyConstant(
@@ -21,6 +21,6 @@ public class EnderPearlItemMixin {
             constant = @Constant(floatValue = 1.5f)
     )
     private float getVelocity(float constant) {
-        return Beryllium.CONFIG.combat.enderPearlSpeed;
+        return Beryllium.SERVER_CONFIG.enderPearlSpeed.get();
     }
 }

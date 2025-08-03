@@ -20,6 +20,6 @@ public class ThrowablePotionItemMixin {
             at = @At("HEAD")
     )
     private void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        user.getItemCooldownManager().set((Item) (Object) this, Beryllium.CONFIG.combat.splashPotionCooldown);
+        user.getItemCooldownManager().set((Item) (Object) this, Beryllium.SERVER_CONFIG.splashPotionCooldown.get());
     }
 }

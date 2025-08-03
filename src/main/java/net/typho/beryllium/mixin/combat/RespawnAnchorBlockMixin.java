@@ -29,7 +29,7 @@ public class RespawnAnchorBlockMixin {
             cancellable = true
     )
     private void onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
-        if (Beryllium.CONFIG.combat.respawnAnchorsDontExplode && !isNether(world)) {
+        if (Beryllium.SERVER_CONFIG.respawnAnchorsDontExplode.get() && !isNether(world)) {
             cir.setReturnValue(ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION);
         }
     }

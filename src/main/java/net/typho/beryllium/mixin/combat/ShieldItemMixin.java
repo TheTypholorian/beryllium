@@ -20,11 +20,11 @@ public abstract class ShieldItemMixin extends Item {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         if (user instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(stack.getItem(), Beryllium.CONFIG.combat.shieldLowerCooldown);
+            player.getItemCooldownManager().set(stack.getItem(), Beryllium.SERVER_CONFIG.shieldLowerCooldown.get());
         }
 
-        if (Beryllium.CONFIG.combat.shieldDurability) {
-            stack.set(Combat.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
+        if (Beryllium.SERVER_CONFIG.shieldDurability.get()) {
+            stack.set(Combat.SHIELD_DURABILITY, (float) Beryllium.SERVER_CONFIG.shieldMaxDurability.get());
         }
 
         super.onStoppedUsing(stack, world, user, remainingUseTicks);
@@ -32,46 +32,46 @@ public abstract class ShieldItemMixin extends Item {
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        if (!Beryllium.CONFIG.combat.shieldDurability) {
+        if (!Beryllium.SERVER_CONFIG.shieldDurability.get()) {
             return super.isItemBarVisible(stack);
         }
 
         float d = Combat.shieldDurability(stack);
 
-        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.SERVER_CONFIG.shieldMaxDurability.get()) {
             return super.isItemBarVisible(stack);
         }
 
-        return d < Beryllium.CONFIG.combat.shieldMaxDurability;
+        return d < Beryllium.SERVER_CONFIG.shieldMaxDurability.get();
     }
 
     @Override
     public int getItemBarColor(ItemStack stack) {
-        if (!Beryllium.CONFIG.combat.shieldDurability) {
+        if (!Beryllium.SERVER_CONFIG.shieldDurability.get()) {
             return super.getItemBarColor(stack);
         }
 
         float d = Combat.shieldDurability(stack);
 
-        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.CONFIG.combat.shieldMaxDurability) {
+        if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && d >= Beryllium.SERVER_CONFIG.shieldMaxDurability.get()) {
             return super.getItemBarColor(stack);
         }
 
-        return MathHelper.hsvToRgb(Math.max(0, d / (float) Beryllium.CONFIG.combat.shieldMaxDurability) / 3, 1, 1);
+        return MathHelper.hsvToRgb(Math.max(0, d / (float) Beryllium.SERVER_CONFIG.shieldMaxDurability.get()) / 3, 1, 1);
     }
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        if (!Beryllium.CONFIG.combat.shieldDurability) {
+        if (!Beryllium.SERVER_CONFIG.shieldDurability.get()) {
             return super.getItemBarStep(stack);
         }
 
-        float durability = Beryllium.CONFIG.combat.shieldMaxDurability - stack.getComponents().getOrDefault(Combat.SHIELD_DURABILITY, (float) Beryllium.CONFIG.combat.shieldMaxDurability);
+        float durability = Beryllium.SERVER_CONFIG.shieldMaxDurability.get() - stack.getComponents().getOrDefault(Combat.SHIELD_DURABILITY, (float) Beryllium.SERVER_CONFIG.shieldMaxDurability.get());
 
         if (!Beryllium.SERVER_CONFIG.durabilityRemoval.get() && durability <= 0) {
             return super.getItemBarColor(stack);
         }
 
-        return MathHelper.clamp(Math.round(13f - durability * 13f / Beryllium.CONFIG.combat.shieldMaxDurability), 0, 13);
+        return MathHelper.clamp(Math.round(13f - durability * 13f / Beryllium.SERVER_CONFIG.shieldMaxDurability.get()), 0, 13);
     }
 }

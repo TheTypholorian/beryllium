@@ -89,7 +89,7 @@ public abstract class LivingEntityMixin {
         float durability = Combat.shieldDurability(shield) - amount;
 
         if (durability <= 0) {
-            durability = Beryllium.CONFIG.combat.shieldMaxDurability;
+            durability = Beryllium.SERVER_CONFIG.shieldMaxDurability.get();
 
             if ((Object) this instanceof PlayerEntity player) {
                 player.disableShield();
@@ -108,7 +108,7 @@ public abstract class LivingEntityMixin {
         float durability = Combat.shieldDurability(shield) - 1;
 
         if (durability <= 0) {
-            durability = Beryllium.CONFIG.combat.shieldMaxDurability;
+            durability = Beryllium.SERVER_CONFIG.shieldMaxDurability.get();
 
             if ((Object) this instanceof PlayerEntity player) {
                 player.disableShield();

@@ -165,6 +165,31 @@ public class BerylliumClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SyncServerConfigS2C.ID, (payload, context) -> Beryllium.SERVER_CONFIG = payload.config());
         HandledScreens.register(Redstone.GOLD_HOPPER_SCREEN_HANDLER_TYPE, GoldHopperScreen::new);
         HandledScreens.register(Building.KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
+        /*
+        ShaderEffectRenderCallback.EVENT.register(tickDelta -> {
+            RenderSystem.recordRenderCall(() -> {
+                ShaderProgram shader = RenderSystem.getShader();
+
+                if (shader != null) {
+                    int loc = GlUniform.getUniformLocation(shader.getGlRef(), "uUltraDark");
+
+                    if (loc >= 0) {
+                        GlUniform uniform = new GlUniform("uUltraDark", 0, 1, shader);
+                        shader.bind();
+                        uniform.set(1);
+                        uniform.upload();
+                        //System.out.println("binding loc " + loc);
+                    }
+
+                    GlUniform uniform = shader.getUniform("uUltraDark");
+
+                    if (uniform != null) {
+                        uniform.set(1);
+                    }
+                }
+            });
+        });
+         */
     }
 
     public static void drawTooltip(DrawContext context, ItemStack stack, Arm arm, int x, int y, PlayerEntity player, TextRenderer renderer) {

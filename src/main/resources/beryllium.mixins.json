@@ -57,9 +57,12 @@
   ],
   "client": [
     "PlayerEntityRendererMixin",
+    "client.ClientWorldMixin",
     "client.CreateWorldScreenMixin",
+    "client.GameRendererMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
+    "client.LightmapTextureManagerMixin",
     "client.ModelLoaderMixin",
     "combat.TridentEntityRendererMixin",
     "enchanting.EnchantmentScreenMixin"

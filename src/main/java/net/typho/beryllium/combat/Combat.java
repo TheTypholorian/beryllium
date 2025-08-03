@@ -1,6 +1,5 @@
 package net.typho.beryllium.combat;
 
-import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
@@ -122,7 +121,7 @@ public class Combat implements ModInitializer {
     public static final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
 
     public static float shieldDurability(ItemStack shield) {
-        return shield.getOrDefault(SHIELD_DURABILITY, Beryllium.CONFIG.combat.shieldMaxDurability).floatValue();
+        return shield.getOrDefault(SHIELD_DURABILITY, Beryllium.SERVER_CONFIG.shieldMaxDurability.get()).floatValue();
     }
 
     @Override
@@ -135,21 +134,5 @@ public class Combat implements ModInitializer {
                     entries.addAfter(Items.IRON_SWORD, IRON_GLAIVE, IRON_SCYTHE);
                     entries.addAfter(Items.GOLDEN_SWORD, GOLDEN_GLAIVE, GOLDEN_SCYTHE);
                 });
-    }
-
-    public static class Config extends ConfigSection {
-        public int enderPearlCooldown = 300;
-        public float enderPearlSpeed = 1;
-        public int endCrystalCooldown = 30;
-        public float endCrystalPower = 4;
-        public boolean maceRebalance = true;
-        public boolean sweepingMargin = true;
-        public float sweepMarginMultiplier = 0.05f;
-        public boolean crossbowEndCrystals = true;
-        public boolean respawnAnchorsDontExplode = true;
-        public boolean shieldDurability = true;
-        public int shieldMaxDurability = 30;
-        public int shieldLowerCooldown = 60;
-        public int splashPotionCooldown = 100;
     }
 }

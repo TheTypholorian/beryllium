@@ -1,25 +1,12 @@
 package net.typho.beryllium.config;
 
-import com.google.gson.JsonObject;
-import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
-import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.suggestion.Suggestions;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.serialization.Dynamic;
-import com.mojang.serialization.OptionalDynamic;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.serialize.ArgumentSerializer;
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.MinecraftServer;
@@ -28,10 +15,10 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.typho.beryllium.combat.Combat;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public class ServerConfig {
     public static final PacketCodec<ByteBuf, ServerConfig> PACKET_CODEC = new PacketCodec<>() {
@@ -46,7 +33,24 @@ public class ServerConfig {
         }
     };
     public final Map<String, Property<?>> properties = new LinkedHashMap<>();
-    public BooleanProperty durabilityRemoval = new BooleanProperty("durabilityRemoval", true);
+
+    public final IntProperty enderPearlCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "enderPearlCooldown", 300);
+    public final FloatProperty enderPearlSpeed = new FloatProperty(this, Combat.CONSTRUCTOR, "enderPearlSpeed", 1f);
+    public final IntProperty endCrystalCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "endCrystalCooldown", 30);
+    public final FloatProperty endCrystalPower = new FloatProperty(this, Combat.CONSTRUCTOR, "endCrystalPower", 4f);
+    public final BooleanProperty maceRebalance = new BooleanProperty(this, Combat.CONSTRUCTOR, "maceRebalance", true);
+    public final BooleanProperty sweepingMargin = new BooleanProperty(this, Combat.CONSTRUCTOR, "sweepingMargin", true);
+    public final FloatProperty sweepMarginMultiplier = new FloatProperty(this, Combat.CONSTRUCTOR, "sweepMarginMultiplier", 0.05f);
+    public final BooleanProperty crossbowEndCrystals = new BooleanProperty(this, Combat.CONSTRUCTOR, "crossbowEndCrystals", true);
+    public final BooleanProperty respawnAnchorsDontExplode = new BooleanProperty(this, Combat.CONSTRUCTOR, "respawnAnchorsDontExplode", true);
+    public final BooleanProperty shieldDurability = new BooleanProperty(this, Combat.CONSTRUCTOR, "shieldDurability", true);
+    public final IntProperty shieldMaxDurability = new IntProperty(this, Combat.CONSTRUCTOR, "shieldMaxDurability", 30);
+    public final IntProperty shieldLowerCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "shieldLowerCooldown", 60);
+    public final IntProperty splashPotionCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "splashPotionCooldown", 100);
+
+    public final BooleanProperty ultraDark = new BooleanProperty(this, "ultraDark", true);
+
+    public final BooleanProperty durabilityRemoval = new BooleanProperty(this, "durabilityRemoval", true);
 
     public ServerConfig() {
     }
@@ -98,7 +102,7 @@ public class ServerConfig {
     }
 
     public ArgumentType<String> keyArgumentType() {
-        return new KeyArgumentType();
+        return new KeyArgumentType(this);
     }
 
     public LiteralArgumentBuilder<ServerCommandSource> setCommandBuilder() {
@@ -121,124 +125,5 @@ public class ServerConfig {
         }
 
         return builder;
-    }
-
-    public class KeyArgumentType implements ArgumentType<String> {
-        @Override
-        public String parse(StringReader reader) throws CommandSyntaxException {
-            return reader.readString();
-        }
-
-        @Override
-        public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-            return CommandSource.suggestMatching(properties.keySet(), builder);
-        }
-    }
-
-    public class KeyArgumentSerializer implements ArgumentSerializer<KeyArgumentType, KeyArgumentSerializer.Properties> {
-        @Override
-        public void writePacket(Properties properties, PacketByteBuf buf) {
-        }
-
-        @Override
-        public Properties fromPacket(PacketByteBuf buf) {
-            return new Properties();
-        }
-
-        @Override
-        public void writeJson(Properties properties, JsonObject json) {
-        }
-
-        @Override
-        public Properties getArgumentTypeProperties(KeyArgumentType argumentType) {
-            return new Properties();
-        }
-
-        public final class Properties implements ArgumentSerializer.ArgumentTypeProperties<KeyArgumentType> {
-            public Properties() {
-            }
-
-            @Override
-            public KeyArgumentType createType(CommandRegistryAccess commandRegistryAccess) {
-                return new KeyArgumentType();
-            }
-
-            @Override
-            public ArgumentSerializer<KeyArgumentType, ?> getSerializer() {
-                return KeyArgumentSerializer.this;
-            }
-        }
-    }
-
-    public abstract class Property<O> {
-        public final String name;
-        public final ArgumentType<?> argumentType;
-        protected O value;
-
-        public Property(String name, ArgumentType<?> argumentType) {
-            this.name = name;
-            this.argumentType = argumentType;
-            properties.put(name, this);
-        }
-
-        public Property(String name, ArgumentType<?> argumentType, O value) {
-            this(name, argumentType);
-            this.value = value;
-        }
-
-        public O get() {
-            return value;
-        }
-
-        @SuppressWarnings("unchecked")
-        public void set(Object value) {
-            this.value = (O) value;
-        }
-
-        public String translationKey() {
-            return "config.beryllium." + name;
-        }
-
-        public Text display() {
-            return Text.translatable(translationKey());
-        }
-
-        public abstract void read(OptionalDynamic<?> dynamic);
-
-        public abstract void decode(ByteBuf buf);
-
-        public abstract NbtElement write(DynamicRegistryManager registries);
-
-        public abstract void encode(ByteBuf buf);
-    }
-
-    public class BooleanProperty extends Property<Boolean> {
-        public BooleanProperty(String name) {
-            super(name, BoolArgumentType.bool());
-        }
-
-        public BooleanProperty(String name, Boolean value) {
-            super(name, BoolArgumentType.bool(), value);
-        }
-
-        @Override
-        public void read(OptionalDynamic<?> dynamic) {
-            value = dynamic.asBoolean(value);
-        }
-
-        @Override
-        public void decode(ByteBuf buf) {
-            value = buf.readBoolean();
-        }
-
-        @Override
-        public NbtElement write(DynamicRegistryManager registries) {
-            return NbtByte.of(value);
-        }
-
-        @Override
-        public void encode(ByteBuf buf) {
-            buf.writeBoolean(value);
-        }
     }
 }

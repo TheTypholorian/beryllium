@@ -80,6 +80,8 @@
   "tooltip.beryllium.building.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed.",
   "attribute.beryllium.exploring.name.generic.stable_footing": "In-Air Block Breaking Efficiency",
 
+  "config.beryllium.durabilityRemoval": "Durability Removal",
+
   "beryllium.server": "Server",
 
   "beryllium.server.combat": "Combat",
@@ -124,5 +126,5 @@
 
   "beryllium.client": "Client",
   "createWorld.tab.beryllium.title": "Beryllium",
-  "config.beryllium.title": "Beryllium Config:"
+  "config.beryllium.title": "Beryllium Config"
 }
