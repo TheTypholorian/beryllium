@@ -126,5 +126,7 @@
   "pack.name.beryllium.looting_axes": "Looting Axes",
   "pack.description.beryllium.looting_axes": "Put sword-only enchantments on axes",
   "pack.name.beryllium.flat_models": "Flat Models",
-  "pack.description.beryllium.flat_models": "Removes all 3D item/block models from the inventory"
+  "pack.description.beryllium.flat_models": "Removes all 3D item/block models from the inventory",
+  "pack.name.beryllium.bare_beryllium": "Bare Beryllium",
+  "pack.description.beryllium.bare_beryllium": "Beryllium compatibility with Bare Bones"
 }
