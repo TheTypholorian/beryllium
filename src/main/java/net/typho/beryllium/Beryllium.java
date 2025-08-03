@@ -71,5 +71,6 @@ public class Beryllium implements ModInitializer {
             );
         });
         ResourceManagerHelper.registerBuiltinResourcePack(CONSTRUCTOR.id("looting_axes"), FabricLoader.getInstance().getModContainer(MOD_ID).get(), Text.translatable("pack.name.beryllium.looting_axes"), ResourcePackActivationType.DEFAULT_ENABLED);
+        ResourceManagerHelper.registerBuiltinResourcePack(CONSTRUCTOR.id("flat_models"), FabricLoader.getInstance().getModContainer(MOD_ID).get(), Text.translatable("pack.name.beryllium.flat_models"), ResourcePackActivationType.NORMAL);
     }
 }

@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:block/orientable",
+  "display": {
+    "gui": {
+      "rotation": [
+        0,
+        180,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "textures": {
+    "front": "beryllium:block/building/kiln_front",
+    "side": "beryllium:block/building/kiln_side",
+    "top": "beryllium:block/building/kiln_top"
+  }
+}
