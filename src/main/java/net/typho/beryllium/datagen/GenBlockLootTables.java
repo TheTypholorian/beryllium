@@ -40,16 +40,25 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
+        addDrop(Exploring.CORRUPTED_END_STONE);
+        addDrop(Exploring.CONGEALED_VOID);
+        addDrop(Exploring.CORRUPTED_LOG);
+        addDrop(Exploring.CORRUPTED_WOOD);
+        addDrop(Exploring.STRIPPED_CORRUPTED_LOG);
+        addDrop(Exploring.STRIPPED_CORRUPTED_WOOD);
+        addDrop(Exploring.CORRUPTED_PLANKS);
+        addDrop(Exploring.CORRUPTED_SAPLING);
+        addDrop(Exploring.CORRUPTED_SAPLING);
+        addDrop(Exploring.FIREFLY_BOTTLE);
         addDrop(Exploring.DAFFODILS, flowerbedDrops(Exploring.DAFFODILS));
         addDrop(Exploring.SCILLA, flowerbedDrops(Exploring.SCILLA));
         addDrop(Exploring.GERANIUMS, flowerbedDrops(Exploring.GERANIUMS));
+        addDrop(Exploring.ALGAE_BLOCK);
+        addDrop(Exploring.VOID_FIRE, dropsNothing());
+        addDrop(Exploring.POINTED_BONE);
 
         addDrop(Redstone.GOLD_HOPPER_BLOCK);
 
-        addDrop(Exploring.VOID_FIRE, dropsNothing());
-
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
-
-        addDrop(Exploring.POINTED_BONE);
     }
 }

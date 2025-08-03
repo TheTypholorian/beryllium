@@ -128,5 +128,7 @@
   "pack.name.beryllium.flat_models": "Flat Models",
   "pack.description.beryllium.flat_models": "Removes all 3D item/block models from the inventory",
   "pack.name.beryllium.bare_beryllium": "Bare Beryllium",
-  "pack.description.beryllium.bare_beryllium": "Beryllium compatibility with Bare Bones"
+  "pack.description.beryllium.bare_beryllium": "Beryllium compatibility with Bare Bones",
+  "pack.name.beryllium.enchanted_horse_armor": "Enchanted Horse Armor",
+  "pack.description.beryllium.enchanted_horse_armor": "Put any armor enchantment on horse armor"
 }

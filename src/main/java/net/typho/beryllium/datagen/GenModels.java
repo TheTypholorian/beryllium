@@ -28,39 +28,7 @@ public class GenModels extends FabricModelProvider {
         pool.family(family);
     }
 
-    @Override
-    public void generateBlockStateModels(BlockStateModelGenerator gen) {
-        family(gen, Building.MOSSY_STONE);
-        family(gen, Building.CRACKED_STONE_BRICKS);
-        family(gen, Building.SMOOTH_STONE);
-        family(gen, Building.SNOW_BRICKS);
-
-        gen.registerFlowerbed(Exploring.DAFFODILS);
-        gen.registerFlowerbed(Exploring.SCILLA);
-        gen.registerFlowerbed(Exploring.GERANIUMS);
-        gen.registerWallPlant(Exploring.ALGAE_BLOCK);
-
-        gen.registerLog(Exploring.CORRUPTED_LOG)
-                .log(Exploring.CORRUPTED_LOG);
-
-        gen.registerSingleton(Exploring.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
-
-        Identifier goldHopper = ModelIds.getBlockModelId(Redstone.GOLD_HOPPER_BLOCK);
-        Identifier goldHopperSide = ModelIds.getBlockSubModelId(Redstone.GOLD_HOPPER_BLOCK, "_side");
-        gen.registerItemModel(Redstone.GOLD_HOPPER_BLOCK.asItem());
-        gen.blockStateCollector
-                .accept(
-                        VariantsBlockStateSupplier.create(Redstone.GOLD_HOPPER_BLOCK)
-                                .coordinate(
-                                        BlockStateVariantMap.create(Properties.HOPPER_FACING)
-                                                .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopper))
-                                                .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide))
-                                                .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R90))
-                                                .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R180))
-                                                .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R270))
-                                )
-                );
-
+    public void voidFire(BlockStateModelGenerator gen) {
         List<Identifier> voidFireFloor = gen.getFireFloorModels(Exploring.VOID_FIRE);
         List<Identifier> voidFireSide = gen.getFireSideModels(Exploring.VOID_FIRE);
         gen.blockStateCollector
@@ -72,7 +40,24 @@ public class GenModels extends FabricModelProvider {
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R180)))
                                 .with(BlockStateModelGenerator.buildBlockStateVariants(voidFireSide, v -> v.put(VariantSettings.Y, VariantSettings.Rotation.R270)))
                 );
+    }
 
+    public void pointedBone(BlockStateModelGenerator gen) {
+        gen.excludeFromSimpleItemModelGeneration(Exploring.POINTED_BONE);
+        BlockStateVariantMap.DoubleProperty<Direction, Thickness> doubleProperty = BlockStateVariantMap.create(Properties.VERTICAL_DIRECTION, Properties.THICKNESS);
+
+        for (Thickness thickness : Thickness.values()) {
+            doubleProperty.register(Direction.UP, thickness, getBoneVariant(gen, Direction.UP, thickness));
+        }
+
+        for (Thickness thickness : Thickness.values()) {
+            doubleProperty.register(Direction.DOWN, thickness, getBoneVariant(gen, Direction.DOWN, thickness));
+        }
+
+        gen.blockStateCollector.accept(VariantsBlockStateSupplier.create(Exploring.POINTED_BONE).coordinate(doubleProperty));
+    }
+
+    public void potionCauldron(BlockStateModelGenerator gen) {
         gen.blockStateCollector
                 .accept(
                         VariantsBlockStateSupplier.create(Combat.POTION_CAULDRON)
@@ -107,19 +92,51 @@ public class GenModels extends FabricModelProvider {
                                                 )
                                 )
                 );
+    }
 
-        gen.excludeFromSimpleItemModelGeneration(Exploring.POINTED_BONE);
-        BlockStateVariantMap.DoubleProperty<Direction, Thickness> doubleProperty = BlockStateVariantMap.create(Properties.VERTICAL_DIRECTION, Properties.THICKNESS);
+    public void goldHopper(BlockStateModelGenerator gen) {
+        Identifier goldHopper = ModelIds.getBlockModelId(Redstone.GOLD_HOPPER_BLOCK);
+        Identifier goldHopperSide = ModelIds.getBlockSubModelId(Redstone.GOLD_HOPPER_BLOCK, "_side");
+        gen.registerItemModel(Redstone.GOLD_HOPPER_BLOCK.asItem());
+        gen.blockStateCollector
+                .accept(
+                        VariantsBlockStateSupplier.create(Redstone.GOLD_HOPPER_BLOCK)
+                                .coordinate(
+                                        BlockStateVariantMap.create(Properties.HOPPER_FACING)
+                                                .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopper))
+                                                .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide))
+                                                .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R90))
+                                                .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R180))
+                                                .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R270))
+                                )
+                );
+    }
 
-        for (Thickness thickness : Thickness.values()) {
-            doubleProperty.register(Direction.UP, thickness, getBoneVariant(gen, Direction.UP, thickness));
-        }
+    @Override
+    public void generateBlockStateModels(BlockStateModelGenerator gen) {
+        family(gen, Building.MOSSY_STONE);
+        family(gen, Building.CRACKED_STONE_BRICKS);
+        family(gen, Building.SMOOTH_STONE);
+        family(gen, Building.SNOW_BRICKS);
 
-        for (Thickness thickness : Thickness.values()) {
-            doubleProperty.register(Direction.DOWN, thickness, getBoneVariant(gen, Direction.DOWN, thickness));
-        }
+        gen.registerFlowerbed(Exploring.DAFFODILS);
+        gen.registerFlowerbed(Exploring.SCILLA);
+        gen.registerFlowerbed(Exploring.GERANIUMS);
+        gen.registerWallPlant(Exploring.ALGAE_BLOCK);
 
-        gen.blockStateCollector.accept(VariantsBlockStateSupplier.create(Exploring.POINTED_BONE).coordinate(doubleProperty));
+        gen.registerLog(Exploring.CORRUPTED_LOG)
+                .log(Exploring.CORRUPTED_LOG)
+                .wood(Exploring.CORRUPTED_WOOD);
+        gen.registerLog(Exploring.STRIPPED_CORRUPTED_LOG)
+                .log(Exploring.STRIPPED_CORRUPTED_LOG)
+                .wood(Exploring.STRIPPED_CORRUPTED_WOOD);
+
+        gen.registerSingleton(Exploring.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
+
+        voidFire(gen);
+        pointedBone(gen);
+        potionCauldron(gen);
+        goldHopper(gen);
     }
 
     public BlockStateVariant getBoneVariant(BlockStateModelGenerator gen, Direction direction, Thickness thickness) {

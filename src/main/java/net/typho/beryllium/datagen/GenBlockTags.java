@@ -74,12 +74,14 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
         getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
                 .add(Exploring.DAFFODILS)
                 .add(Exploring.SCILLA)
-                .add(Exploring.GERANIUMS);
+                .add(Exploring.GERANIUMS)
+                .add(Exploring.ALGAE_BLOCK);
 
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE)
                 .add(Exploring.DAFFODILS)
                 .add(Exploring.SCILLA)
-                .add(Exploring.GERANIUMS);
+                .add(Exploring.GERANIUMS)
+                .add(Exploring.ALGAE_BLOCK);
 
         getOrCreateTagBuilder(BlockTags.FLOWERS)
                 .add(Exploring.DAFFODILS)

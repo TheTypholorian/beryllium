@@ -5,6 +5,8 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentType;
 import net.minecraft.datafixer.TypeReferences;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -34,8 +36,8 @@ public class Constructor implements Identifierifier {
     }
 
     @Override
-    public Identifier id(String name) {
-        return Identifier.of(Beryllium.MOD_ID, this.name == null ? name : (this.name + "/" + name));
+    public Identifier id(String id) {
+        return Identifier.of(Beryllium.MOD_ID, name == null ? id : (name + "/" + id));
     }
 
     public Item item(String id, Item item) {
@@ -46,11 +48,9 @@ public class Constructor implements Identifierifier {
         return Registry.register(Registries.BLOCK, id(id), block);
     }
 
-    public Block blockWithItem(String name, Block block, Item.Settings settings) {
-        Identifier id = id(name);
-        Block res = Registry.register(Registries.BLOCK, id, block);
-        BlockItem item = new BlockItem(res, settings);
-        Registry.register(Registries.ITEM, id, item);
+    public Block blockWithItem(String id, Block block, Item.Settings settings) {
+        Block res = Registry.register(Registries.BLOCK, id(id), block);
+        item(id, new BlockItem(res, settings));
         return res;
     }
 
@@ -61,8 +61,8 @@ public class Constructor implements Identifierifier {
         return identifier;
     }
 
-    public <T extends Feature<?>> T feature(String name, T feature) {
-        return Registry.register(Registries.FEATURE, id(name), feature);
+    public <T extends Feature<?>> T feature(String id, T feature) {
+        return Registry.register(Registries.FEATURE, id(id), feature);
     }
 
     public <T extends net.minecraft.screen.ScreenHandler> ScreenHandlerType<T> screenHandler(String id, ScreenHandlerType.Factory<T> factory) {
@@ -79,5 +79,9 @@ public class Constructor implements Identifierifier {
 
     public RegistryEntry<EntityAttribute> attribute(String id, EntityAttribute attribute) {
         return Registry.registerReference(Registries.ATTRIBUTE, id(id), attribute);
+    }
+
+    public <T extends Entity> EntityType<T> entity(String id, EntityType<T> type) {
+        return Registry.register(Registries.ENTITY_TYPE, id(id), type);
     }
 }
