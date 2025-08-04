@@ -130,5 +130,7 @@
   "pack.name.beryllium.bare_beryllium": "Bare Beryllium",
   "pack.description.beryllium.bare_beryllium": "Beryllium compatibility with Bare Bones",
   "pack.name.beryllium.enchanted_horse_armor": "Enchanted Horse Armor",
-  "pack.description.beryllium.enchanted_horse_armor": "Put any armor enchantment on horse armor"
+  "pack.description.beryllium.enchanted_horse_armor": "Put any armor enchantment on horse armor",
+  "selectWorld.beryllium.ultraDark": "Ultra Dark",
+  "selectWorld.beryllium.ultraDark.info": "Enables the ultra dark setting, also makes the world permanently night and thundering"
 }
