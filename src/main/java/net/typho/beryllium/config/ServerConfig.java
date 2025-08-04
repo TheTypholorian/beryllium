@@ -48,9 +48,9 @@ public class ServerConfig {
     public final IntProperty shieldLowerCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "shieldLowerCooldown", 60);
     public final IntProperty splashPotionCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "splashPotionCooldown", 100);
 
-    public final BooleanProperty ultraDark = new BooleanProperty(this, "ultraDark", true);
-
     public final BooleanProperty durabilityRemoval = new BooleanProperty(this, "durabilityRemoval", true);
+
+    public final BooleanProperty ultraDark = new BooleanProperty(this, "ultraDark", true);
 
     public ServerConfig() {
     }
