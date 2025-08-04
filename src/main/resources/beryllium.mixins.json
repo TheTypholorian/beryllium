@@ -12,6 +12,7 @@
     "MilkBucketItemMixin",
     "PlayerEntityMixin",
     "SaddleItemMixin",
+    "SpawnHelperMixin",
     "building.CookingRecipeDataGenMixin",
     "building.ShearsItemMixin",
     "client.CompassItemMixin",

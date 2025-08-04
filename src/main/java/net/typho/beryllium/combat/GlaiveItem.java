@@ -1,6 +1,5 @@
 package net.typho.beryllium.combat;
 
-import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
@@ -12,18 +11,12 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.util.CustomPoseItem;
 import net.typho.beryllium.util.DualModelItem;
 import net.typho.beryllium.util.Identifierifier;
 
-public class GlaiveItem extends SwordItem implements CustomPoseItem, DualModelItem {
+public class GlaiveItem extends SwordItem implements DualModelItem {
     public GlaiveItem(ToolMaterial toolMaterial, Settings settings) {
         super(toolMaterial, settings);
-    }
-
-    @Override
-    public BipedEntityModel.ArmPose pose() {
-        return BipedEntityModel.ArmPose.CROSSBOW_HOLD;
     }
 
     @Override
