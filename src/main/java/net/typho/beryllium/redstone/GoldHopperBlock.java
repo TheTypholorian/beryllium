@@ -1,5 +1,6 @@
 package net.typho.beryllium.redstone;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,8 +12,15 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class GoldHopperBlock extends HopperBlock {
+    public static final MapCodec<HopperBlock> CODEC = createCodec(HopperBlock::new);
+
     public GoldHopperBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    public MapCodec<HopperBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

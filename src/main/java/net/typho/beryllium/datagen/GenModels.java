@@ -135,6 +135,8 @@ public class GenModels extends FabricModelProvider {
 
         gen.registerTorch(Exploring.BLAZING_TORCH, Exploring.BLAZING_WALL_TORCH);
 
+        gen.registerDispenserLikeOrientable(Redstone.DESTRUCTOR_BLOCK);
+
         voidFire(gen);
         pointedBone(gen);
         potionCauldron(gen);

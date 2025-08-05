@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/orientable_vertical",
+  "textures": {
+    "front": "beryllium:block/redstone/destructor_front_vertical",
+    "side": "minecraft:block/furnace_top"
+  }
+}

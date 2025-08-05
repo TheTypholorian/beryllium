@@ -35,6 +35,119 @@ public class GenRecipes extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
+    public static void firingVanillaRecipes(RecipeExporter exporter) {
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Items.CLAY_BALL), RecipeCategory.MISC, Items.BRICK, 0.3f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_clay_ball", conditionsFromItem(Items.CLAY_BALL))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.CLAY), RecipeCategory.BUILDING_BLOCKS, Blocks.TERRACOTTA.asItem(), 0.35f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_clay_block", conditionsFromItem(Blocks.CLAY))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.LOGS_THAT_BURN), RecipeCategory.MISC, Items.CHARCOAL, 0.15f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_log", conditionsFromTag(ItemTags.LOGS_THAT_BURN))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.NETHERRACK), RecipeCategory.MISC, Items.NETHER_BRICK, 0.1f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_netherrack", conditionsFromItem(Blocks.NETHERRACK))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.SMELTS_TO_GLASS), RecipeCategory.BUILDING_BLOCKS, Blocks.GLASS, 0.1f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_smelts_to_glass", conditionsFromTag(ItemTags.SMELTS_TO_GLASS))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_SANDSTONE.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_sandstone", conditionsFromItem(Blocks.SANDSTONE))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.RED_SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_RED_SANDSTONE.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_red_sandstone", conditionsFromItem(Blocks.RED_SANDSTONE))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.QUARTZ_BLOCK), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_QUARTZ.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_quartz_block", conditionsFromItem(Blocks.QUARTZ_BLOCK))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.BLACK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLACK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_black_terracotta", conditionsFromItem(Blocks.BLACK_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_blue_terracotta", conditionsFromItem(Blocks.BLUE_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.BROWN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BROWN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_brown_terracotta", conditionsFromItem(Blocks.BROWN_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.CYAN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.CYAN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_cyan_terracotta", conditionsFromItem(Blocks.CYAN_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_gray_terracotta", conditionsFromItem(Blocks.GRAY_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.GREEN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GREEN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_green_terracotta", conditionsFromItem(Blocks.GREEN_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.LIGHT_BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_light_blue_terracotta", conditionsFromItem(Blocks.LIGHT_BLUE_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.LIGHT_GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_light_gray_terracotta", conditionsFromItem(Blocks.LIGHT_GRAY_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.LIME_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIME_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_lime_terracotta", conditionsFromItem(Blocks.LIME_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.MAGENTA_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_magenta_terracotta", conditionsFromItem(Blocks.MAGENTA_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.ORANGE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.ORANGE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_orange_terracotta", conditionsFromItem(Blocks.ORANGE_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.PINK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PINK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_pink_terracotta", conditionsFromItem(Blocks.PINK_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.PURPLE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PURPLE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_purple_terracotta", conditionsFromItem(Blocks.PURPLE_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.RED_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.RED_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_red_terracotta", conditionsFromItem(Blocks.RED_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.WHITE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.WHITE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_white_terracotta", conditionsFromItem(Blocks.WHITE_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(
+                        Ingredient.ofItems(Blocks.YELLOW_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.YELLOW_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
+                )
+                .criterion("has_yellow_terracotta", conditionsFromItem(Blocks.YELLOW_TERRACOTTA))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.BASALT), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_BASALT, 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_basalt", conditionsFromItem(Blocks.BASALT))
+                .offerTo(exporter);
+        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.COBBLED_DEEPSLATE), RecipeCategory.BUILDING_BLOCKS, Blocks.DEEPSLATE, 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
+                .criterion("has_cobbled_deepslate", conditionsFromItem(Blocks.COBBLED_DEEPSLATE))
+                .offerTo(exporter);
+    }
+
     public static void arrow(RecipeExporter exporter, Item result, Item tip, String tipCriterion) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, result, 4)
                 .input('#', Items.STICK)
@@ -97,21 +210,6 @@ public class GenRecipes extends FabricRecipeProvider {
 
     @Override
     public void generate(RecipeExporter exporter) {
-        arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
-        arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
-        arrow(exporter, Combat.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
-        arrow(exporter, Combat.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
-
-        offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_GLAIVE, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
-        glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
-        glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
-        glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
-
-        offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_SCYTHE, RecipeCategory.COMBAT, Combat.NETHERITE_SCYTHE);
-        scythe(exporter, Combat.DIAMOND_SCYTHE, Items.DIAMOND, "has_diamond");
-        scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
-        scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
-
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK.asItem(), 1)
                 .pattern("AAA")
                 .pattern("A A")
@@ -246,6 +344,21 @@ public class GenRecipes extends FabricRecipeProvider {
                 .criterion("has_coals", FabricRecipeProvider.conditionsFromTag(ItemTags.COALS))
                 .offerTo(exporter, Exploring.CONSTRUCTOR.id("blazing_torch"));
 
+        arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
+        arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
+        arrow(exporter, Combat.FLAMING_ARROW, Items.FIRE_CHARGE, "has_fire_charge");
+        arrow(exporter, Combat.COPPER_ARROW, Items.COPPER_INGOT, "has_copper_ingot");
+
+        offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_GLAIVE, RecipeCategory.COMBAT, Combat.NETHERITE_GLAIVE);
+        glaive(exporter, Combat.DIAMOND_GLAIVE, Items.DIAMOND, "has_diamond");
+        glaive(exporter, Combat.IRON_GLAIVE, Items.IRON_INGOT, "has_iron_ingot");
+        glaive(exporter, Combat.GOLDEN_GLAIVE, Items.GOLD_INGOT, "has_gold_ingot");
+
+        offerNetheriteUpgradeRecipe(exporter, Combat.DIAMOND_SCYTHE, RecipeCategory.COMBAT, Combat.NETHERITE_SCYTHE);
+        scythe(exporter, Combat.DIAMOND_SCYTHE, Items.DIAMOND, "has_diamond");
+        scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
+        scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
+
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BONE_BLOCK, Exploring.POINTED_BONE);
 
         offerSmelting(exporter, List.of(Items.SUGAR_CANE), RecipeCategory.MISC, Items.LIME_DYE, 1, 200, "lime_dye");
@@ -282,116 +395,7 @@ public class GenRecipes extends FabricRecipeProvider {
             }
         });
 
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Items.CLAY_BALL), RecipeCategory.MISC, Items.BRICK, 0.3f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_clay_ball", conditionsFromItem(Items.CLAY_BALL))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.CLAY), RecipeCategory.BUILDING_BLOCKS, Blocks.TERRACOTTA.asItem(), 0.35f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_clay_block", conditionsFromItem(Blocks.CLAY))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.LOGS_THAT_BURN), RecipeCategory.MISC, Items.CHARCOAL, 0.15f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_log", conditionsFromTag(ItemTags.LOGS_THAT_BURN))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.NETHERRACK), RecipeCategory.MISC, Items.NETHER_BRICK, 0.1f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_netherrack", conditionsFromItem(Blocks.NETHERRACK))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.fromTag(ItemTags.SMELTS_TO_GLASS), RecipeCategory.BUILDING_BLOCKS, Blocks.GLASS, 0.1f, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_smelts_to_glass", conditionsFromTag(ItemTags.SMELTS_TO_GLASS))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_SANDSTONE.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_sandstone", conditionsFromItem(Blocks.SANDSTONE))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.RED_SANDSTONE), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_RED_SANDSTONE.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_red_sandstone", conditionsFromItem(Blocks.RED_SANDSTONE))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.QUARTZ_BLOCK), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_QUARTZ.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_quartz_block", conditionsFromItem(Blocks.QUARTZ_BLOCK))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.BLACK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLACK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_black_terracotta", conditionsFromItem(Blocks.BLACK_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_blue_terracotta", conditionsFromItem(Blocks.BLUE_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.BROWN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.BROWN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_brown_terracotta", conditionsFromItem(Blocks.BROWN_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.CYAN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.CYAN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_cyan_terracotta", conditionsFromItem(Blocks.CYAN_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_gray_terracotta", conditionsFromItem(Blocks.GRAY_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.GREEN_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.GREEN_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_green_terracotta", conditionsFromItem(Blocks.GREEN_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.LIGHT_BLUE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_light_blue_terracotta", conditionsFromItem(Blocks.LIGHT_BLUE_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.LIGHT_GRAY_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_light_gray_terracotta", conditionsFromItem(Blocks.LIGHT_GRAY_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.LIME_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.LIME_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_lime_terracotta", conditionsFromItem(Blocks.LIME_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.MAGENTA_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_magenta_terracotta", conditionsFromItem(Blocks.MAGENTA_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.ORANGE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.ORANGE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_orange_terracotta", conditionsFromItem(Blocks.ORANGE_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.PINK_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PINK_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_pink_terracotta", conditionsFromItem(Blocks.PINK_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.PURPLE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.PURPLE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_purple_terracotta", conditionsFromItem(Blocks.PURPLE_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.RED_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.RED_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_red_terracotta", conditionsFromItem(Blocks.RED_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.WHITE_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.WHITE_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_white_terracotta", conditionsFromItem(Blocks.WHITE_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(
-                        Ingredient.ofItems(Blocks.YELLOW_TERRACOTTA), RecipeCategory.DECORATIONS, Blocks.YELLOW_GLAZED_TERRACOTTA.asItem(), 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new
-                )
-                .criterion("has_yellow_terracotta", conditionsFromItem(Blocks.YELLOW_TERRACOTTA))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.BASALT), RecipeCategory.BUILDING_BLOCKS, Blocks.SMOOTH_BASALT, 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_basalt", conditionsFromItem(Blocks.BASALT))
-                .offerTo(exporter);
-        CookingRecipeJsonBuilder.create(Ingredient.ofItems(Blocks.COBBLED_DEEPSLATE), RecipeCategory.BUILDING_BLOCKS, Blocks.DEEPSLATE, 0.1F, 100, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new)
-                .criterion("has_cobbled_deepslate", conditionsFromItem(Blocks.COBBLED_DEEPSLATE))
-                .offerTo(exporter);
+        firingVanillaRecipes(exporter);
 
         generateFamily(exporter, Building.MOSSY_STONE, FeatureSet.empty());
         generateFamily(exporter, Building.CRACKED_STONE_BRICKS, FeatureSet.empty());

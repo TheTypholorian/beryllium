@@ -1,7 +1,6 @@
 package net.typho.beryllium.mixin.redstone;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -10,7 +9,6 @@ import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Util;
@@ -52,7 +50,7 @@ public class DispenserBlockMixin {
                 } else {
                     setSuccess(false);
                 }
-            } else if (stack.getItem() instanceof ToolItem && Beryllium.CONFIG.redstone.dispensersUseTools) {
+            }/* else if (stack.getItem() instanceof ToolItem && Beryllium.CONFIG.redstone.dispensersUseTools) {
                 float hardness = targetState.getHardness(pointer.world(), targetPos);
 
                 if (hardness != -1 && (!targetState.isToolRequired() || stack.isSuitableFor(targetState))) {
@@ -74,7 +72,7 @@ public class DispenserBlockMixin {
                 } else {
                     setSuccess(false);
                 }
-            }
+            }*/
 
             return stack;
         }

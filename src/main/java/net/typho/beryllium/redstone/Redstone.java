@@ -19,6 +19,9 @@ public class Redstone implements ModInitializer, ClientModInitializer {
     public static final BlockEntityType<GoldHopperBlockEntity> GOLD_HOPPER_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("gold_hopper", BlockEntityType.Builder.create(GoldHopperBlockEntity::new, GOLD_HOPPER_BLOCK));
     public static final ScreenHandlerType<GoldHopperScreenHandler> GOLD_HOPPER_SCREEN_HANDLER_TYPE = CONSTRUCTOR.screenHandler("gold_hopper", GoldHopperScreenHandler::new);
 
+    public static final Block DESTRUCTOR_BLOCK = CONSTRUCTOR.blockWithItem("destructor", new DestructorBlock(AbstractBlock.Settings.copy(Blocks.DISPENSER)), new Item.Settings());
+    public static final BlockEntityType<DestructorBlockEntity> DESTRUCTOR_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("destructor", BlockEntityType.Builder.create(DestructorBlockEntity::new, DESTRUCTOR_BLOCK));
+
     @Override
     public void onInitialize() {
     }
@@ -31,7 +34,6 @@ public class Redstone implements ModInitializer, ClientModInitializer {
     public static class Config extends ConfigSection {
         public boolean cropComparatorOutput = true;
         public boolean dispensersPlaceBlocks = true;
-        public boolean dispensersUseTools = true;
         public int hopperCooldown = 1;
         public boolean instantChainTNT = true;
     }
