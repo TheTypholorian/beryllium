@@ -73,7 +73,7 @@ public class Constructor implements Identifierifier {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, id(id), builder.build(Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id)));
     }
 
-    public <T> ComponentType<T> component(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    public <T> ComponentType<T> dataComponent(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         return Registry.register(Registries.DATA_COMPONENT_TYPE, id(id), builderOperator.apply(ComponentType.builder()).build());
     }
 

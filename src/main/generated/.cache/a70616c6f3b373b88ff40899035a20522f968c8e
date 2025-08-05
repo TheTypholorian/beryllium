@@ -1,10 +1,10 @@
-// 1.21.1	2025-08-05T11:35:42.2904588	Beryllium/Model Definitions
+// 1.21.1	2025-08-05T16:32:37.7793862	Beryllium/Model Definitions
 75cc512fbb9094a26435cd5c5ed53df07a4fdbd2 assets\beryllium\models\block\exploring\void_fire_side0.json
 39c9599350190a9d180699ec92d55b34bc506b16 assets\beryllium\models\block\exploring\pointed_bone_down_tip.json
 bd665b4a28defd0babf4b38b2540374748e0c834 assets\beryllium\models\block\combat\potion_cauldron_level2.json
 ab3097ed4e9aa2904c3dc0d69bc1823690705dd9 assets\beryllium\models\block\exploring\void_fire_side_alt0.json
-ab730711f65c74565df4e861ea4fe48cacd71c6a assets\beryllium\blockstates\building\cracked_stone_brick_wall.json
 bccb5f66df6b4102fc93ed1442c25e80d3f1b445 assets\beryllium\blockstates\building\cracked_stone_brick_stairs.json
+ab730711f65c74565df4e861ea4fe48cacd71c6a assets\beryllium\blockstates\building\cracked_stone_brick_wall.json
 478ed10bb9b812d7ffc56d039c9084b791f10f57 assets\beryllium\models\item\building\smooth_stone_stairs.json
 14dc8e49d7ab6bf093f7b79b9106204e3edfdea7 assets\beryllium\blockstates\exploring\void_fire.json
 4a32cd531623fde236ad77cad37effd15eb3b3f2 assets\beryllium\models\item\exploring\corrupted_end_stone.json

@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-05T11:35:42.3014775	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-05T16:32:37.7881514	Beryllium/Block Loot Tables
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data\beryllium\loot_table\blocks\combat\potion_cauldron.json
 0a8938b319f530c0524e2d0b98457f63a4cb59dc data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
 c7b9f6aaec20fd04ab94f709d42a8c360c0e97ac data\beryllium\loot_table\blocks\building\snow_brick_slab.json
@@ -20,14 +20,14 @@ eb9966b2f69f2e80c9b27f0386be1fbf2e2413da data\beryllium\loot_table\blocks\buildi
 23b21c36d3fb760c2195c7fff2c8744fd2e7dfe0 data\beryllium\loot_table\blocks\building\smooth_stone_stairs.json
 0c0906cadb74709b06fce4abba9b8d838ce1cdc1 data\beryllium\loot_table\blocks\building\cracked_stone_brick_wall.json
 d7f8d437610385f93af7524b313ae9c6db3166b3 data\beryllium\loot_table\blocks\exploring\pointed_bone.json
-6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
 e68c22ac43229fb3dc3fc98bebaae176b4668cab data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
+6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
 8c905ea606fabe175555c0c395761d44cb668194 data\beryllium\loot_table\blocks\exploring\algae.json
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 7a24d100e751a44d7f72022d26ea1279b8c644d3 data\beryllium\loot_table\blocks\exploring\corrupted_end_stone.json
-ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 f7192d201517a41587dd50efc3e4bd1dd40ad4d7 data\beryllium\loot_table\blocks\exploring\congealed_void.json
+ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 d5e9be84fd7ffd07a7014fcb9a4b9148a53809ac data\beryllium\loot_table\blocks\redstone\gold_hopper.json
 8b348a7a9d7f74027ae1f23ce5ed0cbf9452af07 data\beryllium\loot_table\blocks\building\mossy_stone.json
 e8109442699683dd0df739afa43860e61558220c data\beryllium\loot_table\blocks\exploring\geraniums.json

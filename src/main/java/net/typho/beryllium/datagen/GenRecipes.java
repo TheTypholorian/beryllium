@@ -376,6 +376,12 @@ public class GenRecipes extends FabricRecipeProvider {
         offerSmelting(exporter, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather");
         offerMultipleOptions(exporter, RecipeSerializer.SMOKING, SmokingRecipe::new, List.of(Items.ROTTEN_FLESH), RecipeCategory.MISC, Items.LEATHER, 0.2f, 100, "leather", "_from_smoking");
 
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.MOSSY_STONE.getBaseBlock())
+                .input(Blocks.STONE)
+                .input(Blocks.VINE)
+                .group("mossy_stone")
+                .criterion("has_vine", conditionsFromItem(Blocks.VINE))
+                .offerTo(exporter, convertBetween(Building.MOSSY_STONE.getBaseBlock(), Blocks.STONE));
         BlockFamilies.STONE.getVariants().forEach((variant, stone) -> {
             Block mossy = Building.MOSSY_STONE.getVariant(variant);
 
@@ -385,7 +391,7 @@ public class GenRecipes extends FabricRecipeProvider {
                         .input(Blocks.VINE)
                         .group("mossy_stone")
                         .criterion("has_vine", conditionsFromItem(Blocks.VINE))
-                        .offerTo(exporter, convertBetween(mossy, Blocks.VINE));
+                        .offerTo(exporter, convertBetween(mossy, stone));
             }
         });
         firingStone(exporter, List.of(Blocks.COBBLESTONE), Blocks.STONE, "stone");

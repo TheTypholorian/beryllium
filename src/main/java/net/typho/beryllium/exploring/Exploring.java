@@ -197,7 +197,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
     public static final Item EXODINE_INGOT = CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));
-    public static final Item TEST_STICK = CONSTRUCTOR. item("test_stick", new Item(new Item.Settings()) {
+    public static final Item TEST_STICK = CONSTRUCTOR.item("test_stick", new Item(new Item.Settings()) {
         @Override
         public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
             if (!world.isClient) {

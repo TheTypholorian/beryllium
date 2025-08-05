@@ -13,6 +13,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.component.ComponentType;
+import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -51,9 +52,10 @@ public class Building implements ModInitializer, ClientModInitializer {
     public static final Block KILN_BLOCK = CONSTRUCTOR.blockWithItem("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)), new Item.Settings());
     public static final BlockEntityType<KilnEntity> KILN_BLOCK_ENTITY_TYPE = CONSTRUCTOR.blockEntity("kiln", BlockEntityType.Builder.create(KilnEntity::new, KILN_BLOCK));
 
-    public static final ComponentType<BlockPos> MAGIC_WAND_COMPONENT_TYPE = Registry.register(Registries.DATA_COMPONENT_TYPE, CONSTRUCTOR.id("magic_wand_component"), ComponentType.<BlockPos>builder().codec(BlockPos.CODEC).packetCodec(BlockPos.PACKET_CODEC).build());
-    public static final Item FILLING_WAND_ITEM = Registry.register(Registries.ITEM, CONSTRUCTOR.id("filling_wand"), new FillingWandItem(new Item.Settings()));
+    public static final ComponentType<BlockPos> FILLING_WAND_COMPONENT_TYPE = CONSTRUCTOR.dataComponent("filling_wand_component", builder -> builder.codec(BlockPos.CODEC).packetCodec(BlockPos.PACKET_CODEC));
+    public static final Item FILLING_WAND_ITEM = CONSTRUCTOR.item("filling_wand", new FillingWandItem(new Item.Settings()));
 
+    public static final Block STONE_WALL = CONSTRUCTOR.blockWithItem("stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings());
     public static final BlockFamily MOSSY_STONE = new BlockFamily.Builder(CONSTRUCTOR.blockWithItem("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .wall(CONSTRUCTOR.blockWithItem("mossy_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
             .stairs(CONSTRUCTOR.blockWithItem("mossy_stone_stairs", new StairsBlock(Blocks.STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
@@ -79,8 +81,13 @@ public class Building implements ModInitializer, ClientModInitializer {
 
     @Override
     public void onInitialize() {
+        BlockFamilies.STONE.getVariants().put(BlockFamily.Variant.WALL, STONE_WALL);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
                 .register(entries -> {
+                    entries.addAfter(
+                            Items.STONE_SLAB,
+                            STONE_WALL
+                    );
                     entries.addAfter(
                             Items.STONE_BUTTON,
                             MOSSY_STONE.getBaseBlock(),
@@ -110,6 +117,13 @@ public class Building implements ModInitializer, ClientModInitializer {
                             SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
                             SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB),
                             SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL)
+                    );
+                });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL)
+                .register(entries -> {
+                    entries.addAfter(
+                            Items.SMOKER,
+                            KILN_BLOCK
                     );
                 });
     }
