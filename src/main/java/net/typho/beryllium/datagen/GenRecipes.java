@@ -299,6 +299,16 @@ public class GenRecipes extends FabricRecipeProvider {
                 .criterion("has_gold_ingot", FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
                 .offerTo(exporter, Redstone.CONSTRUCTOR.id("gold_hopper"));
 
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Redstone.DESTRUCTOR_BLOCK, 1)
+                .pattern("CCC")
+                .pattern("CPC")
+                .pattern("CRC")
+                .input('C', Items.COBBLESTONE)
+                .input('R', Items.REDSTONE)
+                .input('P', Items.IRON_PICKAXE)
+                .criterion("has_iron_pickaxe", FabricRecipeProvider.conditionsFromItem(Items.IRON_PICKAXE))
+                .offerTo(exporter, Redstone.CONSTRUCTOR.id("destructor_block"));
+
         ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SLIME_BALL, 1)
                 .input(Items.MAGMA_CREAM)
                 .input(Items.HONEY_BOTTLE)
@@ -394,10 +404,13 @@ public class GenRecipes extends FabricRecipeProvider {
                 firingStone(exporter, List.of(stone), smooth, "smooth_stone");
             }
         });
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.SNOW_BRICKS.getBaseBlock(), Blocks.SNOW_BLOCK);
 
         firingVanillaRecipes(exporter);
 
         generateFamily(exporter, Building.MOSSY_STONE, FeatureSet.empty());
         generateFamily(exporter, Building.CRACKED_STONE_BRICKS, FeatureSet.empty());
+        generateFamily(exporter, Building.SMOOTH_STONE, FeatureSet.empty());
+        generateFamily(exporter, Building.SNOW_BRICKS, FeatureSet.empty());
     }
 }

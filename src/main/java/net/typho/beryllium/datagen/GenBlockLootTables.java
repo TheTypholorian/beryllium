@@ -4,6 +4,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
+import net.minecraft.item.Items;
+import net.minecraft.loot.entry.EmptyEntry;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.registry.RegistryWrapper;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
@@ -21,10 +24,10 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
     public void generate() {
         addDrop(Building.KILN_BLOCK);
 
-        addDrop(Building.MOSSY_STONE.getBaseBlock());
-        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL));
-        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS));
-        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB));
+        addDrop(Building.MOSSY_STONE.getBaseBlock(), Blocks.MOSSY_COBBLESTONE);
+        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL), Blocks.MOSSY_COBBLESTONE_WALL);
+        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS), Blocks.MOSSY_COBBLESTONE_STAIRS);
+        addDrop(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB), Blocks.MOSSY_COBBLESTONE_SLAB);
 
         addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL));
         addDrop(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
@@ -34,30 +37,30 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS));
         addDrop(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED));
 
-        addDrop(Building.SNOW_BRICKS.getBaseBlock());
-        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED));
-        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
-        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+        addDrop(Building.SNOW_BRICKS.getBaseBlock(), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(4)));
+        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(4)));
+        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(4)));
+        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(3)));
+        addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(2)));
 
-        addDrop(Exploring.CORRUPTED_END_STONE);
-        addDrop(Exploring.CONGEALED_VOID);
+        addDrop(Exploring.CORRUPTED_END_STONE, block -> drops(block, Blocks.END_STONE));
+        addDrop(Exploring.CONGEALED_VOID, this::dropsWithSilkTouch);
         addDrop(Exploring.CORRUPTED_LOG);
         addDrop(Exploring.CORRUPTED_WOOD);
         addDrop(Exploring.STRIPPED_CORRUPTED_LOG);
         addDrop(Exploring.STRIPPED_CORRUPTED_WOOD);
         addDrop(Exploring.CORRUPTED_PLANKS);
         addDrop(Exploring.CORRUPTED_SAPLING);
-        addDrop(Exploring.CORRUPTED_SAPLING);
-        addDrop(Exploring.FIREFLY_BOTTLE);
+        addDrop(Exploring.FIREFLY_BOTTLE, this::dropsWithSilkTouch);
         addDrop(Exploring.DAFFODILS, flowerbedDrops(Exploring.DAFFODILS));
         addDrop(Exploring.SCILLA, flowerbedDrops(Exploring.SCILLA));
         addDrop(Exploring.GERANIUMS, flowerbedDrops(Exploring.GERANIUMS));
-        addDrop(Exploring.ALGAE_BLOCK);
+        addDrop(Exploring.ALGAE_BLOCK, block -> dropsWithSilkTouchOrShears(block, EmptyEntry.builder()));
         addDrop(Exploring.VOID_FIRE, dropsNothing());
         addDrop(Exploring.POINTED_BONE);
 
         addDrop(Redstone.GOLD_HOPPER_BLOCK);
+        addDrop(Redstone.DESTRUCTOR_BLOCK);
 
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
     }
