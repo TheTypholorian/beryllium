@@ -147,16 +147,6 @@ public class GenRecipes extends FabricRecipeProvider {
                 .criterion("has_cocoa_beans", FabricRecipeProvider.conditionsFromItem(Items.COCOA_BEANS))
                 .offerTo(exporter, Food.CONSTRUCTOR.id("croissant"));
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.DISPENSER, 1)
-                .pattern("###")
-                .pattern("#X#")
-                .pattern("#R#")
-                .input('#', Items.COBBLESTONE)
-                .input('X', Items.STRING)
-                .input('R', Items.REDSTONE)
-                .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
-                .offerTo(exporter, Identifier.ofVanilla("dispenser"));
-
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SADDLE, 1)
                 .pattern(" L ")
                 .pattern("LIL")
@@ -212,9 +202,10 @@ public class GenRecipes extends FabricRecipeProvider {
                 .offerTo(exporter, Redstone.CONSTRUCTOR.id("gold_hopper"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SLIME_BALL, 1)
-                .input(Items.SUGAR)
+                .input(Items.MAGMA_CREAM)
+                .input(Items.HONEY_BOTTLE)
                 .input(Items.LIME_DYE)
-                .criterion("has_lime_dye", FabricRecipeProvider.conditionsFromItem(Items.LIME_DYE))
+                .criterion("has_honey_bottle", FabricRecipeProvider.conditionsFromItem(Items.HONEY_BOTTLE))
                 .offerTo(exporter, Exploring.CONSTRUCTOR.id("slimeball"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 4)
@@ -246,6 +237,14 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input(Items.SAND)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
                 .offerTo(exporter, Exploring.CONSTRUCTOR.id("iron_nugget_from_washing"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Exploring.BLAZING_TORCH_ITEM, 1)
+                .pattern("C")
+                .pattern("B")
+                .input('C', ItemTags.COALS)
+                .input('B', Items.BLAZE_ROD)
+                .criterion("has_coals", FabricRecipeProvider.conditionsFromTag(ItemTags.COALS))
+                .offerTo(exporter, Exploring.CONSTRUCTOR.id("blazing_torch"));
 
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BONE_BLOCK, Exploring.POINTED_BONE);
 

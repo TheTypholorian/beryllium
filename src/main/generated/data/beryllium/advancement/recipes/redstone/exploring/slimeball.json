@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_lime_dye": {
+    "has_honey_bottle": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:lime_dye"
+            "items": "minecraft:honey_bottle"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_lime_dye"
+      "has_honey_bottle"
     ]
   ],
   "rewards": {

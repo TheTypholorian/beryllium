@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_redstone": {
+    "has_coals": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:redstone"
+            "items": "#minecraft:coals"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "beryllium:dispenser"
+        "recipe": "beryllium:exploring/blazing_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_redstone"
+      "has_coals"
     ]
   ],
   "rewards": {
     "recipes": [
-      "beryllium:dispenser"
+      "beryllium:exploring/blazing_torch"
     ]
   }
 }

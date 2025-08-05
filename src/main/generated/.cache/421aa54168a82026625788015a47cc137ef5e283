@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-03T17:04:34.4171856	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-05T09:10:21.2422903	Beryllium/Block Loot Tables
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data\beryllium\loot_table\blocks\combat\potion_cauldron.json
 c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\building\snow_brick_stairs.json
 823aa2bd92314f665daf8b979a8f018b6bd29e49 data\beryllium\loot_table\blocks\building\snow_brick_slab.json
@@ -7,8 +7,8 @@ c34c8594e91fe9d560a17bb6cb138eb0cc846a5e data\beryllium\loot_table\blocks\buildi
 e8afed99c52adbf931964540d569eb1a8de2b2ee data\beryllium\loot_table\blocks\exploring\corrupted_log.json
 26f130989e813ddb1720184b23551da2880a5355 data\beryllium\loot_table\blocks\exploring\corrupted_sapling.json
 3c1cf63848294422536835b875f77e5f7ea0f752 data\beryllium\loot_table\blocks\exploring\corrupted_planks.json
-72dfe4cde86b15dfc442fdd0bd46ee383994f5cd data\beryllium\loot_table\blocks\building\mossy_stone_stairs.json
 95072b0c228e1db98ddaad8a8aad6f52cc830d5e data\beryllium\loot_table\blocks\exploring\stripped_corrupted_log.json
+72dfe4cde86b15dfc442fdd0bd46ee383994f5cd data\beryllium\loot_table\blocks\building\mossy_stone_stairs.json
 91637dca57f4f72bd6484657696714b0880ea619 data\beryllium\loot_table\blocks\exploring\corrupted_wood.json
 7a180bdc8cb4d652e8e862802d9f89867d9d4b8a data\beryllium\loot_table\blocks\building\snow_brick_wall.json
 2159247837a583ee1e8a23cef2d7ff887112adda data\beryllium\loot_table\blocks\building\chiseled_snow_bricks.json
@@ -26,8 +26,8 @@ c883ffaadee1502ccc0a834433baa5fe1ed9a279 data\beryllium\loot_table\blocks\explor
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 1fc5149da5743e3c7c9c3fcf1fa5e70783146445 data\beryllium\loot_table\blocks\exploring\corrupted_end_stone.json
-ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 ee4b49b5e468e504c871168cbb7dd20e9ed32688 data\beryllium\loot_table\blocks\exploring\congealed_void.json
+ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 d5e9be84fd7ffd07a7014fcb9a4b9148a53809ac data\beryllium\loot_table\blocks\redstone\gold_hopper.json
 4c58071aa05faaba12cdf1216c7579249bcbbe10 data\beryllium\loot_table\blocks\building\mossy_stone.json
 e8109442699683dd0df739afa43860e61558220c data\beryllium\loot_table\blocks\exploring\geraniums.json

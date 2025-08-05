@@ -29,6 +29,7 @@ public class MinecraftClientMixin {
             server.getGameRules().get(GameRules.DO_DAYLIGHT_CYCLE).set(false, server);
             server.getGameRules().get(GameRules.DO_WEATHER_CYCLE).set(false, server);
             server.getGameRules().get(GameRules.REDUCED_DEBUG_INFO).set(true, server);
+            server.getGameRules().get(GameRules.NATURAL_REGENERATION).set(false, server);
 
             for (ServerWorld world : server.getWorlds()) {
                 world.setTimeOfDay(18000);

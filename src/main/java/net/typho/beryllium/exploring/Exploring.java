@@ -18,21 +18,21 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.component.ComponentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.entity.projectile.TridentEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.LootFunctionType;
@@ -40,6 +40,7 @@ import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.function.SetNameLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
@@ -55,6 +56,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.village.TradeOffers;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -187,6 +189,10 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .requiresTool()
             .strength(2)
             .sounds(BlockSoundGroup.BONE)), new Item.Settings());
+    public static final Block BLAZING_TORCH = CONSTRUCTOR.block("blazing_torch", new BlazingTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
+    public static final Block BLAZING_WALL_TORCH = CONSTRUCTOR.block("blazing_wall_torch", new BlazingWallTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
+
+    public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
 
     public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
@@ -203,8 +209,16 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             return super.use(world, user, hand);
         }
     });
+    public static final Item BLAZING_TORCH_ITEM = CONSTRUCTOR.item("blazing_torch", new VerticallyAttachableBlockItem(BLAZING_TORCH, BLAZING_WALL_TORCH, new Item.Settings(), Direction.DOWN) {
+        @Override
+        public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+            if (slot == PlayerInventory.OFF_HAND_SLOT || selected) {
+                BlazingTorchBlock.burn(world, entity.getBlockPos());
+            }
+        }
+    });
 
-    public static final RegistryEntry<EntityAttribute> STABLE_FOOTING = CONSTRUCTOR.attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.exploring.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> STABLE_FOOTING = CONSTRUCTOR.attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
 
     public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{
@@ -382,7 +396,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
-                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
                             )
                             .with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
@@ -390,7 +404,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
-                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
                             ));
 
                     break;
@@ -401,14 +415,14 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     @Override
     public void onInitializeClient() {
-        ModelPredicateProviderRegistry.register(Exploring.METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
+        ModelPredicateProviderRegistry.register(METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
         ParticleFactoryRegistry.getInstance().register(
-                Exploring.FIREFLY_PARTICLE,
+                FIREFLY_PARTICLE,
                 FireflyFactory::new
         );
         ColorProviderRegistry.ITEM.register((stack, index) -> {
             if (index == 1) {
-                DyeColor color = stack.get(Exploring.COMPASS_NEEDLE_COMPONENT);
+                DyeColor color = stack.get(COMPASS_NEEDLE_COMPONENT);
 
                 if (color == null) {
                     color = DyeColor.RED;
@@ -431,22 +445,24 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             }
 
             return -1;
-        }, Exploring.EXODINE_INGOT);
+        }, EXODINE_INGOT);
         ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
             if (index != 0) {
                 return world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
             } else {
                 return -1;
             }
-        }, Exploring.DAFFODILS, Exploring.SCILLA, Exploring.GERANIUMS);
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.FIREFLY_BOTTLE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.ALGAE_BLOCK, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.DAFFODILS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.SCILLA, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.GERANIUMS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.VOID_FIRE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.POINTED_BONE, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(Exploring.CONGEALED_VOID, RenderLayer.getTranslucent());
+        }, DAFFODILS, SCILLA, GERANIUMS);
+        BlockRenderLayerMap.INSTANCE.putBlock(FIREFLY_BOTTLE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ALGAE_BLOCK, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DAFFODILS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(SCILLA, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(GERANIUMS, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(VOID_FIRE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(POINTED_BONE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BLAZING_TORCH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BLAZING_WALL_TORCH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CONGEALED_VOID, RenderLayer.getTranslucent());
     }
 
     public static MaterialRules.MaterialRule createEndRule() {

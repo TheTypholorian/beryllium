@@ -133,6 +133,8 @@ public class GenModels extends FabricModelProvider {
 
         gen.registerSingleton(Exploring.CORRUPTED_END_STONE, TexturedModel.CUBE_BOTTOM_TOP);
 
+        gen.registerTorch(Exploring.BLAZING_TORCH, Exploring.BLAZING_WALL_TORCH);
+
         voidFire(gen);
         pointedBone(gen);
         potionCauldron(gen);
