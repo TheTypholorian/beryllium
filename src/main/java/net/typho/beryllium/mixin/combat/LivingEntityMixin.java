@@ -12,9 +12,7 @@ import net.typho.beryllium.combat.ScytheItem;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -116,5 +114,29 @@ public abstract class LivingEntityMixin {
         }
 
         shield.set(Combat.SHIELD_DURABILITY, durability);
+    }
+
+    @Inject(
+            method = "getMovementSpeed()F",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void bonusSpeed(CallbackInfoReturnable<Float> cir) {
+        cir.setReturnValue(cir.getReturnValue() + Combat.bonusSpeed((LivingEntity) (Object) this));
+    }
+
+    @ModifyVariable(
+            method = "travel",
+            at = @At(value = "STORE", ordinal = 3),
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/entity/LivingEntity;isTouchingWater()Z"
+                    )
+            )
+    )
+    private float bonusSwimmingSpeed(float h) {
+        System.out.println(h);
+        return h + Combat.bonusSwimmingSpeed((LivingEntity) (Object) this);
     }
 }

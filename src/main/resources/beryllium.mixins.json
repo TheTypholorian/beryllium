@@ -23,6 +23,8 @@
     "combat.GlassBottleItemMixin",
     "combat.LivingEntityMixin",
     "combat.MaceItemMixin",
+    "combat.PersistentProjectileEntityMixin",
+    "combat.PlayerEntityMixin",
     "combat.PotionItemMixin",
     "combat.ProjectileUtilMixin",
     "combat.RangedWeaponItemMixin",
@@ -69,6 +71,7 @@
     "client.MinecraftClientMixin",
     "client.ModelLoaderMixin",
     "client.WorldTabMixin",
+    "combat.ArmorFeatureRendererMixin",
     "combat.TridentEntityRendererMixin",
     "enchanting.EnchantmentScreenMixin"
   ],

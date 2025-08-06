@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 
 import java.util.concurrent.CompletableFuture;
@@ -34,5 +35,20 @@ public class GenBiomeTags extends FabricTagProvider<Biome> {
                 .add(BiomeKeys.FOREST);
         getOrCreateTagBuilder(BiomeTags.IS_END)
                 .add(Exploring.CORRUPTED_FOREST);
+        getOrCreateTagBuilder(Combat.DUNE_BIOMES)
+                .add(BiomeKeys.DESERT)
+                .add(BiomeKeys.BEACH)
+                .add(BiomeKeys.SNOWY_BEACH);
+        getOrCreateTagBuilder(Combat.COLD_OCEAN_BIOMES)
+                .add(BiomeKeys.COLD_OCEAN)
+                .add(BiomeKeys.DEEP_COLD_OCEAN)
+                .add(BiomeKeys.FROZEN_OCEAN)
+                .add(BiomeKeys.DEEP_FROZEN_OCEAN);
+        getOrCreateTagBuilder(Combat.WARM_OCEAN_BIOMES)
+                .add(BiomeKeys.OCEAN)
+                .add(BiomeKeys.DEEP_OCEAN)
+                .add(BiomeKeys.WARM_OCEAN)
+                .add(BiomeKeys.LUKEWARM_OCEAN)
+                .add(BiomeKeys.DEEP_LUKEWARM_OCEAN);
     }
 }
