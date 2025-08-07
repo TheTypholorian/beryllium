@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-07T10:59:07.5807924	Beryllium/Recipes
+// 1.21.1	2025-08-07T12:35:57.1786153	Beryllium/Recipes
 43b366ea2a464d18213cf0b2fb254a2a4068b834 data\beryllium\recipe\exploring\metal_detector.json
 83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
 8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
@@ -32,6 +32,7 @@ e52db2ff60e363d1588a73d165dbdcfa6675be68 data\beryllium\advancement\recipes\deco
 942c6f83310190afaa470ae7b2bc4258baacceae data\beryllium\advancement\recipes\misc\leather_from_smelting_rotten_flesh.json
 d7e873bcee9e58c8a91b4103a05acbba7dc12599 data\beryllium\recipe\combat\copper_arrow.json
 1fca298efdb191673477aaf33198c812deee7574 data\beryllium\advancement\recipes\misc\lime_dye_from_smelting_sugar_cane.json
+c929c67a833b76ee24b854d072c893ca70dfad9d data\beryllium\advancement\recipes\combat\combat\netherite_horse_armor_smithing.json
 b6543333699f41eb2f0f53325e6a84ba288c46c7 data\beryllium\advancement\recipes\redstone\exploring\slimeball.json
 cc2d0bf0e4456495ded105887bd29bc268e23db3 data\beryllium\advancement\recipes\combat\combat\copper_arrow.json
 e3edf4c100c8b4457b0f7ad6911f4b24660e837f data\beryllium\advancement\recipes\combat\combat\golden_scythe.json
@@ -131,6 +132,7 @@ c3d6f0bccbf589d51cebd4ea5be13641b04bf38e data\beryllium\advancement\recipes\deco
 40eb12017d0b99b3f7f5853d5fa217d051b2ff10 data\beryllium\advancement\recipes\building_blocks\stone_slab_from_firing_cobblestone_slab.json
 1d7242835f74df789e259247abbdbbb68f0cbe33 data\beryllium\advancement\recipes\building_blocks\smooth_red_sandstone.json
 bc531d98aa97d417ccdf6d4f4a842f1d72b08b3a data\beryllium\recipe\exploring\gravel_from_washing.json
+2e9c291c8549f59d9bd6969bb0e6918707e48300 data\beryllium\recipe\combat\netherite_horse_armor_smithing.json
 8e76fb7079a9d58c5ba4d582217aed2dfa8b4171 data\beryllium\advancement\recipes\combat\combat\iron_scythe.json
 58f75fea34f7c2582a1f43e93cc5bc84624bb5bd data\beryllium\advancement\recipes\misc\exploring\iron_nugget_from_washing.json
 1e11307335f94ee408229c428978b0e418e74258 data\beryllium\recipe\bone_block.json

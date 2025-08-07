@@ -113,6 +113,7 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final Item GOLDEN_SCYTHE = CONSTRUCTOR.item("golden_scythe",
             new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(CONSTRUCTOR, ToolMaterials.GOLD, 4, -3.4f)))
     );
+    public static final Item NETHERITE_HORSE_ARMOR = CONSTRUCTOR.item("netherite_horse_armor", new AnimalArmorItem(ArmorMaterials.NETHERITE, AnimalArmorItem.Type.EQUESTRIAN, false, new Item.Settings().maxCount(1)));
     public static final ComponentType<Float> SHIELD_DURABILITY = CONSTRUCTOR.dataComponent("shield_damage", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
     public static final Block POTION_CAULDRON = CONSTRUCTOR.block("potion_cauldron", new PotionCauldronBlock(Biome.Precipitation.NONE, AbstractBlock.Settings.create()));
     public static final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
@@ -149,6 +150,8 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<ArmorTrimMaterial> EFFICIENCY_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("efficiency"));
     public static final TagKey<ArmorTrimMaterial> ARMOR_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("armor"));
     public static final TagKey<ArmorTrimMaterial> SATURATION_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("saturation"));
+
+    public static final TagKey<Item> HORSE_ARMOR = TagKey.of(RegistryKeys.ITEM, CONSTRUCTOR.id("horse_armor"));
 
     public static float shieldDurability(ItemStack shield) {
         return shield.getOrDefault(SHIELD_DURABILITY, Beryllium.SERVER_CONFIG.shieldMaxDurability.get()).floatValue();

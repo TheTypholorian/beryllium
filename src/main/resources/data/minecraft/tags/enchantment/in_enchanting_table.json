@@ -1,13 +1,12 @@
 {
   "replace": false,
   "values": [
-    "beryllium:combat/encumbered",
-    "beryllium:combat/reach",
-    "beryllium:combat/step",
     "beryllium:combat/vitality",
-    "beryllium:combat/weightless",
+    "beryllium:exploring/encumbered",
+    "beryllium:exploring/reach",
+    "beryllium:exploring/step",
+    "beryllium:exploring/weightless",
     "beryllium:exploring/reeling",
-    "beryllium:exploring/stable_footing",
-    "beryllium:exploring/traction"
+    "beryllium:exploring/stable_footing"
   ]
 }

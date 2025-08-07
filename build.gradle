@@ -59,6 +59,8 @@ dependencies {
     include "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"
 
     modImplementation 'com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8'
+
+    //modImplementation("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
 }
 
 processResources {

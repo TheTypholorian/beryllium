@@ -370,6 +370,8 @@ public class GenRecipes extends FabricRecipeProvider {
         scythe(exporter, Combat.IRON_SCYTHE, Items.IRON_INGOT, "has_iron_ingot");
         scythe(exporter, Combat.GOLDEN_SCYTHE, Items.GOLD_INGOT, "has_gold_ingot");
 
+        offerNetheriteUpgradeRecipe(exporter, Items.DIAMOND_HORSE_ARMOR, RecipeCategory.COMBAT, Combat.NETHERITE_HORSE_ARMOR);
+
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.BONE_BLOCK, Exploring.POINTED_BONE);
 
         offerSmelting(exporter, List.of(Items.SUGAR_CANE), RecipeCategory.MISC, Items.LIME_DYE, 1, 200, "lime_dye");

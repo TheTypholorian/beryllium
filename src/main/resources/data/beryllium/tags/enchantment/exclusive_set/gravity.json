@@ -1,6 +1,6 @@
 {
   "values": [
-    "beryllium:combat/encumbered",
-    "beryllium:combat/weightless"
+    "beryllium:exploring/encumbered",
+    "beryllium:exploring/weightless"
   ]
 }
