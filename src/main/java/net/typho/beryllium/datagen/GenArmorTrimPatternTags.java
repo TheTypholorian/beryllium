@@ -33,10 +33,20 @@ public class GenArmorTrimPatternTags extends FabricTagProvider<ArmorTrimPattern>
                 .add(Identifier.ofVanilla("vex"));
         getOrCreateTagBuilder(Combat.FORTIFY_TRIMS)
                 .add(Identifier.ofVanilla("rib"));
-        getOrCreateTagBuilder(Combat.GOLD_TRIMS)
+        getOrCreateTagBuilder(Combat.FARM_TRIMS)
                 .add(Identifier.ofVanilla("snout"));
         getOrCreateTagBuilder(Combat.SIGHT_TRIMS)
                 .add(Identifier.ofVanilla("eye"));
+        getOrCreateTagBuilder(Combat.LUCK_TRIMS)
+                .add(Identifier.ofVanilla("spire"));
+        getOrCreateTagBuilder(Combat.MOUNT_REGEN_TRIMS)
+                .add(Identifier.ofVanilla("wayfinder"));
+        getOrCreateTagBuilder(Combat.MORE_XP_TRIMS)
+                .add(Identifier.ofVanilla("raiser"));
+        getOrCreateTagBuilder(Combat.CHEAP_XP_TRIMS)
+                .add(Identifier.ofVanilla("shaper"));
+        getOrCreateTagBuilder(Combat.MOUNT_SPEED_TRIMS)
+                .add(Identifier.ofVanilla("host"));
         getOrCreateTagBuilder(Combat.INVISIBLE_TRIMS)
                 .add(Identifier.ofVanilla("silence"));
     }

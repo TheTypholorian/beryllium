@@ -11,10 +11,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
@@ -133,8 +130,13 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<ArmorTrimPattern> GROUND_ARMOR_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ground_armor"));
     public static final TagKey<ArmorTrimPattern> ATTACK_SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("attack_speed"));
     public static final TagKey<ArmorTrimPattern> FORTIFY_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("fortify"));
-    public static final TagKey<ArmorTrimPattern> GOLD_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("gold"));
+    public static final TagKey<ArmorTrimPattern> FARM_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("farm"));
     public static final TagKey<ArmorTrimPattern> SIGHT_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("sight"));
+    public static final TagKey<ArmorTrimPattern> LUCK_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("luck"));
+    public static final TagKey<ArmorTrimPattern> MOUNT_REGEN_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("mount_regen"));
+    public static final TagKey<ArmorTrimPattern> MORE_XP_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("more_xp"));
+    public static final TagKey<ArmorTrimPattern> CHEAP_XP_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("cheap_xp"));
+    public static final TagKey<ArmorTrimPattern> MOUNT_SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("mount_speed"));
     public static final TagKey<ArmorTrimPattern> INVISIBLE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("invisible"));
 
     public static final TagKey<ArmorTrimMaterial> SWEEPING_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("sweeping"));
@@ -421,6 +423,30 @@ public class Combat implements ModInitializer, ClientModInitializer {
         }
 
         return (int) f;
+    }
+
+    public static float bonusMountSpeed(Entity entity) {
+        float f = 0;
+
+        LivingEntity passenger = entity.getControllingPassenger();
+
+        if (passenger != null) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(passenger)) {
+                if (trim.getLeft().getPattern().isIn(MOUNT_SPEED_TRIMS)) {
+                    f += 0.05f * trimPatternScale(trim.getRight(), passenger);
+                }
+            }
+        }
+
+        if (entity instanceof LivingEntity living) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(living)) {
+                if (trim.getLeft().getPattern().isIn(MOUNT_SPEED_TRIMS)) {
+                    f += 0.05f * trimPatternScale(trim.getRight(), living);
+                }
+            }
+        }
+
+        return f;
     }
 
     @Override
