@@ -50,5 +50,9 @@ public class GenBiomeTags extends FabricTagProvider<Biome> {
                 .add(BiomeKeys.WARM_OCEAN)
                 .add(BiomeKeys.LUKEWARM_OCEAN)
                 .add(BiomeKeys.DEEP_LUKEWARM_OCEAN);
+        getOrCreateTagBuilder(Combat.JUNGLE_BIOMES)
+                .add(BiomeKeys.JUNGLE)
+                .add(BiomeKeys.BAMBOO_JUNGLE)
+                .add(BiomeKeys.SPARSE_JUNGLE);
     }
 }

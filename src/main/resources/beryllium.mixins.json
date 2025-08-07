@@ -34,6 +34,7 @@
     "combat.ThrowablePotionItemMixin",
     "combat.TridentEntityMixin",
     "combat.TridentItemMixin",
+    "combat.VillagerEntityMixin",
     "config.LevelPropertiesMixin",
     "enchanting.AnimalArmorItemMixin",
     "enchanting.AnvilScreenHandlerMixin",
@@ -61,6 +62,7 @@
   ],
   "client": [
     "PlayerEntityRendererMixin",
+    "client.ArmorFeatureRendererMixin",
     "client.BlindnessFogModifierMixin",
     "client.ClientWorldMixin",
     "client.CreateWorldScreenMixin",
@@ -71,7 +73,6 @@
     "client.MinecraftClientMixin",
     "client.ModelLoaderMixin",
     "client.WorldTabMixin",
-    "combat.ArmorFeatureRendererMixin",
     "combat.TridentEntityRendererMixin",
     "enchanting.EnchantmentScreenMixin"
   ],

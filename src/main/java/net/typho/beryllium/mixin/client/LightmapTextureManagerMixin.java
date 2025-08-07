@@ -2,11 +2,13 @@ package net.typho.beryllium.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.combat.Combat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -21,7 +23,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private float gamma(Double instance, Operation<Float> original) {
-        return Beryllium.SERVER_CONFIG.ultraDark.get() ? 0 : original.call(instance);
+        return Beryllium.SERVER_CONFIG.ultraDark.get() ? 0 : original.call(instance) + Combat.bonusSight(MinecraftClient.getInstance().player);
     }
 
     @WrapOperation(

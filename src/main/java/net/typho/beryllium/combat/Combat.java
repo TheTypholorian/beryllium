@@ -19,11 +19,14 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.trim.ArmorTrim;
+import net.minecraft.item.trim.ArmorTrimMaterial;
 import net.minecraft.item.trim.ArmorTrimPattern;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Position;
@@ -120,6 +123,7 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<Biome> DUNE_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("dunes"));
     public static final TagKey<Biome> COLD_OCEAN_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("cold_oceans"));
     public static final TagKey<Biome> WARM_OCEAN_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("warm_oceans"));
+    public static final TagKey<Biome> JUNGLE_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("jungles"));
 
     public static final TagKey<ArmorTrimPattern> RANGED_DAMAGE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ranged_damage"));
     public static final TagKey<ArmorTrimPattern> SAND_VITALITY_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("sand_vitality"));
@@ -133,12 +137,69 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<ArmorTrimPattern> SIGHT_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("sight"));
     public static final TagKey<ArmorTrimPattern> INVISIBLE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("invisible"));
 
+    public static final TagKey<ArmorTrimMaterial> SWEEPING_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("sweeping"));
+    public static final TagKey<ArmorTrimMaterial> REACH_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("reach"));
+    public static final TagKey<ArmorTrimMaterial> ENHANCE_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("enhance"));
+    public static final TagKey<ArmorTrimMaterial> DISCOUNT_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("discount"));
+    public static final TagKey<ArmorTrimMaterial> ENCHANTABILITY_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("enchantability"));
+    public static final TagKey<ArmorTrimMaterial> KNOCKBACK_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("knockback"));
+    public static final TagKey<ArmorTrimMaterial> JUMP_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("jump"));
+    public static final TagKey<ArmorTrimMaterial> EFFICIENCY_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("efficiency"));
+    public static final TagKey<ArmorTrimMaterial> ARMOR_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("armor"));
+    public static final TagKey<ArmorTrimMaterial> SATURATION_MATERIALS = TagKey.of(RegistryKeys.TRIM_MATERIAL, CONSTRUCTOR.id("saturation"));
+
     public static float shieldDurability(ItemStack shield) {
         return shield.getOrDefault(SHIELD_DURABILITY, Beryllium.SERVER_CONFIG.shieldMaxDurability.get()).floatValue();
     }
 
-    public static List<ArmorTrim> collectTrims(LivingEntity entity) {
-        List<ArmorTrim> trims = new LinkedList<>();
+    public static RegistryEntry<ArmorMaterial> getArmorMaterial(ItemStack stack) {
+        return ((ArmorItem) stack.getItem()).getMaterial();
+    }
+
+    public static float trimMaterialScale(ItemStack stack, LivingEntity owner) {
+        ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+
+        if (trim == null) {
+            return 1;
+        }
+
+        float f = switch (trim.getMaterial().getIdAsString()) {
+            case "minecraft:gold" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("gold")) ? 0.5f : 1;
+            case "minecraft:iron" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("iron")) ? 0.5f : 1;
+            case "minecraft:diamond" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("diamond")) ? 0.5f : 1;
+            case "minecraft:netherite" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("netherite")) ? 0.5f : 1;
+            default -> 1;
+        };
+
+        if (owner != null) {
+            for (Pair<ArmorTrim, ItemStack> trim1 : collectTrims(owner)) {
+                if (!trim1.getLeft().equals(trim)) {
+                    return f;
+                }
+            }
+
+            f *= 1.25f;
+        }
+
+        return f;
+    }
+
+    public static float trimPatternScale(ItemStack stack, LivingEntity owner) {
+        ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+
+        if (trim == null) {
+            return 1;
+        }
+
+        if (trim.getMaterial().isIn(ENHANCE_MATERIALS)) {
+            return 1.5f;
+        }
+
+        return 1;
+    }
+
+    public static List<Pair<ArmorTrim, ItemStack>> collectTrims(LivingEntity entity) {
+        List<Pair<ArmorTrim, ItemStack>> trims = new LinkedList<>();
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.isArmorSlot()) {
@@ -146,7 +207,7 @@ public class Combat implements ModInitializer, ClientModInitializer {
                 ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
                 if (trim != null) {
-                    trims.add(trim);
+                    trims.add(new Pair<>(trim, stack));
                 }
             }
         }
@@ -157,9 +218,9 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusRangedDamage(LivingEntity entity) {
         float f = 0;
 
-        for (ArmorTrim trim : collectTrims(entity)) {
-            if (trim.getPattern().isIn(RANGED_DAMAGE_TRIMS)) {
-                f += 0.5f;
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getPattern().isIn(RANGED_DAMAGE_TRIMS)) {
+                f += 0.5f * trimPatternScale(trim.getRight(), entity);
             }
         }
 
@@ -170,9 +231,9 @@ public class Combat implements ModInitializer, ClientModInitializer {
         float f = 0;
 
         if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(DUNE_BIOMES)) {
-            for (ArmorTrim trim : collectTrims(entity)) {
-                if (trim.getPattern().isIn(SAND_VITALITY_TRIMS)) {
-                    f += 0.1f;
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+                if (trim.getLeft().getPattern().isIn(SAND_VITALITY_TRIMS)) {
+                    f += 0.05f * trimPatternScale(trim.getRight(), entity);
                 }
             }
         }
@@ -183,10 +244,10 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusMeleeDamage(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(COLD_OCEAN_BIOMES)) {
-            for (ArmorTrim trim : collectTrims(entity)) {
-                if (trim.getPattern().isIn(OCEAN_DAMAGE_TRIMS)) {
-                    f++;
+        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(WARM_OCEAN_BIOMES)) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+                if (trim.getLeft().getPattern().isIn(OCEAN_DAMAGE_TRIMS)) {
+                    f += trimPatternScale(trim.getRight(), entity);
                 }
             }
         }
@@ -197,15 +258,169 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusSwimmingSpeed(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(WARM_OCEAN_BIOMES)) {
-            for (ArmorTrim trim : collectTrims(entity)) {
-                if (trim.getPattern().isIn(OCEAN_SPEED_TRIMS)) {
-                    f++;
+        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(COLD_OCEAN_BIOMES)) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+                if (trim.getLeft().getPattern().isIn(OCEAN_SPEED_TRIMS)) {
+                    f += 0.02f * trimPatternScale(trim.getRight(), entity);
                 }
             }
         }
 
         return f;
+    }
+
+    public static int bonusArmor(LivingEntity entity) {
+        float f = 0;
+
+        if (entity.getY() < entity.getWorld().getSeaLevel() - 8) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+                if (trim.getLeft().getPattern().isIn(GROUND_ARMOR_TRIMS)) {
+                    f += 2 * trimPatternScale(trim.getRight(), entity);
+                }
+            }
+        }
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(ARMOR_MATERIALS)) {
+                f += trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return (int) f;
+    }
+
+    public static float bonusAttackSpeed(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getPattern().isIn(ATTACK_SPEED_TRIMS)) {
+                f += 0.05f * trimPatternScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusHealing(LivingEntity entity) {
+        float f = 0;
+
+        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(JUNGLE_BIOMES)) {
+            for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+                if (trim.getLeft().getPattern().isIn(JUNGLE_REGEN_TRIMS)) {
+                    f += 0.02f * trimPatternScale(trim.getRight(), entity);
+                }
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusKnockbackResistance(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getPattern().isIn(FORTIFY_TRIMS)) {
+                f += 0.1f * trimPatternScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusSight(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getPattern().isIn(SIGHT_TRIMS)) {
+                f += trimPatternScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusSweepingRatio(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(SWEEPING_MATERIALS)) {
+                f += 0.1f * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusReach(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(REACH_MATERIALS)) {
+                f += 0.5f * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static int bonusReputation(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(DISCOUNT_MATERIALS)) {
+                f += 5 * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return (int) f;
+    }
+
+    public static float bonusAttackKnockback(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(KNOCKBACK_MATERIALS)) {
+                f += 0.1f * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusJumpHeight(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(JUMP_MATERIALS)) {
+                f += 0.1f * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static float bonusMiningEfficiency(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(EFFICIENCY_MATERIALS)) {
+                f += 8f * trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return f;
+    }
+
+    public static int bonusSaturation(LivingEntity entity) {
+        float f = 0;
+
+        for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
+            if (trim.getLeft().getMaterial().isIn(SATURATION_MATERIALS)) {
+                f += trimMaterialScale(trim.getRight(), entity);
+            }
+        }
+
+        return (int) f;
     }
 
     @Override

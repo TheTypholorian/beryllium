@@ -23,7 +23,7 @@ public class FillingWandItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         BlockPos first = context.getStack().get(Building.FILLING_WAND_COMPONENT_TYPE);
-        BlockPos target = context.getPlayer().isSneaking() ? context.getBlockPos() : context.getBlockPos().offset(context.getSide());
+        BlockPos target = context.getPlayer().isSneaking() ? context.getBlockPos().offset(context.getSide()) : context.getBlockPos();
 
         if (first == null) {
             if (context.getPlayer() != null) {

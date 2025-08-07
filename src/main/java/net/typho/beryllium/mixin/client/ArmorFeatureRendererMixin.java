@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.combat;
+package net.typho.beryllium.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -27,10 +27,12 @@ public class ArmorFeatureRendererMixin {
             cancellable = true
     )
     private void renderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, EquipmentSlot armorSlot, int light, BipedEntityModel<?> model, CallbackInfo ci, @Local ItemStack stack) {
-        if (entity.isInvisible()) {
-            ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+        ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
-            if (trim != null && trim.getPattern().isIn(Combat.INVISIBLE_TRIMS)) {
+        if (trim != null && trim.getPattern().isIn(Combat.INVISIBLE_TRIMS)) {
+            if (Combat.trimPatternScale(stack, entity) > 1f) {
+                ci.cancel();
+            } else if (entity.isInvisible()) {
                 ci.cancel();
             }
         }
