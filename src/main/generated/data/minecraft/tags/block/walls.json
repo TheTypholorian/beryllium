@@ -6,6 +6,12 @@
     "beryllium:building/snow_brick_wall",
     "beryllium:building/granite_brick_wall",
     "beryllium:building/diorite_brick_wall",
-    "beryllium:building/andesite_brick_wall"
+    "beryllium:building/andesite_brick_wall",
+    "beryllium:building/cracked_deepslate_brick_wall",
+    "beryllium:building/cracked_deepslate_tile_wall",
+    "beryllium:building/cracked_brick_wall",
+    "beryllium:building/packed_mud_wall",
+    "beryllium:building/cracked_nether_brick_wall",
+    "beryllium:building/cracked_red_nether_brick_wall"
   ]
 }

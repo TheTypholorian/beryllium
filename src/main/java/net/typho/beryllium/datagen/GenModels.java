@@ -15,6 +15,7 @@ import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.food.Food;
 import net.typho.beryllium.redstone.Redstone;
+import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.List;
 
@@ -118,9 +119,10 @@ public class GenModels extends FabricModelProvider {
         family(gen, Building.CRACKED_STONE_BRICKS);
         family(gen, Building.SMOOTH_STONE);
         family(gen, Building.SNOW_BRICKS);
-        family(gen, Building.GRANITE_BRICKS);
-        family(gen, Building.DIORITE_BRICKS);
-        family(gen, Building.ANDESITE_BRICKS);
+
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            family(gen, family.build());
+        }
 
         gen.registerFlowerbed(Exploring.DAFFODILS);
         gen.registerFlowerbed(Exploring.SCILLA);

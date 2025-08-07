@@ -2,6 +2,7 @@ package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Items;
@@ -12,6 +13,7 @@ import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.redstone.Redstone;
+import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -43,20 +45,18 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(3)));
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(2)));
 
-        addDrop(Building.GRANITE_BRICKS.getBaseBlock());
-        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
-        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            for (Block block : family.datagen.values()) {
+                addDrop(block);
+            }
+        }
 
-        addDrop(Building.DIORITE_BRICKS.getBaseBlock());
-        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
-        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
-
-        addDrop(Building.ANDESITE_BRICKS.getBaseBlock());
-        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
-        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
-        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+        addDrop(Building.CUT_SANDSTONE_WALL);
+        addDrop(Building.CUT_SANDSTONE_STAIRS);
+        addDrop(Building.SMOOTH_SANDSTONE_WALL);
+        addDrop(Building.CUT_RED_SANDSTONE_WALL);
+        addDrop(Building.CUT_RED_SANDSTONE_STAIRS);
+        addDrop(Building.SMOOTH_RED_SANDSTONE_WALL);
 
         addDrop(Exploring.CORRUPTED_END_STONE, block -> drops(block, Blocks.END_STONE));
         addDrop(Exploring.CONGEALED_VOID, this::dropsWithSilkTouch);

@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-07T08:08:48.1878328	Beryllium/Tags for minecraft:trim_pattern
+// 1.21.1	2025-08-07T09:49:38.6987866	Beryllium/Tags for minecraft:trim_pattern
 3915af39365bf3905dc2945453c4cf094410be0f data\beryllium\tags\trim_pattern\combat\ground_armor.json
 3b66dda842a139a646667b78f54af1587679916e data\beryllium\tags\trim_pattern\combat\ocean_damage.json
 04c2eb75aabfbaf4f6218a99b9bf1cec08511caf data\beryllium\tags\trim_pattern\combat\invisible.json
@@ -6,7 +6,7 @@
 e7841eb321948fbd28c4f9295b51a511e4eb6ec0 data\beryllium\tags\trim_pattern\combat\jungle_regen.json
 6f1313e00de35742414671357b0f0446f3cf68b5 data\beryllium\tags\trim_pattern\combat\gold.json
 d84e30f4746592423faa6f3d22920f49cd5c94bc data\beryllium\tags\trim_pattern\combat\ocean_speed.json
-b3f652439e8ebf2f26e62151f9531cc694cb7adc data\beryllium\tags\trim_pattern\combat\fortify.json
 6bc44833795832985fac7c8853938fe575d34cc3 data\beryllium\tags\trim_pattern\combat\attack_speed.json
+b3f652439e8ebf2f26e62151f9531cc694cb7adc data\beryllium\tags\trim_pattern\combat\fortify.json
 15416bc8da826e656aa51adacd470060256be3f8 data\beryllium\tags\trim_pattern\combat\sand_vitality.json
 41903c10ddb0ef746af84a9590595efb9ce5df95 data\beryllium\tags\trim_pattern\combat\sight.json

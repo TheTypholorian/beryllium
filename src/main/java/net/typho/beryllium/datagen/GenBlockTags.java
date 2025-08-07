@@ -2,14 +2,17 @@ package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.redstone.Redstone;
+import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -49,31 +52,50 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
                 .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
-        getOrCreateTagBuilder(BlockTags.WALLS)
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            for (TagKey<Block> tag : family.tags) {
+                FabricTagBuilder builder = getOrCreateTagBuilder(tag);
+
+                for (Block block : family.datagen.values()) {
+                    builder.add(block);
+                }
+            }
+        }
+
+        FabricTagBuilder walls = getOrCreateTagBuilder(BlockTags.WALLS)
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
                 .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
 
-        getOrCreateTagBuilder(BlockTags.STAIRS)
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (family.datagen.containsKey(BlockFamily.Variant.WALL)) {
+                walls.add(family.datagen.get(BlockFamily.Variant.WALL));
+            }
+        }
+
+        FabricTagBuilder stairs = getOrCreateTagBuilder(BlockTags.STAIRS)
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
                 .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
 
-        getOrCreateTagBuilder(BlockTags.SLABS)
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (family.datagen.containsKey(BlockFamily.Variant.STAIRS)) {
+                stairs.add(family.datagen.get(BlockFamily.Variant.STAIRS));
+            }
+        }
+
+        FabricTagBuilder slabs = getOrCreateTagBuilder(BlockTags.SLABS)
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (family.datagen.containsKey(BlockFamily.Variant.SLAB)) {
+                slabs.add(family.datagen.get(BlockFamily.Variant.SLAB));
+            }
+        }
 
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
                 .add(Exploring.DAFFODILS)

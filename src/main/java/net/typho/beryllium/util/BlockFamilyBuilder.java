@@ -3,21 +3,26 @@ package net.typho.beryllium.util;
 import net.minecraft.block.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BlockFamilyBuilder {
+    public static final List<BlockFamilyBuilder> FAMILIES = new LinkedList<>();
+
     public final Constructor constructor;
     public final String prefix;
     public final AbstractBlock.Settings settings;
-    protected Block base;
-    protected final Map<BlockFamily.Variant, Block> variants = new LinkedHashMap<>();
+    public Block base;
+    public final Map<BlockFamily.Variant, Block> variants = new LinkedHashMap<>();
+    public final Map<BlockFamily.Variant, Block> datagen = new LinkedHashMap<>();
+    public final List<TagKey<Block>> tags = new LinkedList<>();
 
     public BlockFamilyBuilder(Constructor constructor, String prefix, AbstractBlock.Settings settings) {
         this.constructor = constructor;
         this.prefix = prefix;
         this.settings = settings;
+        FAMILIES.add(this);
     }
 
     public BlockFamilyBuilder variant(BlockFamily.Variant variant, Block block) {
@@ -27,12 +32,39 @@ public class BlockFamilyBuilder {
 
     public BlockFamily build() {
         if (base == null) {
-            throw new IllegalStateException("Block family builder doesn't have base block");
+            throw new IllegalStateException("Block family builder missing base block");
         }
 
         BlockFamily family = new BlockFamily.Builder(base).build();
         family.getVariants().putAll(variants);
         return family;
+    }
+
+    public Block register(BlockFamily.Variant variant, String id, Block block, Item.Settings settings) {
+        constructor.blockWithItem(id, block, settings);
+        datagen.put(variant, block);
+        return block;
+    }
+
+    public BlockFamilyBuilder noDatagen() {
+        datagen.clear();
+        return this;
+    }
+
+    public BlockFamilyBuilder noBaseDatagen() {
+        return noDatagen(null);
+    }
+
+    public BlockFamilyBuilder noDatagen(BlockFamily.Variant variant) {
+        datagen.remove(variant);
+        return this;
+    }
+
+    @SafeVarargs
+    public final BlockFamilyBuilder tags(TagKey<Block>... tags) {
+        this.tags.addAll(Arrays.asList(tags));
+
+        return this;
     }
 
     public BlockFamilyBuilder base() {
@@ -44,7 +76,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder base(String id, Block block) {
-        base = constructor.blockWithItem(id, block, new Item.Settings());
+        return base(register(null, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder base(Block block) {
+        base = block;
         return this;
     }
 
@@ -57,7 +93,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder button(String id, Block block) {
-        return variant(BlockFamily.Variant.BUTTON, constructor.blockWithItem(id, block, new Item.Settings()));
+        return button(register(BlockFamily.Variant.BUTTON, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder button(Block block) {
+        return variant(BlockFamily.Variant.BUTTON, block);
     }
 
     public BlockFamilyBuilder chiseled() {
@@ -69,7 +109,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder chiseled(String id, Block block) {
-        return variant(BlockFamily.Variant.CHISELED, constructor.blockWithItem(id, block, new Item.Settings()));
+        return chiseled(register(BlockFamily.Variant.CHISELED, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder chiseled(Block block) {
+        return variant(BlockFamily.Variant.CHISELED, block);
     }
 
     public BlockFamilyBuilder cracked() {
@@ -81,7 +125,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder cracked(String id, Block block) {
-        return variant(BlockFamily.Variant.CRACKED, constructor.blockWithItem(id, block, new Item.Settings()));
+        return cracked(register(BlockFamily.Variant.CRACKED, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder cracked(Block block) {
+        return variant(BlockFamily.Variant.CRACKED, block);
     }
 
     public BlockFamilyBuilder cut() {
@@ -93,7 +141,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder cut(String id, Block block) {
-        return variant(BlockFamily.Variant.CUT, constructor.blockWithItem(id, block, new Item.Settings()));
+        return cut(register(BlockFamily.Variant.CUT, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder cut(Block block) {
+        return variant(BlockFamily.Variant.CUT, block);
     }
 
     public BlockFamilyBuilder door(BlockSetType type) {
@@ -105,7 +157,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder door(String id, Block block) {
-        return variant(BlockFamily.Variant.DOOR, constructor.blockWithItem(id, block, new Item.Settings()));
+        return door(register(BlockFamily.Variant.DOOR, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder door(Block block) {
+        return variant(BlockFamily.Variant.DOOR, block);
     }
 
     public BlockFamilyBuilder customFence() {
@@ -117,7 +173,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder customFence(String id, Block block) {
-        return variant(BlockFamily.Variant.CUSTOM_FENCE, constructor.blockWithItem(id, block, new Item.Settings()));
+        return customFence(register(BlockFamily.Variant.CUSTOM_FENCE, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder customFence(Block block) {
+        return variant(BlockFamily.Variant.CUSTOM_FENCE, block);
     }
 
     public BlockFamilyBuilder fence() {
@@ -129,7 +189,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder fence(String id, Block block) {
-        return variant(BlockFamily.Variant.FENCE, constructor.blockWithItem(id, block, new Item.Settings()));
+        return fence(register(BlockFamily.Variant.FENCE, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder fence(Block block) {
+        return variant(BlockFamily.Variant.FENCE, block);
     }
 
     public BlockFamilyBuilder mosaic() {
@@ -141,7 +205,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder mosaic(String id, Block block) {
-        return variant(BlockFamily.Variant.MOSAIC, constructor.blockWithItem(id, block, new Item.Settings()));
+        return mosaic(register(BlockFamily.Variant.MOSAIC, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder mosaic(Block block) {
+        return variant(BlockFamily.Variant.MOSAIC, block);
     }
 
     public BlockFamilyBuilder sign(WoodType type) {
@@ -153,7 +221,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder sign(String id, Block block) {
-        return variant(BlockFamily.Variant.SIGN, constructor.blockWithItem(id, block, new Item.Settings()));
+        return sign(register(BlockFamily.Variant.SIGN, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder sign(Block block) {
+        return variant(BlockFamily.Variant.SIGN, block);
     }
 
     public BlockFamilyBuilder slab() {
@@ -165,7 +237,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder slab(String id, Block block) {
-        return variant(BlockFamily.Variant.SLAB, constructor.blockWithItem(id, block, new Item.Settings()));
+        return slab(register(BlockFamily.Variant.SLAB, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder slab(Block block) {
+        return variant(BlockFamily.Variant.SLAB, block);
     }
 
     public BlockFamilyBuilder stairs() {
@@ -177,7 +253,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder stairs(String id, Block block) {
-        return variant(BlockFamily.Variant.STAIRS, constructor.blockWithItem(id, block, new Item.Settings()));
+        return stairs(register(BlockFamily.Variant.STAIRS, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder stairs(Block block) {
+        return variant(BlockFamily.Variant.STAIRS, block);
     }
 
     public BlockFamilyBuilder pressurePlate(BlockSetType type) {
@@ -189,7 +269,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder pressurePlate(String id, Block block) {
-        return variant(BlockFamily.Variant.PRESSURE_PLATE, constructor.blockWithItem(id, block, new Item.Settings()));
+        return pressurePlate(register(BlockFamily.Variant.PRESSURE_PLATE, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder pressurePlate(Block block) {
+        return variant(BlockFamily.Variant.PRESSURE_PLATE, block);
     }
 
     public BlockFamilyBuilder polished() {
@@ -201,7 +285,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder polished(String id, Block block) {
-        return variant(BlockFamily.Variant.POLISHED, constructor.blockWithItem(id, block, new Item.Settings()));
+        return polished(register(BlockFamily.Variant.POLISHED, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder polished(Block block) {
+        return variant(BlockFamily.Variant.POLISHED, block);
     }
 
     public BlockFamilyBuilder trapdoor(BlockSetType type) {
@@ -213,7 +301,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder trapdoor(String id, Block block) {
-        return variant(BlockFamily.Variant.TRAPDOOR, constructor.blockWithItem(id, block, new Item.Settings()));
+        return trapdoor(register(BlockFamily.Variant.TRAPDOOR, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder trapdoor(Block block) {
+        return variant(BlockFamily.Variant.TRAPDOOR, block);
     }
 
     public BlockFamilyBuilder wall() {
@@ -225,7 +317,11 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder wall(String id, Block block) {
-        return variant(BlockFamily.Variant.WALL, constructor.blockWithItem(id, block, new Item.Settings()));
+        return wall(register(BlockFamily.Variant.WALL, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder wall(Block block) {
+        return variant(BlockFamily.Variant.WALL, block);
     }
 
     public BlockFamilyBuilder wallSign(WoodType type) {
@@ -237,6 +333,10 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder wallSign(String id, Block block) {
-        return variant(BlockFamily.Variant.WALL_SIGN, constructor.blockWithItem(id, block, new Item.Settings()));
+        return wallSign(register(BlockFamily.Variant.WALL_SIGN, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder wallSign(Block block) {
+        return variant(BlockFamily.Variant.WALL_SIGN, block);
     }
 }
