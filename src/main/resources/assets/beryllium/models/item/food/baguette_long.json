@@ -1,0 +1,6 @@
+{
+  "parent": "beryllium:item/large_item",
+  "textures": {
+    "layer0": "beryllium:item/food/baguette_long"
+  }
+}

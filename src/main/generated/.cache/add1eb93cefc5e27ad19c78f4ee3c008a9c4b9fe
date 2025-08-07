@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-07T12:35:57.1786153	Beryllium/Recipes
+// 1.21.1	2025-08-07T16:37:20.3502754	Beryllium/Recipes
 43b366ea2a464d18213cf0b2fb254a2a4068b834 data\beryllium\recipe\exploring\metal_detector.json
 83f96f20a9914e391ddd5ed6964f2fe18241218a data\beryllium\advancement\recipes\combat\combat\diamond_arrow.json
 8cc8bc737c1b4597f922f7026d7b5dcd7dd3970f data\beryllium\recipe\combat\golden_scythe.json
@@ -14,6 +14,7 @@ f1ea618e51c1fcc17314ff4dc610210eca931f41 data\beryllium\recipe\exploring\sand_fr
 b56e47b524cd4edee37c2abbc0517859c49a76c5 data\beryllium\advancement\recipes\combat\combat\iron_glaive.json
 457e2857007ef91e6b503acfd683bbf566891a83 data\beryllium\recipe\combat\flaming_arrow.json
 b0ca396c54579e2d5179599c93179fc3937315ff data\beryllium\recipe\purple_glazed_terracotta.json
+e5c58fbcafee783983fa6e23b6ebee0f5f4647ae data\beryllium\recipe\food\baguette.json
 43ea5b24a66aca6ee51521aedc0b4adc14af4d7c data\beryllium\recipe\black_glazed_terracotta.json
 c275ec98adbd863a321dd555e64f33958b52da6a data\beryllium\recipe\stone_from_firing_cobblestone.json
 7f5d6732a2a5d3e4627c30b91e57b0ed219374b5 data\beryllium\advancement\recipes\building_blocks\smooth_sandstone.json
@@ -66,6 +67,7 @@ f001acf070bcddfbcf144caceab3deb38457690a data\beryllium\recipe\building\snow_bri
 f975d2a159e30c5012eae9e71f9a46575c114915 data\beryllium\recipe\building\mossy_stone_wall_from_building\stone_wall.json
 b009a2fabedee52f7307b852e65cd79f96212802 data\beryllium\advancement\recipes\building_blocks\lodestone.json
 54f640b34469d0b96a156f0f183e2a7e52898041 data\beryllium\recipe\smooth_basalt.json
+def9b485f553537aa2b533232a5b7ce2a76f7d18 data\beryllium\advancement\recipes\food\food\baguette.json
 454636641fe71d9d830a41153d35848c66623748 data\beryllium\recipe\nether_brick.json
 a34143ecd59df716ec03433d6110d7236e14e660 data\beryllium\advancement\recipes\misc\exploring\string_from_carpet.json
 c50f616fa9d7a13dae1c7f731c9c7f9e8ea565cf data\beryllium\advancement\recipes\building_blocks\building\mossy_stone_from_stone.json
@@ -123,7 +125,7 @@ d60ba9ecea71ea410ca3ca37558144f80881b758 data\beryllium\recipe\lodestone.json
 c3d6f0bccbf589d51cebd4ea5be13641b04bf38e data\beryllium\advancement\recipes\decorations\red_glazed_terracotta.json
 123f79683084c6781a0fdc02a8c987633a7baf46 data\beryllium\recipe\building\smooth_stone_wall_from_firing_building\stone_wall.json
 423de26c515631ecfb71e79e7b3bc621ab29fd59 data\beryllium\advancement\recipes\building_blocks\building\smooth_stone_wall_from_firing_building\stone_wall.json
-90a6d71c1174022dfea4c4dbf8ac844d21a291f1 data\beryllium\recipe\food\croissant.json
+0fe251ad2ec29e6be30d96aabea4f28cbd687b57 data\beryllium\recipe\food\croissant.json
 1d03f73857384ddecb3f427a8c138bec76d18b39 data\beryllium\advancement\recipes\redstone\leather_horse_armor.json
 74535ae0c423f488a8c4767a99cdc177aea3068d data\beryllium\recipe\exploring\slimeball.json
 6caf6a956edf3857f4758c4203861489b9a4f95d data\beryllium\advancement\recipes\combat\combat\flaming_arrow.json

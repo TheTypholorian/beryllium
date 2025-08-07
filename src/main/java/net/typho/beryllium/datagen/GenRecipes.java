@@ -238,13 +238,19 @@ public class GenRecipes extends FabricRecipeProvider {
                 .offerTo(exporter, Identifier.ofVanilla("lodestone"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Food.CROISSANT, 1)
-                .pattern("   ")
                 .pattern(" C ")
                 .pattern("WWW")
                 .input('C', Items.COCOA_BEANS)
                 .input('W', Items.WHEAT)
                 .criterion("has_cocoa_beans", FabricRecipeProvider.conditionsFromItem(Items.COCOA_BEANS))
                 .offerTo(exporter, Food.CONSTRUCTOR.id("croissant"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Food.BAGUETTE, 1)
+                .pattern("WWW")
+                .pattern("WWW")
+                .input('W', Items.WHEAT)
+                .criterion("has_wheat", FabricRecipeProvider.conditionsFromItem(Items.WHEAT))
+                .offerTo(exporter, Food.CONSTRUCTOR.id("baguette"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SADDLE, 1)
                 .pattern(" L ")

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.component.ComponentType;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -92,5 +93,11 @@ public class Constructor implements Identifierifier {
 
     public BlockFamilyBuilder blockFamily(String prefix, AbstractBlock.Settings settings) {
         return new BlockFamilyBuilder(this, prefix, settings);
+    }
+
+    public FoodComponent.Builder timedFood(float eatSeconds) {
+        FoodComponent.Builder builder = new FoodComponent.Builder();
+        builder.eatSeconds = eatSeconds;
+        return builder;
     }
 }
