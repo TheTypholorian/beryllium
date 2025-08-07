@@ -418,5 +418,8 @@ public class GenRecipes extends FabricRecipeProvider {
         generateFamily(exporter, Building.CRACKED_STONE_BRICKS, FeatureSet.empty());
         generateFamily(exporter, Building.SMOOTH_STONE, FeatureSet.empty());
         generateFamily(exporter, Building.SNOW_BRICKS, FeatureSet.empty());
+        generateFamily(exporter, Building.GRANITE_BRICKS, FeatureSet.empty());
+        generateFamily(exporter, Building.DIORITE_BRICKS, FeatureSet.empty());
+        generateFamily(exporter, Building.ANDESITE_BRICKS, FeatureSet.empty());
     }
 }

@@ -3,6 +3,9 @@
     "beryllium:building/mossy_stone_stairs",
     "beryllium:building/cracked_stone_brick_stairs",
     "beryllium:building/smooth_stone_stairs",
-    "beryllium:building/snow_brick_stairs"
+    "beryllium:building/snow_brick_stairs",
+    "beryllium:building/granite_brick_stairs",
+    "beryllium:building/diorite_brick_stairs",
+    "beryllium:building/andesite_brick_stairs"
   ]
 }

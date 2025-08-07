@@ -118,6 +118,9 @@ public class GenModels extends FabricModelProvider {
         family(gen, Building.CRACKED_STONE_BRICKS);
         family(gen, Building.SMOOTH_STONE);
         family(gen, Building.SNOW_BRICKS);
+        family(gen, Building.GRANITE_BRICKS);
+        family(gen, Building.DIORITE_BRICKS);
+        family(gen, Building.ANDESITE_BRICKS);
 
         gen.registerFlowerbed(Exploring.DAFFODILS);
         gen.registerFlowerbed(Exploring.SCILLA);

@@ -53,18 +53,27 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
                 .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.WALL))
+                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
 
         getOrCreateTagBuilder(BlockTags.STAIRS)
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
                 .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
+                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
 
         getOrCreateTagBuilder(BlockTags.SLABS)
                 .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
                 .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
+                .add(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
         getOrCreateTagBuilder(BlockTags.INSIDE_STEP_SOUND_BLOCKS)
                 .add(Exploring.DAFFODILS)

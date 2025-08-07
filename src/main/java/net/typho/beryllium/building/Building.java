@@ -78,6 +78,24 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(CONSTRUCTOR.blockWithItem("snow_brick_stairs", new StairsBlock(Blocks.SNOW_BLOCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .slab(CONSTRUCTOR.blockWithItem("snow_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
             .build();
+    public static final BlockFamily GRANITE_BRICKS = CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
+            .base("granite_bricks")
+            .wall()
+            .stairs()
+            .slab()
+            .build();
+    public static final BlockFamily DIORITE_BRICKS = CONSTRUCTOR.blockFamily("diorite_brick", Blocks.STONE_BRICKS)
+            .base("diorite_bricks")
+            .wall()
+            .stairs()
+            .slab()
+            .build();
+    public static final BlockFamily ANDESITE_BRICKS = CONSTRUCTOR.blockFamily("andesite_brick", Blocks.STONE_BRICKS)
+            .base("andesite_bricks")
+            .wall()
+            .stairs()
+            .slab()
+            .build();
 
     @Override
     public void onInitialize() {

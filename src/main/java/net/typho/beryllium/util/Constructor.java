@@ -1,5 +1,6 @@
 package net.typho.beryllium.util;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -83,5 +84,13 @@ public class Constructor implements Identifierifier {
 
     public <T extends Entity> EntityType<T> entity(String id, EntityType<T> type) {
         return Registry.register(Registries.ENTITY_TYPE, id(id), type);
+    }
+
+    public BlockFamilyBuilder blockFamily(String prefix, AbstractBlock copy) {
+        return blockFamily(prefix, AbstractBlock.Settings.copy(copy));
+    }
+
+    public BlockFamilyBuilder blockFamily(String prefix, AbstractBlock.Settings settings) {
+        return new BlockFamilyBuilder(this, prefix, settings);
     }
 }

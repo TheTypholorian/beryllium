@@ -43,6 +43,21 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(3)));
         addDrop(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB), block -> drops(block, Items.SNOWBALL, ConstantLootNumberProvider.create(2)));
 
+        addDrop(Building.GRANITE_BRICKS.getBaseBlock());
+        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+        addDrop(Building.GRANITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+        addDrop(Building.DIORITE_BRICKS.getBaseBlock());
+        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+        addDrop(Building.DIORITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
+        addDrop(Building.ANDESITE_BRICKS.getBaseBlock());
+        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.WALL));
+        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+        addDrop(Building.ANDESITE_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+
         addDrop(Exploring.CORRUPTED_END_STONE, block -> drops(block, Blocks.END_STONE));
         addDrop(Exploring.CONGEALED_VOID, this::dropsWithSilkTouch);
         addDrop(Exploring.CORRUPTED_LOG);
