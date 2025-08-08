@@ -14,7 +14,6 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -22,34 +21,14 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.BerylliumClient;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class MetalDetectorItem extends Item {
-    public record OrePeak(int yMin, int yMax, @Nullable Collection<RegistryKey<Biome>> biomes) {
-        public OrePeak(int yMin, int yMax) {
-            this(yMin, yMax, null);
-        }
-
-        public boolean check(World world, BlockPos pos) {
-            if (biomes != null) {
-                RegistryKey<Biome> current = world.getBiome(pos).getKey().orElse(null);
-
-                if (!biomes.contains(current)) {
-                    return false;
-                }
-            }
-
-            return pos.getY() >= yMin && pos.getY() <= yMax;
-        }
-    }
-
     public static final Map<Block, Color> BLOCK_COLORS = new HashMap<>();
 
     static {
@@ -72,6 +51,7 @@ public class MetalDetectorItem extends Item {
         BLOCK_COLORS.put(Blocks.NETHER_QUARTZ_ORE, new Color(212, 202, 186));
         BLOCK_COLORS.put(Blocks.REDSTONE_ORE, new Color(255, 0, 0));
         BLOCK_COLORS.put(Blocks.DEEPSLATE_REDSTONE_ORE, new Color(255, 0, 0));
+        BLOCK_COLORS.put(Blocks.BUDDING_AMETHYST, new Color(166, 120, 241));
     }
 
     public MetalDetectorItem(Settings settings) {
@@ -153,7 +133,7 @@ public class MetalDetectorItem extends Item {
             found.entrySet()
                     .stream()
                     .sorted(Comparator.comparingInt(entry -> -entry.getValue()))
-                    .forEachOrdered(entry -> tooltip.add(entry.getKey().getName().setStyle(Style.EMPTY.withColor(BLOCK_COLORS.get(entry.getKey()).getRGB()))));
+                    .forEachOrdered(entry -> tooltip.add(entry.getKey().getName().append(" (" + entry.getValue() + ")").setStyle(Style.EMPTY.withColor(BLOCK_COLORS.get(entry.getKey()).getRGB()))));
         }
 
         /*

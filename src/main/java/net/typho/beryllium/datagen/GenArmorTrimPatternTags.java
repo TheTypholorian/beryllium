@@ -19,15 +19,15 @@ public class GenArmorTrimPatternTags extends FabricTagProvider<ArmorTrimPattern>
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(Combat.RANGED_DAMAGE_TRIMS)
                 .add(Identifier.ofVanilla("sentry"));
-        getOrCreateTagBuilder(Combat.SAND_VITALITY_TRIMS)
+        getOrCreateTagBuilder(Combat.SPEED_TRIMS)
                 .add(Identifier.ofVanilla("dune"));
-        getOrCreateTagBuilder(Combat.OCEAN_DAMAGE_TRIMS)
+        getOrCreateTagBuilder(Combat.DAMAGE_TRIMS)
                 .add(Identifier.ofVanilla("coast"));
-        getOrCreateTagBuilder(Combat.OCEAN_SPEED_TRIMS)
+        getOrCreateTagBuilder(Combat.SWIMMING_SPEED_TRIMS)
                 .add(Identifier.ofVanilla("tide"));
-        getOrCreateTagBuilder(Combat.JUNGLE_REGEN_TRIMS)
+        getOrCreateTagBuilder(Combat.REGEN_TRIMS)
                 .add(Identifier.ofVanilla("wild"));
-        getOrCreateTagBuilder(Combat.GROUND_ARMOR_TRIMS)
+        getOrCreateTagBuilder(Combat.ARMOR_TRIMS)
                 .add(Identifier.ofVanilla("ward"));
         getOrCreateTagBuilder(Combat.ATTACK_SPEED_TRIMS)
                 .add(Identifier.ofVanilla("vex"));

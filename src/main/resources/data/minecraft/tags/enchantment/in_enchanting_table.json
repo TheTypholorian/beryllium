@@ -1,12 +1,16 @@
 {
   "replace": false,
   "values": [
+    "beryllium:combat/adrenaline",
+    "beryllium:combat/lifesteal",
+    "beryllium:combat/shackling",
+    "beryllium:combat/target_lock",
     "beryllium:combat/vitality",
     "beryllium:exploring/encumbered",
     "beryllium:exploring/reach",
-    "beryllium:exploring/step",
-    "beryllium:exploring/weightless",
     "beryllium:exploring/reeling",
-    "beryllium:exploring/stable_footing"
+    "beryllium:exploring/stable_footing",
+    "beryllium:exploring/step",
+    "beryllium:exploring/weightless"
   ]
 }

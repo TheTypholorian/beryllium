@@ -118,17 +118,12 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final Block POTION_CAULDRON = CONSTRUCTOR.block("potion_cauldron", new PotionCauldronBlock(Biome.Precipitation.NONE, AbstractBlock.Settings.create()));
     public static final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
 
-    public static final TagKey<Biome> DUNE_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("dunes"));
-    public static final TagKey<Biome> COLD_OCEAN_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("cold_oceans"));
-    public static final TagKey<Biome> WARM_OCEAN_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("warm_oceans"));
-    public static final TagKey<Biome> JUNGLE_BIOMES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("jungles"));
-
     public static final TagKey<ArmorTrimPattern> RANGED_DAMAGE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ranged_damage"));
-    public static final TagKey<ArmorTrimPattern> SAND_VITALITY_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("sand_vitality"));
-    public static final TagKey<ArmorTrimPattern> OCEAN_DAMAGE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ocean_damage"));
-    public static final TagKey<ArmorTrimPattern> OCEAN_SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ocean_speed"));
-    public static final TagKey<ArmorTrimPattern> JUNGLE_REGEN_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("jungle_regen"));
-    public static final TagKey<ArmorTrimPattern> GROUND_ARMOR_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("ground_armor"));
+    public static final TagKey<ArmorTrimPattern> SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("speed"));
+    public static final TagKey<ArmorTrimPattern> DAMAGE_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("damage"));
+    public static final TagKey<ArmorTrimPattern> SWIMMING_SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("swimming_speed"));
+    public static final TagKey<ArmorTrimPattern> REGEN_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("regen"));
+    public static final TagKey<ArmorTrimPattern> ARMOR_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("armor"));
     public static final TagKey<ArmorTrimPattern> ATTACK_SPEED_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("attack_speed"));
     public static final TagKey<ArmorTrimPattern> FORTIFY_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("fortify"));
     public static final TagKey<ArmorTrimPattern> FARM_TRIMS = TagKey.of(RegistryKeys.TRIM_PATTERN, CONSTRUCTOR.id("farm"));
@@ -235,13 +230,11 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusSpeed(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(DUNE_BIOMES)) {
             for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
-                if (trim.getLeft().getPattern().isIn(SAND_VITALITY_TRIMS)) {
+                if (trim.getLeft().getPattern().isIn(SPEED_TRIMS)) {
                     f += 0.05f * trimPatternScale(trim.getRight(), entity);
                 }
             }
-        }
 
         return f;
     }
@@ -249,13 +242,11 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusMeleeDamage(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(WARM_OCEAN_BIOMES)) {
             for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
-                if (trim.getLeft().getPattern().isIn(OCEAN_DAMAGE_TRIMS)) {
+                if (trim.getLeft().getPattern().isIn(DAMAGE_TRIMS)) {
                     f += trimPatternScale(trim.getRight(), entity);
                 }
             }
-        }
 
         return f;
     }
@@ -263,13 +254,11 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusSwimmingSpeed(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(COLD_OCEAN_BIOMES)) {
             for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
-                if (trim.getLeft().getPattern().isIn(OCEAN_SPEED_TRIMS)) {
+                if (trim.getLeft().getPattern().isIn(SWIMMING_SPEED_TRIMS)) {
                     f += 0.02f * trimPatternScale(trim.getRight(), entity);
                 }
             }
-        }
 
         return f;
     }
@@ -277,13 +266,11 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static int bonusArmor(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getY() < entity.getWorld().getSeaLevel() - 8) {
             for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
-                if (trim.getLeft().getPattern().isIn(GROUND_ARMOR_TRIMS)) {
+                if (trim.getLeft().getPattern().isIn(ARMOR_TRIMS)) {
                     f += 2 * trimPatternScale(trim.getRight(), entity);
                 }
             }
-        }
 
         for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
             if (trim.getLeft().getMaterial().isIn(ARMOR_MATERIALS)) {
@@ -309,13 +296,11 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static float bonusHealing(LivingEntity entity) {
         float f = 0;
 
-        if (entity.getWorld().getBiome(entity.getBlockPos()).isIn(JUNGLE_BIOMES)) {
             for (Pair<ArmorTrim, ItemStack> trim : collectTrims(entity)) {
-                if (trim.getLeft().getPattern().isIn(JUNGLE_REGEN_TRIMS)) {
+                if (trim.getLeft().getPattern().isIn(REGEN_TRIMS)) {
                     f += 0.02f * trimPatternScale(trim.getRight(), entity);
                 }
             }
-        }
 
         return f;
     }

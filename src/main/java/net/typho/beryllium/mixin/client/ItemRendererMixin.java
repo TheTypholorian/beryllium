@@ -41,7 +41,7 @@ public abstract class ItemRendererMixin {
             at = @At(value = "STORE"),
             ordinal = 1
     )
-    public BakedModel getHeldItemModelMixin(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack) {
+    public BakedModel getModel(BakedModel bakedModel, @Local(argsOnly = true) ItemStack stack) {
         if (stack.getItem() instanceof DualModelItem dual) {
             return models.getModelManager().getModel(ModelIdentifier.ofInventoryVariant(dual.worldModel()));
         }

@@ -23,7 +23,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private float gamma(Double instance, Operation<Float> original) {
-        return Beryllium.SERVER_CONFIG.ultraDark.get() ? 0 : original.call(instance) + Combat.bonusSight(MinecraftClient.getInstance().player);
+        return Beryllium.SERVER_CONFIG.ultraDark.get() ? Combat.bonusSight(MinecraftClient.getInstance().player) / 4 : original.call(instance) + Combat.bonusSight(MinecraftClient.getInstance().player);
     }
 
     @WrapOperation(

@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:looting",
-    "beryllium:combat/lifesteal"
+    "beryllium:combat/lifesteal",
+    "beryllium:combat/adrenaline"
   ]
 }

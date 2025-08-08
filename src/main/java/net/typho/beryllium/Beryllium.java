@@ -1,6 +1,5 @@
 package net.typho.beryllium;
 
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
@@ -11,7 +10,6 @@ import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -46,8 +44,6 @@ public class Beryllium implements ModInitializer {
                                                 return 1;
                                             })
                                             .then(
-                                                    LiteralArgumentBuilder.<ServerCommandSource>literal("get")
-                                                            .then(
                                                                     CommandManager.argument("key", SERVER_CONFIG.keyArgumentType())
                                                                             .executes(context -> {
                                                                                 String key = context.getArgument("key", String.class);
@@ -61,7 +57,6 @@ public class Beryllium implements ModInitializer {
                                                                                     return 1;
                                                                                 }
                                                                             })
-                                                            )
                                             )
                                             .then(
                                                     SERVER_CONFIG.setCommandBuilder()
