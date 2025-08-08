@@ -1,19 +1,27 @@
 {
   "anvil_cost": 4,
   "description": {
-    "translate": "enchantment.minecraft.fire_aspect"
+    "translate": "enchantment.beryllium.combat.lifesteal"
   },
   "effects": {
     "minecraft:post_attack": [
       {
-        "affected": "victim",
+        "affected": "attacker",
         "effect": {
-          "type": "minecraft:ignite",
-          "duration": {
+          "type": "minecraft:apply_mob_effect",
+          "to_apply": "minecraft:regeneration",
+          "min_duration": {
             "type": "minecraft:linear",
-            "base": 4.0,
-            "per_level_above_first": 4.0
-          }
+            "base": 1,
+            "per_level_above_first": 1
+          },
+          "max_duration": {
+            "type": "minecraft:linear",
+            "base": 1,
+            "per_level_above_first": 1
+          },
+          "min_amplifier": 0,
+          "max_amplifier": 0
         },
         "enchanted": "attacker",
         "requirements": {
@@ -29,7 +37,7 @@
     "base": 60,
     "per_level_above_first": 20
   },
-  "max_level": 2,
+  "max_level": 3,
   "min_cost": {
     "base": 10,
     "per_level_above_first": 20
@@ -40,8 +48,8 @@
   ],
   "supported_items": "#minecraft:enchantable/fire_aspect",
   "weight": 2,
-  "catalyst": "minecraft:fire_charge",
+  "catalyst": "minecraft:glistering_melon",
   "catalyst_count": 4,
   "capacity": 3,
-  "exclusive_set": "#beryllium:exclusive_set/inflict_attack"
+  "exclusive_set": "#beryllium:exclusive_set/benefit_attack"
 }

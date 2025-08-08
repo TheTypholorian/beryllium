@@ -1,0 +1,8 @@
+{
+  "values": [
+    "minecraft:fire_aspect",
+    "minecraft:knockback",
+    "beryllium:combat/target_lock",
+    "beryllium:combat/shackling"
+  ]
+}

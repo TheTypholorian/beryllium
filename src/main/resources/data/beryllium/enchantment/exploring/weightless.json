@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.combat.weightless"
+    "translate": "enchantment.beryllium.exploring.weightless"
   },
   "supported_items": "#minecraft:enchantable/chest_armor",
   "exclusive_set": "#beryllium:exclusive_set/gravity",

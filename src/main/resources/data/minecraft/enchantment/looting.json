@@ -41,5 +41,6 @@
   "weight": 2,
   "catalyst": "minecraft:emerald",
   "catalyst_count": 4,
-  "capacity": 3
+  "capacity": 3,
+  "exclusive_set": "#beryllium:exclusive_set/benefit_attack"
 }

@@ -1,6 +1,6 @@
 {
   "description": {
-    "translate": "enchantment.beryllium.combat.step"
+    "translate": "enchantment.beryllium.exploring.step"
   },
   "supported_items": "#minecraft:enchantable/leg_armor",
   "weight": 1,

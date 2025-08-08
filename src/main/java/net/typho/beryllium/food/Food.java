@@ -1,6 +1,5 @@
 package net.typho.beryllium.food;
 
-import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.item.Item;
@@ -14,10 +13,5 @@ public class Food implements ModInitializer {
 
     @Override
     public void onInitialize() {
-    }
-
-    public static class Config extends ConfigSection {
-        public boolean fertilizableSugarcane = true;
-        public int maxSugarcaneHeight = 5;
     }
 }

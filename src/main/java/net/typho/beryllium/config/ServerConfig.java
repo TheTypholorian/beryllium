@@ -34,6 +34,9 @@ public class ServerConfig {
     };
     public final Map<String, Property<?>> properties = new LinkedHashMap<>();
 
+    public final BooleanProperty fertilizableSugarcane = new BooleanProperty(this, Combat.CONSTRUCTOR, "fertilizableSugarcane", true);
+    public final IntProperty maxSugarcaneHeight = new IntProperty(this, Combat.CONSTRUCTOR, "maxSugarcaneHeight", 5);
+
     public final IntProperty enderPearlCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "enderPearlCooldown", 300);
     public final FloatProperty enderPearlSpeed = new FloatProperty(this, Combat.CONSTRUCTOR, "enderPearlSpeed", 1f);
     public final IntProperty endCrystalCooldown = new IntProperty(this, Combat.CONSTRUCTOR, "endCrystalCooldown", 30);

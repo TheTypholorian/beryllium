@@ -33,5 +33,6 @@
   "weight": 5,
   "catalyst": "minecraft:piston",
   "catalyst_count": 4,
-  "capacity": 2
+  "capacity": 2,
+  "exclusive_set": "#beryllium:exclusive_set/inflict_attack"
 }

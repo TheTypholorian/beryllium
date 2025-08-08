@@ -5,13 +5,11 @@ import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.enchanting.Enchanting;
 import net.typho.beryllium.exploring.Exploring;
-import net.typho.beryllium.food.Food;
 import net.typho.beryllium.redstone.Redstone;
 
 public class BerylliumConfig extends Config {
     public Enchanting.Config enchanting = new Enchanting.Config();
     public Exploring.Config exploring = new Exploring.Config();
-    public Food.Config food = new Food.Config();
     public Redstone.Config redstone = new Redstone.Config();
 
     public BerylliumConfig() {

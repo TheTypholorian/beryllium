@@ -17,7 +17,6 @@
     "client.CommandSourceMixin",
     "client.CompassItemMixin",
     "client.StructureVoidBlockMixin",
-    "combat.ArmorItemTypeMixin",
     "combat.BrewingRecipeRegistryMixin",
     "combat.EndCrystalEntityMixin",
     "combat.EndCrystalItemMixin",
