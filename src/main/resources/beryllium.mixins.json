@@ -69,6 +69,7 @@
     "client.ArmorFeatureRendererMixin",
     "client.BlindnessFogModifierMixin",
     "client.CapeFeatureRendererMixin",
+    "client.ClientPlayerEntityMixin",
     "client.ClientWorldMixin",
     "client.CreateWorldScreenMixin",
     "client.ElytraFeatureRendererMixin",

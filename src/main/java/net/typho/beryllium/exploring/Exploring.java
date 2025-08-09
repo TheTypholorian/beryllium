@@ -396,7 +396,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
-                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.bastion_compass"), SetNameLootFunction.Target.ITEM_NAME))
                             )
                             .with(ItemEntry.builder(Items.COMPASS).weight(40)
                                     .apply(new ExplorationCompassLootFunction.Builder()
@@ -404,7 +404,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                                             .searchRadius(100)
                                             .withSkipExistingChunks(false)
                                     )
-                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
+                                    .apply(SetNameLootFunction.builder(Text.translatable("item.beryllium.exploring.fortress_compass"), SetNameLootFunction.Target.ITEM_NAME))
                             ));
 
                     break;

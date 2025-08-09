@@ -132,10 +132,10 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 
         int color = getColor();
 
-        List<StatusEffectInstance> effects = new LinkedList<>();
+        Map<EffectKey, Integer> effects = new LinkedHashMap<>();
 
         for (Map.Entry<Level, Float> entry : contents.entrySet()) {
-            effects.add(new StatusEffectInstance(entry.getKey().effect, (int) (entry.getKey().duration * entry.getValue() / level), entry.getKey().amplifier));
+            effects.compute(new EffectKey(entry.getKey().effect(), entry.getKey().amplifier), (k, v) -> (v == null ? 0 : v) + (int) (entry.getKey().duration * entry.getValue() / level));
         }
 
         for (Map.Entry<Level, Float> entry : contents.entrySet()) {
@@ -144,10 +144,14 @@ public class PotionCauldronBlockEntity extends BlockEntity {
 
         markDirty();
 
+        List<StatusEffectInstance> list = new LinkedList<>();
+
+        effects.forEach((key, duration) -> list.add(new StatusEffectInstance(key.effect, duration, key.amplifier)));
+
         return new PotionContentsComponent(
                 Optional.empty(),
                 Optional.of(color),
-                effects
+                list
         );
     }
 
@@ -188,6 +192,20 @@ public class PotionCauldronBlockEntity extends BlockEntity {
         @Override
         public int hashCode() {
             return Objects.hash(effect, amplifier, duration);
+        }
+    }
+
+    public record EffectKey(RegistryEntry<StatusEffect> effect, int amplifier) {
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+            EffectKey effectKey = (EffectKey) o;
+            return amplifier == effectKey.amplifier && Objects.equals(effect, effectKey.effect);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(effect, amplifier);
         }
     }
 }
