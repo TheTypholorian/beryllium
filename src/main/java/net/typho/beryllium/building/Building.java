@@ -67,10 +67,6 @@ public class Building implements ModInitializer, ClientModInitializer {
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
             .build();
-    public static final BlockFamily SNOW = CONSTRUCTOR.blockFamily("snow", Blocks.SNOW_BLOCK)
-            .base(Blocks.SNOW_BLOCK)
-            .tags(BlockTags.SHOVEL_MINEABLE)
-            .build();
     public static final BlockFamily SNOW_BRICKS = CONSTRUCTOR.blockFamily("snow_brick", Blocks.SNOW_BLOCK)
             .base("snow_bricks")
             .wall()
@@ -155,7 +151,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.SHOVEL_MINEABLE)
             .build();
-    public static final BlockFamily CRACKED_NETHER_BRICKS = CONSTRUCTOR.blockFamily("cracked_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
+    public static final BlockFamily CRACKED_NETHER_BRICK = CONSTRUCTOR.blockFamily("cracked_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
             .base(Blocks.CRACKED_NETHER_BRICKS)
             .wall()
             .fence()
@@ -165,7 +161,16 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stonecutting()
             .smelting(BlockFamilies.NETHER_BRICK)
             .build();
-    public static final BlockFamily CRACKED_RED_NETHER_BRICKS = CONSTRUCTOR.blockFamily("cracked_red_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
+    public static final BlockFamily RED_NETHER_BRICK = CONSTRUCTOR.blockFamily("red_nether_brick", Blocks.RED_NETHER_BRICKS)
+            .base(Blocks.RED_NETHER_BRICKS)
+            .wall(Blocks.RED_NETHER_BRICK_WALL)
+            .fence()
+            .stairs(Blocks.RED_NETHER_BRICK_STAIRS)
+            .slab(Blocks.RED_NETHER_BRICK_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
+            .build(BlockFamilies.RED_NETHER_BRICK);
+    public static final BlockFamily CRACKED_RED_NETHER_BRICK = CONSTRUCTOR.blockFamily("cracked_red_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
             .base("cracked_red_nether_bricks")
             .wall()
             .fence()
@@ -297,14 +302,16 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .smelting(BlockFamilies.POLISHED_BLACKSTONE_BRICK)
             .build();
     public static final BlockFamily CRACKED_END_STONE_BRICK = CONSTRUCTOR.blockFamily("cracked_end_stone_brick", Blocks.END_STONE_BRICKS)
-            .base()
+            .base("cracked_end_stone_bricks")
             .wall()
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .smelting(BlockFamilies.END_STONE_BRICK)
             .build();
     public static final BlockFamily PURPUR = CONSTRUCTOR.blockFamily("purpur", Blocks.PURPUR_BLOCK)
@@ -316,11 +323,12 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stonecutting()
             .build();
     public static final BlockFamily CRACKED_PURPUR = CONSTRUCTOR.blockFamily("cracked_purpur", Blocks.PURPUR_BLOCK)
-            .base()
+            .base("cracked_purpur_block")
             .wall()
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .smelting(BlockFamilies.PURPUR)
             .build();
 
@@ -351,9 +359,9 @@ public class Building implements ModInitializer, ClientModInitializer {
                     {BlockFamilies.DEEPSLATE_BRICK, CRACKED_DEEPSLATE_BRICKS},
                     {BlockFamilies.DEEPSLATE_TILE, CRACKED_DEEPSLATE_TILES},
                     {BlockFamilies.BRICK, CRACKED_BRICKS},
-                    {PACKED_MUD},
-                    {BlockFamilies.NETHER_BRICK, CRACKED_NETHER_BRICKS},
-                    {BlockFamilies.RED_NETHER_BRICK, CRACKED_RED_NETHER_BRICKS},
+                    {PACKED_MUD, BlockFamilies.MUD_BRICK, SNOW_BRICKS},
+                    {BlockFamilies.NETHER_BRICK, CRACKED_NETHER_BRICK},
+                    {RED_NETHER_BRICK, CRACKED_RED_NETHER_BRICK},
                     {QUARTZ},
                     {SMOOTH_QUARTZ},
                     {QUARTZ_BRICK},
@@ -363,7 +371,6 @@ public class Building implements ModInitializer, ClientModInitializer {
                     {BlockFamilies.GRANITE, POLISHED_GRANITE, GRANITE_BRICKS},
                     {BlockFamilies.DIORITE, POLISHED_DIORITE, DIORITE_BRICKS},
                     {BlockFamilies.ANDESITE, POLISHED_ANDESITE, ANDESITE_BRICKS},
-                    {SNOW, SNOW_BRICKS},
                     {BlockFamilies.BLACKSTONE, GILDED_BLACKSTONE, BlockFamilies.POLISHED_BLACKSTONE, BlockFamilies.POLISHED_BLACKSTONE_BRICK, CRACKED_POLISHED_BLACKSTONE_BRICK},
                     {BlockFamilies.END_STONE_BRICK, CRACKED_END_STONE_BRICK},
                     {PURPUR, CRACKED_PURPUR},

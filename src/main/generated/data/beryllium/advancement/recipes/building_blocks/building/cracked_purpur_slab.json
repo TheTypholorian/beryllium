@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_building/cracked_purpur": {
+    "has_building/cracked_purpur_block": {
       "conditions": {
         "items": [
           {
-            "items": "beryllium:building/cracked_purpur"
+            "items": "beryllium:building/cracked_purpur_block"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_building/cracked_purpur"
+      "has_building/cracked_purpur_block"
     ]
   ],
   "rewards": {

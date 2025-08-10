@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_wall_side",
   "textures": {
-    "wall": "beryllium:block/building/cracked_end_stone_brick"
+    "wall": "beryllium:block/building/cracked_end_stone_bricks"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_wall_post",
   "textures": {
-    "wall": "beryllium:block/building/cracked_purpur"
+    "wall": "beryllium:block/building/cracked_purpur_block"
   }
 }
