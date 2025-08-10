@@ -6,9 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.data.client.*;
-import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.registry.Registries;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -20,7 +18,6 @@ import net.typho.beryllium.redstone.Redstone;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.List;
-import java.util.Objects;
 
 public class GenModels extends FabricModelProvider {
     public GenModels(FabricDataOutput output) {
@@ -114,13 +111,9 @@ public class GenModels extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
-            BlockFamily family1 = new BlockFamily.Builder(family.base).build();
-            family1.getVariants().putAll(family.variants);
-            family1.getVariants().values().removeIf(block -> Objects.equals(Registries.BLOCK.getId(block).getNamespace(), Identifier.DEFAULT_NAMESPACE));
-
             BlockStateModelGenerator.BlockTexturePool pool = gen.registerCubeAllModelTexturePool(family.base);
             pool.textures.put(TextureKey.WALL, pool.textures.getTexture(TextureKey.SIDE));
-            pool.family(family1);
+            pool.family(family.build());
         }
 
         gen.registerFlowerbed(Exploring.DAFFODILS);

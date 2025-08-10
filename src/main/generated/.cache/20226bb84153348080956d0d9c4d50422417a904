@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-10T12:41:39.8127524	Beryllium/Tags for minecraft:trim_pattern
+// 1.21.1	2025-08-10T12:58:02.6501858	Beryllium/Tags for minecraft:trim_pattern
 d84e30f4746592423faa6f3d22920f49cd5c94bc data\beryllium\tags\trim_pattern\combat\swimming_speed.json
 50d92920c69a0eeecf33236a19d3af09986cd899 data\beryllium\tags\trim_pattern\combat\ranged_damage.json
 e7841eb321948fbd28c4f9295b51a511e4eb6ec0 data\beryllium\tags\trim_pattern\combat\regen.json
@@ -9,8 +9,8 @@ b3f652439e8ebf2f26e62151f9531cc694cb7adc data\beryllium\tags\trim_pattern\combat
 d3d16724dd5ef88409e5a5758ce648f79b33014b data\beryllium\tags\trim_pattern\combat\mount_speed.json
 41903c10ddb0ef746af84a9590595efb9ce5df95 data\beryllium\tags\trim_pattern\combat\sight.json
 3b66dda842a139a646667b78f54af1587679916e data\beryllium\tags\trim_pattern\combat\damage.json
-d4cff35f8f99b75b67639f4fa5ec74fd1ba67eb2 data\beryllium\tags\trim_pattern\combat\cheap_xp.json
 ca6ed4e51601b3bb1cb10c51716bd8d17ce42264 data\beryllium\tags\trim_pattern\combat\more_xp.json
+d4cff35f8f99b75b67639f4fa5ec74fd1ba67eb2 data\beryllium\tags\trim_pattern\combat\cheap_xp.json
 04c2eb75aabfbaf4f6218a99b9bf1cec08511caf data\beryllium\tags\trim_pattern\combat\invisible.json
 6bc44833795832985fac7c8853938fe575d34cc3 data\beryllium\tags\trim_pattern\combat\attack_speed.json
 cebe52160d56c1968a41ed04a3f6be9692dd1270 data\beryllium\tags\trim_pattern\combat\luck.json
