@@ -1,9 +1,9 @@
 {
   "values": [
     "beryllium:building/mossy_stone_wall",
+    "beryllium:building/snow_brick_wall",
     "beryllium:building/cracked_stone_brick_wall",
     "beryllium:building/smooth_stone_wall",
-    "beryllium:building/snow_brick_wall",
     "beryllium:building/granite_brick_wall",
     "beryllium:building/diorite_brick_wall",
     "beryllium:building/andesite_brick_wall",
@@ -12,6 +12,16 @@
     "beryllium:building/cracked_brick_wall",
     "beryllium:building/packed_mud_wall",
     "beryllium:building/cracked_nether_brick_wall",
-    "beryllium:building/cracked_red_nether_brick_wall"
+    "beryllium:building/cracked_red_nether_brick_wall",
+    "beryllium:building/stone_wall",
+    "beryllium:building/smooth_quartz_wall",
+    "beryllium:building/quartz_brick_wall",
+    "beryllium:building/smooth_sandstone_wall",
+    "beryllium:building/smooth_red_sandstone_wall",
+    "beryllium:building/prismarine_brick_wall",
+    "beryllium:building/dark_prismarine_wall",
+    "beryllium:building/polished_granite_wall",
+    "beryllium:building/polished_diorite_wall",
+    "beryllium:building/polished_andesite_wall"
   ]
 }

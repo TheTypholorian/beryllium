@@ -5,7 +5,9 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -64,6 +66,17 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .build();
+    public static final BlockFamily SNOW = CONSTRUCTOR.blockFamily("snow", Blocks.SNOW_BLOCK)
+            .base(Blocks.SNOW_BLOCK)
+            .tags(BlockTags.SHOVEL_MINEABLE)
+            .build();
+    public static final BlockFamily SNOW_BRICKS = CONSTRUCTOR.blockFamily("snow_brick", Blocks.SNOW_BLOCK)
+            .base("snow_bricks")
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.SHOVEL_MINEABLE)
+            .build();
     public static final BlockFamily CRACKED_STONE_BRICKS = CONSTRUCTOR.blockFamily("cracked_stone_brick", Blocks.CRACKED_STONE_BRICKS)
             .base(Blocks.CRACKED_STONE_BRICKS)
             .wall()
@@ -73,17 +86,11 @@ public class Building implements ModInitializer, ClientModInitializer {
             .build();
     public static final BlockFamily SMOOTH_STONE = CONSTRUCTOR.blockFamily("smooth_stone", Blocks.SMOOTH_STONE)
             .base(Blocks.SMOOTH_STONE)
+            .chiseled()
             .wall()
             .stairs()
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
-            .build();
-    public static final BlockFamily SNOW_BRICKS = CONSTRUCTOR.blockFamily("snow_brick", Blocks.SNOW_BLOCK)
-            .base("snow_bricks")
-            .wall()
-            .stairs()
-            .slab()
-            .tags(BlockTags.SHOVEL_MINEABLE)
             .build();
     public static final BlockFamily GRANITE_BRICKS = CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
             .base("granite_bricks")
@@ -150,32 +157,101 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .build();
-    public static final Block STONE_WALL = CONSTRUCTOR.blockWithItem("stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings());
-    public static final Block SMOOTH_QUARTZ_WALL = CONSTRUCTOR.blockWithItem("smooth_quartz_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_QUARTZ)), new Item.Settings());
-    public static final Block CUT_SANDSTONE_WALL = CONSTRUCTOR.blockWithItem("cut_sandstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.CUT_SANDSTONE)), new Item.Settings());
-    public static final Block CUT_SANDSTONE_STAIRS = CONSTRUCTOR.blockWithItem("cut_sandstone_stairs", new StairsBlock(Blocks.CUT_SANDSTONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CUT_SANDSTONE)), new Item.Settings());
-    public static final Block SMOOTH_SANDSTONE_WALL = CONSTRUCTOR.blockWithItem("smooth_sandstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_SANDSTONE)), new Item.Settings());
-    public static final Block CUT_RED_SANDSTONE_WALL = CONSTRUCTOR.blockWithItem("cut_red_sandstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.CUT_RED_SANDSTONE)), new Item.Settings());
-    public static final Block CUT_RED_SANDSTONE_STAIRS = CONSTRUCTOR.blockWithItem("cut_red_sandstone_stairs", new StairsBlock(Blocks.CUT_RED_SANDSTONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.CUT_RED_SANDSTONE)), new Item.Settings());
-    public static final Block SMOOTH_RED_SANDSTONE_WALL = CONSTRUCTOR.blockWithItem("smooth_red_sandstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_RED_SANDSTONE)), new Item.Settings());
-    public static final Block PRISMARINE_BRICK_WALL = CONSTRUCTOR.blockWithItem("prismarine_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.PRISMARINE_BRICKS)), new Item.Settings());
-    public static final Block DARK_PRISMARINE_WALL = CONSTRUCTOR.blockWithItem("dark_prismarine_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.DARK_PRISMARINE)), new Item.Settings());
-    public static final Block POLISHED_GRANITE_WALL = CONSTRUCTOR.blockWithItem("polished_granite_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.POLISHED_GRANITE)), new Item.Settings());
+    public static final BlockFamily STONE = CONSTRUCTOR.blockFamily("stone", Blocks.STONE)
+            .base(Blocks.STONE)
+            .wall()
+            .stairs(Blocks.STONE_STAIRS)
+            .slab(Blocks.STONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.STONE);
+    public static final BlockFamily QUARTZ = CONSTRUCTOR.blockFamily("quartz", Blocks.QUARTZ_BLOCK)
+            .base(Blocks.QUARTZ_BLOCK)
+            //.wall()
+            .stairs(Blocks.QUARTZ_STAIRS)
+            .slab(Blocks.QUARTZ_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.QUARTZ_BLOCK);
+    public static final BlockFamily SMOOTH_QUARTZ = CONSTRUCTOR.blockFamily("smooth_quartz", Blocks.SMOOTH_QUARTZ)
+            .base(Blocks.SMOOTH_QUARTZ)
+            .wall()
+            .stairs(Blocks.SMOOTH_QUARTZ_STAIRS)
+            .slab(Blocks.SMOOTH_QUARTZ_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.SMOOTH_QUARTZ);
+    public static final BlockFamily QUARTZ_BRICK = CONSTRUCTOR.blockFamily("quartz_brick", Blocks.QUARTZ_BRICKS)
+            .base(Blocks.QUARTZ_BRICKS)
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build();
+    public static final BlockFamily CUT_SANDSTONE = CONSTRUCTOR.blockFamily("cut_sandstone", Blocks.CUT_SANDSTONE)
+            .base(Blocks.CUT_SANDSTONE)
+            .stairs()
+            .slab(Blocks.CUT_SANDSTONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.CUT_SANDSTONE);
+    public static final BlockFamily SMOOTH_SANDSTONE = CONSTRUCTOR.blockFamily("smooth_sandstone", Blocks.SMOOTH_SANDSTONE)
+            .base(Blocks.SMOOTH_SANDSTONE)
+            .wall()
+            .stairs(Blocks.SMOOTH_SANDSTONE_STAIRS)
+            .slab(Blocks.SMOOTH_SANDSTONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.SMOOTH_SANDSTONE);
+    public static final BlockFamily CUT_RED_SANDSTONE = CONSTRUCTOR.blockFamily("cut_red_sandstone", Blocks.CUT_RED_SANDSTONE)
+            .base(Blocks.CUT_RED_SANDSTONE)
+            .stairs()
+            .slab(Blocks.CUT_RED_SANDSTONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.CUT_RED_SANDSTONE);
+    public static final BlockFamily SMOOTH_RED_SANDSTONE = CONSTRUCTOR.blockFamily("smooth_red_sandstone", Blocks.SMOOTH_RED_SANDSTONE)
+            .base(Blocks.SMOOTH_RED_SANDSTONE)
+            .wall()
+            .stairs(Blocks.SMOOTH_RED_SANDSTONE_STAIRS)
+            .slab(Blocks.SMOOTH_RED_SANDSTONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.SMOOTH_RED_SANDSTONE);
+    public static final BlockFamily PRISMARINE_BRICK = CONSTRUCTOR.blockFamily("prismarine_brick", Blocks.PRISMARINE_BRICKS)
+            .base(Blocks.PRISMARINE_BRICKS)
+            .wall()
+            .stairs(Blocks.PRISMARINE_BRICK_STAIRS)
+            .slab(Blocks.PRISMARINE_BRICK_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.PRISMARINE_BRICK);
+    public static final BlockFamily DARK_PRISMARINE = CONSTRUCTOR.blockFamily("dark_prismarine", Blocks.DARK_PRISMARINE)
+            .base(Blocks.DARK_PRISMARINE)
+            .wall()
+            .stairs(Blocks.DARK_PRISMARINE_STAIRS)
+            .slab(Blocks.DARK_PRISMARINE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.DARK_PRISMARINE);
+    public static final BlockFamily POLISHED_GRANITE = CONSTRUCTOR.blockFamily("polished_granite", Blocks.POLISHED_GRANITE)
+            .base(Blocks.POLISHED_GRANITE)
+            .wall()
+            .stairs(Blocks.POLISHED_GRANITE_STAIRS)
+            .slab(Blocks.POLISHED_GRANITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.POLISHED_GRANITE);
+    public static final BlockFamily POLISHED_DIORITE = CONSTRUCTOR.blockFamily("polished_diorite", Blocks.POLISHED_DIORITE)
+            .base(Blocks.POLISHED_DIORITE)
+            .wall()
+            .stairs(Blocks.POLISHED_DIORITE_STAIRS)
+            .slab(Blocks.POLISHED_DIORITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.POLISHED_DIORITE);
+    public static final BlockFamily POLISHED_ANDESITE = CONSTRUCTOR.blockFamily("polished_andesite", Blocks.POLISHED_ANDESITE)
+            .base(Blocks.POLISHED_ANDESITE)
+            .wall()
+            .stairs(Blocks.POLISHED_ANDESITE_STAIRS)
+            .slab(Blocks.POLISHED_ANDESITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .build(BlockFamilies.POLISHED_ANDESITE);
 
     @Override
     public void onInitialize() {
-        BlockFamilies.STONE.getVariants().put(BlockFamily.Variant.WALL, STONE_WALL);
-        BlockFamilies.SMOOTH_QUARTZ.getVariants().put(BlockFamily.Variant.WALL, SMOOTH_QUARTZ_WALL);
-        BlockFamilies.CUT_SANDSTONE.getVariants().put(BlockFamily.Variant.STAIRS, CUT_SANDSTONE_STAIRS);
-        BlockFamilies.CUT_SANDSTONE.getVariants().put(BlockFamily.Variant.WALL, CUT_SANDSTONE_WALL);
-        BlockFamilies.SMOOTH_SANDSTONE.getVariants().put(BlockFamily.Variant.WALL, SMOOTH_SANDSTONE_WALL);
-        BlockFamilies.CUT_RED_SANDSTONE.getVariants().put(BlockFamily.Variant.STAIRS, CUT_RED_SANDSTONE_STAIRS);
-        BlockFamilies.CUT_RED_SANDSTONE.getVariants().put(BlockFamily.Variant.WALL, CUT_RED_SANDSTONE_WALL);
-        BlockFamilies.SMOOTH_RED_SANDSTONE.getVariants().put(BlockFamily.Variant.WALL, SMOOTH_RED_SANDSTONE_WALL);
-        BlockFamilies.PRISMARINE_BRICK.getVariants().put(BlockFamily.Variant.WALL, PRISMARINE_BRICK_WALL);
-        BlockFamilies.DARK_PRISMARINE.getVariants().put(BlockFamily.Variant.WALL, DARK_PRISMARINE_WALL);
-        BlockFamilies.POLISHED_GRANITE.getVariants().put(BlockFamily.Variant.WALL, POLISHED_GRANITE_WALL);
-
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+            entries.addAfter(Blocks.SMOKER, KILN_BLOCK);
+        });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
             BlockFamily.Variant[] variantOrder = {
                     BlockFamily.Variant.MOSAIC,
@@ -193,13 +269,26 @@ public class Building implements ModInitializer, ClientModInitializer {
                     BlockFamily.Variant.SIGN,
                     BlockFamily.Variant.WALL_SIGN
             };
-            BlockFamily[][] variants = {
-                    {BlockFamilies.GRANITE, BlockFamilies.POLISHED_GRANITE, GRANITE_BRICKS},
-                    {BlockFamilies.DIORITE, BlockFamilies.POLISHED_DIORITE, DIORITE_BRICKS},
-                    {BlockFamilies.ANDESITE, BlockFamilies.POLISHED_ANDESITE, ANDESITE_BRICKS}
+            BlockFamily[][] vanillaVariants = {
+                    {STONE, MOSSY_STONE, BlockFamilies.STONE_BRICK, CRACKED_STONE_BRICKS, BlockFamilies.MOSSY_STONE_BRICK, BlockFamilies.COBBLESTONE, BlockFamilies.MOSSY_COBBLESTONE, SMOOTH_STONE},
+                    {BlockFamilies.DEEPSLATE_BRICK, CRACKED_DEEPSLATE_BRICKS},
+                    {BlockFamilies.DEEPSLATE_TILE, CRACKED_DEEPSLATE_TILES},
+                    {BlockFamilies.BRICK, CRACKED_BRICKS},
+                    {PACKED_MUD},
+                    {BlockFamilies.NETHER_BRICK, CRACKED_NETHER_BRICKS},
+                    {BlockFamilies.RED_NETHER_BRICK, CRACKED_RED_NETHER_BRICKS},
+                    {SMOOTH_QUARTZ},
+                    {QUARTZ_BRICK},
+                    {BlockFamilies.SANDSTONE, CUT_SANDSTONE, SMOOTH_SANDSTONE},
+                    {BlockFamilies.RED_SANDSTONE, CUT_RED_SANDSTONE, SMOOTH_RED_SANDSTONE},
+                    {PRISMARINE_BRICK, DARK_PRISMARINE},
+                    {BlockFamilies.GRANITE, POLISHED_GRANITE, GRANITE_BRICKS},
+                    {BlockFamilies.DIORITE, POLISHED_DIORITE, DIORITE_BRICKS},
+                    {BlockFamilies.ANDESITE, POLISHED_ANDESITE, ANDESITE_BRICKS},
+                    {SNOW, SNOW_BRICKS},
             };
 
-            for (BlockFamily[] variant : variants) {
+            for (BlockFamily[] variant : vanillaVariants) {
                 Block keep = variant[0].getBaseBlock();
 
                 Predicate<ItemStack> predicate = stack -> {
@@ -208,7 +297,7 @@ public class Building implements ModInitializer, ClientModInitializer {
 
                         if (keep != block) {
                             for (BlockFamily family : variant) {
-                                if (family.getVariants().containsValue(block)) {
+                                if (family.getBaseBlock() == block || family.getVariants().containsValue(block)) {
                                     return true;
                                 }
                             }

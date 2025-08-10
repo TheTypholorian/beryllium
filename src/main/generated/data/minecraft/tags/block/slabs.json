@@ -1,8 +1,8 @@
 {
   "values": [
     "beryllium:building/mossy_stone_slab",
-    "beryllium:building/cracked_stone_brick_slab",
     "beryllium:building/snow_brick_slab",
+    "beryllium:building/cracked_stone_brick_slab",
     "beryllium:building/granite_brick_slab",
     "beryllium:building/diorite_brick_slab",
     "beryllium:building/andesite_brick_slab",
@@ -11,6 +11,7 @@
     "beryllium:building/cracked_brick_slab",
     "beryllium:building/packed_mud_slab",
     "beryllium:building/cracked_nether_brick_slab",
-    "beryllium:building/cracked_red_nether_brick_slab"
+    "beryllium:building/cracked_red_nether_brick_slab",
+    "beryllium:building/quartz_brick_slab"
   ]
 }

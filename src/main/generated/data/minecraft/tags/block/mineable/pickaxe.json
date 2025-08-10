@@ -11,6 +11,7 @@
     "beryllium:building/cracked_stone_brick_wall",
     "beryllium:building/cracked_stone_brick_stairs",
     "beryllium:building/cracked_stone_brick_slab",
+    "beryllium:building/chiseled_smooth_stone",
     "beryllium:building/smooth_stone_wall",
     "beryllium:building/smooth_stone_stairs",
     "beryllium:building/granite_bricks",
@@ -43,6 +44,20 @@
     "beryllium:building/cracked_red_nether_brick_wall",
     "beryllium:building/cracked_red_nether_brick_fence",
     "beryllium:building/cracked_red_nether_brick_stairs",
-    "beryllium:building/cracked_red_nether_brick_slab"
+    "beryllium:building/cracked_red_nether_brick_slab",
+    "beryllium:building/stone_wall",
+    "beryllium:building/smooth_quartz_wall",
+    "beryllium:building/quartz_brick_wall",
+    "beryllium:building/quartz_brick_stairs",
+    "beryllium:building/quartz_brick_slab",
+    "beryllium:building/cut_sandstone_stairs",
+    "beryllium:building/smooth_sandstone_wall",
+    "beryllium:building/cut_red_sandstone_stairs",
+    "beryllium:building/smooth_red_sandstone_wall",
+    "beryllium:building/prismarine_brick_wall",
+    "beryllium:building/dark_prismarine_wall",
+    "beryllium:building/polished_granite_wall",
+    "beryllium:building/polished_diorite_wall",
+    "beryllium:building/polished_andesite_wall"
   ]
 }

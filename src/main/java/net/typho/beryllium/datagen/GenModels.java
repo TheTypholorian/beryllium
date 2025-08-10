@@ -117,6 +117,7 @@ public class GenModels extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            System.out.println(family.prefix);
             family(gen, family.build());
         }
 

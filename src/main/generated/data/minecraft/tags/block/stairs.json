@@ -1,9 +1,9 @@
 {
   "values": [
     "beryllium:building/mossy_stone_stairs",
+    "beryllium:building/snow_brick_stairs",
     "beryllium:building/cracked_stone_brick_stairs",
     "beryllium:building/smooth_stone_stairs",
-    "beryllium:building/snow_brick_stairs",
     "beryllium:building/granite_brick_stairs",
     "beryllium:building/diorite_brick_stairs",
     "beryllium:building/andesite_brick_stairs",
@@ -12,6 +12,9 @@
     "beryllium:building/cracked_brick_stairs",
     "beryllium:building/packed_mud_stairs",
     "beryllium:building/cracked_nether_brick_stairs",
-    "beryllium:building/cracked_red_nether_brick_stairs"
+    "beryllium:building/cracked_red_nether_brick_stairs",
+    "beryllium:building/quartz_brick_stairs",
+    "beryllium:building/cut_sandstone_stairs",
+    "beryllium:building/cut_red_sandstone_stairs"
   ]
 }

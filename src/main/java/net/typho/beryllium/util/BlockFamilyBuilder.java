@@ -17,6 +17,7 @@ public class BlockFamilyBuilder {
     public final Map<BlockFamily.Variant, Block> variants = new LinkedHashMap<>();
     public final Map<BlockFamily.Variant, Block> datagen = new LinkedHashMap<>();
     public final List<TagKey<Block>> tags = new LinkedList<>();
+    public BlockFamily built;
 
     public BlockFamilyBuilder(Constructor constructor, String prefix, AbstractBlock.Settings settings) {
         this.constructor = constructor;
@@ -31,12 +32,27 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamily build() {
+        if (built != null) {
+            return built;
+        }
+
         if (base == null) {
             throw new IllegalStateException("Block family builder missing base block");
         }
 
-        BlockFamily family = new BlockFamily.Builder(base).build();
+        built = new BlockFamily.Builder(base).build();
+        built.getVariants().putAll(variants);
+        return built;
+    }
+
+    public BlockFamily build(BlockFamily family) {
+        if (built != null) {
+            return built;
+        }
+
+        built = family;
         family.getVariants().putAll(variants);
+        variants.putAll(family.getVariants());
         return family;
     }
 
