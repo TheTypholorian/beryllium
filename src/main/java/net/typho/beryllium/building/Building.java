@@ -166,7 +166,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .build(BlockFamilies.STONE);
     public static final BlockFamily QUARTZ = CONSTRUCTOR.blockFamily("quartz", Blocks.QUARTZ_BLOCK)
             .base(Blocks.QUARTZ_BLOCK)
-            //.wall()
+            .wall()
             .stairs(Blocks.QUARTZ_STAIRS)
             .slab(Blocks.QUARTZ_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
@@ -187,6 +187,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .build();
     public static final BlockFamily CUT_SANDSTONE = CONSTRUCTOR.blockFamily("cut_sandstone", Blocks.CUT_SANDSTONE)
             .base(Blocks.CUT_SANDSTONE)
+            .wall()
             .stairs()
             .slab(Blocks.CUT_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
@@ -200,6 +201,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .build(BlockFamilies.SMOOTH_SANDSTONE);
     public static final BlockFamily CUT_RED_SANDSTONE = CONSTRUCTOR.blockFamily("cut_red_sandstone", Blocks.CUT_RED_SANDSTONE)
             .base(Blocks.CUT_RED_SANDSTONE)
+            .wall()
             .stairs()
             .slab(Blocks.CUT_RED_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
@@ -277,6 +279,7 @@ public class Building implements ModInitializer, ClientModInitializer {
                     {PACKED_MUD},
                     {BlockFamilies.NETHER_BRICK, CRACKED_NETHER_BRICKS},
                     {BlockFamilies.RED_NETHER_BRICK, CRACKED_RED_NETHER_BRICKS},
+                    {QUARTZ},
                     {SMOOTH_QUARTZ},
                     {QUARTZ_BRICK},
                     {BlockFamilies.SANDSTONE, CUT_SANDSTONE, SMOOTH_SANDSTONE},

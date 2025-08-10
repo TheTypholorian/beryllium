@@ -27,6 +27,7 @@ public class GenModels extends FabricModelProvider {
 
     public static void family(BlockStateModelGenerator gen, BlockFamily family) {
         BlockStateModelGenerator.BlockTexturePool pool = gen.registerCubeAllModelTexturePool(family.getBaseBlock());
+        pool.textures.put(TextureKey.WALL, pool.textures.getTexture(TextureKey.SIDE));
         pool.family(family);
     }
 
@@ -117,7 +118,6 @@ public class GenModels extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
-            System.out.println(family.prefix);
             family(gen, family.build());
         }
 
