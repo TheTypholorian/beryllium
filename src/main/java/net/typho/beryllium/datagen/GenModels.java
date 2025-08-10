@@ -6,7 +6,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.data.client.*;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -156,6 +155,5 @@ public class GenModels extends FabricModelProvider {
         gen.register(Building.FILLING_WAND_ITEM, Models.GENERATED);
         gen.register(Exploring.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
         gen.register(Food.CROISSANT, Models.GENERATED);
-        gen.registerArmor((ArmorItem) Combat.NETHERITE_HORSE_ARMOR);
     }
 }

@@ -37,8 +37,7 @@ public class GenItemTags extends FabricTagProvider.ItemTagProvider {
                 .add(Items.LEATHER_HORSE_ARMOR)
                 .add(Items.IRON_HORSE_ARMOR)
                 .add(Items.GOLDEN_HORSE_ARMOR)
-                .add(Items.DIAMOND_HORSE_ARMOR)
-                .add(Combat.NETHERITE_HORSE_ARMOR);
+                .add(Items.DIAMOND_HORSE_ARMOR);
 
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
                 .addTag(Combat.HORSE_ARMOR);
