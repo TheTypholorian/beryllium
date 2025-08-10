@@ -12,6 +12,10 @@
     "beryllium:building/packed_mud_slab",
     "beryllium:building/cracked_nether_brick_slab",
     "beryllium:building/cracked_red_nether_brick_slab",
-    "beryllium:building/quartz_brick_slab"
+    "beryllium:building/quartz_brick_slab",
+    "beryllium:building/gilded_blackstone_slab",
+    "beryllium:building/cracked_polished_blackstone_brick_slab",
+    "beryllium:building/cracked_end_stone_brick_slab",
+    "beryllium:building/cracked_purpur_slab"
   ]
 }

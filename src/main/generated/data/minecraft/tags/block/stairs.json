@@ -15,6 +15,10 @@
     "beryllium:building/cracked_red_nether_brick_stairs",
     "beryllium:building/quartz_brick_stairs",
     "beryllium:building/cut_sandstone_stairs",
-    "beryllium:building/cut_red_sandstone_stairs"
+    "beryllium:building/cut_red_sandstone_stairs",
+    "beryllium:building/gilded_blackstone_stairs",
+    "beryllium:building/cracked_polished_blackstone_brick_stairs",
+    "beryllium:building/cracked_end_stone_brick_stairs",
+    "beryllium:building/cracked_purpur_stairs"
   ]
 }

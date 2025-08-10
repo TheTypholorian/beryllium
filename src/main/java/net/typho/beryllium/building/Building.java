@@ -283,6 +283,46 @@ public class Building implements ModInitializer, ClientModInitializer {
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting(Blocks.ANDESITE)
             .build(BlockFamilies.POLISHED_ANDESITE);
+    public static final BlockFamily GILDED_BLACKSTONE = CONSTRUCTOR.blockFamily("gilded_blackstone", Blocks.GILDED_BLACKSTONE)
+            .base(Blocks.GILDED_BLACKSTONE)
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
+            .build();
+    public static final BlockFamily CRACKED_POLISHED_BLACKSTONE_BRICK = CONSTRUCTOR.blockFamily("cracked_polished_blackstone_brick", Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
+            .base(Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS)
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .smelting(BlockFamilies.POLISHED_BLACKSTONE_BRICK)
+            .build();
+    public static final BlockFamily CRACKED_END_STONE_BRICK = CONSTRUCTOR.blockFamily("cracked_end_stone_brick", Blocks.END_STONE_BRICKS)
+            .base()
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .smelting(BlockFamilies.END_STONE_BRICK)
+            .build();
+    public static final BlockFamily PURPUR = CONSTRUCTOR.blockFamily("purpur", Blocks.PURPUR_BLOCK)
+            .base(Blocks.PURPUR_BLOCK)
+            .wall()
+            .stairs(Blocks.PURPUR_STAIRS)
+            .slab(Blocks.PURPUR_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
+            .build();
+    public static final BlockFamily CRACKED_PURPUR = CONSTRUCTOR.blockFamily("cracked_purpur", Blocks.PURPUR_BLOCK)
+            .base()
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .smelting(BlockFamilies.PURPUR)
+            .build();
 
     @Override
     public void onInitialize() {
@@ -324,6 +364,9 @@ public class Building implements ModInitializer, ClientModInitializer {
                     {BlockFamilies.DIORITE, POLISHED_DIORITE, DIORITE_BRICKS},
                     {BlockFamilies.ANDESITE, POLISHED_ANDESITE, ANDESITE_BRICKS},
                     {SNOW, SNOW_BRICKS},
+                    {BlockFamilies.BLACKSTONE, GILDED_BLACKSTONE, BlockFamilies.POLISHED_BLACKSTONE, BlockFamilies.POLISHED_BLACKSTONE_BRICK, CRACKED_POLISHED_BLACKSTONE_BRICK},
+                    {BlockFamilies.END_STONE_BRICK, CRACKED_END_STONE_BRICK},
+                    {PURPUR, CRACKED_PURPUR},
             };
 
             for (BlockFamily[] variant : vanillaVariants) {

@@ -61,6 +61,21 @@
     "beryllium:building/dark_prismarine_wall",
     "beryllium:building/polished_granite_wall",
     "beryllium:building/polished_diorite_wall",
-    "beryllium:building/polished_andesite_wall"
+    "beryllium:building/polished_andesite_wall",
+    "beryllium:building/gilded_blackstone_wall",
+    "beryllium:building/gilded_blackstone_stairs",
+    "beryllium:building/gilded_blackstone_slab",
+    "beryllium:building/cracked_polished_blackstone_brick_wall",
+    "beryllium:building/cracked_polished_blackstone_brick_stairs",
+    "beryllium:building/cracked_polished_blackstone_brick_slab",
+    "beryllium:building/cracked_end_stone_brick",
+    "beryllium:building/cracked_end_stone_brick_wall",
+    "beryllium:building/cracked_end_stone_brick_stairs",
+    "beryllium:building/cracked_end_stone_brick_slab",
+    "beryllium:building/purpur_wall",
+    "beryllium:building/cracked_purpur",
+    "beryllium:building/cracked_purpur_wall",
+    "beryllium:building/cracked_purpur_stairs",
+    "beryllium:building/cracked_purpur_slab"
   ]
 }
