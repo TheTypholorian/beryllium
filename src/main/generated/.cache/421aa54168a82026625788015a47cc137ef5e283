@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-10T11:42:22.5633758	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-10T11:57:44.1685372	Beryllium/Block Loot Tables
 57ab46ba7b00411a026f4c5c9efd60abc13d6c91 data\beryllium\loot_table\blocks\building\cracked_bricks.json
 ce306fa02fb8a374de6d38ef435fe3dfa575402a data\beryllium\loot_table\blocks\building\granite_brick_wall.json
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data\beryllium\loot_table\blocks\combat\potion_cauldron.json
@@ -7,8 +7,8 @@ e4dc6a749833a939a15b8ad1655b7a6861b69ee8 data\beryllium\loot_table\blocks\buildi
 aab5e1f29c76f8c3abb54426128f1737a244e7f5 data\beryllium\loot_table\blocks\building\cracked_brick_stairs.json
 465290bc42d8d9c48fc07914f09842514492d89c data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_wall.json
 7e1dab5a3f3d9ca1dbf4a6c1943498d023c51c12 data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_stairs.json
-ab8da0538895eab1f72db7e87e12f4cd5c228269 data\beryllium\loot_table\blocks\building\diorite_bricks.json
 9f278b1e0ffc87be4700cf54c24d4392457adbf9 data\beryllium\loot_table\blocks\building\cut_sandstone_stairs.json
+ab8da0538895eab1f72db7e87e12f4cd5c228269 data\beryllium\loot_table\blocks\building\diorite_bricks.json
 e799f23581857e3a6437c5fb5ec7c7b6611eea7c data\beryllium\loot_table\blocks\building\diorite_brick_wall.json
 72dfe4cde86b15dfc442fdd0bd46ee383994f5cd data\beryllium\loot_table\blocks\building\mossy_stone_stairs.json
 77473a91eba7d722c4f043c49dfbf2569a1b0c29 data\beryllium\loot_table\blocks\building\cut_red_sandstone_stairs.json
@@ -66,8 +66,8 @@ b03d3e826af65896bf1caaea82d690bda13b9eb2 data\beryllium\loot_table\blocks\buildi
 558fd949ef939859dfba3f884bc08ecdced4620d data\beryllium\loot_table\blocks\building\chiseled_smooth_stone.json
 2d4dfdb601f1a7910bc741596cf60e6f60be50ec data\beryllium\loot_table\blocks\exploring\stripped_corrupted_wood.json
 23b21c36d3fb760c2195c7fff2c8744fd2e7dfe0 data\beryllium\loot_table\blocks\building\smooth_stone_stairs.json
-8f5f9ff32a6732b69a09184e257dfa194f384bf5 data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
 6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
+8f5f9ff32a6732b69a09184e257dfa194f384bf5 data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
 cba58ab9aabe0b4ffc91b4a15c54544108cf6faa data\beryllium\loot_table\blocks\building\cracked_nether_brick_wall.json
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json

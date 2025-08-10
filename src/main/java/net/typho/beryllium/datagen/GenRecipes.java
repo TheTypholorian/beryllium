@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamilies;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
@@ -425,6 +426,16 @@ public class GenRecipes extends FabricRecipeProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             generateFamily(exporter, family.build(), FeatureFlags.VANILLA_FEATURES);
+        }
+
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (!family.stonecutting.isEmpty()) {
+                for (Block input : family.stonecutting) {
+                    family.variants.forEach((variant, block) -> {
+                        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, input, variant == BlockFamily.Variant.SLAB ? 2 : 1);
+                    });
+                }
+            }
         }
     }
 }

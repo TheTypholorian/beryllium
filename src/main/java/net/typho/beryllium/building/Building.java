@@ -65,6 +65,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily SNOW = CONSTRUCTOR.blockFamily("snow", Blocks.SNOW_BLOCK)
             .base(Blocks.SNOW_BLOCK)
@@ -83,6 +84,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily SMOOTH_STONE = CONSTRUCTOR.blockFamily("smooth_stone", Blocks.SMOOTH_STONE)
             .base(Blocks.SMOOTH_STONE)
@@ -91,6 +93,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily GRANITE_BRICKS = CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
             .base("granite_bricks")
@@ -98,6 +101,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.GRANITE)
             .build();
     public static final BlockFamily DIORITE_BRICKS = CONSTRUCTOR.blockFamily("diorite_brick", Blocks.STONE_BRICKS)
             .base("diorite_bricks")
@@ -105,6 +109,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.DIORITE)
             .build();
     public static final BlockFamily ANDESITE_BRICKS = CONSTRUCTOR.blockFamily("andesite_brick", Blocks.STONE_BRICKS)
             .base("andesite_bricks")
@@ -112,6 +117,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.ANDESITE)
             .build();
     public static final BlockFamily CRACKED_DEEPSLATE_BRICKS = CONSTRUCTOR.blockFamily("cracked_deepslate_brick", Blocks.CRACKED_DEEPSLATE_BRICKS)
             .base(Blocks.CRACKED_DEEPSLATE_BRICKS)
@@ -119,6 +125,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily CRACKED_DEEPSLATE_TILES = CONSTRUCTOR.blockFamily("cracked_deepslate_tile", Blocks.CRACKED_DEEPSLATE_TILES)
             .base(Blocks.CRACKED_DEEPSLATE_TILES)
@@ -126,6 +133,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily CRACKED_BRICKS = CONSTRUCTOR.blockFamily("cracked_brick", Blocks.BRICKS)
             .base("cracked_bricks")
@@ -133,6 +141,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily PACKED_MUD = CONSTRUCTOR.blockFamily("packed_mud", Blocks.PACKED_MUD)
             .base(Blocks.PACKED_MUD)
@@ -148,6 +157,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily CRACKED_RED_NETHER_BRICKS = CONSTRUCTOR.blockFamily("cracked_red_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
             .base("cracked_red_nether_bricks")
@@ -156,6 +166,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build();
     public static final BlockFamily STONE = CONSTRUCTOR.blockFamily("stone", Blocks.STONE)
             .base(Blocks.STONE)
@@ -163,6 +174,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.STONE_STAIRS)
             .slab(Blocks.STONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.STONE);
     public static final BlockFamily QUARTZ = CONSTRUCTOR.blockFamily("quartz", Blocks.QUARTZ_BLOCK)
             .base(Blocks.QUARTZ_BLOCK)
@@ -170,6 +182,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.QUARTZ_STAIRS)
             .slab(Blocks.QUARTZ_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.QUARTZ_BLOCK);
     public static final BlockFamily SMOOTH_QUARTZ = CONSTRUCTOR.blockFamily("smooth_quartz", Blocks.SMOOTH_QUARTZ)
             .base(Blocks.SMOOTH_QUARTZ)
@@ -177,6 +190,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.SMOOTH_QUARTZ_STAIRS)
             .slab(Blocks.SMOOTH_QUARTZ_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.SMOOTH_QUARTZ);
     public static final BlockFamily QUARTZ_BRICK = CONSTRUCTOR.blockFamily("quartz_brick", Blocks.QUARTZ_BRICKS)
             .base(Blocks.QUARTZ_BRICKS)
@@ -184,6 +198,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.QUARTZ_BLOCK)
             .build();
     public static final BlockFamily CUT_SANDSTONE = CONSTRUCTOR.blockFamily("cut_sandstone", Blocks.CUT_SANDSTONE)
             .base(Blocks.CUT_SANDSTONE)
@@ -191,6 +206,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab(Blocks.CUT_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.SANDSTONE)
             .build(BlockFamilies.CUT_SANDSTONE);
     public static final BlockFamily SMOOTH_SANDSTONE = CONSTRUCTOR.blockFamily("smooth_sandstone", Blocks.SMOOTH_SANDSTONE)
             .base(Blocks.SMOOTH_SANDSTONE)
@@ -198,6 +214,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.SMOOTH_SANDSTONE_STAIRS)
             .slab(Blocks.SMOOTH_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.SMOOTH_SANDSTONE);
     public static final BlockFamily CUT_RED_SANDSTONE = CONSTRUCTOR.blockFamily("cut_red_sandstone", Blocks.CUT_RED_SANDSTONE)
             .base(Blocks.CUT_RED_SANDSTONE)
@@ -205,6 +222,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab(Blocks.CUT_RED_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.RED_SANDSTONE)
             .build(BlockFamilies.CUT_RED_SANDSTONE);
     public static final BlockFamily SMOOTH_RED_SANDSTONE = CONSTRUCTOR.blockFamily("smooth_red_sandstone", Blocks.SMOOTH_RED_SANDSTONE)
             .base(Blocks.SMOOTH_RED_SANDSTONE)
@@ -212,6 +230,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.SMOOTH_RED_SANDSTONE_STAIRS)
             .slab(Blocks.SMOOTH_RED_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.SMOOTH_RED_SANDSTONE);
     public static final BlockFamily PRISMARINE_BRICK = CONSTRUCTOR.blockFamily("prismarine_brick", Blocks.PRISMARINE_BRICKS)
             .base(Blocks.PRISMARINE_BRICKS)
@@ -219,6 +238,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.PRISMARINE_BRICK_STAIRS)
             .slab(Blocks.PRISMARINE_BRICK_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.PRISMARINE_BRICK);
     public static final BlockFamily DARK_PRISMARINE = CONSTRUCTOR.blockFamily("dark_prismarine", Blocks.DARK_PRISMARINE)
             .base(Blocks.DARK_PRISMARINE)
@@ -226,6 +246,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.DARK_PRISMARINE_STAIRS)
             .slab(Blocks.DARK_PRISMARINE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting()
             .build(BlockFamilies.DARK_PRISMARINE);
     public static final BlockFamily POLISHED_GRANITE = CONSTRUCTOR.blockFamily("polished_granite", Blocks.POLISHED_GRANITE)
             .base(Blocks.POLISHED_GRANITE)
@@ -233,6 +254,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.POLISHED_GRANITE_STAIRS)
             .slab(Blocks.POLISHED_GRANITE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.GRANITE)
             .build(BlockFamilies.POLISHED_GRANITE);
     public static final BlockFamily POLISHED_DIORITE = CONSTRUCTOR.blockFamily("polished_diorite", Blocks.POLISHED_DIORITE)
             .base(Blocks.POLISHED_DIORITE)
@@ -240,6 +262,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.POLISHED_DIORITE_STAIRS)
             .slab(Blocks.POLISHED_DIORITE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.DIORITE)
             .build(BlockFamilies.POLISHED_DIORITE);
     public static final BlockFamily POLISHED_ANDESITE = CONSTRUCTOR.blockFamily("polished_andesite", Blocks.POLISHED_ANDESITE)
             .base(Blocks.POLISHED_ANDESITE)
@@ -247,6 +270,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs(Blocks.POLISHED_ANDESITE_STAIRS)
             .slab(Blocks.POLISHED_ANDESITE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.ANDESITE)
             .build(BlockFamilies.POLISHED_ANDESITE);
 
     @Override

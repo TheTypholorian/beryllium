@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "beryllium:building/granite_bricks"
+  },
+  "result": {
+    "count": 2,
+    "id": "beryllium:building/granite_brick_slab"
+  }
+}

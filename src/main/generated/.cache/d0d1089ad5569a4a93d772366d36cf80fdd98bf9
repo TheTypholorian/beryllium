@@ -1,9 +1,9 @@
-// 1.21.1	2025-08-10T11:42:22.5633758	Beryllium/Tags for minecraft:block
+// 1.21.1	2025-08-10T11:57:44.1685372	Beryllium/Tags for minecraft:block
 23db223b8f0b46d45edad216f50507dc27a73165 data\minecraft\tags\block\mineable\shovel.json
 506716dd775afd1d5083c05410a97d5b22daf3d5 data\minecraft\tags\block\cauldrons.json
 c9c90512be80fe885b43d7339ca3cf1575bf3760 data\minecraft\tags\block\stairs.json
-fa0acef30fb8880d3b316809ba188caf7aeacd32 data\beryllium\tags\block\exploring\pointed_blocks.json
 f1d7819a868df1faa06e57062ca67047e85f35fc data\minecraft\tags\block\mineable\pickaxe.json
+fa0acef30fb8880d3b316809ba188caf7aeacd32 data\beryllium\tags\block\exploring\pointed_blocks.json
 7088f73fb189e986d10e0cc4f5852e2ff4d04dbe data\minecraft\tags\block\mineable\hoe.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\flowers.json
 106054d81207eb046b6412c98d7773ac87065063 data\minecraft\tags\block\walls.json
