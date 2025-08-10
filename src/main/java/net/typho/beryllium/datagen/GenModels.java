@@ -116,11 +116,6 @@ public class GenModels extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
-        family(gen, Building.MOSSY_STONE);
-        family(gen, Building.CRACKED_STONE_BRICKS);
-        family(gen, Building.SMOOTH_STONE);
-        family(gen, Building.SNOW_BRICKS);
-
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             family(gen, family.build());
         }

@@ -1,5 +1,9 @@
 {
   "values": [
+    "beryllium:building/kiln",
+    "beryllium:redstone/gold_hopper",
+    "beryllium:combat/potion_cauldron",
+    "beryllium:exploring/pointed_bone",
     "beryllium:building/mossy_stone",
     "beryllium:building/mossy_stone_wall",
     "beryllium:building/mossy_stone_stairs",
@@ -9,11 +13,6 @@
     "beryllium:building/cracked_stone_brick_slab",
     "beryllium:building/smooth_stone_wall",
     "beryllium:building/smooth_stone_stairs",
-    "beryllium:building/chiseled_smooth_stone",
-    "beryllium:building/kiln",
-    "beryllium:redstone/gold_hopper",
-    "beryllium:combat/potion_cauldron",
-    "beryllium:exploring/pointed_bone",
     "beryllium:building/granite_bricks",
     "beryllium:building/granite_brick_wall",
     "beryllium:building/granite_brick_stairs",

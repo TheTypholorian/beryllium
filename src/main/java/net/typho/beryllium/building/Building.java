@@ -16,10 +16,10 @@ import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.CookingRecipeSerializer;
 import net.minecraft.recipe.RecipeSerializer;
@@ -38,6 +38,7 @@ import net.typho.beryllium.building.kiln.*;
 import net.typho.beryllium.util.Constructor;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class Building implements ModInitializer, ClientModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("building");
@@ -56,27 +57,33 @@ public class Building implements ModInitializer, ClientModInitializer {
     public static final ComponentType<BlockPos> FILLING_WAND_COMPONENT_TYPE = CONSTRUCTOR.dataComponent("filling_wand_component", builder -> builder.codec(BlockPos.CODEC).packetCodec(BlockPos.PACKET_CODEC));
     public static final Item FILLING_WAND_ITEM = CONSTRUCTOR.item("filling_wand", new FillingWandItem(new Item.Settings()));
 
-    public static final BlockFamily MOSSY_STONE = new BlockFamily.Builder(CONSTRUCTOR.blockWithItem("mossy_stone", new Block(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
-            .wall(CONSTRUCTOR.blockWithItem("mossy_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
-            .stairs(CONSTRUCTOR.blockWithItem("mossy_stone_stairs", new StairsBlock(Blocks.STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
-            .slab(CONSTRUCTOR.blockWithItem("mossy_stone_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.STONE)), new Item.Settings()))
+    public static final BlockFamily MOSSY_STONE = CONSTRUCTOR.blockFamily("mossy_stone", Blocks.STONE)
+            .base()
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
             .build();
-    public static final BlockFamily CRACKED_STONE_BRICKS = new BlockFamily.Builder(Blocks.CRACKED_STONE_BRICKS)
-            .wall(CONSTRUCTOR.blockWithItem("cracked_stone_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
-            .stairs(CONSTRUCTOR.blockWithItem("cracked_stone_brick_stairs", new StairsBlock(Blocks.STONE_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
-            .slab(CONSTRUCTOR.blockWithItem("cracked_stone_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), new Item.Settings()))
+    public static final BlockFamily CRACKED_STONE_BRICKS = CONSTRUCTOR.blockFamily("cracked_stone_brick", Blocks.CRACKED_STONE_BRICKS)
+            .base(Blocks.CRACKED_STONE_BRICKS)
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.PICKAXE_MINEABLE)
             .build();
-    public static final BlockFamily SMOOTH_STONE = new BlockFamily.Builder(Blocks.SMOOTH_STONE)
-            .chiseled(CONSTRUCTOR.blockWithItem("chiseled_smooth_stone", new Block(AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
-            .wall(CONSTRUCTOR.blockWithItem("smooth_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
-            .stairs(CONSTRUCTOR.blockWithItem("smooth_stone_stairs", new StairsBlock(Blocks.SMOOTH_STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE)), new Item.Settings()))
+    public static final BlockFamily SMOOTH_STONE = CONSTRUCTOR.blockFamily("smooth_stone", Blocks.SMOOTH_STONE)
+            .base(Blocks.SMOOTH_STONE)
+            .wall()
+            .stairs()
             .slab(Blocks.SMOOTH_STONE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
             .build();
-    public static final BlockFamily SNOW_BRICKS = new BlockFamily.Builder(CONSTRUCTOR.blockWithItem("snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
-            .chiseled(CONSTRUCTOR.blockWithItem("chiseled_snow_bricks", new Block(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
-            .wall(CONSTRUCTOR.blockWithItem("snow_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
-            .stairs(CONSTRUCTOR.blockWithItem("snow_brick_stairs", new StairsBlock(Blocks.SNOW_BLOCK.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
-            .slab(CONSTRUCTOR.blockWithItem("snow_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.SNOW_BLOCK)), new Item.Settings()))
+    public static final BlockFamily SNOW_BRICKS = CONSTRUCTOR.blockFamily("snow_brick", Blocks.SNOW_BLOCK)
+            .base("snow_bricks")
+            .wall()
+            .stairs()
+            .slab()
+            .tags(BlockTags.SHOVEL_MINEABLE)
             .build();
     public static final BlockFamily GRANITE_BRICKS = CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
             .base("granite_bricks")
@@ -153,6 +160,7 @@ public class Building implements ModInitializer, ClientModInitializer {
     public static final Block SMOOTH_RED_SANDSTONE_WALL = CONSTRUCTOR.blockWithItem("smooth_red_sandstone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_RED_SANDSTONE)), new Item.Settings());
     public static final Block PRISMARINE_BRICK_WALL = CONSTRUCTOR.blockWithItem("prismarine_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.PRISMARINE_BRICKS)), new Item.Settings());
     public static final Block DARK_PRISMARINE_WALL = CONSTRUCTOR.blockWithItem("dark_prismarine_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.DARK_PRISMARINE)), new Item.Settings());
+    public static final Block POLISHED_GRANITE_WALL = CONSTRUCTOR.blockWithItem("polished_granite_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.POLISHED_GRANITE)), new Item.Settings());
 
     @Override
     public void onInitialize() {
@@ -166,124 +174,74 @@ public class Building implements ModInitializer, ClientModInitializer {
         BlockFamilies.SMOOTH_RED_SANDSTONE.getVariants().put(BlockFamily.Variant.WALL, SMOOTH_RED_SANDSTONE_WALL);
         BlockFamilies.PRISMARINE_BRICK.getVariants().put(BlockFamily.Variant.WALL, PRISMARINE_BRICK_WALL);
         BlockFamilies.DARK_PRISMARINE.getVariants().put(BlockFamily.Variant.WALL, DARK_PRISMARINE_WALL);
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS)
-                .register(entries -> {
-                    entries.addAfter(
-                            Items.STONE_SLAB,
-                            STONE_WALL
-                    );
-                    entries.addAfter(
-                            Items.SMOOTH_QUARTZ,
-                            SMOOTH_QUARTZ_WALL
-                    );
-                    entries.addAfter(
-                            Items.POLISHED_GRANITE,
-                            GRANITE_BRICKS.getBaseBlock(),
-                            GRANITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            GRANITE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            GRANITE_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            Items.POLISHED_DIORITE,
-                            DIORITE_BRICKS.getBaseBlock(),
-                            DIORITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            DIORITE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            DIORITE_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            Items.POLISHED_ANDESITE,
-                            ANDESITE_BRICKS.getBaseBlock(),
-                            ANDESITE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            ANDESITE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            ANDESITE_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.getDisplayStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_DEEPSLATE_BRICKS);
-                    entries.getSearchTabStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_DEEPSLATE_BRICKS);
-                    entries.addAfter(
-                            Items.DEEPSLATE_BRICK_WALL,
-                            CRACKED_DEEPSLATE_BRICKS.getBaseBlock(),
-                            CRACKED_DEEPSLATE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_DEEPSLATE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_DEEPSLATE_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.getDisplayStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_DEEPSLATE_TILES);
-                    entries.getSearchTabStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_DEEPSLATE_TILES);
-                    entries.addAfter(
-                            Items.DEEPSLATE_TILE_WALL,
-                            CRACKED_DEEPSLATE_TILES.getBaseBlock(),
-                            CRACKED_DEEPSLATE_TILES.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_DEEPSLATE_TILES.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_DEEPSLATE_TILES.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            Items.BRICK_WALL,
-                            CRACKED_BRICKS.getBaseBlock(),
-                            CRACKED_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            PACKED_MUD.getBaseBlock(),
-                            PACKED_MUD.getVariant(BlockFamily.Variant.STAIRS),
-                            PACKED_MUD.getVariant(BlockFamily.Variant.SLAB),
-                            PACKED_MUD.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.getDisplayStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_NETHER_BRICKS);
-                    entries.getSearchTabStacks().removeIf(stack -> stack.getItem() == Items.CRACKED_NETHER_BRICKS);
-                    entries.addAfter(
-                            Items.NETHER_BRICK_FENCE,
-                            CRACKED_NETHER_BRICKS.getBaseBlock(),
-                            CRACKED_NETHER_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_NETHER_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_NETHER_BRICKS.getVariant(BlockFamily.Variant.WALL),
-                            CRACKED_NETHER_BRICKS.getVariant(BlockFamily.Variant.FENCE)
-                    );
-                    entries.addAfter(
-                            Items.RED_NETHER_BRICK_WALL,
-                            CRACKED_RED_NETHER_BRICKS.getBaseBlock(),
-                            CRACKED_RED_NETHER_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_RED_NETHER_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_RED_NETHER_BRICKS.getVariant(BlockFamily.Variant.WALL),
-                            CRACKED_RED_NETHER_BRICKS.getVariant(BlockFamily.Variant.FENCE)
-                    );
-                    entries.addAfter(
-                            Items.STONE_BUTTON,
-                            MOSSY_STONE.getBaseBlock(),
-                            MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS),
-                            MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB),
-                            MOSSY_STONE.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            CRACKED_STONE_BRICKS.getBaseBlock(),
-                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            Items.SMOOTH_STONE,
-                            SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED),
-                            SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS)
-                    );
-                    entries.addAfter(
-                            Items.SMOOTH_STONE_SLAB,
-                            SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL)
-                    );
-                    entries.addAfter(
-                            Items.MUD_BRICK_WALL,
-                            SNOW_BRICKS.getBaseBlock(),
-                            SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED),
-                            SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS),
-                            SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB),
-                            SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL)
-                    );
-                });
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL)
-                .register(entries -> {
-                    entries.addAfter(
-                            Items.SMOKER,
-                            KILN_BLOCK
-                    );
-                });
+        BlockFamilies.POLISHED_GRANITE.getVariants().put(BlockFamily.Variant.WALL, POLISHED_GRANITE_WALL);
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
+            BlockFamily.Variant[] variantOrder = {
+                    BlockFamily.Variant.MOSAIC,
+                    BlockFamily.Variant.CHISELED,
+                    BlockFamily.Variant.CUT,
+                    BlockFamily.Variant.STAIRS,
+                    BlockFamily.Variant.SLAB,
+                    BlockFamily.Variant.WALL,
+                    BlockFamily.Variant.FENCE,
+                    BlockFamily.Variant.FENCE_GATE,
+                    BlockFamily.Variant.DOOR,
+                    BlockFamily.Variant.TRAPDOOR,
+                    BlockFamily.Variant.PRESSURE_PLATE,
+                    BlockFamily.Variant.BUTTON,
+                    BlockFamily.Variant.SIGN,
+                    BlockFamily.Variant.WALL_SIGN
+            };
+            BlockFamily[][] variants = {
+                    {BlockFamilies.GRANITE, BlockFamilies.POLISHED_GRANITE, GRANITE_BRICKS},
+                    {BlockFamilies.DIORITE, BlockFamilies.POLISHED_DIORITE, DIORITE_BRICKS},
+                    {BlockFamilies.ANDESITE, BlockFamilies.POLISHED_ANDESITE, ANDESITE_BRICKS}
+            };
+
+            for (BlockFamily[] variant : variants) {
+                Block keep = variant[0].getBaseBlock();
+
+                Predicate<ItemStack> predicate = stack -> {
+                    if (stack.getItem() instanceof BlockItem blockItem) {
+                        Block block = blockItem.getBlock();
+
+                        if (keep != block) {
+                            for (BlockFamily family : variant) {
+                                if (family.getVariants().containsValue(block)) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+
+                    return false;
+                };
+
+                entries.getDisplayStacks().removeIf(predicate);
+                entries.getSearchTabStacks().removeIf(predicate);
+
+                ItemStack last = new ItemStack(keep);
+
+                for (BlockFamily family : variant) {
+                    if (family.getBaseBlock() != keep) {
+                        ItemStack stack = new ItemStack(family.getBaseBlock());
+                        entries.addAfter(last, stack);
+                        last = stack;
+                    }
+
+                    for (BlockFamily.Variant v : variantOrder) {
+                        Block block = family.getVariant(v);
+
+                        if (block != null) {
+                            ItemStack stack = new ItemStack(block);
+                            entries.addAfter(last, stack);
+                            last = stack;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override

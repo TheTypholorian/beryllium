@@ -24,33 +24,10 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-                .add(Building.MOSSY_STONE.getBaseBlock())
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-
-                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.CHISELED))
-
                 .add(Building.KILN_BLOCK)
-
                 .add(Redstone.GOLD_HOPPER_BLOCK)
-
                 .add(Combat.POTION_CAULDRON)
-
                 .add(Exploring.POINTED_BONE);
-
-        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE)
-                .add(Building.SNOW_BRICKS.getBaseBlock())
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.CHISELED))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             for (TagKey<Block> tag : family.tags) {
@@ -62,11 +39,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
             }
         }
 
-        FabricTagBuilder walls = getOrCreateTagBuilder(BlockTags.WALLS)
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.WALL))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.WALL));
+        FabricTagBuilder walls = getOrCreateTagBuilder(BlockTags.WALLS);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.WALL)) {
@@ -74,11 +47,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
             }
         }
 
-        FabricTagBuilder stairs = getOrCreateTagBuilder(BlockTags.STAIRS)
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SMOOTH_STONE.getVariant(BlockFamily.Variant.STAIRS))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.STAIRS));
+        FabricTagBuilder stairs = getOrCreateTagBuilder(BlockTags.STAIRS);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.STAIRS)) {
@@ -86,10 +55,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
             }
         }
 
-        FabricTagBuilder slabs = getOrCreateTagBuilder(BlockTags.SLABS)
-                .add(Building.MOSSY_STONE.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.CRACKED_STONE_BRICKS.getVariant(BlockFamily.Variant.SLAB))
-                .add(Building.SNOW_BRICKS.getVariant(BlockFamily.Variant.SLAB));
+        FabricTagBuilder slabs = getOrCreateTagBuilder(BlockTags.SLABS);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.SLAB)) {

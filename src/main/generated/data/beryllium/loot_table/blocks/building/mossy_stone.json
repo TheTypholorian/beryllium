@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:mossy_cobblestone"
+          "name": "beryllium:building/mossy_stone"
         }
       ],
       "rolls": 1.0

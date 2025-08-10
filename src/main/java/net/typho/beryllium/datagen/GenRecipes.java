@@ -18,7 +18,7 @@ import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnRecipe;
@@ -423,13 +423,8 @@ public class GenRecipes extends FabricRecipeProvider {
 
         firingVanillaRecipes(exporter);
 
-        generateFamily(exporter, Building.MOSSY_STONE, FeatureSet.empty());
-        generateFamily(exporter, Building.CRACKED_STONE_BRICKS, FeatureSet.empty());
-        generateFamily(exporter, Building.SMOOTH_STONE, FeatureSet.empty());
-        generateFamily(exporter, Building.SNOW_BRICKS, FeatureSet.empty());
-
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
-            generateFamily(exporter, family.build(), FeatureSet.empty());
+            generateFamily(exporter, family.build(), FeatureFlags.VANILLA_FEATURES);
         }
     }
 }
