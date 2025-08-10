@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_stone": {
+    "has_nether_brick_stairs": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:stone"
+            "items": "minecraft:nether_brick_stairs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "beryllium:smooth_stone_from_firing_stone"
+        "recipe": "beryllium:building/cracked_nether_brick_stairs_from_smelting_nether_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_stone"
+      "has_nether_brick_stairs"
     ]
   ],
   "rewards": {
     "recipes": [
-      "beryllium:smooth_stone_from_firing_stone"
+      "beryllium:building/cracked_nether_brick_stairs_from_smelting_nether_brick_stairs"
     ]
   }
 }

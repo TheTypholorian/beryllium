@@ -85,6 +85,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.STONE_BRICK)
             .build();
     public static final BlockFamily SMOOTH_STONE = CONSTRUCTOR.blockFamily("smooth_stone", Blocks.SMOOTH_STONE)
             .base(Blocks.SMOOTH_STONE)
@@ -94,6 +95,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab(Blocks.SMOOTH_STONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.STONE)
             .build();
     public static final BlockFamily GRANITE_BRICKS = CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
             .base("granite_bricks")
@@ -126,6 +128,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.DEEPSLATE_BRICK)
             .build();
     public static final BlockFamily CRACKED_DEEPSLATE_TILES = CONSTRUCTOR.blockFamily("cracked_deepslate_tile", Blocks.CRACKED_DEEPSLATE_TILES)
             .base(Blocks.CRACKED_DEEPSLATE_TILES)
@@ -134,6 +137,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.DEEPSLATE_TILE)
             .build();
     public static final BlockFamily CRACKED_BRICKS = CONSTRUCTOR.blockFamily("cracked_brick", Blocks.BRICKS)
             .base("cracked_bricks")
@@ -142,6 +146,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.BRICK)
             .build();
     public static final BlockFamily PACKED_MUD = CONSTRUCTOR.blockFamily("packed_mud", Blocks.PACKED_MUD)
             .base(Blocks.PACKED_MUD)
@@ -158,6 +163,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.NETHER_BRICK)
             .build();
     public static final BlockFamily CRACKED_RED_NETHER_BRICKS = CONSTRUCTOR.blockFamily("cracked_red_nether_brick", Blocks.CRACKED_NETHER_BRICKS)
             .base("cracked_red_nether_bricks")
@@ -167,6 +173,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.RED_NETHER_BRICK)
             .build();
     public static final BlockFamily STONE = CONSTRUCTOR.blockFamily("stone", Blocks.STONE)
             .base(Blocks.STONE)
@@ -175,6 +182,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab(Blocks.STONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.COBBLESTONE)
             .build(BlockFamilies.STONE);
     public static final BlockFamily QUARTZ = CONSTRUCTOR.blockFamily("quartz", Blocks.QUARTZ_BLOCK)
             .base(Blocks.QUARTZ_BLOCK)
@@ -191,6 +199,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab(Blocks.SMOOTH_QUARTZ_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.QUARTZ_BLOCK)
             .build(BlockFamilies.SMOOTH_QUARTZ);
     public static final BlockFamily QUARTZ_BRICK = CONSTRUCTOR.blockFamily("quartz_brick", Blocks.QUARTZ_BRICKS)
             .base(Blocks.QUARTZ_BRICKS)
@@ -215,6 +224,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab(Blocks.SMOOTH_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.SANDSTONE)
             .build(BlockFamilies.SMOOTH_SANDSTONE);
     public static final BlockFamily CUT_RED_SANDSTONE = CONSTRUCTOR.blockFamily("cut_red_sandstone", Blocks.CUT_RED_SANDSTONE)
             .base(Blocks.CUT_RED_SANDSTONE)
@@ -231,6 +241,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab(Blocks.SMOOTH_RED_SANDSTONE_SLAB)
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
+            .smelting(BlockFamilies.RED_SANDSTONE)
             .build(BlockFamilies.SMOOTH_RED_SANDSTONE);
     public static final BlockFamily PRISMARINE_BRICK = CONSTRUCTOR.blockFamily("prismarine_brick", Blocks.PRISMARINE_BRICKS)
             .base(Blocks.PRISMARINE_BRICKS)

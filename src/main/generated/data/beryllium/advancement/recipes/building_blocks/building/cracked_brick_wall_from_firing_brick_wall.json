@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cobblestone": {
+    "has_brick_wall": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:cobblestone"
+            "items": "minecraft:brick_wall"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "beryllium:stone_from_firing_cobblestone"
+        "recipe": "beryllium:building/cracked_brick_wall_from_firing_brick_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cobblestone"
+      "has_brick_wall"
     ]
   ],
   "rewards": {
     "recipes": [
-      "beryllium:stone_from_firing_cobblestone"
+      "beryllium:building/cracked_brick_wall_from_firing_brick_wall"
     ]
   }
 }

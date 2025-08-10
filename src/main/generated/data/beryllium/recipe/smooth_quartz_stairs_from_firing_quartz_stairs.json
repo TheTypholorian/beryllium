@@ -3,11 +3,10 @@
   "category": "blocks",
   "cookingtime": 100,
   "experience": 0.1,
-  "group": "stone",
   "ingredient": {
-    "item": "minecraft:stone"
+    "item": "minecraft:quartz_stairs"
   },
   "result": {
-    "id": "minecraft:smooth_stone"
+    "id": "minecraft:smooth_quartz_stairs"
   }
 }

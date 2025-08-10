@@ -18,6 +18,7 @@ public class BlockFamilyBuilder {
     public final Map<BlockFamily.Variant, Block> datagen = new LinkedHashMap<>();
     public final List<TagKey<Block>> tags = new LinkedList<>();
     public final List<Block> stonecutting = new LinkedList<>();
+    public final List<BlockFamily> smelting = new LinkedList<>();
     public BlockFamily built;
 
     public BlockFamilyBuilder(Constructor constructor, String prefix, AbstractBlock.Settings settings) {
@@ -71,6 +72,11 @@ public class BlockFamilyBuilder {
     public BlockFamilyBuilder stonecutting(Block... blocks) {
         stonecutting.add(base);
         Collections.addAll(stonecutting, blocks);
+        return this;
+    }
+
+    public BlockFamilyBuilder smelting(BlockFamily... families) {
+        Collections.addAll(smelting, families);
         return this;
     }
 

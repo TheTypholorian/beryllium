@@ -3,11 +3,10 @@
   "category": "blocks",
   "cookingtime": 100,
   "experience": 0.1,
-  "group": "stone",
   "ingredient": {
-    "item": "minecraft:cobblestone"
+    "item": "minecraft:nether_brick_wall"
   },
   "result": {
-    "id": "minecraft:stone"
+    "id": "beryllium:building/cracked_nether_brick_wall"
   }
 }

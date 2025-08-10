@@ -206,10 +206,6 @@ public class GenRecipes extends FabricRecipeProvider {
         offerMultipleOptions(exporter, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
     }
 
-    public static void firingStone(RecipeExporter gen, List<ItemConvertible> inputs, ItemConvertible output, String group) {
-        offerFiring(gen, inputs, RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 100, group);
-    }
-
     @Override
     public void generate(RecipeExporter exporter) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK.asItem(), 1)
@@ -404,22 +400,6 @@ public class GenRecipes extends FabricRecipeProvider {
                         .offerTo(exporter, convertBetween(mossy, stone));
             }
         });
-        firingStone(exporter, List.of(Blocks.COBBLESTONE), Blocks.STONE, "stone");
-        BlockFamilies.STONE.getVariants().forEach((variant, stone) -> {
-            Block cobble = BlockFamilies.COBBLESTONE.getVariant(variant);
-
-            if (cobble != null) {
-                firingStone(exporter, List.of(cobble), stone, "stone");
-            }
-        });
-        firingStone(exporter, List.of(Blocks.STONE), Blocks.SMOOTH_STONE, "stone");
-        Building.SMOOTH_STONE.getVariants().forEach((variant, smooth) -> {
-            Block stone = BlockFamilies.STONE.getVariant(variant);
-
-            if (stone != null) {
-                firingStone(exporter, List.of(stone), smooth, "smooth_stone");
-            }
-        });
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.SNOW_BRICKS.getBaseBlock(), Blocks.SNOW_BLOCK);
 
         firingVanillaRecipes(exporter);
@@ -433,6 +413,19 @@ public class GenRecipes extends FabricRecipeProvider {
                 for (Block input : family.stonecutting) {
                     family.variants.forEach((variant, block) -> {
                         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, input, variant == BlockFamily.Variant.SLAB ? 2 : 1);
+                    });
+                }
+            }
+
+            if (!family.smelting.isEmpty()) {
+                for (BlockFamily inFamily : family.smelting) {
+                    family.variants.forEach((variant, output) -> {
+                        Block input = inFamily.getVariant(variant);
+
+                        if (input != null) {
+                            offerSmelting(exporter, List.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200, "");
+                            offerFiring(exporter, List.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 100, "");
+                        }
                     });
                 }
             }

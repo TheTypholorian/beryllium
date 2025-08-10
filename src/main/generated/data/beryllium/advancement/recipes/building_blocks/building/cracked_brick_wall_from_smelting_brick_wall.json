@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_brick_wall": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:brick_wall"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beryllium:building/cracked_brick_wall_from_smelting_brick_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_brick_wall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beryllium:building/cracked_brick_wall_from_smelting_brick_wall"
+    ]
+  }
+}
