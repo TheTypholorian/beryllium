@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             cancellable = true
     )
     private static void createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        cir.setReturnValue(cir.getReturnValue().add(Exploring.PLAYER_STABLE_FOOTING));
+        cir.setReturnValue(cir.getReturnValue().add(Exploring.PLAYER_AIR_MINING_EFFICIENCY));
     }
 
     @ModifyConstant(
@@ -33,6 +33,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
             constant = @Constant(floatValue = 5)
     )
     private float stableFooting(float constant) {
-        return 1 / (float) getAttributeValue(Exploring.PLAYER_STABLE_FOOTING);
+        return 1 / (float) getAttributeValue(Exploring.PLAYER_AIR_MINING_EFFICIENCY);
     }
 }

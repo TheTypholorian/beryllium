@@ -10,10 +10,14 @@ import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.trim.ArmorTrimPattern;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.ScreenHandlerType;
@@ -23,7 +27,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.gen.feature.Feature;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.armor.Armor;
+import net.typho.beryllium.armor.ArmorTrimEffect;
+import net.typho.beryllium.armor.AttributeModifier;
 
+import java.util.List;
 import java.util.function.UnaryOperator;
 
 public class Constructor implements Identifierifier {
@@ -99,5 +107,24 @@ public class Constructor implements Identifierifier {
         FoodComponent.Builder builder = new FoodComponent.Builder();
         builder.eatSeconds = eatSeconds;
         return builder;
+    }
+
+    public ArmorTrimEffect trimEffect(RegistryKey<ArmorTrimPattern> pattern, ArmorTrimEffect effect) {
+        return Registry.register(Armor.ARMOR_TRIM_EFFECTS, pattern.getValue(), effect);
+    }
+
+    @SafeVarargs
+    public final ArmorTrimEffect trimEffect(RegistryKey<ArmorTrimPattern> pattern, RegistryEntry<EntityAttribute> attribute, double d, EntityAttributeModifier.Operation op, RegistryKey<ArmorMaterial>... debuffed) {
+        return trimEffect(pattern, new ArmorTrimEffect(
+                List.of(new AttributeModifier(
+                        attribute,
+                        new EntityAttributeModifier(
+                                id(pattern.getValue().getPath()),
+                                d,
+                                op
+                        )
+                )),
+                List.of(debuffed)
+        ));
     }
 }

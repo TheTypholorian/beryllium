@@ -30,9 +30,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     )
     private static void createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         cir.setReturnValue(cir.getReturnValue().add(Armor.PLAYER_SWIMMING_SPEED)
-                .add(Armor.PLAYER_SIGHT)
-                .add(Armor.PLAYER_BONUS_XP)
-                .add(Armor.PLAYER_CHEAP_XP)
+                .add(Armor.PLAYER_GAMMA)
+                .add(Armor.PLAYER_XP_GAIN)
+                .add(Armor.PLAYER_XP_COST)
                 .add(Armor.PLAYER_SLIDING)
                 .add(Armor.PLAYER_RANGED_SPEED)
                 .add(Armor.PLAYER_DISCOUNT));
