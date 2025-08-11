@@ -23,7 +23,7 @@ public class EnchantmentHelperMixin {
     )
     private static void applyAttributeModifiers(ItemStack stack, EquipmentSlot slot, BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> output, CallbackInfo ci) {
         if (slot.isArmorSlot()) {
-            Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output));
+            Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output, stack));
         }
     }
 
@@ -33,7 +33,7 @@ public class EnchantmentHelperMixin {
     )
     private static void applyAttributeModifiers(ItemStack stack, AttributeModifierSlot slot, BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> output, CallbackInfo ci) {
         if (slot == AttributeModifierSlot.ARMOR) {
-            Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output));
+            Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output, stack));
         }
     }
 }

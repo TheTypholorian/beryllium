@@ -170,7 +170,8 @@
   "attribute.beryllium.armor.name.player.discount": "Discount",
   "attribute.beryllium.armor.name.generic.saturation": "Saturation",
 
-  "item.beryllium.modifiers.trim": "When Applied to Armor:",
+  "item.beryllium.modifiers.trim_pattern": "When Applied to Armor:",
+  "item.beryllium.modifiers.trim_material": "When Applied with Armor Trim:",
 
   "config.beryllium.durabilityRemoval": "Durability Removal",
 

@@ -11,10 +11,11 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.item.trim.ArmorTrim;
+import net.minecraft.item.trim.ArmorTrimMaterials;
 import net.minecraft.item.trim.ArmorTrimPatterns;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -29,8 +30,12 @@ import java.util.*;
 public class Armor implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("armor");
 
-    public static final RegistryKey<Registry<ArmorTrimEffect>> ARMOR_TRIM_EFFECTS_KEY = RegistryKey.ofRegistry(CONSTRUCTOR.id("armor_trim_effects"));
-    public static final Registry<ArmorTrimEffect> ARMOR_TRIM_EFFECTS = FabricRegistryBuilder.createSimple(ARMOR_TRIM_EFFECTS_KEY)
+    public static final RegistryKey<Registry<ArmorTrimPatternEffect>> ARMOR_TRIM_PATTERN_EFFECTS_KEY = RegistryKey.ofRegistry(CONSTRUCTOR.id("armor_trim_pattern_effects"));
+    public static final Registry<ArmorTrimPatternEffect> ARMOR_TRIM_PATTERN_EFFECTS = FabricRegistryBuilder.createSimple(ARMOR_TRIM_PATTERN_EFFECTS_KEY)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
+    public static final RegistryKey<Registry<ArmorTrimMaterialEffect>> ARMOR_TRIM_MATERIAL_EFFECTS_KEY = RegistryKey.ofRegistry(CONSTRUCTOR.id("armor_trim_material_effects"));
+    public static final Registry<ArmorTrimMaterialEffect> ARMOR_TRIM_MATERIAL_EFFECTS = FabricRegistryBuilder.createSimple(ARMOR_TRIM_MATERIAL_EFFECTS_KEY)
             .attribute(RegistryAttribute.SYNCED)
             .buildAndRegister();
     public static final Map<SmithingTemplateItem, Identifier> SMITHING_TEMPLATE_PATTERNS = new LinkedHashMap<>();
@@ -49,51 +54,58 @@ public class Armor implements ModInitializer {
     public static final RegistryEntry<EntityAttribute> PLAYER_DISCOUNT = CONSTRUCTOR.attribute("player.discount", new FreeEntityAttribute("attribute.beryllium.armor.name.player.discount", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_SATURATION = CONSTRUCTOR.attribute("generic.saturation", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.saturation", 0).setTracked(true));
 
-    public static RegistryEntry<ArmorMaterial> getArmorMaterial(ItemStack stack) {
-        return ((ArmorItem) stack.getItem()).getMaterial();
-    }
-
-    public static float trimMaterialScale(ItemStack stack, LivingEntity owner) {
+    public static float trimMaterialScale(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+        float f = 1;
 
-        if (trim == null) {
-            return 1;
-        }
+        if (trim != null) {
+            ArmorTrimMaterialEffect materialEffect = ARMOR_TRIM_MATERIAL_EFFECTS.get(trim.getMaterial().getKey().orElseThrow().getValue());
 
-        float f = switch (trim.getMaterial().getIdAsString()) {
-            case "minecraft:gold" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("gold")) ? 0.5f : 1;
-            case "minecraft:iron" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("iron")) ? 0.5f : 1;
-            case "minecraft:diamond" -> getArmorMaterial(stack).matchesId(Identifier.ofVanilla("diamond")) ? 0.5f : 1;
-            case "minecraft:netherite" ->
-                    getArmorMaterial(stack).matchesId(Identifier.ofVanilla("netherite")) ? 0.5f : 1;
-            default -> 1;
-        };
+            if (materialEffect != null) {
+                if (stack.getItem() instanceof ArmorItem armor && materialEffect.debuffed().contains(armor.getMaterial().getKey().orElseThrow())) {
+                    f *= 0.5f;
+                }
 
-        if (owner != null) {
-            for (Pair<ArmorTrim, ItemStack> trim1 : collectTrims(owner)) {
-                if (!trim1.getLeft().equals(trim)) {
-                    return f;
+                for (CustomTrimEffect custom : materialEffect.custom()) {
+                    f *= custom.trimMaterialScale(stack, trim);
                 }
             }
 
-            f *= 1.25f;
+            ArmorTrimPatternEffect patternEffect = ARMOR_TRIM_PATTERN_EFFECTS.get(trim.getPattern().getKey().orElseThrow().getValue());
+
+            if (patternEffect != null) {
+                for (CustomTrimEffect custom : patternEffect.custom()) {
+                    f *= custom.trimMaterialScale(stack, trim);
+                }
+            }
         }
 
         return f;
     }
 
-    public static float trimPatternScale(ItemStack stack, LivingEntity owner) {
+    public static float trimPatternScale(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+        float f = 1;
 
-        if (trim == null) {
-            return 1;
+        if (trim != null) {
+            ArmorTrimMaterialEffect materialEffect = ARMOR_TRIM_MATERIAL_EFFECTS.get(trim.getMaterial().getKey().orElseThrow().getValue());
+
+            if (materialEffect != null) {
+                for (CustomTrimEffect custom : materialEffect.custom()) {
+                    f *= custom.trimPatternScale(stack, trim);
+                }
+            }
+
+            ArmorTrimPatternEffect patternEffect = ARMOR_TRIM_PATTERN_EFFECTS.get(trim.getPattern().getKey().orElseThrow().getValue());
+
+            if (patternEffect != null) {
+                for (CustomTrimEffect custom : patternEffect.custom()) {
+                    f *= custom.trimPatternScale(stack, trim);
+                }
+            }
         }
 
-        //if (trim.getMaterial().isIn(ENHANCE_MATERIALS)) {
-        //    return 1.5f;
-        //}
-
-        return 1;
+        return f;
     }
 
     public static List<Pair<ArmorTrim, ItemStack>> collectTrims(LivingEntity entity) {
@@ -113,11 +125,11 @@ public class Armor implements ModInitializer {
         return trims;
     }
 
-    public static Optional<ArmorTrimEffect> getTrimEffect(ItemStack stack) {
+    public static Optional<ArmorTrimPatternEffect> getTrimEffect(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
         if (trim != null) {
-            return ARMOR_TRIM_EFFECTS.getOrEmpty(trim.getPattern().getKey().orElseThrow().getValue());
+            return ARMOR_TRIM_PATTERN_EFFECTS.getOrEmpty(trim.getPattern().getKey().orElseThrow().getValue());
         }
 
         return Optional.empty();
@@ -165,15 +177,26 @@ public class Armor implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.SENTRY, GENERIC_RANGED_DAMAGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.DUNE, EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.COAST, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.TIDE, EntityAttributes.GENERIC_ATTACK_DAMAGE, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.WILD, GENERIC_REGENERATION, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.WARD, EntityAttributes.GENERIC_ARMOR, 1, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.VEX, EntityAttributes.GENERIC_ATTACK_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.RIB, EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.EYE, PLAYER_GAMMA, 1, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimEffect(ArmorTrimPatterns.HOST, GENERIC_MOUNT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SENTRY, GENERIC_RANGED_DAMAGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.DUNE, EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.COAST, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.TIDE, EntityAttributes.GENERIC_ATTACK_DAMAGE, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.WILD, GENERIC_REGENERATION, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.WARD, EntityAttributes.GENERIC_ARMOR, 1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.VEX, EntityAttributes.GENERIC_ATTACK_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.RIB, EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.EYE, PLAYER_GAMMA, 1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.HOST, GENERIC_MOUNT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
+
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.AMETHYST, EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.COPPER, EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.DIAMOND, new CustomTrimEffect.Diamond(), ArmorMaterials.DIAMOND.getKey().orElseThrow());
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.EMERALD, PLAYER_DISCOUNT, 5, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.GOLD, new CustomTrimEffect.Gold(), ArmorMaterials.GOLD.getKey().orElseThrow());
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.IRON, EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.LAPIS, EntityAttributes.GENERIC_JUMP_STRENGTH, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.QUARTZ, EntityAttributes.PLAYER_MINING_EFFICIENCY, 8, EntityAttributeModifier.Operation.ADD_VALUE);
+        //CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.NETHERITE, , , EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.REDSTONE, GENERIC_SATURATION, 0.2, EntityAttributeModifier.Operation.ADD_VALUE);
     }
 }

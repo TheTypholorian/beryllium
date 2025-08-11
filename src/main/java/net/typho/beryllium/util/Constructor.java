@@ -14,6 +14,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.trim.ArmorTrimMaterial;
 import net.minecraft.item.trim.ArmorTrimPattern;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -27,9 +28,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.gen.feature.Feature;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.armor.Armor;
-import net.typho.beryllium.armor.ArmorTrimEffect;
-import net.typho.beryllium.armor.AttributeModifier;
+import net.typho.beryllium.armor.*;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -109,13 +108,12 @@ public class Constructor implements Identifierifier {
         return builder;
     }
 
-    public ArmorTrimEffect trimEffect(RegistryKey<ArmorTrimPattern> pattern, ArmorTrimEffect effect) {
-        return Registry.register(Armor.ARMOR_TRIM_EFFECTS, pattern.getValue(), effect);
+    public ArmorTrimPatternEffect trimPatternEffect(RegistryKey<ArmorTrimPattern> pattern, ArmorTrimPatternEffect effect) {
+        return Registry.register(Armor.ARMOR_TRIM_PATTERN_EFFECTS, pattern.getValue(), effect);
     }
 
-    @SafeVarargs
-    public final ArmorTrimEffect trimEffect(RegistryKey<ArmorTrimPattern> pattern, RegistryEntry<EntityAttribute> attribute, double d, EntityAttributeModifier.Operation op, RegistryKey<ArmorMaterial>... debuffed) {
-        return trimEffect(pattern, new ArmorTrimEffect(
+    public ArmorTrimPatternEffect trimPatternEffect(RegistryKey<ArmorTrimPattern> pattern, RegistryEntry<EntityAttribute> attribute, double d, EntityAttributeModifier.Operation op, CustomTrimEffect... effects) {
+        return trimPatternEffect(pattern, new ArmorTrimPatternEffect(
                 List.of(new AttributeModifier(
                         attribute,
                         new EntityAttributeModifier(
@@ -124,6 +122,35 @@ public class Constructor implements Identifierifier {
                                 op
                         )
                 )),
+                List.of(effects)
+        ));
+    }
+
+    public ArmorTrimMaterialEffect trimMaterialEffect(RegistryKey<ArmorTrimMaterial> pattern, ArmorTrimMaterialEffect effect) {
+        return Registry.register(Armor.ARMOR_TRIM_MATERIAL_EFFECTS, pattern.getValue(), effect);
+    }
+
+    @SafeVarargs
+    public final ArmorTrimMaterialEffect trimMaterialEffect(RegistryKey<ArmorTrimMaterial> pattern, CustomTrimEffect effect, RegistryKey<ArmorMaterial>... debuffed) {
+        return trimMaterialEffect(pattern, new ArmorTrimMaterialEffect(
+                List.of(),
+                List.of(effect),
+                List.of(debuffed)
+        ));
+    }
+
+    @SafeVarargs
+    public final ArmorTrimMaterialEffect trimMaterialEffect(RegistryKey<ArmorTrimMaterial> pattern, RegistryEntry<EntityAttribute> attribute, double d, EntityAttributeModifier.Operation op, RegistryKey<ArmorMaterial>... debuffed) {
+        return trimMaterialEffect(pattern, new ArmorTrimMaterialEffect(
+                List.of(new AttributeModifier(
+                        attribute,
+                        new EntityAttributeModifier(
+                                id(pattern.getValue().getPath()),
+                                d,
+                                op
+                        )
+                )),
+                List.of(),
                 List.of(debuffed)
         ));
     }

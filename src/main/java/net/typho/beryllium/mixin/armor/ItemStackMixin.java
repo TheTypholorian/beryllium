@@ -7,7 +7,7 @@ import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.armor.Armor;
-import net.typho.beryllium.armor.ArmorTrimEffect;
+import net.typho.beryllium.armor.ArmorTrimPatternEffect;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +30,7 @@ public abstract class ItemStackMixin {
             Identifier key = Armor.SMITHING_TEMPLATE_PATTERNS.get(template);
 
             if (key != null) {
-                ArmorTrimEffect effect = Armor.ARMOR_TRIM_EFFECTS.get(key);
+                ArmorTrimPatternEffect effect = Armor.ARMOR_TRIM_PATTERN_EFFECTS.get(key);
 
                 if (effect != null) {
                     effect.appendTooltip(textConsumer, player, (ItemStack) (Object) this);

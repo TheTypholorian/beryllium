@@ -2,14 +2,21 @@ package net.typho.beryllium.enchanting;
 
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.armor.Armor;
+import net.typho.beryllium.armor.ArmorTrimMaterialEffect;
+import net.typho.beryllium.armor.ArmorTrimPatternEffect;
+import net.typho.beryllium.armor.CustomTrimEffect;
 import net.typho.beryllium.util.Constructor;
 
 import java.util.function.Supplier;
@@ -75,7 +82,42 @@ public class Enchanting implements ModInitializer {
     }
 
     public static int getMaxEnchCapacity(ItemStack stack) {
-        int i = stack.getItem().getEnchantability();
+        float f = stack.getItem().getEnchantability();
+
+        ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
+
+        if (trim != null) {
+            ArmorTrimMaterialEffect materialEffect = Armor.ARMOR_TRIM_MATERIAL_EFFECTS.get(trim.getMaterial().getKey().orElseThrow().getValue());
+            ArmorTrimPatternEffect patternEffect = Armor.ARMOR_TRIM_PATTERN_EFFECTS.get(trim.getPattern().getKey().orElseThrow().getValue());
+
+            if (materialEffect != null) {
+                for (CustomTrimEffect custom : materialEffect.custom()) {
+                    f += custom.bonusEnchantmentCapacity(stack, trim);
+                }
+            }
+
+            if (patternEffect != null) {
+                for (CustomTrimEffect custom : patternEffect.custom()) {
+                    f += custom.bonusEnchantmentCapacity(stack, trim);
+                }
+            }
+
+            if (materialEffect != null) {
+                if (stack.getItem() instanceof ArmorItem armor && materialEffect.debuffed().contains(armor.getMaterial().getKey().orElseThrow())) {
+                    f *= 0.5f;
+                }
+
+                for (CustomTrimEffect custom : materialEffect.custom()) {
+                    f *= custom.trimMaterialScale(stack, trim);
+                }
+            }
+
+            if (patternEffect != null) {
+                for (CustomTrimEffect custom : patternEffect.custom()) {
+                    f *= custom.trimMaterialScale(stack, trim);
+                }
+            }
+        }
 
         //ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
@@ -83,7 +125,7 @@ public class Enchanting implements ModInitializer {
         //    i += (int) (4 * Armor.trimMaterialScale(stack, null));
         //}
 
-        return i;
+        return (int) f;
     }
 
     public static int getUsedEnchCapacity(ItemStack stack) {
