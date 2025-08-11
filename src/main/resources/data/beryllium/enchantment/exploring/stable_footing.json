@@ -6,7 +6,7 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "beryllium:exploring/player.stable_footing",
+        "attribute": "beryllium:exploring/player.air_mining_efficiency",
         "id": "stable_footing",
         "amount": {
           "type": "minecraft:linear",

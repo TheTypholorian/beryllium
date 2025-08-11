@@ -13,3 +13,4 @@ accessible class net/minecraft/client/render/BackgroundRenderer$FogData
 accessible field net/minecraft/component/type/FoodComponent$Builder eatSeconds F
 accessible field net/minecraft/data/client/BlockStateModelGenerator$BlockTexturePool textures Lnet/minecraft/data/client/TextureMap;
 accessible field net/minecraft/data/client/BlockStateModelGenerator texturedModels Ljava/util/Map;
+accessible method net/minecraft/item/ItemStack appendAttributeModifierTooltip (Ljava/util/function/Consumer;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/entity/attribute/EntityAttributeModifier;)V
