@@ -1,8 +1,8 @@
-package net.typho.beryllium.mixin.combat;
+package net.typho.beryllium.mixin.armor;
 
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.armor.Armor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +16,6 @@ public class VillagerEntityMixin {
             cancellable = true
     )
     private void bonusReputation(PlayerEntity player, CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(cir.getReturnValue() + Combat.bonusReputation(player));
+        cir.setReturnValue(cir.getReturnValue() + Armor.bonusReputation(player));
     }
 }

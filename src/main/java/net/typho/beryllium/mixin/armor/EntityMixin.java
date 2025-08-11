@@ -1,8 +1,8 @@
-package net.typho.beryllium.mixin.combat;
+package net.typho.beryllium.mixin.armor;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
-import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.armor.Armor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -16,6 +16,6 @@ public abstract class EntityMixin {
             argsOnly = true
     )
     private Vec3d movement(Vec3d value) {
-        return value.multiply(1 + Combat.bonusMountSpeed((Entity) (Object) this));
+        return value.multiply(1 + Armor.bonusMountSpeed((Entity) (Object) this));
     }
 }

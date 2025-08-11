@@ -6,7 +6,7 @@
   "effects": {
     "minecraft:attributes": [
       {
-        "attribute": "beryllium:exploring/generic.stable_footing",
+        "attribute": "beryllium:exploring/player.stable_footing",
         "id": "stable_footing",
         "amount": {
           "type": "minecraft:linear",

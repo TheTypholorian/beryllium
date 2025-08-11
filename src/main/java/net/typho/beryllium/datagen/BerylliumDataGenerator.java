@@ -43,8 +43,6 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(GenBlockTags::new);
         pack.addProvider(GenStructureTags::new);
         pack.addProvider(GenBiomeTags::new);
-        pack.addProvider(GenArmorTrimPatternTags::new);
-        pack.addProvider(GenArmorTrimMaterialTags::new);
         pack.addProvider(GenModels::new);
         pack.addProvider(GenRecipes::new);
         pack.addProvider(GenBlockLootTables::new);

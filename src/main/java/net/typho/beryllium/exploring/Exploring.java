@@ -218,7 +218,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
         }
     });
 
-    public static final RegistryEntry<EntityAttribute> STABLE_FOOTING = CONSTRUCTOR.attribute("generic.stable_footing", new ClampedEntityAttribute("attribute.beryllium.name.generic.stable_footing", 0.2, 0.001, 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_STABLE_FOOTING = CONSTRUCTOR.attribute("player.stable_footing", new ClampedEntityAttribute("attribute.beryllium.name.player.stable_footing", 0.2, 0.001, 1).setTracked(true));
 
     public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{

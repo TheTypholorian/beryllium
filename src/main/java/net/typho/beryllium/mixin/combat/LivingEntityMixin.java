@@ -1,14 +1,10 @@
 package net.typho.beryllium.mixin.combat;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.Vec3d;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.combat.Combat;
@@ -18,7 +14,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -121,66 +116,5 @@ public abstract class LivingEntityMixin {
         }
 
         shield.set(Combat.SHIELD_DURABILITY, durability);
-    }
-
-    @Inject(
-            method = "getMovementSpeed()F",
-            at = @At("RETURN"),
-            cancellable = true
-    )
-    private void bonusSpeed(CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(cir.getReturnValue() + Combat.bonusSpeed((LivingEntity) (Object) this));
-    }
-
-    @ModifyVariable(
-            method = "travel(Lnet/minecraft/util/math/Vec3d;)V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"
-            ),
-            ordinal = 0
-    )
-    private float bonusSwimmingSpeed(float f) {
-        return f + Combat.bonusSwimmingSpeed((LivingEntity) (Object) this);
-    }
-
-    @Inject(
-            method = "getArmor",
-            at = @At("RETURN"),
-            cancellable = true
-    )
-    private void bonusArmor(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(cir.getReturnValue() + Combat.bonusArmor((LivingEntity) (Object) this));
-    }
-
-    @WrapOperation(
-            method = "takeKnockback",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D"
-            )
-    )
-    private double bonusKnockbackResistance(LivingEntity instance, RegistryEntry<EntityAttribute> attribute, Operation<Double> original) {
-        return original.call(instance, attribute) + Combat.bonusKnockbackResistance((LivingEntity) (Object) this);
-    }
-
-    @WrapOperation(
-            method = "getKnockbackAgainst",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;getAttributeValue(Lnet/minecraft/registry/entry/RegistryEntry;)D"
-            )
-    )
-    private double bonusKnockback(LivingEntity instance, RegistryEntry<EntityAttribute> attribute, Operation<Double> original) {
-        return original.call(instance, attribute) + Combat.bonusAttackKnockback((LivingEntity) (Object) this);
-    }
-
-    @Inject(
-            method = "getJumpBoostVelocityModifier",
-            at = @At("RETURN"),
-            cancellable = true
-    )
-    private void bonusJumpHeight(CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(cir.getReturnValue() + Combat.bonusJumpHeight((LivingEntity) (Object) this));
     }
 }

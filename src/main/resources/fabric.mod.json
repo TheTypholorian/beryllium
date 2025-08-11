@@ -26,6 +26,7 @@
       "net.typho.beryllium.redstone.Redstone"
     ],
     "main": [
+      "net.typho.beryllium.armor.Armor",
       "net.typho.beryllium.Beryllium",
       "net.typho.beryllium.building.Building",
       "net.typho.beryllium.combat.Combat",
