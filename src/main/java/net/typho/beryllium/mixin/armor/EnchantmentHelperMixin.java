@@ -5,6 +5,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.item.Equipment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.armor.Armor;
@@ -32,7 +33,7 @@ public class EnchantmentHelperMixin {
             at = @At("TAIL")
     )
     private static void applyAttributeModifiers(ItemStack stack, AttributeModifierSlot slot, BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> output, CallbackInfo ci) {
-        if (slot == AttributeModifierSlot.ARMOR) {
+        if (stack.getItem() instanceof Equipment equipment ? slot.matches(equipment.getSlotType()) : slot == AttributeModifierSlot.ARMOR) {
             Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output, stack));
         }
     }

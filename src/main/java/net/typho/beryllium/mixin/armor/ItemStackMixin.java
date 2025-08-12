@@ -19,7 +19,8 @@ import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    @Shadow public abstract Item getItem();
+    @Shadow
+    public abstract Item getItem();
 
     @Inject(
             method = "appendAttributeModifiersTooltip",

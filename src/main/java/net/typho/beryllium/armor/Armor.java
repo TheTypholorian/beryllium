@@ -196,7 +196,7 @@ public class Armor implements ModInitializer {
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.IRON, EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.LAPIS, EntityAttributes.GENERIC_JUMP_STRENGTH, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.QUARTZ, EntityAttributes.PLAYER_MINING_EFFICIENCY, 8, EntityAttributeModifier.Operation.ADD_VALUE);
-        //CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.NETHERITE, , , EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.NETHERITE, EntityAttributes.GENERIC_BURNING_TIME, -0.1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.REDSTONE, GENERIC_SATURATION, 0.2, EntityAttributeModifier.Operation.ADD_VALUE);
     }
 }
