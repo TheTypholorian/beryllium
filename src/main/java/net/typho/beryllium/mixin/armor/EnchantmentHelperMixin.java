@@ -33,7 +33,7 @@ public class EnchantmentHelperMixin {
             at = @At("TAIL")
     )
     private static void applyAttributeModifiers(ItemStack stack, AttributeModifierSlot slot, BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> output, CallbackInfo ci) {
-        if (stack.getItem() instanceof Equipment equipment ? slot.matches(equipment.getSlotType()) : slot == AttributeModifierSlot.ARMOR) {
+        if (stack.getItem() instanceof Equipment equipment ? slot.matches(equipment.getSlotType()) && slot.ordinal() >= 4 && slot.ordinal() <= 7 : slot == AttributeModifierSlot.ARMOR) {
             Armor.getTrimEffect(stack).ifPresent(effect -> effect.applyModifiers(slot.name(), output, stack));
         }
     }

@@ -168,10 +168,13 @@
   "attribute.beryllium.armor.name.player.sliding": "Sliding",
   "attribute.beryllium.armor.name.player.ranged_speed": "Ranged Speed",
   "attribute.beryllium.armor.name.player.discount": "Discount",
-  "attribute.beryllium.armor.name.generic.saturation": "Saturation",
+  "attribute.beryllium.armor.name.generic.saturation": "Saturation per Second",
+  "trim_effect.beryllium.name.material_scale": "Material Effect Scale",
+  "trim_effect.beryllium.name.pattern_scale": "Pattern Effect Scale",
+  "trim_effect.beryllium.name.enchantment_capacity": "Enchantment Capacity",
 
   "item.beryllium.modifiers.trim_pattern": "When Applied to Armor:",
-  "item.beryllium.modifiers.trim_material": "When Applied with Armor Trim:",
+  "item.beryllium.modifiers.trim_material": "When Applied to Armor Trim:",
 
   "config.beryllium.durabilityRemoval": "Durability Removal",
 

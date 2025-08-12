@@ -26,12 +26,16 @@ public record ArmorTrimPatternEffect(List<AttributeModifier> attributes, List<Cu
     }
 
     public void appendTooltip(Consumer<Text> output, @Nullable PlayerEntity player, ItemStack stack) {
-        if (!attributes.isEmpty()) {
+        if (!attributes.isEmpty() || !custom.isEmpty()) {
             output.accept(ScreenTexts.EMPTY);
             output.accept(Text.translatable("item.beryllium.modifiers.trim_pattern").formatted(Formatting.GRAY));
 
             for (AttributeModifier attribute : attributes) {
                 stack.appendAttributeModifierTooltip(output, player, attribute.attribute(), attribute.modifier());
+            }
+
+            for (CustomTrimEffect custom : custom) {
+                custom.appendTooltip(output, stack);
             }
         }
     }
