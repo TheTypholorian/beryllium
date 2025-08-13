@@ -9,7 +9,7 @@ import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +29,7 @@ public class RespawnAnchorBlockMixin {
             cancellable = true
     )
     private void onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
-        if (Beryllium.SERVER_CONFIG.respawnAnchorsDontExplode.get() && !isNether(world)) {
+        if (Config.respawnAnchorsDontExplode.get() && !isNether(world)) {
             cir.setReturnValue(ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION);
         }
     }

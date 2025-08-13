@@ -5,7 +5,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.level.ServerWorldProperties;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.config.Config;
 import net.typho.beryllium.exploring.Exploring;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +24,7 @@ public class MinecraftServerMixin {
             cancellable = true
     )
     private static void setupSpawn(ServerWorld world, ServerWorldProperties worldProperties, boolean bonusChest, boolean debugWorld, CallbackInfo ci) {
-        if (Beryllium.SERVER_CONFIG.spawnInVillage.get()) {
+        if (Config.spawnInVillage.get()) {
             BlockPos spawn = world.locateStructure(Exploring.SPAWN_KEY, new BlockPos(0, 0, 0), 500, false);
 
             if (spawn != null) {

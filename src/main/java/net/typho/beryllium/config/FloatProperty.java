@@ -9,8 +9,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 
 public class FloatProperty extends Property<Float> {
-    public FloatProperty(ServerConfig config, Identifier id, Float value) {
-        super(config, id, FloatArgumentType.floatArg(), value);
+    public FloatProperty(Identifier id, Float value) {
+        super(id, FloatArgumentType.floatArg(), value);
     }
 
     @Override

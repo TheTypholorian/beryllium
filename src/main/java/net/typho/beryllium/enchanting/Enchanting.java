@@ -11,11 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.armor.ArmorTrimMaterialEffect;
 import net.typho.beryllium.armor.ArmorTrimPatternEffect;
 import net.typho.beryllium.armor.CustomTrimEffect;
+import net.typho.beryllium.config.Config;
 import net.typho.beryllium.util.Constructor;
 
 import java.util.function.Supplier;
@@ -145,7 +145,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
-        if (!Beryllium.SERVER_CONFIG.enchantmentCapacity.get()) {
+        if (!Config.enchantmentCapacity.get()) {
             return true;
         }
 
@@ -161,7 +161,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        if (!Beryllium.SERVER_CONFIG.enchantmentCatalysts.get()) {
+        if (!Config.enchantmentCatalysts.get()) {
             return ItemStack.EMPTY;
         }
 
@@ -171,7 +171,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
-        if (player.getAbilities().creativeMode || !Beryllium.SERVER_CONFIG.enchantmentCatalysts.get()) {
+        if (player.getAbilities().creativeMode || !Config.enchantmentCatalysts.get()) {
             return true;
         }
 

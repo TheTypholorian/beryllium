@@ -21,8 +21,8 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.BerylliumClient;
+import net.typho.beryllium.config.Config;
 
 import java.awt.*;
 import java.util.*;
@@ -62,7 +62,7 @@ public class MetalDetectorItem extends Item {
         BlockPos origin = entity.getBlockPos();
         Set<BlockPos> found = new HashSet<>();
 
-        int xRad = Beryllium.SERVER_CONFIG.metalDetectorRadius.get(), yRad = Beryllium.SERVER_CONFIG.metalDetectorHeight.get();
+        int xRad = Config.metalDetectorRadius.get(), yRad = Config.metalDetectorHeight.get();
 
         for (int y = -yRad; y <= yRad; y++) {
             int by = origin.getY() + y;
@@ -111,7 +111,7 @@ public class MetalDetectorItem extends Item {
         if (player != null && player.getInventory().contains(stack)) {
             BlockPos playerPos = player.getBlockPos();
             World world = player.getWorld();
-            int radius = Beryllium.SERVER_CONFIG.metalDetectorRadius.get();
+            int radius = Config.metalDetectorRadius.get();
             Map<Block, Integer> found = new HashMap<>();
 
             if (BerylliumClient.CONFIG.compassCoords) {

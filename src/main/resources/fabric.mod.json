@@ -31,7 +31,8 @@
       "net.typho.beryllium.combat.Combat",
       "net.typho.beryllium.enchanting.Enchanting",
       "net.typho.beryllium.exploring.Exploring",
-      "net.typho.beryllium.food.Food"
+      "net.typho.beryllium.food.Food",
+      "net.typho.beryllium.config.Config"
     ],
     "cardinal-components": [
       "net.typho.beryllium.exploring.Exploring"

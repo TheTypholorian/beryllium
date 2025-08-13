@@ -9,8 +9,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 
 public class IntProperty extends Property<Integer> {
-    public IntProperty(ServerConfig config, Identifier id, Integer value) {
-        super(config, id, IntegerArgumentType.integer(), value);
+    public IntProperty(Identifier id, Integer value) {
+        super(id, IntegerArgumentType.integer(), value);
     }
 
     @Override

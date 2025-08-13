@@ -7,8 +7,8 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.armor.Armor;
+import net.typho.beryllium.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -23,7 +23,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private float gamma(Double instance, Operation<Float> original) {
-        return Beryllium.SERVER_CONFIG.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) / 4 : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
+        return Config.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) / 4 : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
     }
 
     @WrapOperation(
@@ -34,7 +34,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private boolean hasNightVision(ClientPlayerEntity instance, RegistryEntry<StatusEffect> registryEntry, Operation<Boolean> original) {
-        if (Beryllium.SERVER_CONFIG.ultraDark.get()) {
+        if (Config.ultraDark.get()) {
             return false;
         }
 

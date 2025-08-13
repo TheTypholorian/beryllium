@@ -3,7 +3,7 @@ package net.typho.beryllium.mixin.client;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,7 +16,7 @@ public class BlindnessFogModifierMixin {
             at = @At("TAIL")
     )
     private void fog(BackgroundRenderer.FogData fogData, LivingEntity entity, StatusEffectInstance effect, float viewDistance, float tickDelta, CallbackInfo ci) {
-        if (Beryllium.SERVER_CONFIG.ultraDark.get()) {
+        if (Config.ultraDark.get()) {
             fogData.fogStart += 8;
             fogData.fogEnd += 16;
         }

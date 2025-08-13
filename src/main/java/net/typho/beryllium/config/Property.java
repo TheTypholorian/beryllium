@@ -17,11 +17,11 @@ public abstract class Property<O> {
     public final O defValue;
     protected O value;
 
-    public Property(ServerConfig config, Identifier id, ArgumentType<O> argumentType, O value) {
+    public Property(Identifier id, ArgumentType<O> argumentType, O value) {
         this.id = id;
         this.argumentType = argumentType;
-        config.properties.put(id, this);
         this.value = defValue = value;
+        Config.properties.put(id, this);
     }
 
     public O get() {

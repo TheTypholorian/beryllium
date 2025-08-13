@@ -9,8 +9,8 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 
 public class BooleanProperty extends Property<Boolean> {
-    public BooleanProperty(ServerConfig config, Identifier id, Boolean value) {
-        super(config, id, BoolArgumentType.bool(), value);
+    public BooleanProperty(Identifier id, Boolean value) {
+        super(id, BoolArgumentType.bool(), value);
     }
 
     @Override

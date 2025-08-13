@@ -1,7 +1,7 @@
 package net.typho.beryllium.mixin;
 
 import net.minecraft.world.level.LevelProperties;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.config.Config;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +15,7 @@ public class LevelPropertiesMixin {
             cancellable = true
     )
     private void getTimeOfDay(CallbackInfoReturnable<Long> cir) {
-        if (Beryllium.SERVER_CONFIG.ultraDark.get()) {
+        if (Config.ultraDark.get()) {
             cir.setReturnValue(18000L);
         }
     }
@@ -26,7 +26,7 @@ public class LevelPropertiesMixin {
             cancellable = true
     )
     private void isThundering(CallbackInfoReturnable<Boolean> cir) {
-        if (Beryllium.SERVER_CONFIG.ultraDark.get()) {
+        if (Config.ultraDark.get()) {
             cir.setReturnValue(true);
         }
     }
@@ -37,7 +37,7 @@ public class LevelPropertiesMixin {
             cancellable = true
     )
     private void isRaining(CallbackInfoReturnable<Boolean> cir) {
-        if (Beryllium.SERVER_CONFIG.ultraDark.get()) {
+        if (Config.ultraDark.get()) {
             cir.setReturnValue(true);
         }
     }
