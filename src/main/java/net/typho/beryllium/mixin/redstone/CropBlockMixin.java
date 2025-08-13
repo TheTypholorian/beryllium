@@ -26,7 +26,7 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @Override
     protected boolean hasComparatorOutput(BlockState state) {
-        return Beryllium.CONFIG.redstone.cropComparatorOutput;
+        return Beryllium.SERVER_CONFIG.cropComparatorOutput.get();
     }
 
     @Override

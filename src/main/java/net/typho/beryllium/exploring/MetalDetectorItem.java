@@ -62,7 +62,7 @@ public class MetalDetectorItem extends Item {
         BlockPos origin = entity.getBlockPos();
         Set<BlockPos> found = new HashSet<>();
 
-        int xRad = Beryllium.CONFIG.exploring.metalDetector.needleX, yRad = Beryllium.CONFIG.exploring.metalDetector.needleY;
+        int xRad = Beryllium.SERVER_CONFIG.metalDetectorRadius.get(), yRad = Beryllium.SERVER_CONFIG.metalDetectorHeight.get();
 
         for (int y = -yRad; y <= yRad; y++) {
             int by = origin.getY() + y;
@@ -111,7 +111,7 @@ public class MetalDetectorItem extends Item {
         if (player != null && player.getInventory().contains(stack)) {
             BlockPos playerPos = player.getBlockPos();
             World world = player.getWorld();
-            int radius = Beryllium.CONFIG.exploring.metalDetector.tooltipRadius;
+            int radius = Beryllium.SERVER_CONFIG.metalDetectorRadius.get();
             Map<Block, Integer> found = new HashMap<>();
 
             if (BerylliumClient.CONFIG.compassCoords) {

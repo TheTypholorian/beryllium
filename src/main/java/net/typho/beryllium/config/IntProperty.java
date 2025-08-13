@@ -6,19 +6,11 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.typho.beryllium.util.Constructor;
+import net.minecraft.util.Identifier;
 
-public class IntProperty extends TextFieldProperty<Integer> {
-    public IntProperty(ServerConfig config, String category, String name, Integer value) {
-        super(config, category, name, IntegerArgumentType.integer(), value);
-    }
-
-    public IntProperty(ServerConfig config, Constructor cons, String name, Integer value) {
-        super(config, cons, name, IntegerArgumentType.integer(), value);
-    }
-
-    public IntProperty(ServerConfig config, String name, Integer value) {
-        super(config, name, IntegerArgumentType.integer(), value);
+public class IntProperty extends Property<Integer> {
+    public IntProperty(ServerConfig config, Identifier id, Integer value) {
+        super(config, id, IntegerArgumentType.integer(), value);
     }
 
     @Override

@@ -22,8 +22,7 @@
       "net.typho.beryllium.client.BerylliumClient",
       "net.typho.beryllium.building.Building",
       "net.typho.beryllium.combat.Combat",
-      "net.typho.beryllium.exploring.Exploring",
-      "net.typho.beryllium.redstone.Redstone"
+      "net.typho.beryllium.exploring.Exploring"
     ],
     "main": [
       "net.typho.beryllium.armor.Armor",
@@ -32,8 +31,7 @@
       "net.typho.beryllium.combat.Combat",
       "net.typho.beryllium.enchanting.Enchanting",
       "net.typho.beryllium.exploring.Exploring",
-      "net.typho.beryllium.food.Food",
-      "net.typho.beryllium.redstone.Redstone"
+      "net.typho.beryllium.food.Food"
     ],
     "cardinal-components": [
       "net.typho.beryllium.exploring.Exploring"

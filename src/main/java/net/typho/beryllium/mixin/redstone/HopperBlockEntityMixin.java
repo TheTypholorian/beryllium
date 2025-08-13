@@ -42,6 +42,6 @@ public abstract class HopperBlockEntityMixin {
             constant = @Constant(intValue = 8)
     )
     private static int cooldown(int cooldown) {
-        return Beryllium.CONFIG.redstone.hopperCooldown;
+        return Beryllium.SERVER_CONFIG.hopperCooldown.get();
     }
 }

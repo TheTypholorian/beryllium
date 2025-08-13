@@ -1,6 +1,5 @@
 package net.typho.beryllium.enchanting;
 
-import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
@@ -146,7 +145,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
-        if (!Beryllium.CONFIG.enchanting.capacity) {
+        if (!Beryllium.SERVER_CONFIG.enchantmentCapacity.get()) {
             return true;
         }
 
@@ -162,7 +161,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        if (!Beryllium.CONFIG.enchanting.catalysts) {
+        if (!Beryllium.SERVER_CONFIG.enchantmentCatalysts.get()) {
             return ItemStack.EMPTY;
         }
 
@@ -172,7 +171,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
-        if (player.getAbilities().creativeMode || !Beryllium.CONFIG.enchanting.catalysts) {
+        if (player.getAbilities().creativeMode || !Beryllium.SERVER_CONFIG.enchantmentCatalysts.get()) {
             return true;
         }
 
@@ -183,10 +182,5 @@ public class Enchanting implements ModInitializer {
 
     @Override
     public void onInitialize() {
-    }
-
-    public static class Config extends ConfigSection {
-        public boolean catalysts = true;
-        public boolean capacity = true;
     }
 }

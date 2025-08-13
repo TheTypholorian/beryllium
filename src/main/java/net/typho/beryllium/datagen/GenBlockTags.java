@@ -11,7 +11,6 @@ import net.minecraft.registry.tag.TagKey;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
-import net.typho.beryllium.redstone.Redstone;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,7 +24,6 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                 .add(Building.KILN_BLOCK)
-                .add(Redstone.GOLD_HOPPER_BLOCK)
                 .add(Combat.POTION_CAULDRON)
                 .add(Exploring.POINTED_BONE);
 

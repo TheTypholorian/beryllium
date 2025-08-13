@@ -13,7 +13,6 @@ import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.food.Food;
-import net.typho.beryllium.redstone.Redstone;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.List;
@@ -89,24 +88,6 @@ public class GenModels extends FabricModelProvider {
                 );
     }
 
-    public void goldHopper(BlockStateModelGenerator gen) {
-        Identifier goldHopper = ModelIds.getBlockModelId(Redstone.GOLD_HOPPER_BLOCK);
-        Identifier goldHopperSide = ModelIds.getBlockSubModelId(Redstone.GOLD_HOPPER_BLOCK, "_side");
-        gen.registerItemModel(Redstone.GOLD_HOPPER_BLOCK.asItem());
-        gen.blockStateCollector
-                .accept(
-                        VariantsBlockStateSupplier.create(Redstone.GOLD_HOPPER_BLOCK)
-                                .coordinate(
-                                        BlockStateVariantMap.create(Properties.HOPPER_FACING)
-                                                .register(Direction.DOWN, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopper))
-                                                .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide))
-                                                .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R90))
-                                                .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R180))
-                                                .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, goldHopperSide).put(VariantSettings.Y, VariantSettings.Rotation.R270))
-                                )
-                );
-    }
-
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
@@ -131,12 +112,9 @@ public class GenModels extends FabricModelProvider {
 
         gen.registerTorch(Exploring.BLAZING_TORCH, Exploring.BLAZING_WALL_TORCH);
 
-        gen.registerDispenserLikeOrientable(Redstone.DESTRUCTOR_BLOCK);
-
         voidFire(gen);
         pointedBone(gen);
         potionCauldron(gen);
-        goldHopper(gen);
     }
 
     public BlockStateVariant getBoneVariant(BlockStateModelGenerator gen, Direction direction, Thickness thickness) {

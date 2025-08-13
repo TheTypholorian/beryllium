@@ -3,7 +3,6 @@ package net.typho.beryllium.exploring;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import me.fzzyhmstrs.fzzy_config.config.ConfigSection;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -473,15 +472,5 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                 ),
                 VanillaSurfaceRules.getEndStoneRule()
         );
-    }
-
-    public static class Config extends ConfigSection {
-        public MetalDetector metalDetector = new MetalDetector();
-
-        public static class MetalDetector extends ConfigSection {
-            public int tooltipRadius = 16, needleX = 16, needleY = 2;
-        }
-
-        public boolean spawnInVillage = true;
     }
 }

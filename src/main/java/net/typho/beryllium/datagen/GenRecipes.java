@@ -26,7 +26,6 @@ import net.typho.beryllium.building.kiln.KilnRecipe;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.food.Food;
-import net.typho.beryllium.redstone.Redstone;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.List;
@@ -292,26 +291,6 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('L', Items.LEATHER)
                 .criterion("has_diamond", FabricRecipeProvider.conditionsFromItem(Items.DIAMOND))
                 .offerTo(exporter, Identifier.ofVanilla("diamond_horse_armor"));
-
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Redstone.GOLD_HOPPER_BLOCK, 1)
-                .pattern("GRG")
-                .pattern("GCG")
-                .pattern(" G ")
-                .input('G', Items.GOLD_INGOT)
-                .input('R', Items.REDSTONE)
-                .input('C', Items.CHEST)
-                .criterion("has_gold_ingot", FabricRecipeProvider.conditionsFromItem(Items.GOLD_INGOT))
-                .offerTo(exporter, Redstone.CONSTRUCTOR.id("gold_hopper"));
-
-        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Redstone.DESTRUCTOR_BLOCK, 1)
-                .pattern("CCC")
-                .pattern("CPC")
-                .pattern("CRC")
-                .input('C', Items.COBBLESTONE)
-                .input('R', Items.REDSTONE)
-                .input('P', Items.IRON_PICKAXE)
-                .criterion("has_iron_pickaxe", FabricRecipeProvider.conditionsFromItem(Items.IRON_PICKAXE))
-                .offerTo(exporter, Redstone.CONSTRUCTOR.id("destructor_block"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SLIME_BALL, 1)
                 .input(Items.MAGMA_CREAM)

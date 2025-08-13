@@ -22,7 +22,7 @@ public class TntBlockMixin {
             cancellable = true
     )
     public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion, CallbackInfo ci) {
-        if (Beryllium.CONFIG.redstone.instantChainTNT) {
+        if (Beryllium.SERVER_CONFIG.instantChainTNT.get()) {
             if (!world.isClient) {
                 world.createExplosion(
                         null,

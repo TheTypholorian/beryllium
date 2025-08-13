@@ -9,7 +9,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.Exploring;
-import net.typho.beryllium.redstone.Redstone;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.concurrent.CompletableFuture;
@@ -44,9 +43,6 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Exploring.ALGAE_BLOCK, block -> dropsWithSilkTouchOrShears(block, EmptyEntry.builder()));
         addDrop(Exploring.VOID_FIRE, dropsNothing());
         addDrop(Exploring.POINTED_BONE);
-
-        addDrop(Redstone.GOLD_HOPPER_BLOCK);
-        addDrop(Redstone.DESTRUCTOR_BLOCK);
 
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
     }
