@@ -6,6 +6,7 @@
   "mixins": [
     "BucketItemMixin",
     "ElytraItemMixin",
+    "HostileEntityMixin",
     "ItemStackMixin",
     "LevelPropertiesMixin",
     "LivingEntityMixin",

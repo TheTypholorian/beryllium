@@ -63,10 +63,10 @@ public class ServerConfig {
 
     public final BooleanProperty cropComparatorOutput = new BooleanProperty(this, Redstone.CONSTRUCTOR.id("crop_comparator_output"), true);
     public final BooleanProperty dispensersPlaceBlocks = new BooleanProperty(this, Redstone.CONSTRUCTOR.id("dispensers_place_blocks"), true);
-    public final IntProperty hopperCooldown = new IntProperty(this, Redstone.CONSTRUCTOR.id("hopper_cooldown"), 2);
-    public final BooleanProperty instantChainTNT = new BooleanProperty(this, Redstone.CONSTRUCTOR.id("instant_chain_tnt"), true);
+    public final IntProperty hopperCooldown = new IntProperty(this, Redstone.CONSTRUCTOR.id("hopper_cooldown"), 4);
+    public final BooleanProperty instantChainTNT = new BooleanProperty(this, Redstone.CONSTRUCTOR.id("instant_chain_tnt"), false);
 
-    public final BooleanProperty durabilityRemoval = new BooleanProperty(this, Beryllium.CONSTRUCTOR.id("durability_removal"), true);
+    public final BooleanProperty durabilityRemoval = new BooleanProperty(this, Beryllium.CONSTRUCTOR.id("durability_removal"), false);
     public final BooleanProperty ultraDark = new BooleanProperty(this, Beryllium.CONSTRUCTOR.id("ultra_dark"), true);
 
     public ServerConfig() {
