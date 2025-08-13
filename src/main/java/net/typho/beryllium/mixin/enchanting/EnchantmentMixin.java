@@ -53,7 +53,7 @@ public abstract class EnchantmentMixin {
         }
 
         if (cir.getReturnValue()) {
-            if (!Enchanting.canFitEnchantment(stack, ench)) {
+            if (!Enchanting.canFitEnchantment(stack, /* here */)) {
                 cir.setReturnValue(false);
             } else {
                 for (RegistryEntry<Enchantment> enchantment : stack.getEnchantments().getEnchantments()) {

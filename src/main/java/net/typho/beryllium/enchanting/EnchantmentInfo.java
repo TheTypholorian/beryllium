@@ -1,25 +1,22 @@
 package net.typho.beryllium.enchanting;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Identifier;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+public record EnchantmentInfo(ItemStack catalyst, int size) {
+    public static final MapCodec<EnchantmentInfo> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            ItemStack.CODEC.fieldOf("catalyst").forGetter(EnchantmentInfo::catalyst),
+            Codec.INT.fieldOf("size").forGetter(EnchantmentInfo::size)
+    ).apply(instance, EnchantmentInfo::new));
 
-public record EnchantmentInfo(ItemStack catalyst, int capacity) {
-    public static final EnchantmentInfo DEFAULT = new EnchantmentInfo(ItemStack.EMPTY, 2);
-    public static final Map<Identifier, EnchantmentInfo> MAP = new LinkedHashMap<>();
-
-    public static EnchantmentInfo get(Identifier enchantment) {
-        return MAP.getOrDefault(enchantment, DEFAULT);
+    public EnchantmentInfo(Item catalyst, int count, int size) {
+        this(new ItemStack(catalyst, count), size);
     }
 
-    public EnchantmentInfo(Item catalyst, int count, int capacity) {
-        this(new ItemStack(catalyst, count), capacity);
-    }
-
-    public ItemStack catalyst(int level) {
+    public ItemStack getCatalyst(int level) {
         return catalyst.copyWithCount(catalyst.getCount() * level);
     }
 }

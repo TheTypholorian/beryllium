@@ -13,7 +13,6 @@ import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.typho.beryllium.enchanting.Enchanting;
-import net.typho.beryllium.enchanting.EnchantmentInfo;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,9 +24,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = AnvilScreenHandler.class, priority = 1100)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
-    @Shadow @Final private Property levelCost;
+    @Shadow
+    @Final
+    private Property levelCost;
 
-    @Shadow private @Nullable String newItemName;
+    @Shadow
+    private @Nullable String newItemName;
 
     public AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(type, syncId, playerInventory, context);
@@ -107,7 +109,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 cost += level;
             }
 
-            cost += EnchantmentInfo.get(enchant.getKey().orElseThrow().getValue()).capacity();
+            cost += (enchant.getKey().orElseThrow().getValue()).size();
 
             builder.add(enchant, level);
         }

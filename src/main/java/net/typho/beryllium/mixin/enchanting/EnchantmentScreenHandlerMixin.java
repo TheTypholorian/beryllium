@@ -197,7 +197,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                         RegistryEntry<Enchantment> enchant = enchOptional.get();
                         int level = enchantmentLevel[id];
 
-                        if (Enchanting.hasEnoughCatalysts(catalystSlot, enchant, level, player)) {
+                        if (Enchanting.hasEnoughCatalysts(world.getRegistryManager(), catalystSlot, enchant, level, player)) {
                             player.applyEnchantmentCosts(enchantSlot, i);
                             if (enchantSlot.isOf(Items.BOOK)) {
                                 itemStack3 = enchantSlot.withItem(Items.ENCHANTED_BOOK);
@@ -224,7 +224,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
                                 this.inventory.setStack(1, ItemStack.EMPTY);
                             }
 
-                            catalystSlot.decrementUnlessCreative(Enchanting.getCatalyst(enchant, level).getCount(), player);
+                            catalystSlot.decrementUnlessCreative(Enchanting.getCatalyst(world.getRegistryManager(), enchant, level).getCount(), player);
                             if (catalystSlot.isEmpty()) {
                                 this.inventory.setStack(2, ItemStack.EMPTY);
                             }

@@ -1,6 +1,9 @@
 package net.typho.beryllium.enchanting;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -10,7 +13,10 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.trim.ArmorTrim;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.armor.ArmorTrimMaterialEffect;
 import net.typho.beryllium.armor.ArmorTrimPatternEffect;
@@ -18,11 +24,17 @@ import net.typho.beryllium.armor.CustomTrimEffect;
 import net.typho.beryllium.config.Config;
 import net.typho.beryllium.util.Constructor;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class Enchanting implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("enchanting");
+
+    public static final RegistryKey<Registry<EnchantmentInfo>> ENCHANTMENT_INFO_KEY = RegistryKey.ofRegistry(Beryllium.CONSTRUCTOR.id("enchantment_info"));
+    public static final Registry<EnchantmentInfo> ENCHANTMENT_INFO = FabricRegistryBuilder.createSimple(ENCHANTMENT_INFO_KEY)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister();
 
     public static String toRomanNumeral(int n) {
         enum Letter {
@@ -132,19 +144,18 @@ public class Enchanting implements ModInitializer {
     }
 
     public static int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
-        return stream.mapToInt(entry -> getEnchantmentCapacity(entry.enchantment.value())).sum();
+        return stream.mapToInt(entry -> getEnchantmentSize(RegistryKey.of(ENCHANTMENT_INFO_KEY, entry.enchantment.getKey().orElseThrow().getValue()))).sum();
     }
 
-    public static int getEnchantmentCapacity(Enchantment enchant) {
-        // TODO
-        return 2;//BalancedEnchantment.cast(enchant.definition()).getCapacity();
+    public static int getEnchantmentSize(RegistryKey<EnchantmentInfo> key) {
+        return Objects.requireNonNull(ENCHANTMENT_INFO.get(key)).size();
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
+    public static boolean canFitEnchantment(ItemStack stack, RegistryKey<Enchantment> enchant) {
         return canFitEnchantment(stack, enchant, () -> EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
+    public static boolean canFitEnchantment(ItemStack stack, RegistryKey<Enchantment> enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
         if (!Config.enchantmentCapacity.get()) {
             return true;
         }
@@ -153,11 +164,11 @@ public class Enchanting implements ModInitializer {
             return enchantments.get().findAny().isEmpty();
         }
 
-        if (enchantments.get().anyMatch(entry -> entry.enchantment.value() == enchant)) {
+        if (enchantments.get().anyMatch(entry -> entry.enchantment.matchesKey(enchant))) {
             return true;
         }
 
-        return getUsedEnchCapacity(enchantments.get()) + getEnchantmentCapacity(enchant) <= getMaxEnchCapacity(stack);
+        return getUsedEnchCapacity(enchantments.get()) + getEnchantmentSize(RegistryKey.of(ENCHANTMENT_INFO_KEY, enchant.getValue())) <= getMaxEnchCapacity(stack);
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
@@ -165,9 +176,7 @@ public class Enchanting implements ModInitializer {
             return ItemStack.EMPTY;
         }
 
-        //BalancedEnchantment balanced = BalancedEnchantment.cast(enchant.value().definition());
-        //return new ItemStack(balanced.getCatalyst(), balanced.getCatalystCount() * level);
-        return EnchantmentInfo.get(enchant.getKey().orElseThrow().getValue()).catalyst(level);
+        return Objects.requireNonNull(ENCHANTMENT_INFO.get(enchant.getKey().orElseThrow().getValue())).getCatalyst(level);
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
@@ -182,5 +191,6 @@ public class Enchanting implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        DynamicRegistries.registerSynced(ENCHANTMENT_INFO_KEY, EnchantmentInfo.CODEC.codec());
     }
 }

@@ -60,7 +60,7 @@ public class EnchantmentHelperMixin {
 
     /**
      * @author The Typhothanian
-     * @reason Enchantment capacity
+     * @reason Enchantment size
      */
     @Overwrite
     public static List<EnchantmentLevelEntry> generateEnchantments(
@@ -78,7 +78,7 @@ public class EnchantmentHelperMixin {
 
             if (!list2.isEmpty()) {
                 Weighting.getRandom(random, list2).ifPresent(add -> {
-                    if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                    if (Enchanting.canFitEnchantment(stack, add.enchantment.getKey().orElseThrow(), list::stream)) {
                         list.add(add);
                     }
                 });
@@ -93,7 +93,7 @@ public class EnchantmentHelperMixin {
                     }
 
                     Weighting.getRandom(random, list2).ifPresent(add -> {
-                        if (Enchanting.canFitEnchantment(stack, add.enchantment.value(), list::stream)) {
+                        if (Enchanting.canFitEnchantment(stack, add.enchantment.getKey().orElseThrow(), list::stream)) {
                             list.add(add);
                         }
                     });
