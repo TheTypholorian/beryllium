@@ -1,9 +1,9 @@
 package net.typho.beryllium.enchanting;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
+import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -144,18 +144,18 @@ public class Enchanting implements ModInitializer {
     }
 
     public static int getUsedEnchCapacity(Stream<EnchantmentLevelEntry> stream) {
-        return stream.mapToInt(entry -> getEnchantmentSize(RegistryKey.of(ENCHANTMENT_INFO_KEY, entry.enchantment.getKey().orElseThrow().getValue()))).sum();
+        return stream.mapToInt(entry -> getEnchantmentSize(entry.enchantment.value())).sum();
     }
 
-    public static int getEnchantmentSize(RegistryKey<EnchantmentInfo> key) {
-        return Objects.requireNonNull(ENCHANTMENT_INFO.get(key)).size();
+    public static int getEnchantmentSize(Enchantment enchant) {
+        return ((HasEnchantmentInfo) (Object) enchant).getInfo().size();
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, RegistryKey<Enchantment> enchant) {
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant) {
         return canFitEnchantment(stack, enchant, () -> EnchantmentHelper.getEnchantments(stack).getEnchantmentEntries().stream().map(entry -> new EnchantmentLevelEntry(entry.getKey(), entry.getIntValue())));
     }
 
-    public static boolean canFitEnchantment(ItemStack stack, RegistryKey<Enchantment> enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
+    public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
         if (!Config.enchantmentCapacity.get()) {
             return true;
         }
@@ -164,11 +164,11 @@ public class Enchanting implements ModInitializer {
             return enchantments.get().findAny().isEmpty();
         }
 
-        if (enchantments.get().anyMatch(entry -> entry.enchantment.matchesKey(enchant))) {
+        if (enchantments.get().anyMatch(entry -> entry.enchantment.value() == enchant)) {
             return true;
         }
 
-        return getUsedEnchCapacity(enchantments.get()) + getEnchantmentSize(RegistryKey.of(ENCHANTMENT_INFO_KEY, enchant.getValue())) <= getMaxEnchCapacity(stack);
+        return getUsedEnchCapacity(enchantments.get()) + getEnchantmentSize(enchant) <= getMaxEnchCapacity(stack);
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
@@ -186,11 +186,15 @@ public class Enchanting implements ModInitializer {
 
         ItemStack req = getCatalyst(enchant, level);
 
+        if (req.isEmpty()) {
+            return true;
+        }
+
         return source.getItem() == req.getItem() && source.getCount() >= req.getCount();
     }
 
     @Override
     public void onInitialize() {
-        DynamicRegistries.registerSynced(ENCHANTMENT_INFO_KEY, EnchantmentInfo.CODEC.codec());
+        EnchantmentEvents.MODIFY.register((key, builder, source) -> ((HasEnchantmentInfo) builder).setInfo(ENCHANTMENT_INFO.get(key.getValue())));
     }
 }

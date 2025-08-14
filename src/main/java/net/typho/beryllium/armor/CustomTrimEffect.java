@@ -25,6 +25,10 @@ public interface CustomTrimEffect {
         return 0;
     }
 
+    default boolean shouldRender(boolean invisible, ItemStack stack, @Nullable ArmorTrim trim) {
+        return true;
+    }
+
     default void appendTooltip(Consumer<Text> output, ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
         float mScale = trimMaterialScale(stack, trim);
@@ -44,11 +48,15 @@ public interface CustomTrimEffect {
         if (ench != 1) {
             appendTooltipValue(output, ench, EntityAttributeModifier.Operation.ADD_VALUE, Text.translatable("trim_effect.beryllium.name.enchantment_capacity"));
         }
+
+        if (!shouldRender(false, stack, trim)) {
+            output.accept(ScreenTexts.space().append(Text.translatable("trim_effect.beryllium.name.invisible_always")).formatted(Formatting.BLUE));
+        } else if (!shouldRender(true, stack, trim)) {
+            output.accept(ScreenTexts.space().append(Text.translatable("trim_effect.beryllium.name.invisible")).formatted(Formatting.BLUE));
+        }
     }
 
     default void appendTooltipValue(Consumer<Text> output, float d, EntityAttributeModifier.Operation op, Text name) {
-        boolean bl = false;
-
         double e;
 
         if (op == EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE || op == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
@@ -57,19 +65,7 @@ public interface CustomTrimEffect {
             e = d;
         }
 
-        if (bl) {
-            output.accept(
-                    ScreenTexts.space()
-                            .append(
-                                    Text.translatable(
-                                            "attribute.modifier.equals." + op.getId(),
-                                            AttributeModifiersComponent.DECIMAL_FORMAT.format(e),
-                                            name
-                                    )
-                            )
-                            .formatted(Formatting.DARK_GREEN)
-            );
-        } else if (d > 0.0) {
+        if (d > 0.0) {
             output.accept(
                     Text.translatable(
                                     "attribute.modifier.plus." + op.getId(),
@@ -101,6 +97,17 @@ public interface CustomTrimEffect {
         @Override
         public int bonusEnchantmentCapacity(ItemStack stack, @Nullable ArmorTrim trim) {
             return 4;
+        }
+    }
+
+    class Silence implements CustomTrimEffect {
+        @Override
+        public boolean shouldRender(boolean invisible, ItemStack stack, @Nullable ArmorTrim trim) {
+            if (invisible) {
+                return false;
+            }
+
+            return Armor.trimPatternScale(stack) < 1.001;
         }
     }
 }

@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -21,11 +20,13 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.typho.beryllium.util.Constructor;
 import net.typho.beryllium.util.FreeEntityAttribute;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class Armor implements ModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("armor");
@@ -108,23 +109,6 @@ public class Armor implements ModInitializer {
         return f;
     }
 
-    public static List<Pair<ArmorTrim, ItemStack>> collectTrims(LivingEntity entity) {
-        List<Pair<ArmorTrim, ItemStack>> trims = new LinkedList<>();
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            if (slot.isArmorSlot()) {
-                ItemStack stack = entity.getEquippedStack(slot);
-                ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
-
-                if (trim != null) {
-                    trims.add(new Pair<>(trim, stack));
-                }
-            }
-        }
-
-        return trims;
-    }
-
     public static Optional<ArmorTrimPatternEffect> getTrimEffect(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
@@ -144,7 +128,14 @@ public class Armor implements ModInitializer {
     }
 
     public static float bonusHealing(LivingEntity entity) {
-        return (float) entity.getAttributeValue(GENERIC_REGENERATION);
+        float f = (float) entity.getAttributeValue(GENERIC_REGENERATION);
+        LivingEntity rider = entity.getControllingPassenger();
+
+        if (rider != null) {
+            f += (float) rider.getAttributeValue(GENERIC_MOUNT_REGENERATION);
+        }
+
+        return f;
     }
 
     public static float bonusCleansing(LivingEntity entity) {
@@ -175,18 +166,50 @@ public class Armor implements ModInitializer {
         return f;
     }
 
+    public static boolean shouldRenderArmor(boolean invisible, ItemStack stack, @Nullable ArmorTrim trim) {
+        if (trim != null) {
+            ArmorTrimMaterialEffect materialEffect = ARMOR_TRIM_MATERIAL_EFFECTS.get(trim.getMaterial().getKey().orElseThrow().getValue());
+
+            if (materialEffect != null) {
+                for (CustomTrimEffect custom : materialEffect.custom()) {
+                    if (!custom.shouldRender(invisible, stack, trim)) {
+                        return false;
+                    }
+                }
+            }
+
+            ArmorTrimPatternEffect patternEffect = ARMOR_TRIM_PATTERN_EFFECTS.get(trim.getPattern().getKey().orElseThrow().getValue());
+
+            if (patternEffect != null) {
+                for (CustomTrimEffect custom : patternEffect.custom()) {
+                    if (!custom.shouldRender(invisible, stack, trim)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     @Override
     public void onInitialize() {
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SENTRY, GENERIC_RANGED_DAMAGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.DUNE, EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.COAST, EntityAttributes.GENERIC_ATTACK_DAMAGE, 1, EntityAttributeModifier.Operation.ADD_VALUE);
-        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.TIDE, EntityAttributes.GENERIC_ATTACK_DAMAGE, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.TIDE, PLAYER_SWIMMING_SPEED, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.WILD, GENERIC_REGENERATION, 0.02, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.WARD, EntityAttributes.GENERIC_ARMOR, 1, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.VEX, EntityAttributes.GENERIC_ATTACK_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.RIB, EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SNOUT, GENERIC_CLEANSING, 0.2, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.EYE, PLAYER_GAMMA, 1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SPIRE, EntityAttributes.GENERIC_LUCK, 1, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.WAYFINDER, GENERIC_MOUNT_REGENERATION, 0.03, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.RAISER, PLAYER_XP_GAIN, 0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SHAPER, PLAYER_XP_COST, -0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.HOST, GENERIC_MOUNT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SILENCE, new CustomTrimEffect.Silence());
 
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.AMETHYST, EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.COPPER, EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);

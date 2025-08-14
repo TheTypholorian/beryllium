@@ -126,6 +126,13 @@ public class Constructor implements Identifierifier {
         ));
     }
 
+    public ArmorTrimPatternEffect trimPatternEffect(RegistryKey<ArmorTrimPattern> pattern, CustomTrimEffect... effects) {
+        return trimPatternEffect(pattern, new ArmorTrimPatternEffect(
+                List.of(),
+                List.of(effects)
+        ));
+    }
+
     public ArmorTrimMaterialEffect trimMaterialEffect(RegistryKey<ArmorTrimMaterial> pattern, ArmorTrimMaterialEffect effect) {
         return Registry.register(Armor.ARMOR_TRIM_MATERIAL_EFFECTS, pattern.getValue(), effect);
     }

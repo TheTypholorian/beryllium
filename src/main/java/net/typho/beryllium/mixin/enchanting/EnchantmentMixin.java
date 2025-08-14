@@ -12,13 +12,30 @@ import net.minecraft.text.Text;
 import net.minecraft.text.Texts;
 import net.minecraft.util.Formatting;
 import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.enchanting.EnchantmentInfo;
+import net.typho.beryllium.enchanting.HasEnchantmentInfo;
+import org.spongepowered.asm.mixin.Implements;
+import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Enchantment.class)
+@Implements(@Interface(iface = HasEnchantmentInfo.class, prefix = "info$"))
 public abstract class EnchantmentMixin {
+    @Unique
+    public EnchantmentInfo info = EnchantmentInfo.DEFAULT;
+
+    public EnchantmentInfo info$getInfo() {
+        return info;
+    }
+
+    public void info$setInfo(EnchantmentInfo info) {
+        this.info = info;
+    }
+
     @Inject(
             method = "getName",
             at = @At("HEAD"),
@@ -53,7 +70,7 @@ public abstract class EnchantmentMixin {
         }
 
         if (cir.getReturnValue()) {
-            if (!Enchanting.canFitEnchantment(stack, /* here */)) {
+            if (!Enchanting.canFitEnchantment(stack, ench)) {
                 cir.setReturnValue(false);
             } else {
                 for (RegistryEntry<Enchantment> enchantment : stack.getEnchantments().getEnchantments()) {

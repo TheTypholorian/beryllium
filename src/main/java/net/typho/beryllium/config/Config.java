@@ -58,9 +58,6 @@ public class Config implements ModInitializer {
     public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.CONSTRUCTOR.id("durability_removal"), false);
     public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.CONSTRUCTOR.id("ultra_dark"), true);
 
-    private Config() {
-    }
-
     public static void read(Dynamic<?> dynamic) {
         for (Property<?> property : properties.values()) {
             property.read(dynamic.get(property.id.toString()));

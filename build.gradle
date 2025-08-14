@@ -27,9 +27,17 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
 
-    maven {
-        name = "FzzyMaven"
-        url = "https://maven.fzzyhmstrs.me/"
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+
+        filter {
+            includeGroup "maven.modrinth"
+        }
     }
 
     maven {
@@ -48,8 +56,6 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation("me.fzzyhmstrs:fzzy_config:${project.fzzy_config}")
-
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"
@@ -58,9 +64,8 @@ dependencies {
     include "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
     include "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"
 
-    modImplementation 'com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8'
-
-    //modImplementation("net.mehvahdjukaar:moonlight-fabric:${project.moonlight_version}")
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}"
+    modImplementation "maven.modrinth:sodium:${project.sodium_version}-fabric"
 }
 
 processResources {

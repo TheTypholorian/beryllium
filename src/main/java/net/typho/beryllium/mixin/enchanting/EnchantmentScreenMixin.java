@@ -95,7 +95,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                             .get(RegistryKeys.ENCHANTMENT)
                             .getEntry(handler.enchantmentId[id]);
 
-                    if (enchOptional.isEmpty() || (lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || !Enchanting.hasEnoughCatalysts(client.player.getRegistryManager(), catalystSlot, enchOptional.get(), handler.enchantmentLevel[id], client.player)) {
+                    if (enchOptional.isEmpty() || (lapis < id + 1 || client.player.experienceLevel < power) && !client.player.getAbilities().creativeMode || !Enchanting.hasEnoughCatalysts(catalystSlot, enchOptional.get(), handler.enchantmentLevel[id], client.player)) {
                         RenderSystem.enableBlend();
                         context.drawGuiTexture(ENCHANTMENT_SLOT_DISABLED_TEXTURE, m, y + 14 + 19 * id, 108, 19);
                         context.drawGuiTexture(LEVEL_DISABLED_TEXTURES[id], m + 1, y + 15 + 19 * id, 16, 16);
@@ -148,10 +148,10 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                 if (optional.isPresent()) {
                     int l = handler.enchantmentLevel[j];
                     int m = j + 1;
-                    if (isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0 && optional.isPresent()) {
+                    if (isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0) {
                         List<Text> list = Lists.newArrayList();
                         list.add(Text.translatable("container.enchant.clue", Enchantment.getName(optional.get(), l)).formatted(Formatting.WHITE));
-                        ItemStack catalyst = Enchanting.getCatalyst(client.player.getRegistryManager(), optional.get(), l);
+                        ItemStack catalyst = Enchanting.getCatalyst(optional.get(), l);
                         if (!bl) {
                             list.add(ScreenTexts.EMPTY);
                             if (client.player.experienceLevel < k) {
@@ -165,7 +165,11 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                                 }
 
                                 list.add(mutableText.formatted(i >= m ? Formatting.GRAY : Formatting.RED));
-                                list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Enchanting.hasEnoughCatalysts(client.player.getRegistryManager(), handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
+
+                                if (!catalyst.isEmpty()) {
+                                    list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Enchanting.hasEnoughCatalysts(handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
+                                }
+
                                 MutableText mutableText3;
                                 if (m == 1) {
                                     mutableText3 = Text.translatable("container.enchant.level.one");

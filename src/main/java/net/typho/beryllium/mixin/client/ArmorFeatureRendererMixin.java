@@ -1,11 +1,23 @@
 package net.typho.beryllium.mixin.client;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.trim.ArmorTrim;
+import net.typho.beryllium.armor.Armor;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ArmorFeatureRenderer.class)
 public class ArmorFeatureRendererMixin {
-    /*
     @Inject(
             method = "renderArmor",
             at = @At(
@@ -17,13 +29,8 @@ public class ArmorFeatureRendererMixin {
     private void renderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, EquipmentSlot armorSlot, int light, BipedEntityModel<?> model, CallbackInfo ci, @Local ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
-        if (trim != null && trim.getPattern().isIn(Armor.INVISIBLE_TRIMS)) {
-            if (Armor.trimPatternScale(stack, entity) > 1f) {
-                ci.cancel();
-            } else if (entity.isInvisible()) {
-                ci.cancel();
-            }
+        if (Armor.shouldRenderArmor(entity.isInvisible(), stack, trim)) {
+            ci.cancel();
         }
     }
-     */
 }

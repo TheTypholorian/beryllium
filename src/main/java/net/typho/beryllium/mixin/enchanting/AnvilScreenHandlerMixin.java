@@ -13,6 +13,7 @@ import net.minecraft.screen.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
 import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.enchanting.HasEnchantmentInfo;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -109,7 +110,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 cost += level;
             }
 
-            cost += (enchant.getKey().orElseThrow().getValue()).size();
+            cost += ((HasEnchantmentInfo) (Object) enchant.value()).getInfo().size();
 
             builder.add(enchant, level);
         }

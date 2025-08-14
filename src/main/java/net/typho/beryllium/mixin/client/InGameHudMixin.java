@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.util.Arm;
-import net.typho.beryllium.client.BerylliumClient;
+import net.typho.beryllium.client.ClientConfig;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,7 +33,7 @@ public abstract class InGameHudMixin {
             at = @At("TAIL")
     )
     private void renderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (BerylliumClient.CONFIG.hudItemTooltips) {
+        if (ClientConfig.get().hudItemTooltips().getValue()) {
             PlayerEntity player = getCameraPlayer();
 
             if (player != null) {
@@ -58,7 +58,7 @@ public abstract class InGameHudMixin {
             cancellable = true
     )
     private void renderHeldItemTooltip(DrawContext context, CallbackInfo ci) {
-        if (BerylliumClient.CONFIG.hudItemTooltips) {
+        if (ClientConfig.get().hudItemTooltips().getValue()) {
             ci.cancel();
         }
     }

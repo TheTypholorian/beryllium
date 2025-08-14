@@ -172,6 +172,8 @@
   "trim_effect.beryllium.name.material_scale": "Material Effect Scale",
   "trim_effect.beryllium.name.pattern_scale": "Pattern Effect Scale",
   "trim_effect.beryllium.name.enchantment_capacity": "Enchantment Capacity",
+  "trim_effect.beryllium.name.invisible_always": "Armor is Invisible",
+  "trim_effect.beryllium.name.invisible": "Invisible when Player is Invisible",
 
   "item.beryllium.modifiers.trim_pattern": "When Applied to Armor:",
   "item.beryllium.modifiers.trim_material": "When Applied to Armor Trim:",
