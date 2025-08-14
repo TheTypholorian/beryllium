@@ -4,7 +4,7 @@ import net.minecraft.block.TntBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +22,7 @@ public class TntBlockMixin {
             cancellable = true
     )
     public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion, CallbackInfo ci) {
-        if (Config.instantChainTNT.get()) {
+        if (ServerConfig.instantChainTNT.get()) {
             if (!world.isClient) {
                 world.createExplosion(
                         null,

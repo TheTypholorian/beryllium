@@ -21,7 +21,7 @@ import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.armor.ArmorTrimMaterialEffect;
 import net.typho.beryllium.armor.ArmorTrimPatternEffect;
 import net.typho.beryllium.armor.CustomTrimEffect;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import net.typho.beryllium.util.Constructor;
 
 import java.util.Objects;
@@ -156,7 +156,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
-        if (!Config.enchantmentCapacity.get()) {
+        if (!ServerConfig.enchantmentCapacity.get()) {
             return true;
         }
 
@@ -172,7 +172,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        if (!Config.enchantmentCatalysts.get()) {
+        if (!ServerConfig.enchantmentCatalysts.get()) {
             return ItemStack.EMPTY;
         }
 
@@ -180,7 +180,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
-        if (player.getAbilities().creativeMode || !Config.enchantmentCatalysts.get()) {
+        if (player.getAbilities().creativeMode || !ServerConfig.enchantmentCatalysts.get()) {
             return true;
         }
 

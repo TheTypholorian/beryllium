@@ -1,7 +1,7 @@
 package net.typho.beryllium.mixin.combat;
 
 import net.minecraft.item.EnderPearlItem;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -13,7 +13,7 @@ public class EnderPearlItemMixin {
             constant = @Constant(intValue = 20)
     )
     private int getCooldown(int original) {
-        return Config.enderPearlCooldown.get();
+        return ServerConfig.enderPearlCooldown.get();
     }
 
     @ModifyConstant(
@@ -21,6 +21,6 @@ public class EnderPearlItemMixin {
             constant = @Constant(floatValue = 1.5f)
     )
     private float getVelocity(float constant) {
-        return Config.enderPearlSpeed.get();
+        return ServerConfig.enderPearlSpeed.get();
     }
 }

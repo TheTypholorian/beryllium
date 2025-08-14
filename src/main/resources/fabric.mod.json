@@ -32,7 +32,7 @@
       "net.typho.beryllium.enchanting.Enchanting",
       "net.typho.beryllium.exploring.Exploring",
       "net.typho.beryllium.food.Food",
-      "net.typho.beryllium.config.Config"
+      "net.typho.beryllium.config.ServerConfig"
     ],
     "cardinal-components": [
       "net.typho.beryllium.exploring.Exploring"

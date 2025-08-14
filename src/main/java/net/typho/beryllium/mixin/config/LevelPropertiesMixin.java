@@ -8,7 +8,7 @@ import net.minecraft.world.gen.GeneratorOptions;
 import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,7 +23,7 @@ public class LevelPropertiesMixin {
             at = @At("RETURN")
     )
     private static <T> void readProperties(Dynamic<T> dynamic, LevelInfo info, LevelProperties.SpecialProperty specialProperty, GeneratorOptions generatorOptions, Lifecycle lifecycle, CallbackInfoReturnable<LevelProperties> cir) {
-        Config.read(dynamic.get(Beryllium.MOD_ID + "ServerConfig").orElseEmptyMap());
+        ServerConfig.read(dynamic.get(Beryllium.MOD_ID + "ServerConfig").orElseEmptyMap());
     }
 
     @Inject(
@@ -31,6 +31,6 @@ public class LevelPropertiesMixin {
             at = @At("HEAD")
     )
     private void updateProperties(DynamicRegistryManager registryManager, NbtCompound levelNbt, NbtCompound playerNbt, CallbackInfo ci) {
-        levelNbt.put(Beryllium.MOD_ID + "ServerConfig", Config.write(registryManager));
+        levelNbt.put(Beryllium.MOD_ID + "ServerConfig", ServerConfig.write(registryManager));
     }
 }

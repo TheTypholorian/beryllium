@@ -7,7 +7,7 @@ import net.minecraft.block.PlantBlock;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +26,7 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @Override
     protected boolean hasComparatorOutput(BlockState state) {
-        return Config.cropComparatorOutput.get();
+        return ServerConfig.cropComparatorOutput.get();
     }
 
     @Override

@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.*;
 
 import java.util.Map;
@@ -30,7 +30,7 @@ public class DispenserBlockMixin {
             BlockPos targetPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
             BlockState targetState = pointer.world().getBlockState(targetPos);
 
-            if (stack.getItem() instanceof BlockItem blockItem && Config.dispensersPlaceBlocks.get()) {
+            if (stack.getItem() instanceof BlockItem blockItem && ServerConfig.dispensersPlaceBlocks.get()) {
                 Block block = blockItem.getBlock();
                 BlockState placeState = block.getDefaultState();
 

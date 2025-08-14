@@ -6,7 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.MaceItem;
 import net.minecraft.server.world.ServerWorld;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +22,7 @@ public class MaceItemMixin {
             cancellable = true
     )
     private void getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource, CallbackInfoReturnable<Float> cir) {
-        if (Config.maceRebalance.get()) {
+        if (ServerConfig.maceRebalance.get()) {
             if (damageSource.getSource() instanceof LivingEntity livingEntity) {
                 if (!shouldDealAdditionalDamage(livingEntity)) {
                     cir.setReturnValue(0f);

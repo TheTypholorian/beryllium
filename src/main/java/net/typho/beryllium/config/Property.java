@@ -21,7 +21,7 @@ public abstract class Property<O> {
         this.id = id;
         this.argumentType = argumentType;
         this.value = defValue = value;
-        Config.properties.put(id, this);
+        ServerConfig.properties.put(id, this);
     }
 
     public O get() {

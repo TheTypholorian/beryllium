@@ -1,7 +1,7 @@
 package net.typho.beryllium.mixin.client;
 
 import net.minecraft.client.render.GameRenderer;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +15,7 @@ public class GameRendererMixin {
             cancellable = true
     )
     private void getSkyDarkness(float tickDelta, CallbackInfoReturnable<Float> cir) {
-        if (Config.ultraDark.get()) {
+        if (ServerConfig.ultraDark.get()) {
             cir.setReturnValue(1f);
         }
     }

@@ -16,6 +16,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.enchanting.Enchanting;
 import net.typho.beryllium.exploring.Exploring;
@@ -24,7 +25,7 @@ import net.typho.beryllium.redstone.Redstone;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Config implements ModInitializer {
+public class ServerConfig implements ModInitializer {
     public static final Map<Identifier, Property<?>> properties = new LinkedHashMap<>();
 
     public static final BooleanProperty fertilizableSugarcane = new BooleanProperty(Combat.CONSTRUCTOR.id("fertilizable_sugarcane"), true);
@@ -42,6 +43,8 @@ public class Config implements ModInitializer {
     public static final IntProperty shieldMaxDurability = new IntProperty(Combat.CONSTRUCTOR.id("shield_max_durability"), 30);
     public static final IntProperty shieldLowerCooldown = new IntProperty(Combat.CONSTRUCTOR.id("shield_lower_cooldown"), 60);
     public static final IntProperty splashPotionCooldown = new IntProperty(Combat.CONSTRUCTOR.id("splash_potion_cooldown"), 100);
+
+    public static final BooleanProperty disabledArmor = new BooleanProperty(Armor.CONSTRUCTOR.id("disabled_armor"), true);
 
     public static final IntProperty metalDetectorRadius = new IntProperty(Exploring.CONSTRUCTOR.id("metal_detector_radius"), 16);
     public static final IntProperty metalDetectorHeight = new IntProperty(Exploring.CONSTRUCTOR.id("metal_detector_height"), 2);
@@ -97,7 +100,7 @@ public class Config implements ModInitializer {
     public static LiteralArgumentBuilder<ServerCommandSource> command(LiteralArgumentBuilder<ServerCommandSource> command) {
         command.then(LiteralArgumentBuilder.<ServerCommandSource>literal("config")
                 .executes(context -> {
-                    context.getSource().sendFeedback(Config::print, false);
+                    context.getSource().sendFeedback(ServerConfig::print, false);
                     return 1;
                 }));
 

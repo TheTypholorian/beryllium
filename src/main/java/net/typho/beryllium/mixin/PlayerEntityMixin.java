@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -16,6 +16,6 @@ public class PlayerEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z")
     )
     private boolean hasBlindness(PlayerEntity instance, RegistryEntry<StatusEffect> effect, Operation<Boolean> original) {
-        return !Config.ultraDark.get() && original.call(instance, effect);
+        return !ServerConfig.ultraDark.get() && original.call(instance, effect);
     }
 }

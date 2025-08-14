@@ -5,7 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
 import net.minecraft.world.ServerWorldAccess;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +19,7 @@ public class HostileEntityMixin {
             cancellable = true
     )
     private static void isSpawnDark(ServerWorldAccess world, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> cir) {
-        if (Config.ultraDark.get()) {
+        if (ServerConfig.ultraDark.get()) {
             cir.setReturnValue(world.getLightLevel(LightType.BLOCK, pos) > 0);
         }
     }

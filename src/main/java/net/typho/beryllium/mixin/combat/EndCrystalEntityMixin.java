@@ -5,7 +5,7 @@ import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.world.World;
-import net.typho.beryllium.config.Config;
+import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +34,7 @@ public abstract class EndCrystalEntityMixin {
                 crystal.remove(Entity.RemovalReason.KILLED);
 
                 DamageSource damageSource = source.getAttacker() != null ? crystal.getDamageSources().explosion(crystal, source.getAttacker()) : null;
-                crystal.getWorld().createExplosion(crystal, damageSource, null, crystal.getX(), crystal.getY(), crystal.getZ(), Config.endCrystalPower.get(), false, World.ExplosionSourceType.BLOCK);
+                crystal.getWorld().createExplosion(crystal, damageSource, null, crystal.getX(), crystal.getY(), crystal.getZ(), ServerConfig.endCrystalPower.get(), false, World.ExplosionSourceType.BLOCK);
 
                 crystalDestroyed(source);
             }

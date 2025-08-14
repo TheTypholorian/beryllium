@@ -14,6 +14,7 @@
     "PlayerEntityMixin",
     "SaddleItemMixin",
     "UtilMixin",
+    "armor.AttributeModifiersComponentMixin",
     "armor.EnchantmentHelperMixin",
     "armor.EntityMixin",
     "armor.ItemStackMixin",
