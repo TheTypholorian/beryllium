@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-14T19:10:24.1383489	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-15T09:13:16.1818903	Beryllium/Block Loot Tables
 57ab46ba7b00411a026f4c5c9efd60abc13d6c91 data\beryllium\loot_table\blocks\building\cracked_bricks.json
 24cdf2f0512ed87a07af1864a469d6ace02712a7 data\beryllium\loot_table\blocks\building\diorite_brick_slab.json
 966356bf887542af9008e21592eae98129758ec1 data\beryllium\loot_table\blocks\building\cracked_purpur_slab.json
@@ -44,8 +44,8 @@ cba58ab9aabe0b4ffc91b4a15c54544108cf6faa data\beryllium\loot_table\blocks\buildi
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
 4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 7a24d100e751a44d7f72022d26ea1279b8c644d3 data\beryllium\loot_table\blocks\exploring\corrupted_end_stone.json
-f7192d201517a41587dd50efc3e4bd1dd40ad4d7 data\beryllium\loot_table\blocks\exploring\congealed_void.json
 ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
+f7192d201517a41587dd50efc3e4bd1dd40ad4d7 data\beryllium\loot_table\blocks\exploring\congealed_void.json
 a53c4d8d12a6f6d46e4cb89fe913e80fa4eff3ed data\beryllium\loot_table\blocks\building\smooth_red_sandstone_wall.json
 3e57bfb56a1a43b0035fea01d00a062cb57516e3 data\beryllium\loot_table\blocks\building\cracked_purpur_wall.json
 ca17d95e3b0976af4e52a5e771bc7b933e4e5d48 data\beryllium\loot_table\blocks\building\purpur_wall.json
@@ -57,6 +57,7 @@ ce306fa02fb8a374de6d38ef435fe3dfa575402a data\beryllium\loot_table\blocks\buildi
 548d115eeb79b74d3fbe03951bdc179110ed6f8a data\beryllium\loot_table\blocks\combat\potion_cauldron.json
 e4dc6a749833a939a15b8ad1655b7a6861b69ee8 data\beryllium\loot_table\blocks\building\cracked_deepslate_tile_wall.json
 aab5e1f29c76f8c3abb54426128f1737a244e7f5 data\beryllium\loot_table\blocks\building\cracked_brick_stairs.json
+b9fc235a6eaf8a9fc36810a305ee675c0d4888ea data\beryllium\loot_table\blocks\exploring\black_opal_ore.json
 465290bc42d8d9c48fc07914f09842514492d89c data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_wall.json
 0a764208be9375a9fd17e232c48cbae2457777ba data\beryllium\loot_table\blocks\building\cracked_polished_blackstone_brick_stairs.json
 9f278b1e0ffc87be4700cf54c24d4392457adbf9 data\beryllium\loot_table\blocks\building\cut_sandstone_stairs.json

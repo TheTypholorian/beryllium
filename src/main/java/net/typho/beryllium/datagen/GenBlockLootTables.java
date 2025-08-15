@@ -4,10 +4,16 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
 import net.minecraft.loot.entry.EmptyEntry;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryWrapper;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
@@ -43,6 +49,9 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Exploring.ALGAE_BLOCK, block -> dropsWithSilkTouchOrShears(block, EmptyEntry.builder()));
         addDrop(Exploring.VOID_FIRE, dropsNothing());
         addDrop(Exploring.POINTED_BONE);
+        addDrop(Exploring.BLACK_OPAL_ORE, block -> new LootTable.Builder()
+                .pool(LootPool.builder().with(ItemEntry.builder(Blocks.END_STONE)))
+                .pool(LootPool.builder().conditionally(new BlockStatePropertyLootCondition.Builder(Exploring.BLACK_OPAL_ORE).properties(StatePredicate.Builder.create().exactMatch(BlackOpalOreBlock.STAGE, 3))).with(ItemEntry.builder(Exploring.BLACK_OPAL))));
 
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
     }

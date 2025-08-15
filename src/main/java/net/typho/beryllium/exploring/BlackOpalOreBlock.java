@@ -10,6 +10,7 @@ public class BlackOpalOreBlock extends Block {
 
     public BlackOpalOreBlock(Settings settings) {
         super(settings);
+        setDefaultState(getDefaultState().with(STAGE, 0));
     }
 
     @Override

@@ -194,6 +194,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
 
+    public static final Item BLACK_OPAL = CONSTRUCTOR.item("black_opal", new Item(new Item.Settings()));
     public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
     public static final Item EXODINE_INGOT = CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));
@@ -218,7 +219,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
         }
     });
 
-    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.exploring.name.player.stable_footing", 0.2, 0.001, 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.exploring.name.player.stable_footing", 0.2, 0.00001, 1).setTracked(true));
 
     public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{

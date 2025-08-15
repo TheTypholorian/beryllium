@@ -59,6 +59,8 @@
     "enchanting.ItemStackMixin",
     "enchanting.TradeOffersMixin",
     "exploring.AbstractFireBlockMixin",
+    "exploring.ChorusFlowerBlockMixin",
+    "exploring.ChorusPlantBlockMixin",
     "exploring.DeltaFeatureMixin",
     "exploring.DragonFireballEntityMixin",
     "exploring.EndCrystalEntityMixin",

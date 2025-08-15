@@ -90,6 +90,7 @@ public class GenModels extends FabricModelProvider {
     }
 
     public void blackOpalOre(BlockStateModelGenerator gen) {
+        gen.excludeFromSimpleItemModelGeneration(Exploring.BLACK_OPAL_ORE);
         gen.blockStateCollector
                 .accept(
                         VariantsBlockStateSupplier.create(Exploring.BLACK_OPAL_ORE)
@@ -181,5 +182,6 @@ public class GenModels extends FabricModelProvider {
         gen.register(Building.FILLING_WAND_ITEM, Models.GENERATED);
         gen.register(Exploring.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
         gen.register(Food.CROISSANT, Models.GENERATED);
+        gen.register(Exploring.BLACK_OPAL, Models.GENERATED);
     }
 }
