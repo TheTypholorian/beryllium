@@ -455,6 +455,21 @@ public class Building implements ModInitializer, ClientModInitializer {
                 }
             }
 
+            if (MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud() && hit instanceof BlockHitResult blockHit) {
+                MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
+
+                WorldRenderer.drawBox(
+                        matrices,
+                        Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
+                        blockHit.getBlockPos().getX(), blockHit.getBlockPos().getY(), blockHit.getBlockPos().getZ(),
+                        blockHit.getBlockPos().getX() + 1, blockHit.getBlockPos().getY() + 1, blockHit.getBlockPos().getZ() + 1,
+                        1, 1, 1, 1,
+                        0.5f, 0.5f, 0.5f
+                );
+
+                return false;
+            }
+
             return true;
         });
         HandledScreens.register(Building.KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);

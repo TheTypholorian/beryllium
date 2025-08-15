@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.food.Food;
 import net.typho.beryllium.util.BlockFamilyBuilder;
@@ -88,6 +89,52 @@ public class GenModels extends FabricModelProvider {
                 );
     }
 
+    public void blackOpalOre(BlockStateModelGenerator gen) {
+        gen.blockStateCollector
+                .accept(
+                        VariantsBlockStateSupplier.create(Exploring.BLACK_OPAL_ORE)
+                                .coordinate(
+                                        BlockStateVariantMap.create(BlackOpalOreBlock.STAGE)
+                                                .register(
+                                                        0,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.CUBE_ALL
+                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_0", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_0")), gen.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        1,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.CUBE_ALL
+                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_1", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_1")), gen.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        2,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.CUBE_ALL
+                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_2", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_2")), gen.modelCollector)
+                                                                )
+                                                )
+                                                .register(
+                                                        3,
+                                                        BlockStateVariant.create()
+                                                                .put(
+                                                                        VariantSettings.MODEL,
+                                                                        Models.CUBE_ALL
+                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_3", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_3")), gen.modelCollector)
+                                                                )
+                                                )
+                                )
+                );
+    }
+
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
@@ -115,6 +162,7 @@ public class GenModels extends FabricModelProvider {
         voidFire(gen);
         pointedBone(gen);
         potionCauldron(gen);
+        blackOpalOre(gen);
     }
 
     public BlockStateVariant getBoneVariant(BlockStateModelGenerator gen, Direction direction, Thickness thickness) {

@@ -132,6 +132,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
 
+    public static final Block BLACK_OPAL_ORE = CONSTRUCTOR.blockWithItem("black_opal_ore", new BlackOpalOreBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
     public static final Block CORRUPTED_END_STONE = CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
     public static final Block CONGEALED_VOID = CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.MAGENTA)
