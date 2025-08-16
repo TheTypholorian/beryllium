@@ -1,23 +1,15 @@
 package net.typho.beryllium.building;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -32,14 +24,9 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.StatFormatter;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.typho.beryllium.building.kiln.*;
 import net.typho.beryllium.util.Constructor;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 public class Building implements ModInitializer, ClientModInitializer {
@@ -55,9 +42,6 @@ public class Building implements ModInitializer, ClientModInitializer {
     public static final ScreenHandlerType<KilnScreenHandler> KILN_SCREEN_HANDLER_TYPE = CONSTRUCTOR.screenHandler("kiln", KilnScreenHandler::new);
     public static final Block KILN_BLOCK = CONSTRUCTOR.blockWithItem("kiln", new KilnBlock(AbstractBlock.Settings.copy(Blocks.BLAST_FURNACE)), new Item.Settings());
     public static final BlockEntityType<KilnEntity> KILN_BLOCK_ENTITY_TYPE = CONSTRUCTOR.blockEntity("kiln", BlockEntityType.Builder.create(KilnEntity::new, KILN_BLOCK));
-
-    public static final ComponentType<BlockPos> FILLING_WAND_COMPONENT_TYPE = CONSTRUCTOR.dataComponent("filling_wand_component", builder -> builder.codec(BlockPos.CODEC).packetCodec(BlockPos.PACKET_CODEC));
-    public static final Item FILLING_WAND_ITEM = CONSTRUCTOR.item("filling_wand", new FillingWandItem(new Item.Settings()));
 
     public static final BlockFamily MOSSY_STONE = CONSTRUCTOR.blockFamily("mossy_stone", Blocks.STONE)
             .base()
@@ -423,55 +407,6 @@ public class Building implements ModInitializer, ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        WorldRenderEvents.BEFORE_BLOCK_OUTLINE.register((context, hit) -> {
-            PlayerEntity player = MinecraftClient.getInstance().player;
-
-            if (player != null) {
-                ItemStack held = player.getMainHandStack();
-
-                if (held.getItem() instanceof FillingWandItem && hit instanceof BlockHitResult blockHit) {
-                    MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
-                    Vec3d cam = context.camera().getPos();
-
-                    matrices.push();
-                    matrices.translate(-cam.x, -cam.y, -cam.z);
-                    RenderSystem.disableDepthTest();
-
-                    BlockBox box = FillingWandItem.getSelection(player, held, blockHit);
-
-                    WorldRenderer.drawBox(
-                            matrices,
-                            Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
-                            box.getMinX(), box.getMinY(), box.getMinZ(),
-                            box.getMaxX() + 1, box.getMaxY() + 1, box.getMaxZ() + 1,
-                            1, 1, 1, 1,
-                            0.5f, 0.5f, 0.5f
-                    );
-
-                    RenderSystem.enableDepthTest();
-                    matrices.pop();
-
-                    return false;
-                }
-            }
-
-            if (MinecraftClient.getInstance().getDebugHud().shouldShowDebugHud() && hit instanceof BlockHitResult blockHit) {
-                MatrixStack matrices = Objects.requireNonNull(context.matrixStack());
-
-                WorldRenderer.drawBox(
-                        matrices,
-                        Objects.requireNonNull(context.consumers()).getBuffer(RenderLayer.getLines()),
-                        blockHit.getBlockPos().getX(), blockHit.getBlockPos().getY(), blockHit.getBlockPos().getZ(),
-                        blockHit.getBlockPos().getX() + 1, blockHit.getBlockPos().getY() + 1, blockHit.getBlockPos().getZ() + 1,
-                        1, 1, 1, 1,
-                        0.5f, 0.5f, 0.5f
-                );
-
-                return false;
-            }
-
-            return true;
-        });
         HandledScreens.register(Building.KILN_SCREEN_HANDLER_TYPE, KilnScreen::new);
     }
 }

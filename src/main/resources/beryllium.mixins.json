@@ -27,7 +27,6 @@
     "armor.VillagerEntityMixin",
     "building.CookingRecipeDataGenMixin",
     "building.ShearsItemMixin",
-    "client.CommandSourceMixin",
     "client.CompassItemMixin",
     "client.StructureVoidBlockMixin",
     "combat.BrewingRecipeRegistryMixin",
