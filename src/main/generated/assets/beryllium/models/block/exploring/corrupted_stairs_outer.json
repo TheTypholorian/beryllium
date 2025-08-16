@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "beryllium:block/exploring/corrupted",
+    "side": "beryllium:block/exploring/corrupted",
+    "top": "beryllium:block/exploring/corrupted"
+  }
+}

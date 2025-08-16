@@ -9,7 +9,6 @@ import net.minecraft.data.client.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
@@ -90,10 +89,10 @@ public class GenModels extends FabricModelProvider {
     }
 
     public void blackOpalOre(BlockStateModelGenerator gen) {
-        gen.excludeFromSimpleItemModelGeneration(Exploring.BLACK_OPAL_ORE);
+        gen.excludeFromSimpleItemModelGeneration(Exploring.ONYX_ORE);
         gen.blockStateCollector
                 .accept(
-                        VariantsBlockStateSupplier.create(Exploring.BLACK_OPAL_ORE)
+                        VariantsBlockStateSupplier.create(Exploring.ONYX_ORE)
                                 .coordinate(
                                         BlockStateVariantMap.create(BlackOpalOreBlock.STAGE)
                                                 .register(
@@ -102,7 +101,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.CUBE_ALL
-                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_0", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_0")), gen.modelCollector)
+                                                                                .upload(Exploring.ONYX_ORE, "_0", TextureMap.all(TextureMap.getSubId(Exploring.ONYX_ORE, "_0")), gen.modelCollector)
                                                                 )
                                                 )
                                                 .register(
@@ -111,7 +110,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.CUBE_ALL
-                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_1", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_1")), gen.modelCollector)
+                                                                                .upload(Exploring.ONYX_ORE, "_1", TextureMap.all(TextureMap.getSubId(Exploring.ONYX_ORE, "_1")), gen.modelCollector)
                                                                 )
                                                 )
                                                 .register(
@@ -120,7 +119,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.CUBE_ALL
-                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_2", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_2")), gen.modelCollector)
+                                                                                .upload(Exploring.ONYX_ORE, "_2", TextureMap.all(TextureMap.getSubId(Exploring.ONYX_ORE, "_2")), gen.modelCollector)
                                                                 )
                                                 )
                                                 .register(
@@ -129,7 +128,7 @@ public class GenModels extends FabricModelProvider {
                                                                 .put(
                                                                         VariantSettings.MODEL,
                                                                         Models.CUBE_ALL
-                                                                                .upload(Exploring.BLACK_OPAL_ORE, "_3", TextureMap.all(TextureMap.getSubId(Exploring.BLACK_OPAL_ORE, "_3")), gen.modelCollector)
+                                                                                .upload(Exploring.ONYX_ORE, "_3", TextureMap.all(TextureMap.getSubId(Exploring.ONYX_ORE, "_3")), gen.modelCollector)
                                                                 )
                                                 )
                                 )
@@ -179,9 +178,8 @@ public class GenModels extends FabricModelProvider {
         gen.register(Combat.IRON_ARROW, Models.GENERATED);
         gen.register(Combat.FLAMING_ARROW, Models.GENERATED);
         gen.register(Combat.COPPER_ARROW, Models.GENERATED);
-        gen.register(Building.FILLING_WAND_ITEM, Models.GENERATED);
         gen.register(Exploring.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
         gen.register(Food.CROISSANT, Models.GENERATED);
-        gen.register(Exploring.BLACK_OPAL, Models.GENERATED);
+        gen.register(Exploring.ONYX, Models.GENERATED);
     }
 }

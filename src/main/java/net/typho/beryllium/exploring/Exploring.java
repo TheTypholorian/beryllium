@@ -24,6 +24,7 @@ import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.component.ComponentType;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -132,7 +133,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
 
-    public static final Block BLACK_OPAL_ORE = CONSTRUCTOR.blockWithItem("black_opal_ore", new BlackOpalOreBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
+    public static final Block ONYX_ORE = CONSTRUCTOR.blockWithItem("onyx_ore", new BlackOpalOreBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
     public static final Block CORRUPTED_END_STONE = CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
     public static final Block CONGEALED_VOID = CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.MAGENTA)
@@ -148,7 +149,19 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final Block CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
     public static final Block STRIPPED_CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
     public static final Block STRIPPED_CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
-    public static final Block CORRUPTED_PLANKS = CONSTRUCTOR.blockWithItem("corrupted_planks", new Block(AbstractBlock.Settings.copy(Blocks.CRIMSON_PLANKS)), new Item.Settings());
+    public static final BlockFamily CORRUPTED_FAMILY = CONSTRUCTOR.blockFamily("corrupted", Blocks.CRIMSON_PLANKS)
+            .base()
+            .stairs()
+            .slab()
+            .fence()
+            .fenceGate(WoodType.CRIMSON)
+            .sign(WoodType.CRIMSON)
+            .wallSign(WoodType.CRIMSON)
+            .pressurePlate(BlockSetType.CRIMSON)
+            .button(BlockSetType.CRIMSON, 30)
+            .trapdoor(BlockSetType.CRIMSON)
+            .door(BlockSetType.CRIMSON)
+            .build();
     public static final Block CORRUPTED_SAPLING = CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
         @Override
         protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
@@ -194,7 +207,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
 
-    public static final Item BLACK_OPAL = CONSTRUCTOR.item("black_opal", new Item(new Item.Settings()));
+    public static final Item ONYX = CONSTRUCTOR.item("onyx", new Item(new Item.Settings()));
     public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
     public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
     public static final Item EXODINE_INGOT = CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));

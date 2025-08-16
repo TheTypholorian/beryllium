@@ -37,7 +37,7 @@ public class ChorusFlowerBlockMixin {
                 world.setBlockState(pos, below.with(BlackOpalOreBlock.STAGE, stage + 1));
             }
         } else if (below.isOf(Blocks.END_STONE)) {
-            world.setBlockState(pos, Exploring.BLACK_OPAL_ORE.getDefaultState());
+            world.setBlockState(pos, Exploring.ONYX_ORE.getDefaultState());
         }
     }
 

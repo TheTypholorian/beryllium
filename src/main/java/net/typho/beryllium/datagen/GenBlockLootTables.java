@@ -40,7 +40,6 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Exploring.CORRUPTED_WOOD);
         addDrop(Exploring.STRIPPED_CORRUPTED_LOG);
         addDrop(Exploring.STRIPPED_CORRUPTED_WOOD);
-        addDrop(Exploring.CORRUPTED_PLANKS);
         addDrop(Exploring.CORRUPTED_SAPLING);
         addDrop(Exploring.FIREFLY_BOTTLE, this::dropsWithSilkTouch);
         addDrop(Exploring.DAFFODILS, flowerbedDrops(Exploring.DAFFODILS));
@@ -49,9 +48,9 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Exploring.ALGAE_BLOCK, block -> dropsWithSilkTouchOrShears(block, EmptyEntry.builder()));
         addDrop(Exploring.VOID_FIRE, dropsNothing());
         addDrop(Exploring.POINTED_BONE);
-        addDrop(Exploring.BLACK_OPAL_ORE, block -> new LootTable.Builder()
+        addDrop(Exploring.ONYX_ORE, block -> new LootTable.Builder()
                 .pool(LootPool.builder().with(ItemEntry.builder(Blocks.END_STONE)))
-                .pool(LootPool.builder().conditionally(new BlockStatePropertyLootCondition.Builder(Exploring.BLACK_OPAL_ORE).properties(StatePredicate.Builder.create().exactMatch(BlackOpalOreBlock.STAGE, 3))).with(ItemEntry.builder(Exploring.BLACK_OPAL))));
+                .pool(LootPool.builder().conditionally(new BlockStatePropertyLootCondition.Builder(Exploring.ONYX_ORE).properties(StatePredicate.Builder.create().exactMatch(BlackOpalOreBlock.STAGE, 3))).with(ItemEntry.builder(Exploring.ONYX))));
 
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
     }

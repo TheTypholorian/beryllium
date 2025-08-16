@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beryllium:exploring/corrupted_planks"
+          "name": "beryllium:exploring/corrupted_pressure_plate"
         }
       ],
       "rolls": 1.0

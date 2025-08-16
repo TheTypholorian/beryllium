@@ -225,6 +225,38 @@ public class BlockFamilyBuilder {
         return variant(BlockFamily.Variant.FENCE, block);
     }
 
+    public BlockFamilyBuilder customFenceGate(WoodType type) {
+        return customFenceGate(prefix + "_fence_gate", type);
+    }
+
+    public BlockFamilyBuilder customFenceGate(String id, WoodType type) {
+        return customFenceGate(id, new FenceGateBlock(type, settings));
+    }
+
+    public BlockFamilyBuilder customFenceGate(String id, Block block) {
+        return customFenceGate(register(BlockFamily.Variant.CUSTOM_FENCE_GATE, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder customFenceGate(Block block) {
+        return variant(BlockFamily.Variant.CUSTOM_FENCE_GATE, block);
+    }
+
+    public BlockFamilyBuilder fenceGate(WoodType type) {
+        return fenceGate(prefix + "_fence_gate", type);
+    }
+
+    public BlockFamilyBuilder fenceGate(String id, WoodType type) {
+        return fenceGate(id, new FenceGateBlock(type, settings));
+    }
+
+    public BlockFamilyBuilder fenceGate(String id, Block block) {
+        return fenceGate(register(BlockFamily.Variant.FENCE_GATE, id, block, new Item.Settings()));
+    }
+
+    public BlockFamilyBuilder fenceGate(Block block) {
+        return variant(BlockFamily.Variant.FENCE_GATE, block);
+    }
+
     public BlockFamilyBuilder mosaic() {
         return mosaic(prefix + "_mosaic");
     }

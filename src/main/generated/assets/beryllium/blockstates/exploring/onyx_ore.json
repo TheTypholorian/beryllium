@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "beryllium:block/exploring/onyx_ore_0"
+    },
+    "stage=1": {
+      "model": "beryllium:block/exploring/onyx_ore_1"
+    },
+    "stage=2": {
+      "model": "beryllium:block/exploring/onyx_ore_2"
+    },
+    "stage=3": {
+      "model": "beryllium:block/exploring/onyx_ore_3"
+    }
+  }
+}

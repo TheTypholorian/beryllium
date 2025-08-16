@@ -15,7 +15,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "beryllium:exploring/black_opal_ore",
+          "block": "beryllium:exploring/onyx_ore",
           "condition": "minecraft:block_state_property",
           "properties": {
             "stage": "3"
@@ -25,7 +25,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "beryllium:exploring/black_opal"
+          "name": "beryllium:exploring/onyx"
         }
       ],
       "rolls": 1.0

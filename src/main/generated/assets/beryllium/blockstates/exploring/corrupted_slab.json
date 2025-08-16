@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "beryllium:block/exploring/corrupted_slab"
+    },
+    "type=double": {
+      "model": "beryllium:block/exploring/corrupted"
+    },
+    "type=top": {
+      "model": "beryllium:block/exploring/corrupted_slab_top"
+    }
+  }
+}

@@ -26,7 +26,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Building.KILN_BLOCK)
                 .add(Combat.POTION_CAULDRON)
                 .add(Exploring.POINTED_BONE)
-                .add(Exploring.BLACK_OPAL_ORE);
+                .add(Exploring.ONYX_ORE);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             for (TagKey<Block> tag : family.tags) {

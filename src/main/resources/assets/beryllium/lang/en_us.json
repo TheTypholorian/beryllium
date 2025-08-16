@@ -19,8 +19,10 @@
   "item.beryllium.exploring.compass.pos": "X: %s Y: %s Z: %s",
   "item.beryllium.exploring.exodine_ingot": "Exodine Ingot",
   "item.beryllium.exploring.algae": "Algae",
+  "item.beryllium.exploring.onyx": "Onyx",
   "item.beryllium.food.croissant": "Chocolate Croissant",
   "item.beryllium.food.baguette": "Baguette",
+
   "block.beryllium.building.kiln": "Kiln",
 
   "block.beryllium.building.mossy_stone": "Mossy Stone",
@@ -113,6 +115,7 @@
   "block.beryllium.exploring.algae": "Algae",
   "block.beryllium.exploring.pointed_bone": "Pointed Bone",
   "block.beryllium.exploring.corrupted_log": "Corrupted Log",
+  "block.beryllium.exploring.onyx_ore": "Onyx Ore",
   "block.beryllium.combat.potion_cauldron": "Potion Cauldron",
   "block.beryllium.redstone.gold_hopper": "Gold Hopper",
   "block.beryllium.redstone.destructor": "Destructor",
