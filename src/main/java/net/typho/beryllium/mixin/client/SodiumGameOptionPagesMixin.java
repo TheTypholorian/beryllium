@@ -32,18 +32,21 @@ public class SodiumGameOptionPagesMixin {
             )
     )
     private static OptionGroup general(OptionGroup.Builder instance, Operation<OptionGroup> original) {
-        return original.call(instance.add(OptionImpl.createBuilder(boolean.class, vanillaOpts)
-                .setName(Text.translatable("options.beryllium.hud_item_tooltips"))
-                .setTooltip(Text.translatable("options.beryllium.hud_item_tooltips.tooltip"))
-                .setControl(TickBoxControl::new)
-                .setBinding((options, value) -> ((ClientConfig) options).hudItemTooltips().setValue(value), options -> ((ClientConfig) options).hudItemTooltips().getValue())
-                .setImpact(OptionImpact.LOW)
-                .build()).add(OptionImpl.createBuilder(boolean.class, vanillaOpts)
-                .setName(Text.translatable("options.beryllium.compass_coords"))
-                .setTooltip(Text.translatable("options.beryllium.compass_coords.tooltip"))
-                .setControl(TickBoxControl::new)
-                .setBinding((options, value) -> ((ClientConfig) options).compassCoords().setValue(value), options -> ((ClientConfig) options).compassCoords().getValue())
-                .setImpact(OptionImpact.LOW)
-                .build()));
+        return original.call(
+                instance.add(OptionImpl.createBuilder(boolean.class, vanillaOpts)
+                                .setName(Text.translatable("options.beryllium.hud_item_tooltips"))
+                                .setTooltip(Text.translatable("options.beryllium.hud_item_tooltips.tooltip"))
+                                .setControl(TickBoxControl::new)
+                                .setBinding((options, value) -> ((ClientConfig) options).hudItemTooltips().setValue(value), options -> ((ClientConfig) options).hudItemTooltips().getValue())
+                                .setImpact(OptionImpact.LOW)
+                                .build())
+                        .add(OptionImpl.createBuilder(boolean.class, vanillaOpts)
+                                .setName(Text.translatable("options.beryllium.compass_coords"))
+                                .setTooltip(Text.translatable("options.beryllium.compass_coords.tooltip"))
+                                .setControl(TickBoxControl::new)
+                                .setBinding((options, value) -> ((ClientConfig) options).compassCoords().setValue(value), options -> ((ClientConfig) options).compassCoords().getValue())
+                                .setImpact(OptionImpact.LOW)
+                                .build())
+        );
     }
 }
