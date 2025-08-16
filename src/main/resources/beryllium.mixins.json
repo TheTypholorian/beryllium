@@ -13,6 +13,7 @@
     "MilkBucketItemMixin",
     "PlayerEntityMixin",
     "SaddleItemMixin",
+    "ServerPlayerEntityMixin",
     "UtilMixin",
     "armor.AttributeModifiersComponentMixin",
     "armor.EnchantmentHelperMixin",

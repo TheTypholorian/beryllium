@@ -233,5 +233,9 @@
   "pack.name.beryllium.enchanted_horse_armor": "Enchanted Horse Armor",
   "pack.description.beryllium.enchanted_horse_armor": "Put any armor enchantment on horse armor",
   "selectWorld.beryllium.ultraDark": "Ultra Dark",
-  "selectWorld.beryllium.ultraDark.info": "Enables the ultra dark setting, also makes the world permanently night and thundering"
+  "selectWorld.beryllium.ultraDark.info": "Enables the ultra dark setting, also makes the world permanently night and thundering",
+  "options.beryllium.hud_item_tooltips": "Hud Item Tooltips",
+  "options.beryllium.hud_item_tooltips.tooltip": "Displays tooltips of currently held items on the hud",
+  "options.beryllium.compass_coords": "Compass Coords",
+  "options.beryllium.compass_coords.tooltip": "Shows player coordinates on compass item tooltips"
 }

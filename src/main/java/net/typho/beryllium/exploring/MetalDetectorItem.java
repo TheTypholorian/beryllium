@@ -114,7 +114,7 @@ public class MetalDetectorItem extends Item {
             int radius = ServerConfig.metalDetectorRadius.get();
             Map<Block, Integer> found = new HashMap<>();
 
-            if (ClientConfig.get().hudItemTooltips().getValue() && !player.hasReducedDebugInfo()) {
+            if (ClientConfig.get().compassCoords().getValue() && !player.hasReducedDebugInfo()) {
                 tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
             }
 

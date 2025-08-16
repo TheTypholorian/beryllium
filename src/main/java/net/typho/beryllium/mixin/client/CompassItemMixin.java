@@ -24,7 +24,7 @@ public abstract class CompassItemMixin extends Item {
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
 
-        if (stack.getHolder() != null && stack.getHolder() instanceof PlayerEntity player && ClientConfig.get().hudItemTooltips().getValue() && !player.hasReducedDebugInfo()) {
+        if (stack.getHolder() != null && stack.getHolder() instanceof PlayerEntity player && ClientConfig.get().compassCoords().getValue() && !player.hasReducedDebugInfo()) {
             BlockPos playerPos = stack.getHolder().getBlockPos();
             tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
         }

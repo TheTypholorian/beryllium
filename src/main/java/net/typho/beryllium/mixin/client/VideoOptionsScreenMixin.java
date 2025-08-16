@@ -18,9 +18,10 @@ public class VideoOptionsScreenMixin {
     )
     private static void getOptions(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
         SimpleOption<?>[] array = cir.getReturnValue();
-        SimpleOption<?>[] r = new SimpleOption[array.length + 1];
+        SimpleOption<?>[] r = new SimpleOption[array.length + 2];
         System.arraycopy(array, 0, r, 0, array.length);
-        r[array.length] = ((ClientConfig) gameOptions).hudItemTooltips();
+        r[array.length - 1] = ((ClientConfig) gameOptions).hudItemTooltips();
+        r[array.length] = ((ClientConfig) gameOptions).compassCoords();
         cir.setReturnValue(r);
     }
 }

@@ -17,8 +17,18 @@ public class GameOptionsMixin {
             true,
             value -> {}
     );
+    @Unique
+    private final SimpleOption<Boolean> compassCoords = SimpleOption.ofBoolean(
+            "options.beryllium.compass_coords",
+            true,
+            value -> {}
+    );
 
     public SimpleOption<Boolean> config$hudItemTooltips() {
         return hudItemTooltips;
+    }
+
+    public SimpleOption<Boolean> config$compassCoords() {
+        return compassCoords;
     }
 }

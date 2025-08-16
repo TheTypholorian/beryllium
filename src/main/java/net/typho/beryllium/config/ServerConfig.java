@@ -59,7 +59,8 @@ public class ServerConfig implements ModInitializer {
     public static final BooleanProperty instantChainTNT = new BooleanProperty(Redstone.CONSTRUCTOR.id("instant_chain_tnt"), false);
 
     public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.CONSTRUCTOR.id("durability_removal"), false);
-    public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.CONSTRUCTOR.id("ultra_dark"), true);
+    public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.CONSTRUCTOR.id("ultra_dark"), false);
+    public static final BooleanProperty disabledChat = new BooleanProperty(Beryllium.CONSTRUCTOR.id("disabled_chat"), false);
 
     public static void read(Dynamic<?> dynamic) {
         for (Property<?> property : properties.values()) {
