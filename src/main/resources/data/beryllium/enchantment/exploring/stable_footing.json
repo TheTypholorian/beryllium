@@ -31,8 +31,5 @@
     "armor"
   ],
   "supported_items": "#minecraft:enchantable/foot_armor",
-  "weight": 2,
-  "catalyst": "minecraft:slime_ball",
-  "catalyst_count": 4,
-  "capacity": 4
+  "weight": 2
 }

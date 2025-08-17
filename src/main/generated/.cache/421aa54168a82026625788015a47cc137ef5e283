@@ -1,12 +1,12 @@
-// 1.21.1	2025-08-16T16:40:01.9890362	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-17T06:58:28.9333371	Beryllium/Block Loot Tables
 57ab46ba7b00411a026f4c5c9efd60abc13d6c91 data\beryllium\loot_table\blocks\building\cracked_bricks.json
 6b9e8e4742661dfd7c296304ca8cae3fb5540f1c data\beryllium\loot_table\blocks\exploring\corrupted_door.json
 24cdf2f0512ed87a07af1864a469d6ace02712a7 data\beryllium\loot_table\blocks\building\diorite_brick_slab.json
 966356bf887542af9008e21592eae98129758ec1 data\beryllium\loot_table\blocks\building\cracked_purpur_slab.json
 7e1dab5a3f3d9ca1dbf4a6c1943498d023c51c12 data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_stairs.json
 ab8da0538895eab1f72db7e87e12f4cd5c228269 data\beryllium\loot_table\blocks\building\diorite_bricks.json
-e799f23581857e3a6437c5fb5ec7c7b6611eea7c data\beryllium\loot_table\blocks\building\diorite_brick_wall.json
 5435d07136449f54ca57301f07e2cafbff8c1ba7 data\beryllium\loot_table\blocks\exploring\corrupted_stairs.json
+e799f23581857e3a6437c5fb5ec7c7b6611eea7c data\beryllium\loot_table\blocks\building\diorite_brick_wall.json
 77473a91eba7d722c4f043c49dfbf2569a1b0c29 data\beryllium\loot_table\blocks\building\cut_red_sandstone_stairs.json
 858ba305818f45db73189cda62131d0ad4935d10 data\beryllium\loot_table\blocks\building\cracked_red_nether_bricks.json
 b3c68338ba99fe68cc167fa888faead57f5b38a7 data\beryllium\loot_table\blocks\building\cut_red_sandstone_wall.json

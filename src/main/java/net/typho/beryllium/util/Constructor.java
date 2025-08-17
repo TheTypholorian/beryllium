@@ -29,6 +29,8 @@ import net.minecraft.util.Util;
 import net.minecraft.world.gen.feature.Feature;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.armor.*;
+import net.typho.beryllium.enchanting.Enchanting;
+import net.typho.beryllium.enchanting.EnchantmentInfo;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -160,5 +162,9 @@ public class Constructor implements Identifierifier {
                 List.of(),
                 List.of(debuffed)
         ));
+    }
+
+    public EnchantmentInfo enchantmentInfo(Identifier id, EnchantmentInfo info) {
+        return Registry.register(Enchanting.ENCHANTMENT_INFO, id, info);
     }
 }

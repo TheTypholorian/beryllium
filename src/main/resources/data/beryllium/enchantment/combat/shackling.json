@@ -47,9 +47,6 @@
     "mainhand"
   ],
   "supported_items": "#minecraft:enchantable/fire_aspect",
-  "weight": 2,
-  "catalyst": "minecraft:chain",
-  "catalyst_count": 4,
-  "capacity": 3,
+  "weight": 2
   "exclusive_set": "#beryllium:exclusive_set/inflict_attack"
 }

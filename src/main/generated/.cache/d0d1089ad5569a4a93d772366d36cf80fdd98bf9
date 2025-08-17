@@ -1,8 +1,8 @@
-// 1.21.1	2025-08-16T16:40:01.988038	Beryllium/Tags for minecraft:block
+// 1.21.1	2025-08-17T06:58:28.9333371	Beryllium/Tags for minecraft:block
 23db223b8f0b46d45edad216f50507dc27a73165 data\minecraft\tags\block\mineable\shovel.json
 506716dd775afd1d5083c05410a97d5b22daf3d5 data\minecraft\tags\block\cauldrons.json
-b06d7252186b521b1fd449d02be168f8cad60351 data\minecraft\tags\block\stairs.json
 f2f3fe4d847de97624675f88744212f4e01d166f data\minecraft\tags\block\mineable\pickaxe.json
+cbd0b0816826605cd2dbb57d5da987210fb94670 data\minecraft\tags\block\stairs.json
 fa0acef30fb8880d3b316809ba188caf7aeacd32 data\beryllium\tags\block\exploring\pointed_blocks.json
 7088f73fb189e986d10e0cc4f5852e2ff4d04dbe data\minecraft\tags\block\mineable\hoe.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\flowers.json
@@ -11,4 +11,4 @@ cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\flowers.json
 7088f73fb189e986d10e0cc4f5852e2ff4d04dbe data\minecraft\tags\block\sword_efficient.json
 e5957e0da5128fa348a6af5e66335f19855076ce data\minecraft\tags\block\fire.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\inside_step_sound_blocks.json
-41e5e5ae5412c6f1fcb49be12c19a57e8801ff8b data\minecraft\tags\block\slabs.json
+92573bac04f0ed105161132e959f6ad14c4f5746 data\minecraft\tags\block\slabs.json

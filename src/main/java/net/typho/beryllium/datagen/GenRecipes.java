@@ -378,6 +378,9 @@ public class GenRecipes extends FabricRecipeProvider {
             }
         });
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.SNOW_BRICKS.getBaseBlock(), Blocks.SNOW_BLOCK);
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.GRANITE_BRICKS.getBaseBlock(), Blocks.POLISHED_GRANITE);
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.ANDESITE_BRICKS.getBaseBlock(), Blocks.POLISHED_ANDESITE);
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.DIORITE_BRICKS.getBaseBlock(), Blocks.POLISHED_DIORITE);
 
         firingVanillaRecipes(exporter);
 

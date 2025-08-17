@@ -46,8 +46,5 @@
     "armor"
   ],
   "supported_items": "#minecraft:enchantable/armor",
-  "weight": 5,
-  "catalyst": "minecraft:snowball",
-  "catalyst_count": 4,
-  "capacity": 4
+  "weight": 5
 }

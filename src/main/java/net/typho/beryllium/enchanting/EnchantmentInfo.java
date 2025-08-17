@@ -17,6 +17,10 @@ public record EnchantmentInfo(ItemStack catalyst, int size) {
         this(new ItemStack(catalyst, count), size);
     }
 
+    public EnchantmentInfo(Item catalyst, int size) {
+        this(catalyst, 4, size);
+    }
+
     public ItemStack getCatalyst(int level) {
         return catalyst.copyWithCount(catalyst.getCount() * level);
     }
