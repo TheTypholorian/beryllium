@@ -179,6 +179,7 @@ public class GenModels extends FabricModelProvider {
         gen.register(Combat.FLAMING_ARROW, Models.GENERATED);
         gen.register(Combat.COPPER_ARROW, Models.GENERATED);
         gen.register(Exploring.FIREFLY_BOTTLE.asItem(), Models.GENERATED);
+        gen.register(Exploring.POINTED_BONE.asItem(), Models.GENERATED);
         gen.register(Food.CROISSANT, Models.GENERATED);
         gen.register(Exploring.ONYX, Models.GENERATED);
     }

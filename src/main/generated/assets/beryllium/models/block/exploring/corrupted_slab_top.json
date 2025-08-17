@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "beryllium:block/exploring/corrupted",
-    "side": "beryllium:block/exploring/corrupted",
-    "top": "beryllium:block/exploring/corrupted"
-  }
-}

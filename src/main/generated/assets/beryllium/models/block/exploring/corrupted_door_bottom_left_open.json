@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom_left_open",
-  "textures": {
-    "bottom": "beryllium:block/exploring/corrupted_door_bottom",
-    "top": "beryllium:block/exploring/corrupted_door_top"
-  }
-}

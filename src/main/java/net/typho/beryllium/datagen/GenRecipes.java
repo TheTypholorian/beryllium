@@ -381,6 +381,8 @@ public class GenRecipes extends FabricRecipeProvider {
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.GRANITE_BRICKS.getBaseBlock(), Blocks.POLISHED_GRANITE);
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.ANDESITE_BRICKS.getBaseBlock(), Blocks.POLISHED_ANDESITE);
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.DIORITE_BRICKS.getBaseBlock(), Blocks.POLISHED_DIORITE);
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Exploring.CORRUPTED_WOOD, Exploring.CORRUPTED_LOG);
+        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Exploring.STRIPPED_CORRUPTED_WOOD, Exploring.STRIPPED_CORRUPTED_LOG);
 
         firingVanillaRecipes(exporter);
 

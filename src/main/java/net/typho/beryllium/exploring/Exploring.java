@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
@@ -149,8 +150,8 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final Block CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
     public static final Block STRIPPED_CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
     public static final Block STRIPPED_CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
-    public static final BlockFamily CORRUPTED_FAMILY = CONSTRUCTOR.blockFamily("corrupted", Blocks.CRIMSON_PLANKS)
-            .base()
+    public static final BlockFamily CORRUPTED_FAMILY = CONSTRUCTOR.blockFamily("corrupted_plank", Blocks.CRIMSON_PLANKS)
+            .base("corrupted_planks")
             .stairs()
             .slab()
             .fence()
@@ -256,6 +257,8 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     @Override
     public void onInitialize() {
+        StrippableBlockRegistry.register(CORRUPTED_LOG, STRIPPED_CORRUPTED_LOG);
+        StrippableBlockRegistry.register(CORRUPTED_WOOD, STRIPPED_CORRUPTED_WOOD);
         FlammableBlockRegistry.getDefaultInstance().add(DAFFODILS, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(SCILLA, 60, 100);
         FlammableBlockRegistry.getDefaultInstance().add(GERANIUMS, 60, 100);

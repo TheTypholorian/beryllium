@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left",
+  "textures": {
+    "bottom": "beryllium:block/exploring/corrupted_plank_door_bottom",
+    "top": "beryllium:block/exploring/corrupted_plank_door_top"
+  }
+}
