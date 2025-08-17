@@ -3,10 +3,7 @@ package net.typho.beryllium.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.config.ServerConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,20 +21,5 @@ public class LightmapTextureManagerMixin {
     )
     private float gamma(Double instance, Operation<Float> original) {
         return ServerConfig.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) * (1 - ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world)) : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
-    }
-
-    @WrapOperation(
-            method = "update",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/network/ClientPlayerEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"
-            )
-    )
-    private boolean hasNightVision(ClientPlayerEntity instance, RegistryEntry<StatusEffect> registryEntry, Operation<Boolean> original) {
-        if (ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world) > 0.1f) {
-            return false;
-        }
-
-        return original.call(instance, registryEntry);
     }
 }

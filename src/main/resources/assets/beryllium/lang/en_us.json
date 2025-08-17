@@ -171,6 +171,8 @@
   "attribute.beryllium.armor.name.player.sliding": "Sliding",
   "attribute.beryllium.armor.name.player.ranged_speed": "Ranged Speed",
   "attribute.beryllium.armor.name.generic.saturation": "Saturation per Second",
+  "attribute.beryllium.armor.name.generic.block_slipperiness": "Block Slipperiness",
+  "attribute.beryllium.armor.name.generic.ranged_speed": "Ranged Speed",
   "trim_effect.beryllium.name.material_scale": "Material Effect Scale",
   "trim_effect.beryllium.name.pattern_scale": "Pattern Effect Scale",
   "trim_effect.beryllium.name.enchantment_capacity": "Enchantment Capacity",

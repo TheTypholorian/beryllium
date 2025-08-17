@@ -8,7 +8,6 @@
 - replace stonecutting inputs with tag
 - cracked purpur translations
 - fix creative durability (it's at 1/4 for some reason)
-- increase enchanting table bookshelf height
 - etable pull from chests
 - enderman trades
 - end city
@@ -16,3 +15,4 @@
 - other end structures
 - end fight
 - golden steak and potatoes
+- color coded trim attributes on tooltip

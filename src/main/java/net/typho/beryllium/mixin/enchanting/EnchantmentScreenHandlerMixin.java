@@ -45,7 +45,7 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
 
     @Shadow
     @Final
-    private ScreenHandlerContext context;
+    public ScreenHandlerContext context;
 
     @Shadow
     @Final

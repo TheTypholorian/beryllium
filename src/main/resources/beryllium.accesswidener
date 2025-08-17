@@ -16,3 +16,4 @@ accessible field net/minecraft/data/client/BlockStateModelGenerator texturedMode
 accessible method net/minecraft/item/ItemStack appendAttributeModifierTooltip (Ljava/util/function/Consumer;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/entity/attribute/EntityAttributeModifier;)V
 accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
+accessible field net/minecraft/screen/EnchantmentScreenHandler context Lnet/minecraft/screen/ScreenHandlerContext;
