@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "beryllium:exploring/end_city",
+      "weight": 100
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 10,
+    "separation": 3,
+    "salt": 42
+  }
+}
