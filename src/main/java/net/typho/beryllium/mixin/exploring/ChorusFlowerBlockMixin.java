@@ -8,8 +8,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.exploring.OnyxBlock;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,11 +30,11 @@ public class ChorusFlowerBlockMixin {
     private void grow(World world, BlockPos pos, int age, CallbackInfo ci) {
         BlockState below = world.getBlockState(pos = pos.down().down());
 
-        if (below.getBlock() instanceof BlackOpalOreBlock) {
-            int stage = below.get(BlackOpalOreBlock.STAGE);
+        if (below.getBlock() instanceof OnyxBlock) {
+            int stage = below.get(OnyxBlock.STAGE);
 
             if (stage < 3) {
-                world.setBlockState(pos, below.with(BlackOpalOreBlock.STAGE, stage + 1));
+                world.setBlockState(pos, below.with(OnyxBlock.STAGE, stage + 1));
             }
         } else if (below.isOf(Blocks.END_STONE)) {
             world.setBlockState(pos, Exploring.ONYX_ORE.getDefaultState());
@@ -56,6 +56,6 @@ public class ChorusFlowerBlockMixin {
             return original.call(instance, block);
         }
 
-        return original.call(instance, block) || instance.getBlock() instanceof BlackOpalOreBlock;
+        return original.call(instance, block) || instance.getBlock() instanceof OnyxBlock;
     }
 }

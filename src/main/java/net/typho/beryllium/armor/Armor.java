@@ -47,13 +47,14 @@ public class Armor implements ModInitializer {
     public static final RegistryEntry<EntityAttribute> GENERIC_CLEANSING = CONSTRUCTOR.attribute("generic.cleansing", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.cleansing", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> PLAYER_GAMMA = CONSTRUCTOR.attribute("player.gamma", new FreeEntityAttribute("attribute.beryllium.armor.name.player.gamma", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_MOUNT_REGENERATION = CONSTRUCTOR.attribute("generic.mount_regeneration", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.mount_regeneration", 0).setTracked(true));
-    public static final RegistryEntry<EntityAttribute> PLAYER_XP_GAIN = CONSTRUCTOR.attribute("player.xp_gain", new FreeEntityAttribute("attribute.beryllium.armor.name.player.bonus_xp", 1).setTracked(true));
-    public static final RegistryEntry<EntityAttribute> PLAYER_XP_COST = CONSTRUCTOR.attribute("player.xp_cost", new FreeEntityAttribute("attribute.beryllium.armor.name.player.cheap_xp", 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_XP_GAIN = CONSTRUCTOR.attribute("player.xp_gain", new FreeEntityAttribute("attribute.beryllium.armor.name.player.xp_gain", 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_XP_COST = CONSTRUCTOR.attribute("player.xp_cost", new FreeEntityAttribute("attribute.beryllium.armor.name.player.xp_cost", 1).setCategory(EntityAttribute.Category.NEGATIVE).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_MOUNT_SPEED = CONSTRUCTOR.attribute("generic.mount_speed", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.mount_speed", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> PLAYER_SLIDING = CONSTRUCTOR.attribute("player.sliding", new FreeEntityAttribute("attribute.beryllium.armor.name.player.sliding", 0).setTracked(true));
-    public static final RegistryEntry<EntityAttribute> PLAYER_RANGED_SPEED = CONSTRUCTOR.attribute("player.ranged_speed", new FreeEntityAttribute("attribute.beryllium.armor.name.player.ranged_speed", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> PLAYER_DISCOUNT = CONSTRUCTOR.attribute("player.discount", new FreeEntityAttribute("attribute.beryllium.armor.name.player.discount", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_SATURATION = CONSTRUCTOR.attribute("generic.saturation", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.saturation", 0).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> GENERIC_BLOCK_SLIPPERINESS = CONSTRUCTOR.attribute("generic.block_slipperiness", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.block_slipperiness", 1).setCategory(EntityAttribute.Category.NEUTRAL).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> GENERIC_RANGED_SPEED = CONSTRUCTOR.attribute("generic.ranged_speed", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.ranged_speed", 0).setTracked(true));
 
     public static float trimMaterialScale(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
@@ -121,6 +122,10 @@ public class Armor implements ModInitializer {
 
     public static float bonusRangedDamage(LivingEntity entity) {
         return (float) entity.getAttributeValue(GENERIC_RANGED_DAMAGE);
+    }
+
+    public static float bonusRangedSpeed(LivingEntity entity) {
+        return (float) entity.getAttributeValue(GENERIC_RANGED_SPEED);
     }
 
     public static float bonusSwimmingSpeed(LivingEntity entity) {
@@ -210,6 +215,8 @@ public class Armor implements ModInitializer {
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SHAPER, PLAYER_XP_COST, -0.05, EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.HOST, GENERIC_MOUNT_SPEED, 0.05, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.SILENCE, new CustomTrimEffect.Silence());
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.FLOW, GENERIC_BLOCK_SLIPPERINESS, 0.075, EntityAttributeModifier.Operation.ADD_VALUE);
+        CONSTRUCTOR.trimPatternEffect(ArmorTrimPatterns.BOLT, GENERIC_RANGED_SPEED, 0.25, EntityAttributeModifier.Operation.ADD_VALUE);
 
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.AMETHYST, EntityAttributes.PLAYER_SWEEPING_DAMAGE_RATIO, 0.1, EntityAttributeModifier.Operation.ADD_VALUE);
         CONSTRUCTOR.trimMaterialEffect(ArmorTrimMaterials.COPPER, EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE, 0.5, EntityAttributeModifier.Operation.ADD_VALUE);

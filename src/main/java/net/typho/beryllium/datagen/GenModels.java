@@ -10,8 +10,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.typho.beryllium.combat.Combat;
-import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.exploring.OnyxBlock;
 import net.typho.beryllium.food.Food;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
@@ -94,7 +94,7 @@ public class GenModels extends FabricModelProvider {
                 .accept(
                         VariantsBlockStateSupplier.create(Exploring.ONYX_ORE)
                                 .coordinate(
-                                        BlockStateVariantMap.create(BlackOpalOreBlock.STAGE)
+                                        BlockStateVariantMap.create(OnyxBlock.STAGE)
                                                 .register(
                                                         0,
                                                         BlockStateVariant.create()

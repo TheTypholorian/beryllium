@@ -20,7 +20,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.random.Random;
 import net.typho.beryllium.enchanting.Enchanting;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -59,8 +58,6 @@ public abstract class EnchantmentScreenHandlerMixin extends ScreenHandler {
     @Shadow
     @Final
     public int[] enchantmentLevel;
-
-    @Shadow @Final private Random random;
 
     protected EnchantmentScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId) {
         super(type, syncId);

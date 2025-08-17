@@ -29,7 +29,7 @@ public class ArmorFeatureRendererMixin {
     private void renderArmor(MatrixStack matrices, VertexConsumerProvider vertexConsumers, LivingEntity entity, EquipmentSlot armorSlot, int light, BipedEntityModel<?> model, CallbackInfo ci, @Local ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);
 
-        if (Armor.shouldRenderArmor(entity.isInvisible(), stack, trim)) {
+        if (!Armor.shouldRenderArmor(entity.isInvisible(), stack, trim)) {
             ci.cancel();
         }
     }

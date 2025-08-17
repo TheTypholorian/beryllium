@@ -148,14 +148,18 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                 if (optional.isPresent()) {
                     int l = handler.enchantmentLevel[j];
                     int m = j + 1;
-                    if (isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && k > 0 && l >= 0) {
+                    if (isPointWithinBounds(60, 14 + 19 * j, 108, 17, mouseX, mouseY) && l >= 0) {
                         List<Text> list = Lists.newArrayList();
                         list.add(Text.translatable("container.enchant.clue", Enchantment.getName(optional.get(), l)).formatted(Formatting.WHITE));
                         ItemStack catalyst = Enchanting.getCatalyst(optional.get(), l);
                         if (!bl) {
                             list.add(ScreenTexts.EMPTY);
+                            int points = Enchanting.getEnchantmentLevelCost(client.player, m);
+
                             if (client.player.experienceLevel < k) {
-                                list.add(Text.translatable("container.enchant.level.requirement", handler.enchantmentPower[j]).formatted(Formatting.RED));
+                                list.add(Text.translatable("container.enchant.level.requirement", k).formatted(Formatting.RED));
+                            } else if (client.player.totalExperience < points) {
+                                list.add(Text.translatable("container.beryllium.enchant.xp", points).formatted(Formatting.RED));
                             } else {
                                 MutableText mutableText;
                                 if (m == 1) {
@@ -170,14 +174,7 @@ public abstract class EnchantmentScreenMixin extends HandledScreen<EnchantmentSc
                                     list.add(Text.literal(catalyst.getCount() + "x ").append(catalyst.getName()).formatted(Enchanting.hasEnoughCatalysts(handler.getSlot(2).getStack(), optional.get(), l, client.player) ? Formatting.GRAY : Formatting.RED));
                                 }
 
-                                MutableText mutableText3;
-                                if (m == 1) {
-                                    mutableText3 = Text.translatable("container.enchant.level.one");
-                                } else {
-                                    mutableText3 = Text.translatable("container.enchant.level.many", m);
-                                }
-
-                                list.add(mutableText3.formatted(Formatting.GRAY));
+                                list.add(Text.translatable("container.beryllium.enchant.xp", points).formatted(Formatting.GRAY));
                             }
                         }
 

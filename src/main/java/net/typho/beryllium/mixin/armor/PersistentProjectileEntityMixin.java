@@ -27,4 +27,46 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
 
         return d;
     }
+
+    @ModifyVariable(
+            method = "setVelocity",
+            at = @At("HEAD"),
+            ordinal = 0,
+            argsOnly = true
+    )
+    private double modifyX(double d) {
+        if (getOwner() instanceof LivingEntity living) {
+            d *= 1 + Armor.bonusRangedSpeed(living);
+        }
+
+        return d;
+    }
+
+    @ModifyVariable(
+            method = "setVelocity",
+            at = @At("HEAD"),
+            ordinal = 1,
+            argsOnly = true
+    )
+    private double modifyY(double d) {
+        if (getOwner() instanceof LivingEntity living) {
+            d *= 1 + Armor.bonusRangedSpeed(living);
+        }
+
+        return d;
+    }
+
+    @ModifyVariable(
+            method = "setVelocity",
+            at = @At("HEAD"),
+            ordinal = 2,
+            argsOnly = true
+    )
+    private double modifyZ(double d) {
+        if (getOwner() instanceof LivingEntity living) {
+            d *= 1 + Armor.bonusRangedSpeed(living);
+        }
+
+        return d;
+    }
 }

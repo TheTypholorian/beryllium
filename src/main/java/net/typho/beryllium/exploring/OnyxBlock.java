@@ -5,10 +5,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 
-public class BlackOpalOreBlock extends Block {
+public class OnyxBlock extends Block {
     public static final IntProperty STAGE = IntProperty.of("stage", 0, 3);
 
-    public BlackOpalOreBlock(Settings settings) {
+    public OnyxBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState().with(STAGE, 0));
     }

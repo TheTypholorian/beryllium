@@ -29,6 +29,8 @@ import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.DragonFireballEntity;
@@ -134,7 +136,9 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
 
-    public static final Block ONYX_ORE = CONSTRUCTOR.blockWithItem("onyx_ore", new BlackOpalOreBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
+    public static final RegistryEntry<StatusEffect> SHATTERED = CONSTRUCTOR.statusEffect("shattered", new StatusEffect(StatusEffectCategory.HARMFUL, 0x5B345B){});
+
+    public static final Block ONYX_ORE = CONSTRUCTOR.blockWithItem("onyx_ore", new OnyxBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
     public static final Block CORRUPTED_END_STONE = CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
     public static final Block CONGEALED_VOID = CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.MAGENTA)

@@ -23,7 +23,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private float gamma(Double instance, Operation<Float> original) {
-        return ServerConfig.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) / 4 : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
+        return ServerConfig.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) * (1 - ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world)) : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
     }
 
     @WrapOperation(
@@ -34,7 +34,7 @@ public class LightmapTextureManagerMixin {
             )
     )
     private boolean hasNightVision(ClientPlayerEntity instance, RegistryEntry<StatusEffect> registryEntry, Operation<Boolean> original) {
-        if (ServerConfig.ultraDark.get()) {
+        if (ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world) > 0.1f) {
             return false;
         }
 

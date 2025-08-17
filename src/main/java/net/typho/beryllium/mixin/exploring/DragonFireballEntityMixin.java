@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.util.hit.HitResult;
@@ -62,5 +63,16 @@ public abstract class DragonFireballEntityMixin extends ExplosiveProjectileEntit
                 }
             }
         }
+    }
+
+    @Inject(
+            method = "onCollision",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/AreaEffectCloudEntity;addEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;)V"
+            )
+    )
+    private void addEffect(HitResult hitResult, CallbackInfo ci, @Local AreaEffectCloudEntity cloud) {
+        cloud.addEffect(new StatusEffectInstance(Exploring.SHATTERED, 15));
     }
 }

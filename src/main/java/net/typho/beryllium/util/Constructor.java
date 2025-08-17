@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -166,5 +167,9 @@ public class Constructor implements Identifierifier {
 
     public EnchantmentInfo enchantmentInfo(Identifier id, EnchantmentInfo info) {
         return Registry.register(Enchanting.ENCHANTMENT_INFO, id, info);
+    }
+
+    public RegistryEntry<StatusEffect> statusEffect(String id, StatusEffect effect) {
+        return Registry.registerReference(Registries.STATUS_EFFECT, id(id), effect);
     }
 }

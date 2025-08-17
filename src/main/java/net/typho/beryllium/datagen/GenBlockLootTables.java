@@ -13,8 +13,8 @@ import net.minecraft.predicate.StatePredicate;
 import net.minecraft.registry.RegistryWrapper;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.combat.Combat;
-import net.typho.beryllium.exploring.BlackOpalOreBlock;
 import net.typho.beryllium.exploring.Exploring;
+import net.typho.beryllium.exploring.OnyxBlock;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.concurrent.CompletableFuture;
@@ -50,7 +50,7 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Exploring.POINTED_BONE);
         addDrop(Exploring.ONYX_ORE, block -> new LootTable.Builder()
                 .pool(LootPool.builder().with(ItemEntry.builder(Blocks.END_STONE)))
-                .pool(LootPool.builder().conditionally(new BlockStatePropertyLootCondition.Builder(Exploring.ONYX_ORE).properties(StatePredicate.Builder.create().exactMatch(BlackOpalOreBlock.STAGE, 3))).with(ItemEntry.builder(Exploring.ONYX))));
+                .pool(LootPool.builder().conditionally(new BlockStatePropertyLootCondition.Builder(Exploring.ONYX_ORE).properties(StatePredicate.Builder.create().exactMatch(OnyxBlock.STAGE, 3))).with(ItemEntry.builder(Exploring.ONYX))));
 
         addDrop(Combat.POTION_CAULDRON, Blocks.CAULDRON);
     }

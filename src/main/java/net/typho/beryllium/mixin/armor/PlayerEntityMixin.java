@@ -5,12 +5,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.typho.beryllium.armor.Armor;
+import net.typho.beryllium.enchanting.Enchanting;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -18,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerEntityMixin extends LivingEntity {
     @Shadow
     protected HungerManager hungerManager;
+
+    @Shadow public abstract void addExperience(int experience);
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -34,7 +40,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 .add(Armor.PLAYER_XP_GAIN)
                 .add(Armor.PLAYER_XP_COST)
                 .add(Armor.PLAYER_SLIDING)
-                .add(Armor.PLAYER_RANGED_SPEED)
                 .add(Armor.PLAYER_DISCOUNT));
     }
 
@@ -51,5 +56,27 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if (age % 20 == 0) {
             hungerManager.add(Armor.bonusSaturation(this), 0.1f);
         }
+    }
+
+    @ModifyVariable(
+            method = "addExperience",
+            at = @At("HEAD"),
+            argsOnly = true
+    )
+    public int experience(int value) {
+        if (value < 0) {
+            return value;
+        }
+
+        return (int) (value * getAttributeValue(Armor.PLAYER_XP_GAIN));
+    }
+
+    /**
+     * @author The Typhothanian
+     * @reason XP Cost attribute
+     */
+    @Overwrite
+    public void applyEnchantmentCosts(ItemStack enchantedItem, int levels) {
+        addExperience(-Enchanting.getEnchantmentLevelCost(this, levels));
     }
 }

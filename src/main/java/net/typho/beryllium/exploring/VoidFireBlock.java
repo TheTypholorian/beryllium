@@ -5,8 +5,12 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
@@ -20,6 +24,15 @@ public class VoidFireBlock extends AbstractFireBlock {
 
     public VoidFireBlock(AbstractBlock.Settings settings) {
         super(settings, 2.0F);
+    }
+
+    @Override
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (!entity.isFireImmune() && entity instanceof LivingEntity living) {
+            living.addStatusEffect(new StatusEffectInstance(Exploring.SHATTERED, 15));
+        }
+
+        super.onEntityCollision(state, world, pos, entity);
     }
 
     @Override

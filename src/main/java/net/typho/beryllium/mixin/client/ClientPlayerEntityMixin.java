@@ -19,6 +19,6 @@ public class ClientPlayerEntityMixin {
             )
     )
     private boolean hasBlindness(ClientPlayerEntity instance, RegistryEntry<StatusEffect> effect, Operation<Boolean> original) {
-        return !ServerConfig.ultraDark.get() && original.call(instance, effect);
+        return !(ServerConfig.ultraDarkBlend(instance.getWorld()) < 0.1f) && original.call(instance, effect);
     }
 }

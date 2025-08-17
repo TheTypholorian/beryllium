@@ -10,3 +10,9 @@
 - fix creative durability (it's at 1/4 for some reason)
 - increase enchanting table bookshelf height
 - etable pull from chests
+- enderman trades
+- end city
+- one other end wood type
+- other end structures
+- end fight
+- golden steak and potatoes

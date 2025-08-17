@@ -8,6 +8,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
@@ -195,6 +196,10 @@ public class Enchanting implements ModInitializer {
         //}
 
         return (int) f;
+    }
+
+    public static int getEnchantmentLevelCost(LivingEntity entity, int levels) {
+        return (int) (levels * 10 * entity.getAttributeValue(Armor.PLAYER_XP_COST));
     }
 
     public static int getUsedEnchCapacity(ItemStack stack) {

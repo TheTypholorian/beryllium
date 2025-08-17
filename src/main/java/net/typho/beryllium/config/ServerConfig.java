@@ -15,6 +15,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.armor.Armor;
 import net.typho.beryllium.combat.Combat;
@@ -61,6 +63,17 @@ public class ServerConfig implements ModInitializer {
     public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.CONSTRUCTOR.id("durability_removal"), false);
     public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.CONSTRUCTOR.id("ultra_dark"), false);
     public static final BooleanProperty disabledChat = new BooleanProperty(Beryllium.CONSTRUCTOR.id("disabled_chat"), false);
+
+    public static float ultraDarkBlend(World world) {
+        if (!ultraDark.get()) {
+            return 0;
+        }
+
+        float f = (world.getTimeOfDay() / 12000f + 0.75f) * (float) Math.PI;
+        f = (float) (Math.cos(f) * 1.5f);
+        f = MathHelper.clamp(f, 0, 1);
+        return f;
+    }
 
     public static void read(Dynamic<?> dynamic) {
         for (Property<?> property : properties.values()) {

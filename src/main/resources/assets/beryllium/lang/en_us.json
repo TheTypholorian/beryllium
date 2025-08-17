@@ -170,7 +170,6 @@
   "attribute.beryllium.armor.name.generic.mount_speed": "Mount Speed",
   "attribute.beryllium.armor.name.player.sliding": "Sliding",
   "attribute.beryllium.armor.name.player.ranged_speed": "Ranged Speed",
-  "attribute.beryllium.armor.name.player.discount": "Discount",
   "attribute.beryllium.armor.name.generic.saturation": "Saturation per Second",
   "trim_effect.beryllium.name.material_scale": "Material Effect Scale",
   "trim_effect.beryllium.name.pattern_scale": "Pattern Effect Scale",
@@ -237,5 +236,7 @@
   "options.beryllium.hud_item_tooltips": "Hud Item Tooltips",
   "options.beryllium.hud_item_tooltips.tooltip": "Displays tooltips of currently held items on the hud",
   "options.beryllium.compass_coords": "Compass Coords",
-  "options.beryllium.compass_coords.tooltip": "Shows player coordinates on compass item tooltips"
+  "options.beryllium.compass_coords.tooltip": "Shows player coordinates on compass item tooltips",
+  "container.beryllium.enchant.xp.requirement": "XP Requirement: %s",
+  "container.beryllium.enchant.xp": "%s XP Points"
 }

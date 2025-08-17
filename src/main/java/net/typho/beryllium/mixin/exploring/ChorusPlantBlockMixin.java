@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusPlantBlock;
-import net.typho.beryllium.exploring.BlackOpalOreBlock;
+import net.typho.beryllium.exploring.OnyxBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -28,6 +28,6 @@ public class ChorusPlantBlockMixin {
             return original.call(instance, block);
         }
 
-        return original.call(instance, block) || instance.getBlock() instanceof BlackOpalOreBlock;
+        return original.call(instance, block) || instance.getBlock() instanceof OnyxBlock;
     }
 }
