@@ -1,7 +1,43 @@
 {
-  "parent": "minecraft:block/glow_lichen",
+  "ambientocclusion": false,
   "textures": {
-    "glow_lichen": "beryllium:block/exploring/algae",
-    "particle": "#glow_lichen"
-  }
+    "layer0": "beryllium:block/exploring/algae",
+    "particle": "#layer0"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0.1
+      ],
+      "to": [
+        16,
+        16,
+        0.1
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ],
+          "texture": "#layer0",
+          "tintIndex": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#layer0",
+          "tintIndex": 0
+        }
+      }
+    }
+  ]
 }
