@@ -12,6 +12,7 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -387,14 +388,18 @@ public class GenRecipes extends FabricRecipeProvider {
         firingVanillaRecipes(exporter);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            System.out.println("Recipes for " + family.prefix);
             generateFamily(exporter, family.build(), FeatureFlags.VANILLA_FEATURES);
         }
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            System.out.println("Stonecutting recipes for " + family.prefix);
             if (!family.stonecutting.isEmpty()) {
-                for (Block input : family.stonecutting) {
+                for (Ingredient input : family.stonecutting) {
                     family.variants.forEach((variant, block) -> {
-                        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, input, variant == BlockFamily.Variant.SLAB ? 2 : 1);
+                        for (ItemStack stack : input.getMatchingStacks()) {
+                            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, stack.getItem(), variant == BlockFamily.Variant.SLAB ? 2 : 1);
+                        }
                     });
                 }
             }

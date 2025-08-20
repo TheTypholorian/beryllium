@@ -32,6 +32,10 @@ import java.util.function.Predicate;
 public class Building implements ModInitializer, ClientModInitializer {
     public static final Constructor CONSTRUCTOR = new Constructor("building");
 
+    //public static final TagKey<Item> STONECUTTING_STONE = TagKey.of(RegistryKeys.ITEM, Beryllium.CONSTRUCTOR.id("stonecutting/stone"));
+    //public static final TagKey<Item> STONECUTTING_STONE_BRICKS = TagKey.of(RegistryKeys.ITEM, Beryllium.CONSTRUCTOR.id("stonecutting/stone_bricks"));
+    //public static final TagKey<Item> STONECUTTING_SMOOTH_STONE = TagKey.of(RegistryKeys.ITEM, Beryllium.CONSTRUCTOR.id("stonecutting/smooth_stone"));
+
     public static final RecipeType<KilnRecipe> KILN_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, CONSTRUCTOR.id("firing"), new RecipeType<>() {
         public String toString() {
             return "kiln";
@@ -58,6 +62,13 @@ public class Building implements ModInitializer, ClientModInitializer {
             .slab()
             .tags(BlockTags.SHOVEL_MINEABLE)
             .build();
+    public static final BlockFamily STONE_BRICKS = CONSTRUCTOR.blockFamily("stone_brick", Blocks.STONE_BRICKS)
+            .base(Blocks.STONE_BRICKS)
+            .wall(Blocks.STONE_BRICK_WALL)
+            .stairs(Blocks.STONE_BRICK_STAIRS)
+            .slab(Blocks.STONE_BRICK_SLAB)
+            .noDatagen()
+            .build(BlockFamilies.STONE_BRICK);
     public static final BlockFamily CRACKED_STONE_BRICKS = CONSTRUCTOR.blockFamily("cracked_stone_brick", Blocks.CRACKED_STONE_BRICKS)
             .base(Blocks.CRACKED_STONE_BRICKS)
             .wall()

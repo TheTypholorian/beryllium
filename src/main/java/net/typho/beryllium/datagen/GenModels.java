@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.data.client.*;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
@@ -138,9 +139,12 @@ public class GenModels extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator gen) {
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            System.out.println("Block models for " + family.prefix);
             BlockStateModelGenerator.BlockTexturePool pool = gen.registerCubeAllModelTexturePool(family.base);
             pool.textures.put(TextureKey.WALL, pool.textures.getTexture(TextureKey.SIDE));
-            pool.family(family.build());
+            BlockFamily family1 = new BlockFamily.Builder(family.base).build();
+            family1.getVariants().putAll(family.datagen);
+            pool.family(family1);
         }
 
         gen.registerFlowerbed(Exploring.DAFFODILS);

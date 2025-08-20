@@ -29,6 +29,7 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
         addDrop(Building.KILN_BLOCK);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            System.out.println("Block loot tables for " + family.prefix);
             for (Block block : family.datagen.values()) {
                 addDrop(block);
             }

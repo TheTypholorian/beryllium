@@ -3,6 +3,8 @@ package net.typho.beryllium.util;
 import net.minecraft.block.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.*;
@@ -17,7 +19,7 @@ public class BlockFamilyBuilder {
     public final Map<BlockFamily.Variant, Block> variants = new LinkedHashMap<>();
     public final Map<BlockFamily.Variant, Block> datagen = new LinkedHashMap<>();
     public final List<TagKey<Block>> tags = new LinkedList<>();
-    public final List<Block> stonecutting = new LinkedList<>();
+    public final List<Ingredient> stonecutting = new LinkedList<>();
     public final List<BlockFamily> smelting = new LinkedList<>();
     public BlockFamily built;
 
@@ -64,14 +66,25 @@ public class BlockFamilyBuilder {
         return block;
     }
 
-    public BlockFamilyBuilder noDatagen() {
-        datagen.clear();
+    public BlockFamilyBuilder stonecutting(TagKey<Item> tag) {
+        stonecutting(Ingredient.fromTag(tag));
         return this;
     }
 
-    public BlockFamilyBuilder stonecutting(Block... blocks) {
-        stonecutting.add(base);
-        Collections.addAll(stonecutting, blocks);
+    public BlockFamilyBuilder stonecutting(Ingredient... inputs) {
+        stonecutting();
+        Collections.addAll(stonecutting, inputs);
+        return this;
+    }
+
+    public BlockFamilyBuilder stonecutting(ItemConvertible... inputs) {
+        stonecutting();
+        Arrays.stream(inputs).map(Ingredient::ofItems).forEach(stonecutting::add);
+        return this;
+    }
+
+    public BlockFamilyBuilder stonecutting() {
+        stonecutting.add(Ingredient.ofItems(base));
         return this;
     }
 
@@ -86,6 +99,11 @@ public class BlockFamilyBuilder {
 
     public BlockFamilyBuilder noDatagen(BlockFamily.Variant variant) {
         datagen.remove(variant);
+        return this;
+    }
+
+    public BlockFamilyBuilder noDatagen() {
+        datagen.clear();
         return this;
     }
 
