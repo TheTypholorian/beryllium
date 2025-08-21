@@ -475,7 +475,6 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             }
         }, DAFFODILS, SCILLA, GERANIUMS);
         ColorProviderRegistry.BLOCK.register((state, world, pos, index) -> {
-            System.out.println(index);
             return 0xFF0000;/*world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor()*/
         }, ALGAE_BLOCK);
         BlockRenderLayerMap.INSTANCE.putBlock(ALGAE_BLOCK, RenderLayer.getTranslucent());
