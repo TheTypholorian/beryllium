@@ -29,6 +29,10 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Exploring.ONYX_ORE);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (!family.tags.isEmpty()) {
+                System.out.println("Block tags for " + family.prefix);
+            }
+
             for (TagKey<Block> tag : family.tags) {
                 FabricTagBuilder builder = getOrCreateTagBuilder(tag);
 
@@ -42,6 +46,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.WALL)) {
+                System.out.println("Wall block tags for " + family.prefix);
                 walls.add(family.datagen.get(BlockFamily.Variant.WALL));
             }
         }
@@ -50,6 +55,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.STAIRS)) {
+                System.out.println("Stair block tags for " + family.prefix);
                 stairs.add(family.datagen.get(BlockFamily.Variant.STAIRS));
             }
         }
@@ -58,6 +64,7 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             if (family.datagen.containsKey(BlockFamily.Variant.SLAB)) {
+                System.out.println("Slab block tags for " + family.prefix);
                 slabs.add(family.datagen.get(BlockFamily.Variant.SLAB));
             }
         }

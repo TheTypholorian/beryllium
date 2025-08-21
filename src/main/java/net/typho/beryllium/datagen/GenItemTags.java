@@ -41,5 +41,15 @@ public class GenItemTags extends FabricTagProvider.ItemTagProvider {
 
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
                 .addTag(Combat.HORSE_ARMOR);
+
+        /*
+        getOrCreateTagBuilder(Building.STONECUTTING_STONE)
+                .add(Items.STONE);
+        getOrCreateTagBuilder(Building.STONECUTTING_STONE_BRICKS)
+                .addTag(Building.STONECUTTING_STONE)
+                .add(Items.STONE_BRICKS);
+        getOrCreateTagBuilder(Building.STONECUTTING_SMOOTH_STONE)
+                .add(Items.SMOOTH_STONE);
+         */
     }
 }

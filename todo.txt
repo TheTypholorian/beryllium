@@ -6,9 +6,7 @@
 - fix output amount of compacting recipes
 - fix stonecutting granite bricks from granite/polished granite
 - replace stonecutting inputs with tag
-- cracked purpur translations
 - fix creative durability (it's at 1/4 for some reason)
-- etable pull from chests
 - enderman trades
 - end city
 - one other end wood type
