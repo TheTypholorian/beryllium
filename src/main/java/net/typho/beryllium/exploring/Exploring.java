@@ -124,6 +124,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("magma_delta"));
     public static final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("bone_spikes"));
     public static final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("corrupted_tree"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> END_SPIKE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("end_spike"));
 
     public static final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("swamp_algae"));
     public static final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("river_algae"));

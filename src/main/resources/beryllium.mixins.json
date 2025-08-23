@@ -66,6 +66,7 @@
     "exploring.EndCrystalEntityMixin",
     "exploring.EnderDragonEntityMixin",
     "exploring.EndermanEntityMixin",
+    "exploring.EndSpikeFeatureMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
     "exploring.PlayerEntityMixin",

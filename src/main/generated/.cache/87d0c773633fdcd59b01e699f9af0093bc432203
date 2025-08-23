@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-20T09:30:56.6049797	Beryllium/Tags for minecraft:worldgen/structure
+// 1.21.1	2025-08-22T11:40:18.2728291	Beryllium/Tags for minecraft:worldgen/structure
 67de4047e1e3aab40c5318c5cb39d89e58e90fce data\beryllium\tags\worldgen\structure\exploring\on_bastion_maps.json
-f601732bcb221c84402a118279c904ef0f01d3a9 data\beryllium\tags\worldgen\structure\exploring\spawn.json
 9e75ef423a3e6299a734bd1fa8669d090ac66985 data\beryllium\tags\worldgen\structure\exploring\on_fortress_maps.json
+f601732bcb221c84402a118279c904ef0f01d3a9 data\beryllium\tags\worldgen\structure\exploring\spawn.json
