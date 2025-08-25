@@ -9,6 +9,7 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.World;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.Exploring;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -74,7 +75,7 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntity {
                     getWorld()
                             .getRegistryManager()
                             .get(RegistryKeys.ENCHANTMENT)
-                            .getEntry(Exploring.CONSTRUCTOR.id("reeling"))
+                            .getEntry(Beryllium.EXPLORING_CONSTRUCTOR.id("reeling"))
                             .orElseThrow(),
                     getItemStack()
             ) / 16f);

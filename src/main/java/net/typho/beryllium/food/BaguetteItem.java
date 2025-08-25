@@ -2,6 +2,7 @@ package net.typho.beryllium.food;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.util.DualModelItem;
 
 public class BaguetteItem extends Item implements DualModelItem {
@@ -11,11 +12,11 @@ public class BaguetteItem extends Item implements DualModelItem {
 
     @Override
     public Identifier worldModel() {
-        return Food.CONSTRUCTOR.id("baguette_long");
+        return Beryllium.FOOD_CONSTRUCTOR.id("baguette_long");
     }
 
     @Override
     public Identifier guiModel() {
-        return Food.CONSTRUCTOR.id("baguette");
+        return Beryllium.FOOD_CONSTRUCTOR.id("baguette");
     }
 }

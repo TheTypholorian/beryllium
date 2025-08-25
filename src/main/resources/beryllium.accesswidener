@@ -17,3 +17,4 @@ accessible method net/minecraft/item/ItemStack appendAttributeModifierTooltip (L
 accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible field net/minecraft/screen/EnchantmentScreenHandler context Lnet/minecraft/screen/ScreenHandlerContext;
+accessible field net/minecraft/resource/featuretoggle/FeatureManager$Builder featureFlags Ljava/util/Map;

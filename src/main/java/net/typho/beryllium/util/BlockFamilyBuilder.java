@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.featuretoggle.FeatureFlag;
 
 import java.util.*;
 
@@ -80,6 +81,11 @@ public class BlockFamilyBuilder {
     public BlockFamilyBuilder stonecutting(ItemConvertible... inputs) {
         stonecutting();
         Arrays.stream(inputs).map(Ingredient::ofItems).forEach(stonecutting::add);
+        return this;
+    }
+
+    public BlockFamilyBuilder features(FeatureFlag... flags) {
+        settings.requires(flags);
         return this;
     }
 

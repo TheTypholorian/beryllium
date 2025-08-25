@@ -28,14 +28,11 @@ import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.EndCrystalProjectileEntityRenderer;
 import net.typho.beryllium.config.ServerConfig;
-import net.typho.beryllium.util.Constructor;
 import org.jetbrains.annotations.Nullable;
 
 public class Combat implements ModInitializer, ClientModInitializer {
-    public static final Constructor CONSTRUCTOR = new Constructor("combat");
-
-    public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = CONSTRUCTOR.entity("diamond_arrow", EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
-    public static final Item DIAMOND_ARROW = CONSTRUCTOR.item("diamond_arrow", new ArrowItem(new Item.Settings()) {
+    public static final EntityType<DiamondArrowEntity> DIAMOND_ARROW_TYPE = Beryllium.COMBAT_CONSTRUCTOR.entity("diamond_arrow", EntityType.Builder.<DiamondArrowEntity>create(DiamondArrowEntity::new, SpawnGroup.MISC).dimensions(0.5f, 0.5f).maxTrackingRange(4).trackingTickInterval(20).build("diamond_arrow"));
+    public static final Item DIAMOND_ARROW = Beryllium.COMBAT_CONSTRUCTOR.item("diamond_arrow", new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new DiamondArrowEntity(DIAMOND_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -46,8 +43,8 @@ public class Combat implements ModInitializer, ClientModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<IronArrowEntity> IRON_ARROW_TYPE = CONSTRUCTOR.entity("iron_arrow", EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("iron_arrow"));
-    public static final Item IRON_ARROW = CONSTRUCTOR.item("iron_arrow", new ArrowItem(new Item.Settings()) {
+    public static final EntityType<IronArrowEntity> IRON_ARROW_TYPE = Beryllium.COMBAT_CONSTRUCTOR.entity("iron_arrow", EntityType.Builder.<IronArrowEntity>create(IronArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("iron_arrow"));
+    public static final Item IRON_ARROW = Beryllium.COMBAT_CONSTRUCTOR.item("iron_arrow", new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new IronArrowEntity(IRON_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -58,8 +55,8 @@ public class Combat implements ModInitializer, ClientModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<FlamingArrowEntity> FLAMING_ARROW_TYPE = CONSTRUCTOR.entity("flaming_arrow", EntityType.Builder.<FlamingArrowEntity>create(FlamingArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("flaming_arrow"));
-    public static final Item FLAMING_ARROW = CONSTRUCTOR.item("flaming_arrow", new ArrowItem(new Item.Settings()) {
+    public static final EntityType<FlamingArrowEntity> FLAMING_ARROW_TYPE = Beryllium.COMBAT_CONSTRUCTOR.entity("flaming_arrow", EntityType.Builder.<FlamingArrowEntity>create(FlamingArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("flaming_arrow"));
+    public static final Item FLAMING_ARROW = Beryllium.COMBAT_CONSTRUCTOR.item("flaming_arrow", new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new FlamingArrowEntity(FLAMING_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -70,8 +67,8 @@ public class Combat implements ModInitializer, ClientModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<CopperArrowEntity> COPPER_ARROW_TYPE = CONSTRUCTOR.entity("copper_arrow", EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
-    public static final Item COPPER_ARROW = CONSTRUCTOR.item("copper_arrow", new ArrowItem(new Item.Settings()) {
+    public static final EntityType<CopperArrowEntity> COPPER_ARROW_TYPE = Beryllium.COMBAT_CONSTRUCTOR.entity("copper_arrow", EntityType.Builder.<CopperArrowEntity>create(CopperArrowEntity::new, SpawnGroup.MISC).dimensions(0.5F, 0.5F).maxTrackingRange(4).trackingTickInterval(20).build("copper_arrow"));
+    public static final Item COPPER_ARROW = Beryllium.COMBAT_CONSTRUCTOR.item("copper_arrow", new ArrowItem(new Item.Settings()) {
         public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
             return new CopperArrowEntity(COPPER_ARROW_TYPE, shooter, world, stack.copyWithCount(1), shotFrom);
         }
@@ -82,36 +79,36 @@ public class Combat implements ModInitializer, ClientModInitializer {
             return arrowEntity;
         }
     });
-    public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = CONSTRUCTOR.entity("moving_end_crystal", EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
-    public static final Item NETHERITE_GLAIVE = CONSTRUCTOR.item("netherite_glaive",
-            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(CONSTRUCTOR, 3, ToolMaterials.NETHERITE, 2, -3.2f)))
+    public static final EntityType<EndCrystalProjectileEntity> END_CRYSTAL_PROJECTILE_ENTITY = Beryllium.COMBAT_CONSTRUCTOR.entity("moving_end_crystal", EntityType.Builder.<EndCrystalProjectileEntity>create(EndCrystalProjectileEntity::new, SpawnGroup.MISC).dimensions(2f, 2f).maxTrackingRange(256).trackingTickInterval(3).build());
+    public static final Item NETHERITE_GLAIVE = Beryllium.COMBAT_CONSTRUCTOR.item("netherite_glaive",
+            new GlaiveItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(Beryllium.COMBAT_CONSTRUCTOR, 3, ToolMaterials.NETHERITE, 2, -3.2f)))
     );
-    public static final Item DIAMOND_GLAIVE = CONSTRUCTOR.item("diamond_glaive",
-            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(CONSTRUCTOR, 3, ToolMaterials.DIAMOND, 2, -3.2f)))
+    public static final Item DIAMOND_GLAIVE = Beryllium.COMBAT_CONSTRUCTOR.item("diamond_glaive",
+            new GlaiveItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(Beryllium.COMBAT_CONSTRUCTOR, 3, ToolMaterials.DIAMOND, 2, -3.2f)))
     );
-    public static final Item IRON_GLAIVE = CONSTRUCTOR.item("iron_glaive",
-            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(CONSTRUCTOR, 3, ToolMaterials.IRON, 2, -3.2f)))
+    public static final Item IRON_GLAIVE = Beryllium.COMBAT_CONSTRUCTOR.item("iron_glaive",
+            new GlaiveItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(Beryllium.COMBAT_CONSTRUCTOR, 3, ToolMaterials.IRON, 2, -3.2f)))
     );
-    public static final Item GOLDEN_GLAIVE = CONSTRUCTOR.item("golden_glaive",
-            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(CONSTRUCTOR, 3, ToolMaterials.GOLD, 2, -3.2f)))
+    public static final Item GOLDEN_GLAIVE = Beryllium.COMBAT_CONSTRUCTOR.item("golden_glaive",
+            new GlaiveItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(GlaiveItem.glaiveModifiers(Beryllium.COMBAT_CONSTRUCTOR, 3, ToolMaterials.GOLD, 2, -3.2f)))
     );
-    public static final Item NETHERITE_SCYTHE = CONSTRUCTOR.item("netherite_scythe",
-            new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(CONSTRUCTOR, ToolMaterials.NETHERITE, 4, -3.4f)))
+    public static final Item NETHERITE_SCYTHE = Beryllium.COMBAT_CONSTRUCTOR.item("netherite_scythe",
+            new ScytheItem(ToolMaterials.NETHERITE, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(Beryllium.COMBAT_CONSTRUCTOR, ToolMaterials.NETHERITE, 4, -3.4f)))
     );
-    public static final Item DIAMOND_SCYTHE = CONSTRUCTOR.item("diamond_scythe",
-            new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(CONSTRUCTOR, ToolMaterials.DIAMOND, 4, -3.4f)))
+    public static final Item DIAMOND_SCYTHE = Beryllium.COMBAT_CONSTRUCTOR.item("diamond_scythe",
+            new ScytheItem(ToolMaterials.DIAMOND, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(Beryllium.COMBAT_CONSTRUCTOR, ToolMaterials.DIAMOND, 4, -3.4f)))
     );
-    public static final Item IRON_SCYTHE = CONSTRUCTOR.item("iron_scythe",
-            new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(CONSTRUCTOR, ToolMaterials.IRON, 4, -3.4f)))
+    public static final Item IRON_SCYTHE = Beryllium.COMBAT_CONSTRUCTOR.item("iron_scythe",
+            new ScytheItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(Beryllium.COMBAT_CONSTRUCTOR, ToolMaterials.IRON, 4, -3.4f)))
     );
-    public static final Item GOLDEN_SCYTHE = CONSTRUCTOR.item("golden_scythe",
-            new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(CONSTRUCTOR, ToolMaterials.GOLD, 4, -3.4f)))
+    public static final Item GOLDEN_SCYTHE = Beryllium.COMBAT_CONSTRUCTOR.item("golden_scythe",
+            new ScytheItem(ToolMaterials.GOLD, new Item.Settings().attributeModifiers(ScytheItem.scytheModifiers(Beryllium.COMBAT_CONSTRUCTOR, ToolMaterials.GOLD, 4, -3.4f)))
     );
-    public static final ComponentType<Float> SHIELD_DURABILITY = CONSTRUCTOR.dataComponent("shield_damage", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
-    public static final Block POTION_CAULDRON = CONSTRUCTOR.block("potion_cauldron", new PotionCauldronBlock(Biome.Precipitation.NONE, AbstractBlock.Settings.create()));
-    public static final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
+    public static final ComponentType<Float> SHIELD_DURABILITY = Beryllium.COMBAT_CONSTRUCTOR.dataComponent("shield_damage", builder -> builder.codec(Codecs.POSITIVE_FLOAT).packetCodec(PacketCodecs.FLOAT));
+    public static final Block POTION_CAULDRON = Beryllium.COMBAT_CONSTRUCTOR.block("potion_cauldron", new PotionCauldronBlock(Biome.Precipitation.NONE, AbstractBlock.Settings.create()));
+    public static final BlockEntityType<PotionCauldronBlockEntity> POTION_CAULDRON_BLOCK_ENTITY = Beryllium.COMBAT_CONSTRUCTOR.blockEntity("potion_cauldron", BlockEntityType.Builder.create(PotionCauldronBlockEntity::new, POTION_CAULDRON));
 
-    public static final TagKey<Item> HORSE_ARMOR = TagKey.of(RegistryKeys.ITEM, CONSTRUCTOR.id("horse_armor"));
+    public static final TagKey<Item> HORSE_ARMOR = TagKey.of(RegistryKeys.ITEM, Beryllium.COMBAT_CONSTRUCTOR.id("horse_armor"));
 
     public static float shieldDurability(ItemStack shield) {
         return shield.getOrDefault(SHIELD_DURABILITY, ServerConfig.shieldMaxDurability.get()).floatValue();

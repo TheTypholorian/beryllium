@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -18,11 +19,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
-import net.typho.beryllium.armor.Armor;
-import net.typho.beryllium.combat.Combat;
-import net.typho.beryllium.enchanting.Enchanting;
-import net.typho.beryllium.exploring.Exploring;
-import net.typho.beryllium.redstone.Redstone;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,39 +26,41 @@ import java.util.Map;
 public class ServerConfig implements ModInitializer {
     public static final Map<Identifier, Property<?>> properties = new LinkedHashMap<>();
 
-    public static final BooleanProperty fertilizableSugarcane = new BooleanProperty(Combat.CONSTRUCTOR.id("fertilizable_sugarcane"), true);
-    public static final IntProperty maxSugarcaneHeight = new IntProperty(Combat.CONSTRUCTOR.id("max_sugarcane_height"), 5);
-    public static final IntProperty enderPearlCooldown = new IntProperty(Combat.CONSTRUCTOR.id("ender_pearl_cooldown"), 300);
-    public static final FloatProperty enderPearlSpeed = new FloatProperty(Combat.CONSTRUCTOR.id("ender_pearl_speed"), 1f);
-    public static final IntProperty endCrystalCooldown = new IntProperty(Combat.CONSTRUCTOR.id("end_crystal_cooldown"), 30);
-    public static final FloatProperty endCrystalPower = new FloatProperty(Combat.CONSTRUCTOR.id("end_crystal_power"), 4f);
-    public static final BooleanProperty maceRebalance = new BooleanProperty(Combat.CONSTRUCTOR.id("mace_rebalance"), true);
-    public static final BooleanProperty sweepingMargin = new BooleanProperty(Combat.CONSTRUCTOR.id("sweeping_margin"), true);
-    public static final FloatProperty sweepMarginMultiplier = new FloatProperty(Combat.CONSTRUCTOR.id("sweep_margin_multiplier"), 0.05f);
-    public static final BooleanProperty crossbowEndCrystals = new BooleanProperty(Combat.CONSTRUCTOR.id("crossbow_end_crystals"), true);
-    public static final BooleanProperty respawnAnchorsDontExplode = new BooleanProperty(Combat.CONSTRUCTOR.id("respawn_anchors_dont_explode"), true);
-    public static final BooleanProperty shieldDurability = new BooleanProperty(Combat.CONSTRUCTOR.id("shield_durability"), true);
-    public static final IntProperty shieldMaxDurability = new IntProperty(Combat.CONSTRUCTOR.id("shield_max_durability"), 30);
-    public static final IntProperty shieldLowerCooldown = new IntProperty(Combat.CONSTRUCTOR.id("shield_lower_cooldown"), 60);
-    public static final IntProperty splashPotionCooldown = new IntProperty(Combat.CONSTRUCTOR.id("splash_potion_cooldown"), 100);
+    public static final BooleanProperty fertilizableSugarcane = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("fertilizable_sugarcane"), true);
+    public static final IntProperty maxSugarcaneHeight = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("max_sugarcane_height"), 5);
+    public static final IntProperty enderPearlCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("ender_pearl_cooldown"), 300);
+    public static final FloatProperty enderPearlSpeed = new FloatProperty(Beryllium.COMBAT_CONSTRUCTOR.id("ender_pearl_speed"), 1f);
+    public static final IntProperty endCrystalCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("end_crystal_cooldown"), 30);
+    public static final FloatProperty endCrystalPower = new FloatProperty(Beryllium.COMBAT_CONSTRUCTOR.id("end_crystal_power"), 4f);
+    public static final BooleanProperty maceRebalance = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("mace_rebalance"), true);
+    public static final BooleanProperty sweepingMargin = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("sweeping_margin"), true);
+    public static final FloatProperty sweepMarginMultiplier = new FloatProperty(Beryllium.COMBAT_CONSTRUCTOR.id("sweep_margin_multiplier"), 0.05f);
+    public static final BooleanProperty crossbowEndCrystals = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("crossbow_end_crystals"), true);
+    public static final BooleanProperty respawnAnchorsDontExplode = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("respawn_anchors_dont_explode"), true);
+    public static final BooleanProperty shieldDurability = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_durability"), true);
+    public static final IntProperty shieldMaxDurability = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_max_durability"), 30);
+    public static final IntProperty shieldLowerCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_lower_cooldown"), 60);
+    public static final IntProperty splashPotionCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("splash_potion_cooldown"), 100);
 
-    public static final BooleanProperty disabledArmor = new BooleanProperty(Armor.CONSTRUCTOR.id("disabled_armor"), true);
+    public static final BooleanProperty disabledArmor = new BooleanProperty(Beryllium.ARMOR_CONSTRUCTOR.id("disabled_armor"), true);
 
-    public static final IntProperty metalDetectorRadius = new IntProperty(Exploring.CONSTRUCTOR.id("metal_detector_radius"), 16);
-    public static final IntProperty metalDetectorHeight = new IntProperty(Exploring.CONSTRUCTOR.id("metal_detector_height"), 2);
-    public static final BooleanProperty spawnInVillage = new BooleanProperty(Exploring.CONSTRUCTOR.id("spawn_in_village"), true);
+    public static final FeatureProperty graniteBricks = new FeatureProperty(Beryllium.BUILDING_CONSTRUCTOR.id("granite_bricks"), true);
 
-    public static final BooleanProperty enchantmentCatalysts = new BooleanProperty(Enchanting.CONSTRUCTOR.id("enchantment_catalysts"), true);
-    public static final BooleanProperty enchantmentCapacity = new BooleanProperty(Enchanting.CONSTRUCTOR.id("enchantment_capacity"), true);
+    public static final IntProperty metalDetectorRadius = new IntProperty(Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector_radius"), 16);
+    public static final IntProperty metalDetectorHeight = new IntProperty(Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector_height"), 2);
+    public static final BooleanProperty spawnInVillage = new BooleanProperty(Beryllium.EXPLORING_CONSTRUCTOR.id("spawn_in_village"), true);
 
-    public static final BooleanProperty cropComparatorOutput = new BooleanProperty(Redstone.CONSTRUCTOR.id("crop_comparator_output"), true);
-    public static final BooleanProperty dispensersPlaceBlocks = new BooleanProperty(Redstone.CONSTRUCTOR.id("dispensers_place_blocks"), true);
-    public static final IntProperty hopperCooldown = new IntProperty(Redstone.CONSTRUCTOR.id("hopper_cooldown"), 4);
-    public static final BooleanProperty instantChainTNT = new BooleanProperty(Redstone.CONSTRUCTOR.id("instant_chain_tnt"), false);
+    public static final BooleanProperty enchantmentCatalysts = new BooleanProperty(Beryllium.ENCHANTING_CONSTRUCTOR.id("enchantment_catalysts"), true);
+    public static final BooleanProperty enchantmentCapacity = new BooleanProperty(Beryllium.ENCHANTING_CONSTRUCTOR.id("enchantment_capacity"), true);
 
-    public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.CONSTRUCTOR.id("durability_removal"), false);
-    public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.CONSTRUCTOR.id("ultra_dark"), false);
-    public static final BooleanProperty disabledChat = new BooleanProperty(Beryllium.CONSTRUCTOR.id("disabled_chat"), false);
+    public static final BooleanProperty cropComparatorOutput = new BooleanProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("crop_comparator_output"), true);
+    public static final BooleanProperty dispensersPlaceBlocks = new BooleanProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("dispensers_place_blocks"), true);
+    public static final IntProperty hopperCooldown = new IntProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("hopper_cooldown"), 4);
+    public static final BooleanProperty instantChainTNT = new BooleanProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("instant_chain_tnt"), false);
+
+    public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("durability_removal"), false);
+    public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("ultra_dark"), false);
+    public static final BooleanProperty disabledChat = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("disabled_chat"), false);
 
     public static float ultraDarkBlend(World world) {
         if (!ultraDark.get()) {
@@ -111,6 +109,14 @@ public class ServerConfig implements ModInitializer {
         server.session.backupLevelDataFile(server.getRegistryManager(), server.getSaveProperties(), server.getPlayerManager().getUserData());
     }
 
+    public static FeatureSet getEnabledFeatures(FeatureSet set) {
+        for (Property<?> property : properties.values()) {
+            set = property.getFeatures(set);
+        }
+
+        return set;
+    }
+
     public static LiteralArgumentBuilder<ServerCommandSource> command(LiteralArgumentBuilder<ServerCommandSource> command) {
         command.then(LiteralArgumentBuilder.<ServerCommandSource>literal("config")
                 .executes(context -> {
@@ -132,6 +138,7 @@ public class ServerConfig implements ModInitializer {
                                                 context.getSource().getServer().execute(() -> {
                                                     Object value = context.getArgument("value", Object.class);
                                                     property.set(value);
+                                                    property.updatedServer(context.getSource().getServer());
                                                     save(context.getSource().getServer());
 
                                                     for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {

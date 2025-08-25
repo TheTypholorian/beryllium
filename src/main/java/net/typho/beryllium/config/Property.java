@@ -5,8 +5,11 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.OptionalDynamic;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
@@ -26,6 +29,13 @@ public abstract class Property<O> {
 
     public O get() {
         return value;
+    }
+
+    public void updatedClient(MinecraftClient client) {
+    }
+
+    public void updatedServer(MinecraftServer server) {
+        server.sendMessage(Text.translatable("config.beryllium.feature_warning"));
     }
 
     @SuppressWarnings("unchecked")
@@ -64,4 +74,8 @@ public abstract class Property<O> {
     public abstract NbtElement write(DynamicRegistryManager registries);
 
     public abstract void encode(ByteBuf buf);
+
+    public FeatureSet getFeatures(FeatureSet features) {
+        return features;
+    }
 }

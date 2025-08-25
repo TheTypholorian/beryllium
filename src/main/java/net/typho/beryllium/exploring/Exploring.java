@@ -78,7 +78,6 @@ import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.FireflyFactory;
 import net.typho.beryllium.combat.ReelingComponent;
-import net.typho.beryllium.util.Constructor;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -91,56 +90,54 @@ import java.awt.*;
 import java.util.Optional;
 
 public class Exploring implements ModInitializer, ClientModInitializer, EntityComponentInitializer, TerraBlenderApi {
-    public static final Constructor CONSTRUCTOR = new Constructor("exploring");
+    public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, Beryllium.EXPLORING_CONSTRUCTOR.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
 
-    public static final LootFunctionType<ExplorationCompassLootFunction> EXPLORATION_COMPASS = Registry.register(Registries.LOOT_FUNCTION_TYPE, CONSTRUCTOR.id("exploration_compass"), new LootFunctionType<>(ExplorationCompassLootFunction.CODEC));
+    public static final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, Beryllium.EXPLORING_CONSTRUCTOR.id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
 
-    public static final ComponentType<DyeColor> COMPASS_NEEDLE_COMPONENT = Registry.register(Registries.DATA_COMPONENT_TYPE, CONSTRUCTOR.id("needle_color"), ComponentType.<DyeColor>builder().codec(DyeColor.CODEC).build());
+    public static final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, Beryllium.EXPLORING_CONSTRUCTOR.id("firefly"), FabricParticleTypes.simple(false));
 
-    public static final SimpleParticleType FIREFLY_PARTICLE = Registry.register(Registries.PARTICLE_TYPE, CONSTRUCTOR.id("firefly"), FabricParticleTypes.simple(false));
+    public static final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING_CONSTRUCTOR.id("on_bastion_maps"));
+    public static final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING_CONSTRUCTOR.id("on_fortress_maps"));
+    public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING_CONSTRUCTOR.id("spawn"));
 
-    public static final TagKey<Structure> ON_BASTION_MAPS = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("on_bastion_maps"));
-    public static final TagKey<Structure> ON_FORTRESS_MAPS = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("on_fortress_maps"));
-    public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, CONSTRUCTOR.id("spawn"));
+    public static final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("has_fireflies"));
+    public static final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("birch"));
+    public static final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("spruce"));
+    public static final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("oak"));
 
-    public static final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("has_fireflies"));
-    public static final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("birch"));
-    public static final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("spruce"));
-    public static final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("oak"));
+    public static final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Beryllium.EXPLORING_CONSTRUCTOR.id("void_fire_base_blocks"));
+    public static final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Beryllium.EXPLORING_CONSTRUCTOR.id("pointed_blocks"));
 
-    public static final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, CONSTRUCTOR.id("void_fire_base_blocks"));
-    public static final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, CONSTRUCTOR.id("pointed_blocks"));
+    public static final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("river_algae"), new RiverAlgaeFeature());
+    public static final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = Beryllium.EXPLORING_CONSTRUCTOR.feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
 
-    public static final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, CONSTRUCTOR.id("river_algae"), new RiverAlgaeFeature());
-    public static final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = CONSTRUCTOR.feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));
+    public static final RegistryKey<Biome> CORRUPTED_FOREST = RegistryKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted_forest"));
 
-    public static final RegistryKey<Biome> CORRUPTED_FOREST = RegistryKey.of(RegistryKeys.BIOME, CONSTRUCTOR.id("corrupted_forest"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("swamp_algae"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("river_algae"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("daffodils"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("scilla"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("geraniums"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("magma_delta"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("bone_spikes"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted_tree"));
 
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("swamp_algae"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> RIVER_ALGAE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("river_algae"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> DAFFODILS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("daffodils"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> SCILLA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("scilla"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> GERANIUMS_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("geraniums"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("magma_delta"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("bone_spikes"));
-    public static final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, CONSTRUCTOR.id("corrupted_tree"));
+    public static final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("swamp_algae"));
+    public static final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("river_algae"));
+    public static final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("daffodils"));
+    public static final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("scilla"));
+    public static final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("geraniums"));
+    public static final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("magma_delta"));
+    public static final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("bone_spikes"));
+    public static final RegistryKey<PlacedFeature> CORRUPTED_TREE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted_tree"));
 
-    public static final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("swamp_algae"));
-    public static final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("river_algae"));
-    public static final RegistryKey<PlacedFeature> DAFFODILS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("daffodils"));
-    public static final RegistryKey<PlacedFeature> SCILLA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("scilla"));
-    public static final RegistryKey<PlacedFeature> GERANIUMS_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("geraniums"));
-    public static final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("magma_delta"));
-    public static final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("bone_spikes"));
-    public static final RegistryKey<PlacedFeature> CORRUPTED_TREE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, CONSTRUCTOR.id("corrupted_tree"));
+    public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
 
-    public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
+    public static final RegistryEntry<StatusEffect> SHATTERED = Beryllium.EXPLORING_CONSTRUCTOR.statusEffect("shattered", new StatusEffect(StatusEffectCategory.HARMFUL, 0x5B345B){});
 
-    public static final RegistryEntry<StatusEffect> SHATTERED = CONSTRUCTOR.statusEffect("shattered", new StatusEffect(StatusEffectCategory.HARMFUL, 0x5B345B){});
-
-    public static final Block ONYX_ORE = CONSTRUCTOR.blockWithItem("onyx_ore", new OnyxBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
-    public static final Block CORRUPTED_END_STONE = CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
-    public static final Block CONGEALED_VOID = CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
+    public static final Block ONYX_ORE = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("onyx_ore", new OnyxBlock(AbstractBlock.Settings.copy(Blocks.END_STONE).strength(6, 18)), new Item.Settings());
+    public static final Block CORRUPTED_END_STONE = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_end_stone", new Block(AbstractBlock.Settings.copy(Blocks.END_STONE)), new Item.Settings());
+    public static final Block CONGEALED_VOID = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("congealed_void", new CongealedVoidBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.MAGENTA)
             .sounds(BlockSoundGroup.SLIME)
             .noCollision()
@@ -150,11 +147,11 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .solidBlock(Blocks::never)
             .suffocates(Blocks::never)
             .blockVision(Blocks::never)), new Item.Settings());
-    public static final Block CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_STEM)), new Item.Settings());
-    public static final Block CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
-    public static final Block STRIPPED_CORRUPTED_LOG = CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
-    public static final Block STRIPPED_CORRUPTED_WOOD = CONSTRUCTOR.blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
-    public static final BlockFamily CORRUPTED_FAMILY = CONSTRUCTOR.blockFamily("corrupted_plank", Blocks.CRIMSON_PLANKS)
+    public static final Block CORRUPTED_LOG = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_STEM)), new Item.Settings());
+    public static final Block CORRUPTED_WOOD = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
+    public static final Block STRIPPED_CORRUPTED_LOG = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
+    public static final Block STRIPPED_CORRUPTED_WOOD = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("stripped_corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_HYPHAE)), new Item.Settings());
+    public static final BlockFamily CORRUPTED_FAMILY = Beryllium.EXPLORING_CONSTRUCTOR.blockFamily("corrupted_plank", Blocks.CRIMSON_PLANKS)
             .base("corrupted_planks")
             .stairs()
             .slab()
@@ -167,14 +164,14 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .trapdoor(BlockSetType.CRIMSON)
             .door(BlockSetType.CRIMSON)
             .build();
-    public static final Block CORRUPTED_SAPLING = CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
+    public static final Block CORRUPTED_SAPLING = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
         @Override
         protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
             return floor.isOf(CORRUPTED_END_STONE) || floor.isOf(Blocks.END_STONE);
         }
     }, new Item.Settings());
     public static final Block FIREFLY_BOTTLE =
-            CONSTRUCTOR.blockWithItem(
+            Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem(
                     "firefly_bottle",
                     new Block(AbstractBlock.Settings.create()
                             .strength(0)
@@ -189,10 +186,10 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                             .blockVision(Blocks::never)),
                     new Item.Settings()
             );
-    public static final Block DAFFODILS = CONSTRUCTOR.blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public static final Block SCILLA = CONSTRUCTOR.blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public static final Block GERANIUMS = CONSTRUCTOR.blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
-    public static final Block ALGAE_BLOCK = CONSTRUCTOR.block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
+    public static final Block DAFFODILS = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("daffodils", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block SCILLA = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("scilla", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block GERANIUMS = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("geraniums", new FlowerbedBlock(AbstractBlock.Settings.copy(Blocks.PINK_PETALS)), new Item.Settings());
+    public static final Block ALGAE_BLOCK = Beryllium.EXPLORING_CONSTRUCTOR.block("algae", new AlgaeBlock(AbstractBlock.Settings.create()
             .mapColor(MapColor.DARK_GREEN)
             .replaceable()
             .noCollision()
@@ -201,22 +198,22 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .nonOpaque()
             .burnable()
             .pistonBehavior(PistonBehavior.DESTROY)));
-    public static final Block VOID_FIRE = CONSTRUCTOR.block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
-    public static final Block POINTED_BONE = CONSTRUCTOR.blockWithItem("pointed_bone", new PointedBoneBlock(AbstractBlock.Settings.copy(Blocks.POINTED_DRIPSTONE)
+    public static final Block VOID_FIRE = Beryllium.EXPLORING_CONSTRUCTOR.block("void_fire", new VoidFireBlock(AbstractBlock.Settings.copy(Blocks.SOUL_FIRE).mapColor(MapColor.MAGENTA)));
+    public static final Block POINTED_BONE = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("pointed_bone", new PointedBoneBlock(AbstractBlock.Settings.copy(Blocks.POINTED_DRIPSTONE)
             .mapColor(MapColor.PALE_YELLOW)
             .requiresTool()
             .strength(2)
             .sounds(BlockSoundGroup.BONE)), new Item.Settings());
-    public static final Block BLAZING_TORCH = CONSTRUCTOR.block("blazing_torch", new BlazingTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
-    public static final Block BLAZING_WALL_TORCH = CONSTRUCTOR.block("blazing_wall_torch", new BlazingWallTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
+    public static final Block BLAZING_TORCH = Beryllium.EXPLORING_CONSTRUCTOR.block("blazing_torch", new BlazingTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
+    public static final Block BLAZING_WALL_TORCH = Beryllium.EXPLORING_CONSTRUCTOR.block("blazing_wall_torch", new BlazingWallTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
 
-    public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
+    public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = Beryllium.EXPLORING_CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
 
-    public static final Item ONYX = CONSTRUCTOR.item("onyx", new Item(new Item.Settings()));
-    public static final Item METAL_DETECTOR_ITEM = CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
-    public static final Item ALGAE_ITEM = CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
-    public static final Item EXODINE_INGOT = CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));
-    public static final Item TEST_STICK = CONSTRUCTOR.item("test_stick", new Item(new Item.Settings()) {
+    public static final Item ONYX = Beryllium.EXPLORING_CONSTRUCTOR.item("onyx", new Item(new Item.Settings()));
+    public static final Item METAL_DETECTOR_ITEM = Beryllium.EXPLORING_CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
+    public static final Item ALGAE_ITEM = Beryllium.EXPLORING_CONSTRUCTOR.item("algae", new AlgaeItem(ALGAE_BLOCK, new Item.Settings()));
+    public static final Item EXODINE_INGOT = Beryllium.EXPLORING_CONSTRUCTOR.item("exodine_ingot", new Item(new Item.Settings()));
+    public static final Item TEST_STICK = Beryllium.EXPLORING_CONSTRUCTOR.item("test_stick", new Item(new Item.Settings()) {
         @Override
         public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
             if (!world.isClient) {
@@ -228,7 +225,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             return super.use(world, user, hand);
         }
     });
-    public static final Item BLAZING_TORCH_ITEM = CONSTRUCTOR.item("blazing_torch", new VerticallyAttachableBlockItem(BLAZING_TORCH, BLAZING_WALL_TORCH, new Item.Settings(), Direction.DOWN) {
+    public static final Item BLAZING_TORCH_ITEM = Beryllium.EXPLORING_CONSTRUCTOR.item("blazing_torch", new VerticallyAttachableBlockItem(BLAZING_TORCH, BLAZING_WALL_TORCH, new Item.Settings(), Direction.DOWN) {
         @Override
         public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
             if (slot == PlayerInventory.OFF_HAND_SLOT || selected) {
@@ -237,7 +234,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
         }
     });
 
-    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.exploring.name.player.stable_footing", 0.2, 0.00001, 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = Beryllium.EXPLORING_CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.exploring.name.player.stable_footing", 0.2, 0.00001, 1).setTracked(true));
 
     public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{
@@ -246,7 +243,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             }
     ));
 
-    public static final ComponentKey<ReelingComponent> REELING = ComponentRegistryV3.INSTANCE.getOrCreate(CONSTRUCTOR.id("reeling"), ReelingComponent.class);
+    public static final ComponentKey<ReelingComponent> REELING = ComponentRegistryV3.INSTANCE.getOrCreate(Beryllium.EXPLORING_CONSTRUCTOR.id("reeling"), ReelingComponent.class);
 
     @Override
     public void onTerraBlenderInitialized() {
@@ -275,13 +272,13 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                     entries.addAfter(Items.PINK_PETALS, DAFFODILS, SCILLA, GERANIUMS);
                 });
         DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.COMPASS, builder -> builder.add(COMPASS_NEEDLE_COMPONENT, DyeColor.RED)));
-        Registry.register(Registries.RECIPE_TYPE, CONSTRUCTOR.id("compass_dye"), new RecipeType<>() {
+        Registry.register(Registries.RECIPE_TYPE, Beryllium.EXPLORING_CONSTRUCTOR.id("compass_dye"), new RecipeType<>() {
             @Override
             public String toString() {
                 return "exploring/compass_dye";
             }
         });
-        Registry.register(Registries.RECIPE_SERIALIZER, CONSTRUCTOR.id("compass_dye"), CompassDyeRecipe.SERIALIZER);
+        Registry.register(Registries.RECIPE_SERIALIZER, Beryllium.EXPLORING_CONSTRUCTOR.id("compass_dye"), CompassDyeRecipe.SERIALIZER);
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
                 GenerationStep.Feature.VEGETAL_DECORATION,
@@ -312,11 +309,11 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
                 BONE_SPIKES_PLACED
         );
-        BiomeModifications.create(CONSTRUCTOR.id("fireflies"))
+        BiomeModifications.create(Beryllium.EXPLORING_CONSTRUCTOR.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(HAS_FIREFLIES), context -> {
                     context.getEffects().setParticleConfig(new BiomeParticleConfig(FIREFLY_PARTICLE, 0.008f));
                 });
-        BiomeModifications.create(CONSTRUCTOR.id("swamp_water"))
+        BiomeModifications.create(Beryllium.EXPLORING_CONSTRUCTOR.id("swamp_water"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.includeByKey(BiomeKeys.SWAMP), context -> {
                     context.getEffects().setWaterColor(0x6D6D5C);
                     context.getEffects().setWaterFogColor(0x6D6D5C);

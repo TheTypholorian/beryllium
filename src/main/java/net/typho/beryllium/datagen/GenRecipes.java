@@ -21,10 +21,13 @@ import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
+import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Identifier;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.Building;
 import net.typho.beryllium.building.kiln.KilnRecipe;
 import net.typho.beryllium.combat.Combat;
+import net.typho.beryllium.config.ServerConfig;
 import net.typho.beryllium.exploring.Exploring;
 import net.typho.beryllium.food.Food;
 import net.typho.beryllium.util.BlockFamilyBuilder;
@@ -214,7 +217,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .pattern("AAA")
                 .input('A', Items.BRICK)
                 .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
-                .offerTo(exporter, Building.CONSTRUCTOR.id("kiln"));
+                .offerTo(exporter, Beryllium.BUILDING_CONSTRUCTOR.id("kiln"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Exploring.METAL_DETECTOR_ITEM, 1)
                 .pattern(" C ")
@@ -223,7 +226,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', Items.COPPER_INGOT)
                 .input('R', Items.REDSTONE)
                 .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("metal_detector"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.LODESTONE, 1)
                 .pattern("AAA")
@@ -240,14 +243,14 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', Items.COCOA_BEANS)
                 .input('W', Items.WHEAT)
                 .criterion("has_cocoa_beans", FabricRecipeProvider.conditionsFromItem(Items.COCOA_BEANS))
-                .offerTo(exporter, Food.CONSTRUCTOR.id("croissant"));
+                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.id("croissant"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Food.BAGUETTE, 1)
                 .pattern("WWW")
                 .pattern("WWW")
                 .input('W', Items.WHEAT)
                 .criterion("has_wheat", FabricRecipeProvider.conditionsFromItem(Items.WHEAT))
-                .offerTo(exporter, Food.CONSTRUCTOR.id("baguette"));
+                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.id("baguette"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SADDLE, 1)
                 .pattern(" L ")
@@ -298,37 +301,37 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(Items.LIME_DYE)
                 .criterion("has_honey_bottle", FabricRecipeProvider.conditionsFromItem(Items.HONEY_BOTTLE))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("slimeball"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("slimeball"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 4)
                 .input(ItemTags.WOOL)
                 .input(Items.SHEARS)
                 .criterion("has_wool", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("string_from_wool"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("string_from_wool"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 2)
                 .input(ItemTags.WOOL_CARPETS)
                 .input(Items.SHEARS)
                 .criterion("has_carpet", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL_CARPETS))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("string_from_carpet"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("string_from_carpet"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.GRAVEL, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.COBBLESTONE)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("gravel_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("gravel_from_washing"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SAND, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.GRAVEL)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("sand_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("sand_from_washing"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.IRON_NUGGET, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.SAND)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("iron_nugget_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("iron_nugget_from_washing"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Exploring.BLAZING_TORCH_ITEM, 1)
                 .pattern("C")
@@ -336,7 +339,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', ItemTags.COALS)
                 .input('B', Items.BLAZE_ROD)
                 .criterion("has_coals", FabricRecipeProvider.conditionsFromTag(ItemTags.COALS))
-                .offerTo(exporter, Exploring.CONSTRUCTOR.id("blazing_torch"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("blazing_torch"));
 
         arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
         arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
@@ -386,10 +389,11 @@ public class GenRecipes extends FabricRecipeProvider {
         offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Exploring.STRIPPED_CORRUPTED_WOOD, Exploring.STRIPPED_CORRUPTED_LOG);
 
         firingVanillaRecipes(exporter);
+        FeatureSet features = ServerConfig.getEnabledFeatures(FeatureFlags.VANILLA_FEATURES);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             System.out.println("Recipes for " + family.prefix);
-            generateFamily(exporter, family.build(), FeatureFlags.VANILLA_FEATURES);
+            generateFamily(exporter, family.build(), features);
         }
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {

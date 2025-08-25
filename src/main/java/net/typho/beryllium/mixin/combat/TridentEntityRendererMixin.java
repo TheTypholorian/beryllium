@@ -13,6 +13,7 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.exploring.Exploring;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,7 +38,7 @@ public abstract class TridentEntityRendererMixin extends EntityRenderer<TridentE
                 trident.getWorld()
                         .getRegistryManager()
                         .get(RegistryKeys.ENCHANTMENT)
-                        .getEntry(Exploring.CONSTRUCTOR.id("reeling"))
+                        .getEntry(Beryllium.EXPLORING_CONSTRUCTOR.id("reeling"))
                         .orElseThrow(),
                 trident.getItemStack()
         ) > 0;

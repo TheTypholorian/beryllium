@@ -158,7 +158,6 @@
   "container.beryllium.redstone.gold_hopper": "Gold Hopper",
   "stat.beryllium.building.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.building.fireable": "Fireable",
-  "tooltip.beryllium.building.magic_wand": "Right-click on 2 blocks to fill the air between them with the block in your off-hand. Sneak to select targeted block, otherwise picks where a block would be placed.",
   "attribute.beryllium.exploring.name.player.air_mining_efficiency": "Air Mining Efficiency",
   "attribute.beryllium.armor.name.generic.ranged_damage": "Ranged Damage",
   "attribute.beryllium.armor.name.player.swimming_speed": "Swimming Speed",
@@ -242,5 +241,6 @@
   "options.beryllium.compass_coords": "Compass Coords",
   "options.beryllium.compass_coords.tooltip": "Shows player coordinates on compass item tooltips",
   "container.beryllium.enchant.xp.requirement": "XP Requirement: %s",
-  "container.beryllium.enchant.xp": "%s XP Points"
+  "container.beryllium.enchant.xp": "%s XP Points",
+  "config.beryllium.feature_warning": "Server config properties that toggle items and blocks (feature flags) aren't properly synced to clients, and they have to reconnect."
 }

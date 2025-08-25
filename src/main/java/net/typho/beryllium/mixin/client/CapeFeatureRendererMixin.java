@@ -22,7 +22,7 @@ public class CapeFeatureRendererMixin {
     )
     private Identifier capeTexture(SkinTextures instance, Operation<Identifier> original, @Local(argsOnly = true) AbstractClientPlayerEntity entity) {
         if (entity.getUuidAsString().equalsIgnoreCase("eb612c97-1f52-4113-b5f6-5fc0d15b5e5b")) {
-            return Beryllium.CONSTRUCTOR.id("textures/capes/ace_cape.png");
+            return Beryllium.BASE_CONSTRUCTOR.id("textures/capes/ace_cape.png");
         }
 
         return original.call(instance);
