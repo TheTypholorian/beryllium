@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "beryllium:block/building/cracked_bricks",
+    "side": "beryllium:block/building/cracked_bricks",
+    "top": "beryllium:block/building/cracked_bricks"
+  }
+}

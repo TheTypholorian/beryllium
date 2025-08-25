@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/flowerbed_1",
+  "textures": {
+    "flowerbed": "beryllium:block/exploring/geraniums",
+    "stem": "beryllium:block/exploring/geraniums_stem"
+  }
+}

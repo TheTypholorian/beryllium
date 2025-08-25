@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "beryllium:block/exploring/stripped_corrupted_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "beryllium:block/exploring/stripped_corrupted_wood"
+    },
+    "axis=z": {
+      "model": "beryllium:block/exploring/stripped_corrupted_wood",
+      "x": 90
+    }
+  }
+}

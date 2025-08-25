@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:end_stone"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "beryllium:exploring/onyx_ore",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "stage": "3"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "beryllium:exploring/onyx"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "beryllium:block/building/cracked_end_stone_bricks"
+  }
+}

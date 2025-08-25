@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "beryllium:block/exploring/stripped_corrupted_log",
+    "side": "beryllium:block/exploring/stripped_corrupted_log"
+  }
+}

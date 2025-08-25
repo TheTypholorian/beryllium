@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side",
+  "textures": {
+    "fire": "beryllium:block/exploring/void_fire_0"
+  }
+}

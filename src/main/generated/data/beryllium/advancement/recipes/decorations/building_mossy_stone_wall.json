@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_building_mossy_stone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "beryllium:building/mossy_stone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "beryllium:building_mossy_stone_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_building_mossy_stone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "beryllium:building_mossy_stone_wall"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "beryllium:block/exploring/corrupted_end_stone_bottom",
+    "side": "beryllium:block/exploring/corrupted_end_stone_side",
+    "top": "beryllium:block/exploring/corrupted_end_stone_top"
+  }
+}
