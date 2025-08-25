@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
+  "group": "bark",
   "key": {
     "#": {
       "item": "beryllium:exploring/stripped_corrupted_log"
@@ -11,7 +12,7 @@
     "##"
   ],
   "result": {
-    "count": 1,
+    "count": 3,
     "id": "beryllium:exploring/stripped_corrupted_wood"
   }
 }

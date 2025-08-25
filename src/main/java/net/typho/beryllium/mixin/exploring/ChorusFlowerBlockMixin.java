@@ -56,6 +56,6 @@ public class ChorusFlowerBlockMixin {
             return original.call(instance, block);
         }
 
-        return original.call(instance, block) || instance.getBlock() instanceof OnyxBlock;
+        return original.call(instance, block) || instance.isIn(Exploring.CHORUS_PLANTABLE);
     }
 }

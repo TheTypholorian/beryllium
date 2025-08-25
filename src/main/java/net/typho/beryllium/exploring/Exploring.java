@@ -107,6 +107,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     public static final TagKey<Block> VOID_FIRE_BASE_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Beryllium.EXPLORING_CONSTRUCTOR.id("void_fire_base_blocks"));
     public static final TagKey<Block> POINTED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, Beryllium.EXPLORING_CONSTRUCTOR.id("pointed_blocks"));
+    public static final TagKey<Block> CHORUS_PLANTABLE = TagKey.of(RegistryKeys.BLOCK, Beryllium.EXPLORING_CONSTRUCTOR.id("chorus_plantable"));
 
     public static final RiverAlgaeFeature RIVER_ALGAE_FEATURE = Registry.register(Registries.FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("river_algae"), new RiverAlgaeFeature());
     public static final Feature<BasaltColumnsFeatureConfig> BONE_SPIKES = Beryllium.EXPLORING_CONSTRUCTOR.feature("bone_spikes", new BoneSpikesFeature(BasaltColumnsFeatureConfig.CODEC));

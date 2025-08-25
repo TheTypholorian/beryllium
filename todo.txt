@@ -1,9 +1,6 @@
 - stable footing
 - corrupted planks texture
 - corrupted forest foliage
-- plant chorus on corrupted end stone
-- make better textures
-- fix output amount of compacting recipes
 - fix stonecutting granite bricks from granite/polished granite
 - replace stonecutting inputs with tag
 - fix creative durability (it's at 1/4 for some reason)
@@ -13,4 +10,3 @@
 - other end structures
 - end fight
 - golden steak and potatoes
-- color coded trim attributes on tooltip

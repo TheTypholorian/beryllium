@@ -100,6 +100,11 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
                 .add(Blocks.POINTED_DRIPSTONE)
                 .add(Exploring.POINTED_BONE);
 
+        getOrCreateTagBuilder(Exploring.CHORUS_PLANTABLE)
+                .add(Blocks.END_STONE)
+                .add(Exploring.ONYX_ORE)
+                .add(Exploring.CORRUPTED_END_STONE);
+
         getOrCreateTagBuilder(BlockTags.FIRE)
                 .add(Exploring.VOID_FIRE);
 

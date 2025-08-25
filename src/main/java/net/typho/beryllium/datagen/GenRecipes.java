@@ -6,19 +6,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
-import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.RecipeExporter;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.predicate.ComponentPredicate;
+import net.minecraft.predicate.NumberRange;
+import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.resource.featuretoggle.FeatureSet;
@@ -33,6 +35,8 @@ import net.typho.beryllium.food.Food;
 import net.typho.beryllium.util.BlockFamilyBuilder;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GenRecipes extends FabricRecipeProvider {
@@ -209,6 +213,21 @@ public class GenRecipes extends FabricRecipeProvider {
         offerMultipleOptions(exporter, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
     }
 
+    public static void offer2x2ConversionRecipe(
+            RecipeExporter exporter,
+            RecipeCategory category,
+            ItemConvertible input,
+            ItemConvertible output,
+            String criterion
+    ) {
+        ShapedRecipeJsonBuilder.create(category, output, 4)
+                .input('#', input)
+                .pattern("##")
+                .pattern("##")
+                .criterion(criterion, FabricRecipeProvider.conditionsFromItem(input))
+                .offerTo(exporter);
+    }
+
     @Override
     public void generate(RecipeExporter exporter) {
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Building.KILN_BLOCK.asItem(), 1)
@@ -381,12 +400,12 @@ public class GenRecipes extends FabricRecipeProvider {
                         .offerTo(exporter, convertBetween(mossy, stone));
             }
         });
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.SNOW_BRICKS.getBaseBlock(), Blocks.SNOW_BLOCK);
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.GRANITE_BRICKS.getBaseBlock(), Blocks.POLISHED_GRANITE);
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.ANDESITE_BRICKS.getBaseBlock(), Blocks.POLISHED_ANDESITE);
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Building.DIORITE_BRICKS.getBaseBlock(), Blocks.POLISHED_DIORITE);
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Exploring.CORRUPTED_WOOD, Exploring.CORRUPTED_LOG);
-        offer2x2CompactingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Exploring.STRIPPED_CORRUPTED_WOOD, Exploring.STRIPPED_CORRUPTED_LOG);
+        offer2x2ConversionRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.SNOW_BLOCK, Building.SNOW_BRICKS.getBaseBlock(), "has_snow_block");
+        offer2x2ConversionRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.POLISHED_GRANITE, Building.GRANITE_BRICKS.getBaseBlock(), "has_polished_granite");
+        offer2x2ConversionRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.POLISHED_ANDESITE, Building.ANDESITE_BRICKS.getBaseBlock(), "has_polished_andesite");
+        offer2x2ConversionRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, Blocks.POLISHED_DIORITE, Building.DIORITE_BRICKS.getBaseBlock(), "has_polished_diorite");
+        offerBarkBlockRecipe(exporter, Exploring.CORRUPTED_WOOD, Exploring.CORRUPTED_LOG);
+        offerBarkBlockRecipe(exporter, Exploring.STRIPPED_CORRUPTED_WOOD, Exploring.STRIPPED_CORRUPTED_LOG);
 
         firingVanillaRecipes(exporter);
         FeatureSet features = ServerConfig.getEnabledFeatures(FeatureFlags.VANILLA_FEATURES);
@@ -400,10 +419,19 @@ public class GenRecipes extends FabricRecipeProvider {
             System.out.println("Stonecutting recipes for " + family.prefix);
             if (!family.stonecutting.isEmpty()) {
                 for (Ingredient input : family.stonecutting) {
+                    ItemStack[] matching = input.getMatchingStacks();
+                    RegistryEntryList<Item> list = RegistryEntryList.of(stack -> Registries.ITEM.getEntry(stack.getItem()), List.of(matching));
+                    Item icon = matching[0].getItem();
+
                     family.variants.forEach((variant, block) -> {
-                        for (ItemStack stack : input.getMatchingStacks()) {
-                            offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, block, stack.getItem(), variant == BlockFamily.Variant.SLAB ? 2 : 1);
-                        }
+                        StonecuttingRecipeJsonBuilder.createStonecutting(input, RecipeCategory.BUILDING_BLOCKS, block, variant == BlockFamily.Variant.SLAB ? 2 : 1)
+                                .criterion("has_input", conditionsFromItemPredicates(new ItemPredicate(
+                                        Optional.of(list),
+                                        NumberRange.IntRange.ANY,
+                                        ComponentPredicate.EMPTY,
+                                        Map.of()
+                                )))
+                                .offerTo(exporter, convertBetween(block, icon) + "_stonecutting");
                     });
                 }
             }
