@@ -1,0 +1,15 @@
+{
+  "values": [
+    "beryllium:exploring/corrupted_planks",
+    "beryllium:exploring/corrupted_plank_stairs",
+    "beryllium:exploring/corrupted_plank_slab",
+    "beryllium:exploring/corrupted_plank_fence",
+    "beryllium:exploring/corrupted_plank_fence_gate",
+    "beryllium:exploring/corrupted_plank_sign",
+    "beryllium:exploring/corrupted_plank_wall_sign",
+    "beryllium:exploring/corrupted_plank_pressure_plate",
+    "beryllium:exploring/corrupted_plank_button",
+    "beryllium:exploring/corrupted_plank_trapdoor",
+    "beryllium:exploring/corrupted_plank_door"
+  ]
+}

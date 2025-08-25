@@ -1,12 +1,13 @@
-// 1.21.1	2025-08-25T11:35:10.3104469	Beryllium/Tags for minecraft:block
+// 1.21.1	2025-08-25T14:58:50.8566886	Beryllium/Tags for minecraft:block
 23db223b8f0b46d45edad216f50507dc27a73165 data\minecraft\tags\block\mineable\shovel.json
 506716dd775afd1d5083c05410a97d5b22daf3d5 data\minecraft\tags\block\cauldrons.json
 dbd2ed2f1bcb6885e861e19ece5185a58b8840f7 data\minecraft\tags\block\stairs.json
 b0d4396a4b2669e6d3118a8cb6a59634a40460a2 data\minecraft\tags\block\mineable\pickaxe.json
 a3c16c25bfcd6e73d585186be457f028461937a8 data\minecraft\tags\block\fence_gates.json
 fa0acef30fb8880d3b316809ba188caf7aeacd32 data\beryllium\tags\block\exploring\pointed_blocks.json
-7088f73fb189e986d10e0cc4f5852e2ff4d04dbe data\minecraft\tags\block\mineable\hoe.json
 b793db028430ec05d48548c9c546504889b37572 data\minecraft\tags\block\fences.json
+7088f73fb189e986d10e0cc4f5852e2ff4d04dbe data\minecraft\tags\block\mineable\hoe.json
+04426624a00b23a80bc11f1ce0aafc2a733ccaba data\minecraft\tags\block\mineable\axe.json
 cce2be34d83b7a05ceb9c025d89c8b64a0766116 data\minecraft\tags\block\flowers.json
 baaa6e80067f33c31907dc853c18df4f4a957a44 data\minecraft\tags\block\walls.json
 3f0b1251139b1377841dd7c1edfb7988da0d4a77 data\beryllium\tags\block\exploring\void_fire_base_blocks.json

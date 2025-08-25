@@ -2,7 +2,6 @@ package net.typho.beryllium.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
@@ -30,9 +29,14 @@ public class GenBlockLootTables extends FabricBlockLootTableProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             System.out.println("Block loot tables for " + family.prefix);
-            for (Block block : family.datagen.values()) {
-                addDrop(block);
-            }
+
+            family.datagen.forEach((variant, block) -> {
+                switch (variant) {
+                    case SLAB -> addDrop(block, slabDrops(block));
+                    case DOOR -> addDrop(block, doorDrops(block));
+                    case null, default -> addDrop(block);
+                }
+            });
         }
 
         addDrop(Exploring.CORRUPTED_END_STONE, block -> drops(block, Blocks.END_STONE));
