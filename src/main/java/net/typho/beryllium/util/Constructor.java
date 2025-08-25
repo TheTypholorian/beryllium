@@ -34,6 +34,7 @@ import net.typho.beryllium.enchanting.Enchanting;
 import net.typho.beryllium.enchanting.EnchantmentInfo;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class Constructor implements Identifierifier {
@@ -104,10 +105,10 @@ public class Constructor implements Identifierifier {
     }
 
     public BlockFamilyBuilder blockFamily(String prefix, AbstractBlock copy) {
-        return blockFamily(prefix, AbstractBlock.Settings.copy(copy));
+        return blockFamily(prefix, () -> AbstractBlock.Settings.copy(copy));
     }
 
-    public BlockFamilyBuilder blockFamily(String prefix, AbstractBlock.Settings settings) {
+    public BlockFamilyBuilder blockFamily(String prefix, Supplier<AbstractBlock.Settings> settings) {
         return new BlockFamilyBuilder(this, prefix, settings);
     }
 

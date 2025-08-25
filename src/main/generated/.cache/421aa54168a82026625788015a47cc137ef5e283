@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-25T10:22:49.5427366	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-25T11:35:10.3114457	Beryllium/Block Loot Tables
 57ab46ba7b00411a026f4c5c9efd60abc13d6c91 data\beryllium\loot_table\blocks\building\cracked_bricks.json
 24cdf2f0512ed87a07af1864a469d6ace02712a7 data\beryllium\loot_table\blocks\building\diorite_brick_slab.json
 966356bf887542af9008e21592eae98129758ec1 data\beryllium\loot_table\blocks\building\cracked_purpur_slab.json
@@ -98,12 +98,12 @@ f788fd9f6d6d9005d59aae94a2093a7b32015982 data\beryllium\loot_table\blocks\buildi
 a34be016930720a18ea3b4da2069cfd7541f9af7 data\beryllium\loot_table\blocks\building\andesite_brick_slab.json
 3673cde2722c988a41b81d97ec772ab5c1c868cf data\beryllium\loot_table\blocks\exploring\firefly_bottle.json
 558fd949ef939859dfba3f884bc08ecdced4620d data\beryllium\loot_table\blocks\building\chiseled_smooth_stone.json
-7fa2487baa1d3f8500d5e34f0c7ffa70e2c9d8af data\beryllium\loot_table\blocks\exploring\corrupted_plank_sign.json
+1d336982031d4ac387710e80185f7e5c5c1b7d4b data\beryllium\loot_table\blocks\exploring\corrupted_plank_sign.json
 cf0fd64f119050242111f45e31397c3e61af380c data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_slab.json
 b210aa25c4c6968a291e98de6984f92c6097acb4 data\beryllium\loot_table\blocks\building\quartz_brick_stairs.json
 dd6e79c6771fbffac07cf6009f6e15e57f575cae data\beryllium\loot_table\blocks\building\granite_brick_slab.json
-ba760218e97adee7e9885f3e4aae48088fecdaee data\beryllium\loot_table\blocks\building\cracked_deepslate_brick_stairs.json
 e7b6fd7d72925da790e7afc786997a5bc04038f7 data\beryllium\loot_table\blocks\building\cracked_purpur_stairs.json
+ba760218e97adee7e9885f3e4aae48088fecdaee data\beryllium\loot_table\blocks\building\cracked_deepslate_brick_stairs.json
 3ae0d78c881ed45e2e1b9f45d00093baa76c3c01 data\beryllium\loot_table\blocks\building\cracked_brick_slab.json
 2d3d2cc314b4d3b1cdcf633b49bbe386a3ed0fd4 data\beryllium\loot_table\blocks\building\cracked_polished_blackstone_brick_slab.json
 def93d2a2ece30190063fb6c208c5e5bc3be111a data\beryllium\loot_table\blocks\building\gilded_blackstone_slab.json

@@ -51,6 +51,24 @@ public class GenBlockTags extends FabricTagProvider.BlockTagProvider {
             }
         }
 
+        FabricTagBuilder fences = getOrCreateTagBuilder(BlockTags.FENCES);
+
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (family.datagen.containsKey(BlockFamily.Variant.FENCE)) {
+                System.out.println("Wall block tags for " + family.prefix);
+                fences.add(family.datagen.get(BlockFamily.Variant.FENCE));
+            }
+        }
+
+        FabricTagBuilder fenceGates = getOrCreateTagBuilder(BlockTags.FENCE_GATES);
+
+        for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
+            if (family.datagen.containsKey(BlockFamily.Variant.FENCE_GATE)) {
+                System.out.println("Wall block tags for " + family.prefix);
+                fenceGates.add(family.datagen.get(BlockFamily.Variant.FENCE_GATE));
+            }
+        }
+
         FabricTagBuilder stairs = getOrCreateTagBuilder(BlockTags.STAIRS);
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {

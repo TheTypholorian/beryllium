@@ -1,6 +1,7 @@
 package net.typho.beryllium.util;
 
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -10,13 +11,14 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class BlockFamilyBuilder {
     public static final List<BlockFamilyBuilder> FAMILIES = new LinkedList<>();
 
     public final Constructor constructor;
     public final String prefix;
-    public final AbstractBlock.Settings settings;
+    public Supplier<AbstractBlock.Settings> settings;
     public Block base;
     public final Map<BlockFamily.Variant, Block> variants = new LinkedHashMap<>();
     public final Map<BlockFamily.Variant, Block> datagen = new LinkedHashMap<>();
@@ -26,7 +28,7 @@ public class BlockFamilyBuilder {
     public BlockFamily built;
     public SignItem signItem;
 
-    public BlockFamilyBuilder(Constructor constructor, String prefix, AbstractBlock.Settings settings) {
+    public BlockFamilyBuilder(Constructor constructor, String prefix, Supplier<AbstractBlock.Settings> settings) {
         this.constructor = constructor;
         this.prefix = prefix;
         this.settings = settings;
@@ -93,7 +95,8 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder features(FeatureFlag... flags) {
-        settings.requires(flags);
+        Supplier<AbstractBlock.Settings> old = settings;
+        settings = () -> old.get().requires(flags);
         return this;
     }
 
@@ -133,7 +136,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder base(String id) {
-        return base(id, new Block(settings));
+        return base(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder base(String id, Block block) {
@@ -150,7 +153,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder button(String id, BlockSetType type, int pressTicks) {
-        return button(id, new ButtonBlock(type, pressTicks, settings));
+        return button(id, new ButtonBlock(type, pressTicks, settings.get().noCollision()));
     }
 
     public BlockFamilyBuilder button(String id, Block block) {
@@ -166,7 +169,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder chiseled(String id) {
-        return chiseled(id, new Block(settings));
+        return chiseled(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder chiseled(String id, Block block) {
@@ -182,7 +185,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder cracked(String id) {
-        return cracked(id, new Block(settings));
+        return cracked(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder cracked(String id, Block block) {
@@ -198,7 +201,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder cut(String id) {
-        return cut(id, new Block(settings));
+        return cut(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder cut(String id, Block block) {
@@ -214,7 +217,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder door(String id, BlockSetType type) {
-        return door(id, new DoorBlock(type, settings));
+        return door(id, new DoorBlock(type, settings.get()));
     }
 
     public BlockFamilyBuilder door(String id, Block block) {
@@ -230,7 +233,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder customFence(String id) {
-        return customFence(id, new FenceBlock(settings));
+        return customFence(id, new FenceBlock(settings.get()));
     }
 
     public BlockFamilyBuilder customFence(String id, Block block) {
@@ -246,7 +249,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder fence(String id) {
-        return fence(id, new FenceBlock(settings));
+        return fence(id, new FenceBlock(settings.get()));
     }
 
     public BlockFamilyBuilder fence(String id, Block block) {
@@ -262,7 +265,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder customFenceGate(String id, WoodType type) {
-        return customFenceGate(id, new FenceGateBlock(type, settings));
+        return customFenceGate(id, new FenceGateBlock(type, settings.get()));
     }
 
     public BlockFamilyBuilder customFenceGate(String id, Block block) {
@@ -278,7 +281,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder fenceGate(String id, WoodType type) {
-        return fenceGate(id, new FenceGateBlock(type, settings));
+        return fenceGate(id, new FenceGateBlock(type, settings.get()));
     }
 
     public BlockFamilyBuilder fenceGate(String id, Block block) {
@@ -294,7 +297,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder mosaic(String id) {
-        return mosaic(id, new Block(settings));
+        return mosaic(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder mosaic(String id, Block block) {
@@ -310,7 +313,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder sign(String id, WoodType type) {
-        return sign(id, new SignBlock(type, settings));
+        return sign(id, new SignBlock(type, settings.get().noCollision()));
     }
 
     public BlockFamilyBuilder sign(String id, Block block) {
@@ -318,6 +321,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder sign(Block block) {
+        BlockEntityType.SIGN.addSupportedBlock(block);
         return variant(BlockFamily.Variant.SIGN, block);
     }
 
@@ -326,7 +330,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder slab(String id) {
-        return slab(id, new SlabBlock(settings));
+        return slab(id, new SlabBlock(settings.get()));
     }
 
     public BlockFamilyBuilder slab(String id, Block block) {
@@ -342,7 +346,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder stairs(String id) {
-        return stairs(id, new StairsBlock(base.getDefaultState(), settings));
+        return stairs(id, new StairsBlock(base.getDefaultState(), settings.get()));
     }
 
     public BlockFamilyBuilder stairs(String id, Block block) {
@@ -358,7 +362,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder pressurePlate(String id, BlockSetType type) {
-        return pressurePlate(id, new PressurePlateBlock(type, settings));
+        return pressurePlate(id, new PressurePlateBlock(type, settings.get().noCollision()));
     }
 
     public BlockFamilyBuilder pressurePlate(String id, Block block) {
@@ -374,7 +378,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder polished(String id) {
-        return polished(id, new Block(settings));
+        return polished(id, new Block(settings.get()));
     }
 
     public BlockFamilyBuilder polished(String id, Block block) {
@@ -390,7 +394,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder trapdoor(String id, BlockSetType type) {
-        return trapdoor(id, new TrapdoorBlock(type, settings));
+        return trapdoor(id, new TrapdoorBlock(type, settings.get()));
     }
 
     public BlockFamilyBuilder trapdoor(String id, Block block) {
@@ -406,7 +410,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder wall(String id) {
-        return wall(id, new WallBlock(settings));
+        return wall(id, new WallBlock(settings.get()));
     }
 
     public BlockFamilyBuilder wall(String id, Block block) {
@@ -431,6 +435,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder wallSign(Block block) {
+        BlockEntityType.SIGN.addSupportedBlock(block);
         return variant(BlockFamily.Variant.WALL_SIGN, block);
     }
 

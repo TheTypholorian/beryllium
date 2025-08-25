@@ -53,6 +53,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
@@ -148,6 +149,26 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .solidBlock(Blocks::never)
             .suffocates(Blocks::never)
             .blockVision(Blocks::never)), new Item.Settings());
+    public static final BlockSetType CORRUPTED_SET_TYPE = BlockSetType.register(new BlockSetType(
+            Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted").toString(),
+            true,
+            true,
+            true,
+            BlockSetType.ActivationRule.EVERYTHING,
+            BlockSoundGroup.NETHER_WOOD,
+            SoundEvents.BLOCK_NETHER_WOOD_DOOR_CLOSE,
+            SoundEvents.BLOCK_NETHER_WOOD_DOOR_OPEN,
+            SoundEvents.BLOCK_NETHER_WOOD_TRAPDOOR_CLOSE,
+            SoundEvents.BLOCK_NETHER_WOOD_TRAPDOOR_OPEN,
+            SoundEvents.BLOCK_NETHER_WOOD_PRESSURE_PLATE_CLICK_OFF,
+            SoundEvents.BLOCK_NETHER_WOOD_PRESSURE_PLATE_CLICK_ON,
+            SoundEvents.BLOCK_NETHER_WOOD_BUTTON_CLICK_OFF,
+            SoundEvents.BLOCK_NETHER_WOOD_BUTTON_CLICK_ON
+    ));
+    public static final WoodType CORRUPTED_WOOD_TYPE = WoodType.register(new WoodType(
+            Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted").toString(),
+            CORRUPTED_SET_TYPE
+    ));
     public static final Block CORRUPTED_LOG = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_STEM)), new Item.Settings());
     public static final Block CORRUPTED_WOOD = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_wood", new PillarBlock(AbstractBlock.Settings.copy(Blocks.CRIMSON_HYPHAE)), new Item.Settings());
     public static final Block STRIPPED_CORRUPTED_LOG = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("stripped_corrupted_log", new PillarBlock(AbstractBlock.Settings.copy(Blocks.STRIPPED_CRIMSON_STEM)), new Item.Settings());
@@ -157,13 +178,13 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .stairs()
             .slab()
             .fence()
-            .fenceGate(WoodType.CRIMSON)
-            .sign(WoodType.CRIMSON)
-            .wallSign(WoodType.CRIMSON)
-            .pressurePlate(BlockSetType.CRIMSON)
-            .button(BlockSetType.CRIMSON, 30)
-            .trapdoor(BlockSetType.CRIMSON)
-            .door(BlockSetType.CRIMSON)
+            .fenceGate(CORRUPTED_WOOD_TYPE)
+            .sign(CORRUPTED_WOOD_TYPE)
+            .wallSign(CORRUPTED_WOOD_TYPE)
+            .pressurePlate(CORRUPTED_SET_TYPE)
+            .button(CORRUPTED_SET_TYPE, 30)
+            .trapdoor(CORRUPTED_SET_TYPE)
+            .door(CORRUPTED_SET_TYPE)
             .signItem()
             .build();
     public static final Block CORRUPTED_SAPLING = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
