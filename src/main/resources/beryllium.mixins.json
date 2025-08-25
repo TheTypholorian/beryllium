@@ -26,6 +26,7 @@
     "armor.StatusEffectInstanceMixin",
     "armor.VillagerEntityMixin",
     "building.CookingRecipeDataGenMixin",
+    "building.JsonDataLoaderMixin",
     "building.ShearsItemMixin",
     "client.CompassItemMixin",
     "combat.BrewingRecipeRegistryMixin",

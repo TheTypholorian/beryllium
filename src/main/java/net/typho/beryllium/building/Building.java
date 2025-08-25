@@ -327,6 +327,16 @@ public class Building implements ModInitializer, ClientModInitializer {
             .smelting(BlockFamilies.PURPUR)
             .build();
 
+    public static boolean cancelJsonResource(Identifier id) {
+        if (id.getNamespace().equals(Identifier.DEFAULT_NAMESPACE)) {
+            if (id.getPath().contains("granite") && id.getPath().contains("stonecutting")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public void onInitialize() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
