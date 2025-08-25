@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.SignItem;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.featuretoggle.FeatureFlag;
@@ -23,6 +24,7 @@ public class BlockFamilyBuilder {
     public final List<Ingredient> stonecutting = new LinkedList<>();
     public final List<BlockFamily> smelting = new LinkedList<>();
     public BlockFamily built;
+    public SignItem signItem;
 
     public BlockFamilyBuilder(Constructor constructor, String prefix, AbstractBlock.Settings settings) {
         this.constructor = constructor;
@@ -63,6 +65,12 @@ public class BlockFamilyBuilder {
 
     public Block register(BlockFamily.Variant variant, String id, Block block, Item.Settings settings) {
         constructor.blockWithItem(id, block, settings);
+        datagen.put(variant, block);
+        return block;
+    }
+
+    public Block register(BlockFamily.Variant variant, String id, Block block) {
+        constructor.block(id, block);
         datagen.put(variant, block);
         return block;
     }
@@ -306,7 +314,7 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder sign(String id, Block block) {
-        return sign(register(BlockFamily.Variant.SIGN, id, block, new Item.Settings()));
+        return sign(register(BlockFamily.Variant.SIGN, id, block));
     }
 
     public BlockFamilyBuilder sign(Block block) {
@@ -410,18 +418,28 @@ public class BlockFamilyBuilder {
     }
 
     public BlockFamilyBuilder wallSign(WoodType type) {
-        return wallSign(prefix + "_wall", type);
+        return wallSign(prefix + "_wall_sign", type);
     }
 
     public BlockFamilyBuilder wallSign(String id, WoodType type) {
-        return wallSign(id, new WallSignBlock(type, settings));
+        Block sign = variants.get(BlockFamily.Variant.SIGN);
+        return wallSign(id, new WallSignBlock(type, AbstractBlock.Settings.copy(sign).dropsLike(sign)));
     }
 
     public BlockFamilyBuilder wallSign(String id, Block block) {
-        return wallSign(register(BlockFamily.Variant.WALL_SIGN, id, block, new Item.Settings()));
+        return wallSign(register(BlockFamily.Variant.WALL_SIGN, id, block));
     }
 
     public BlockFamilyBuilder wallSign(Block block) {
         return variant(BlockFamily.Variant.WALL_SIGN, block);
+    }
+
+    public BlockFamilyBuilder signItem() {
+        Block sign = variants.get(BlockFamily.Variant.SIGN);
+        Block wallSign = variants.get(BlockFamily.Variant.WALL_SIGN);
+
+        signItem = constructor.item(prefix + "_sign", new SignItem(new Item.Settings().maxCount(16), sign, wallSign));
+
+        return this;
     }
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-25T09:44:25.8649945	Beryllium/Block Loot Tables
+// 1.21.1	2025-08-25T10:22:49.5427366	Beryllium/Block Loot Tables
 57ab46ba7b00411a026f4c5c9efd60abc13d6c91 data\beryllium\loot_table\blocks\building\cracked_bricks.json
 24cdf2f0512ed87a07af1864a469d6ace02712a7 data\beryllium\loot_table\blocks\building\diorite_brick_slab.json
 966356bf887542af9008e21592eae98129758ec1 data\beryllium\loot_table\blocks\building\cracked_purpur_slab.json
@@ -7,7 +7,6 @@ ab8da0538895eab1f72db7e87e12f4cd5c228269 data\beryllium\loot_table\blocks\buildi
 507662aef732541f2316b01dfe47dda8564ec107 data\beryllium\loot_table\blocks\exploring\corrupted_plank_slab.json
 e799f23581857e3a6437c5fb5ec7c7b6611eea7c data\beryllium\loot_table\blocks\building\diorite_brick_wall.json
 77473a91eba7d722c4f043c49dfbf2569a1b0c29 data\beryllium\loot_table\blocks\building\cut_red_sandstone_stairs.json
-9f699c97895b24186662edaa20f467f1611c0440 data\beryllium\loot_table\blocks\exploring\corrupted_plank_wall.json
 858ba305818f45db73189cda62131d0ad4935d10 data\beryllium\loot_table\blocks\building\cracked_red_nether_bricks.json
 b3c68338ba99fe68cc167fa888faead57f5b38a7 data\beryllium\loot_table\blocks\building\cut_red_sandstone_wall.json
 97e11513c28eb6ed9f43b015d3aca29392dc9d4c data\beryllium\loot_table\blocks\building\quartz_wall.json
@@ -45,8 +44,8 @@ b03d3e826af65896bf1caaea82d690bda13b9eb2 data\beryllium\loot_table\blocks\buildi
 8f5f9ff32a6732b69a09184e257dfa194f384bf5 data\beryllium\loot_table\blocks\building\mossy_stone_slab.json
 6658af76898ab2dc67de329a5685f25e1fd9131c data\beryllium\loot_table\blocks\building\smooth_stone_wall.json
 cba58ab9aabe0b4ffc91b4a15c54544108cf6faa data\beryllium\loot_table\blocks\building\cracked_nether_brick_wall.json
-4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 40cd2ca655d56d76a6dc19c9ef7ab42530c0bd9a data\beryllium\loot_table\blocks\exploring\daffodils.json
+4df55ddf3dfa8d7d305b2e38f8ee627cc1b99cf8 data\beryllium\loot_table\blocks\building\kiln.json
 7a24d100e751a44d7f72022d26ea1279b8c644d3 data\beryllium\loot_table\blocks\exploring\corrupted_end_stone.json
 ce1cb77958aa465b2a70a188e82c1a58c74a1448 data\beryllium\loot_table\blocks\building\cracked_stone_brick_stairs.json
 f7192d201517a41587dd50efc3e4bd1dd40ad4d7 data\beryllium\loot_table\blocks\exploring\congealed_void.json
@@ -99,7 +98,7 @@ f788fd9f6d6d9005d59aae94a2093a7b32015982 data\beryllium\loot_table\blocks\buildi
 a34be016930720a18ea3b4da2069cfd7541f9af7 data\beryllium\loot_table\blocks\building\andesite_brick_slab.json
 3673cde2722c988a41b81d97ec772ab5c1c868cf data\beryllium\loot_table\blocks\exploring\firefly_bottle.json
 558fd949ef939859dfba3f884bc08ecdced4620d data\beryllium\loot_table\blocks\building\chiseled_smooth_stone.json
-1d336982031d4ac387710e80185f7e5c5c1b7d4b data\beryllium\loot_table\blocks\exploring\corrupted_plank_sign.json
+7fa2487baa1d3f8500d5e34f0c7ffa70e2c9d8af data\beryllium\loot_table\blocks\exploring\corrupted_plank_sign.json
 cf0fd64f119050242111f45e31397c3e61af380c data\beryllium\loot_table\blocks\building\cracked_red_nether_brick_slab.json
 b210aa25c4c6968a291e98de6984f92c6097acb4 data\beryllium\loot_table\blocks\building\quartz_brick_stairs.json
 dd6e79c6771fbffac07cf6009f6e15e57f575cae data\beryllium\loot_table\blocks\building\granite_brick_slab.json

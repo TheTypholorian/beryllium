@@ -52,7 +52,7 @@ public class Constructor implements Identifierifier {
         return Identifier.of(Beryllium.MOD_ID, name == null ? id : (name + "/" + id));
     }
 
-    public Item item(String id, Item item) {
+    public <I extends Item> I item(String id, I item) {
         return Registry.register(Registries.ITEM, id(id), item);
     }
 
@@ -63,6 +63,12 @@ public class Constructor implements Identifierifier {
     public Block blockWithItem(String id, Block block, Item.Settings settings) {
         Block res = Registry.register(Registries.BLOCK, id(id), block);
         item(id, new BlockItem(res, settings));
+        return res;
+    }
+
+    public Block blockWithItem(String id, Block block, Item item) {
+        Block res = Registry.register(Registries.BLOCK, id(id), block);
+        item(id, item);
         return res;
     }
 

@@ -164,6 +164,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             .button(BlockSetType.CRIMSON, 30)
             .trapdoor(BlockSetType.CRIMSON)
             .door(BlockSetType.CRIMSON)
+            .signItem()
             .build();
     public static final Block CORRUPTED_SAPLING = Beryllium.EXPLORING_CONSTRUCTOR.blockWithItem("corrupted_sapling", new SaplingBlock(CORRUPTED_SAPLING_GENERATOR, AbstractBlock.Settings.copy(Blocks.CRIMSON_FUNGUS)) {
         @Override
