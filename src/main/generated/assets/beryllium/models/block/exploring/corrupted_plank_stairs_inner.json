@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "beryllium:block/exploring/corrupted_planks",
-    "side": "beryllium:block/exploring/corrupted_planks",
-    "top": "beryllium:block/exploring/corrupted_planks"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/flowerbed_2",
-  "textures": {
-    "flowerbed": "beryllium:block/exploring/geraniums",
-    "stem": "beryllium:block/exploring/geraniums_stem"
-  }
-}

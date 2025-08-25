@@ -17,6 +17,7 @@ import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SmokingRecipe;
+import net.minecraft.recipe.book.CookingRecipeCategory;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
@@ -197,20 +198,23 @@ public class GenRecipes extends FabricRecipeProvider {
                 .pattern("AAA")
                 .pattern("AAA")
                 .input('A', ingredient)
-                .criterion("has_" + net.minecraft.registry.Registries.BLOCK.getId(ingredient).getPath(), FabricRecipeProvider.conditionsFromItem(ingredient))
+                .criterion(hasItem(ingredient), FabricRecipeProvider.conditionsFromItem(ingredient))
                 .offerTo(gen, net.minecraft.registry.Registries.BLOCK.getId(result));
     }
 
     public static void offerFiring(
             RecipeExporter exporter,
-            List<ItemConvertible> inputs,
+            ItemConvertible input,
             RecipeCategory category,
+            CookingRecipeCategory cookingCategory,
             ItemConvertible output,
             float experience,
             int cookingTime,
             String group
     ) {
-        offerMultipleOptions(exporter, Building.KILN_RECIPE_SERIALIZER, KilnRecipe::new, inputs, category, output, experience, cookingTime, group, "_from_firing");
+        new CookingRecipeJsonBuilder(category, cookingCategory, output, Ingredient.ofItems(input), experience, cookingTime, KilnRecipe::new)
+                .criterion(hasItem(input), FabricRecipeProvider.conditionsFromItem(input))
+                .offerTo(exporter, getItemPath(output) + "_from_firing_" + getItemPath(input));
     }
 
     public static void offer2x2ConversionRecipe(
@@ -236,7 +240,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .pattern("AAA")
                 .input('A', Items.BRICK)
                 .criterion("has_brick", FabricRecipeProvider.conditionsFromItem(Items.BRICK))
-                .offerTo(exporter, Beryllium.BUILDING_CONSTRUCTOR.id("kiln"));
+                .offerTo(exporter, Beryllium.BUILDING_CONSTRUCTOR.recipeId("kiln"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Exploring.METAL_DETECTOR_ITEM, 1)
                 .pattern(" C ")
@@ -245,7 +249,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', Items.COPPER_INGOT)
                 .input('R', Items.REDSTONE)
                 .criterion("has_redstone", FabricRecipeProvider.conditionsFromItem(Items.REDSTONE))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("metal_detector"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, Items.LODESTONE, 1)
                 .pattern("AAA")
@@ -262,14 +266,14 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', Items.COCOA_BEANS)
                 .input('W', Items.WHEAT)
                 .criterion("has_cocoa_beans", FabricRecipeProvider.conditionsFromItem(Items.COCOA_BEANS))
-                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.id("croissant"));
+                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.recipeId("croissant"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, Food.BAGUETTE, 1)
                 .pattern("WWW")
                 .pattern("WWW")
                 .input('W', Items.WHEAT)
                 .criterion("has_wheat", FabricRecipeProvider.conditionsFromItem(Items.WHEAT))
-                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.id("baguette"));
+                .offerTo(exporter, Beryllium.FOOD_CONSTRUCTOR.recipeId("baguette"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, Items.SADDLE, 1)
                 .pattern(" L ")
@@ -320,37 +324,37 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(Items.LIME_DYE)
                 .criterion("has_honey_bottle", FabricRecipeProvider.conditionsFromItem(Items.HONEY_BOTTLE))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("slimeball"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("slimeball"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 4)
                 .input(ItemTags.WOOL)
                 .input(Items.SHEARS)
                 .criterion("has_wool", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("string_from_wool"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("string_from_wool"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.STRING, 2)
                 .input(ItemTags.WOOL_CARPETS)
                 .input(Items.SHEARS)
                 .criterion("has_carpet", FabricRecipeProvider.conditionsFromTag(ItemTags.WOOL_CARPETS))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("string_from_carpet"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("string_from_carpet"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.GRAVEL, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.COBBLESTONE)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("gravel_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("gravel_from_washing"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SAND, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.GRAVEL)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("sand_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("sand_from_washing"));
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Items.IRON_NUGGET, 1)
                 .input(Items.WATER_BUCKET)
                 .input(Items.SAND)
                 .criterion("has_water", FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("iron_nugget_from_washing"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("iron_nugget_from_washing"));
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Exploring.BLAZING_TORCH_ITEM, 1)
                 .pattern("C")
@@ -358,7 +362,7 @@ public class GenRecipes extends FabricRecipeProvider {
                 .input('C', ItemTags.COALS)
                 .input('B', Items.BLAZE_ROD)
                 .criterion("has_coals", FabricRecipeProvider.conditionsFromTag(ItemTags.COALS))
-                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.id("blazing_torch"));
+                .offerTo(exporter, Beryllium.EXPLORING_CONSTRUCTOR.recipeId("blazing_torch"));
 
         arrow(exporter, Combat.DIAMOND_ARROW, Items.DIAMOND, "has_diamond");
         arrow(exporter, Combat.IRON_ARROW, Items.IRON_INGOT, "has_iron_ingot");
@@ -417,33 +421,36 @@ public class GenRecipes extends FabricRecipeProvider {
 
         for (BlockFamilyBuilder family : BlockFamilyBuilder.FAMILIES) {
             System.out.println("Stonecutting recipes for " + family.prefix);
+
             if (!family.stonecutting.isEmpty()) {
                 for (Ingredient input : family.stonecutting) {
                     ItemStack[] matching = input.getMatchingStacks();
                     RegistryEntryList<Item> list = RegistryEntryList.of(stack -> Registries.ITEM.getEntry(stack.getItem()), List.of(matching));
                     Item icon = matching[0].getItem();
 
-                    family.variants.forEach((variant, block) -> {
-                        StonecuttingRecipeJsonBuilder.createStonecutting(input, RecipeCategory.BUILDING_BLOCKS, block, variant == BlockFamily.Variant.SLAB ? 2 : 1)
-                                .criterion("has_input", conditionsFromItemPredicates(new ItemPredicate(
-                                        Optional.of(list),
-                                        NumberRange.IntRange.ANY,
-                                        ComponentPredicate.EMPTY,
-                                        Map.of()
-                                )))
-                                .offerTo(exporter, convertBetween(block, icon) + "_stonecutting");
+                    Building.iterateBlockFamily(family, (variant, block) -> {
+                        if (block.asItem() != icon) {
+                            StonecuttingRecipeJsonBuilder.createStonecutting(input, RecipeCategory.BUILDING_BLOCKS, block, variant == BlockFamily.Variant.SLAB ? 2 : 1)
+                                    .criterion("has_input", conditionsFromItemPredicates(new ItemPredicate(
+                                            Optional.of(list),
+                                            NumberRange.IntRange.ANY,
+                                            ComponentPredicate.EMPTY,
+                                            Map.of()
+                                    )))
+                                    .offerTo(exporter, convertBetween(block, icon) + "_stonecutting");
+                        }
                     });
                 }
             }
 
             if (!family.smelting.isEmpty()) {
                 for (BlockFamily inFamily : family.smelting) {
-                    family.variants.forEach((variant, output) -> {
-                        Block input = inFamily.getVariant(variant);
+                    Building.iterateBlockFamily(family, (variant, output) -> {
+                        Block input = variant == null ? inFamily.getBaseBlock() : inFamily.getVariant(variant);
 
                         if (input != null) {
                             offerSmelting(exporter, List.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 200, "");
-                            offerFiring(exporter, List.of(input), RecipeCategory.BUILDING_BLOCKS, output, 0.1f, 100, "");
+                            offerFiring(exporter, input, RecipeCategory.BUILDING_BLOCKS, CookingRecipeCategory.BLOCKS, output, 0.1f, 100, "");
                         }
                     });
                 }

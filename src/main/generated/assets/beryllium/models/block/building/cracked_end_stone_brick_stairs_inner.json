@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "beryllium:block/building/cracked_end_stone_bricks",
-    "side": "beryllium:block/building/cracked_end_stone_bricks",
-    "top": "beryllium:block/building/cracked_end_stone_bricks"
-  }
-}

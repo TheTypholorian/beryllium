@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "beryllium:block/building/cracked_purpur_block",
-    "side": "beryllium:block/building/cracked_purpur_block",
-    "top": "beryllium:block/building/cracked_purpur_block"
-  }
-}

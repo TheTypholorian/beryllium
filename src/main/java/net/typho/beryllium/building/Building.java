@@ -27,7 +27,9 @@ import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.building.kiln.*;
 import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.util.BlockFamilyBuilder;
 
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 public class Building implements ModInitializer, ClientModInitializer {
@@ -94,7 +96,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.GRANITE)
+            .stonecutting(Blocks.GRANITE, Blocks.POLISHED_GRANITE)
             .build();
     public static final BlockFamily DIORITE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("diorite_brick", Blocks.STONE_BRICKS)
             .base("diorite_bricks")
@@ -102,7 +104,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.DIORITE)
+            .stonecutting(Blocks.DIORITE, Blocks.POLISHED_DIORITE)
             .build();
     public static final BlockFamily ANDESITE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("andesite_brick", Blocks.STONE_BRICKS)
             .base("andesite_bricks")
@@ -110,8 +112,32 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stairs()
             .slab()
             .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.ANDESITE)
+            .stonecutting(Blocks.ANDESITE, Blocks.POLISHED_ANDESITE)
             .build();
+    public static final BlockFamily POLISHED_GRANITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_granite", Blocks.POLISHED_GRANITE)
+            .base(Blocks.POLISHED_GRANITE)
+            .wall()
+            .stairs(Blocks.POLISHED_GRANITE_STAIRS)
+            .slab(Blocks.POLISHED_GRANITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.GRANITE)
+            .build(BlockFamilies.POLISHED_GRANITE);
+    public static final BlockFamily POLISHED_DIORITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_diorite", Blocks.POLISHED_DIORITE)
+            .base(Blocks.POLISHED_DIORITE)
+            .wall()
+            .stairs(Blocks.POLISHED_DIORITE_STAIRS)
+            .slab(Blocks.POLISHED_DIORITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.DIORITE)
+            .build(BlockFamilies.POLISHED_DIORITE);
+    public static final BlockFamily POLISHED_ANDESITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_andesite", Blocks.POLISHED_ANDESITE)
+            .base(Blocks.POLISHED_ANDESITE)
+            .wall()
+            .stairs(Blocks.POLISHED_ANDESITE_STAIRS)
+            .slab(Blocks.POLISHED_ANDESITE_SLAB)
+            .tags(BlockTags.PICKAXE_MINEABLE)
+            .stonecutting(Blocks.ANDESITE)
+            .build(BlockFamilies.POLISHED_ANDESITE);
     public static final BlockFamily CRACKED_DEEPSLATE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("cracked_deepslate_brick", Blocks.CRACKED_DEEPSLATE_BRICKS)
             .base(Blocks.CRACKED_DEEPSLATE_BRICKS)
             .wall()
@@ -259,30 +285,6 @@ public class Building implements ModInitializer, ClientModInitializer {
             .tags(BlockTags.PICKAXE_MINEABLE)
             .stonecutting()
             .build(BlockFamilies.DARK_PRISMARINE);
-    public static final BlockFamily POLISHED_GRANITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_granite", Blocks.POLISHED_GRANITE)
-            .base(Blocks.POLISHED_GRANITE)
-            .wall()
-            .stairs(Blocks.POLISHED_GRANITE_STAIRS)
-            .slab(Blocks.POLISHED_GRANITE_SLAB)
-            .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.GRANITE)
-            .build(BlockFamilies.POLISHED_GRANITE);
-    public static final BlockFamily POLISHED_DIORITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_diorite", Blocks.POLISHED_DIORITE)
-            .base(Blocks.POLISHED_DIORITE)
-            .wall()
-            .stairs(Blocks.POLISHED_DIORITE_STAIRS)
-            .slab(Blocks.POLISHED_DIORITE_SLAB)
-            .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.DIORITE)
-            .build(BlockFamilies.POLISHED_DIORITE);
-    public static final BlockFamily POLISHED_ANDESITE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("polished_andesite", Blocks.POLISHED_ANDESITE)
-            .base(Blocks.POLISHED_ANDESITE)
-            .wall()
-            .stairs(Blocks.POLISHED_ANDESITE_STAIRS)
-            .slab(Blocks.POLISHED_ANDESITE_SLAB)
-            .tags(BlockTags.PICKAXE_MINEABLE)
-            .stonecutting(Blocks.ANDESITE)
-            .build(BlockFamilies.POLISHED_ANDESITE);
     public static final BlockFamily GILDED_BLACKSTONE = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("gilded_blackstone", Blocks.GILDED_BLACKSTONE)
             .base(Blocks.GILDED_BLACKSTONE)
             .wall()
@@ -327,14 +329,13 @@ public class Building implements ModInitializer, ClientModInitializer {
             .smelting(BlockFamilies.PURPUR)
             .build();
 
-    public static boolean cancelJsonResource(Identifier id) {
-        if (id.getNamespace().equals(Identifier.DEFAULT_NAMESPACE)) {
-            if (id.getPath().contains("granite") && id.getPath().contains("stonecutting")) {
-                return true;
-            }
-        }
+    public static void iterateBlockFamily(BlockFamily family, BiConsumer<BlockFamily.Variant, Block> out) {
+        out.accept(null, family.getBaseBlock());
+        family.getVariants().forEach(out);
+    }
 
-        return false;
+    public static void iterateBlockFamily(BlockFamilyBuilder family, BiConsumer<BlockFamily.Variant, Block> out) {
+        family.datagen.forEach(out);
     }
 
     @Override

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "beryllium:block/building/snow_bricks",
-    "side": "beryllium:block/building/snow_bricks",
-    "top": "beryllium:block/building/snow_bricks"
-  }
-}

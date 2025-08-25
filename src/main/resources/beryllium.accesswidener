@@ -18,3 +18,4 @@ accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
 accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
 accessible field net/minecraft/screen/EnchantmentScreenHandler context Lnet/minecraft/screen/ScreenHandlerContext;
 accessible field net/minecraft/resource/featuretoggle/FeatureManager$Builder featureFlags Ljava/util/Map;
+accessible method net/minecraft/data/server/recipe/CookingRecipeJsonBuilder <init> (Lnet/minecraft/recipe/book/RecipeCategory;Lnet/minecraft/recipe/book/CookingRecipeCategory;Lnet/minecraft/item/ItemConvertible;Lnet/minecraft/recipe/Ingredient;FILnet/minecraft/recipe/AbstractCookingRecipe$RecipeFactory;)V
