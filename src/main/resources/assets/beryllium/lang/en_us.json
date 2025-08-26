@@ -158,7 +158,7 @@
   "container.beryllium.redstone.gold_hopper": "Gold Hopper",
   "stat.beryllium.building.interact_with_kiln": "Interact with Kiln",
   "gui.beryllium.recipebook.toggleRecipes.building.fireable": "Fireable",
-  "attribute.beryllium.exploring.name.player.air_mining_efficiency": "Air Mining Efficiency",
+  "attribute.beryllium.armor.name.player.air_mining_efficiency": "Air Mining Efficiency",
   "attribute.beryllium.armor.name.generic.ranged_damage": "Ranged Damage",
   "attribute.beryllium.armor.name.player.swimming_speed": "Swimming Speed",
   "attribute.beryllium.armor.name.generic.regeneration": "Regeneration",

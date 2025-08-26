@@ -1,4 +1,3 @@
-- stable footing
 - corrupted planks texture
 - corrupted forest foliage
 - fix stonecutting granite bricks from granite/polished granite

@@ -1,5 +1,8 @@
 package net.typho.beryllium.mixin.armor;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -40,7 +43,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                 .add(Armor.PLAYER_XP_GAIN)
                 .add(Armor.PLAYER_XP_COST)
                 .add(Armor.PLAYER_SLIDING)
-                .add(Armor.PLAYER_DISCOUNT));
+                .add(Armor.PLAYER_DISCOUNT)
+                .add(Armor.PLAYER_AIR_MINING_EFFICIENCY));
     }
 
     @Inject(
@@ -78,5 +82,28 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Overwrite
     public void applyEnchantmentCosts(ItemStack enchantedItem, int levels) {
         addExperience(-Enchanting.getEnchantmentLevelCost(this, levels));
+    }
+
+    @WrapOperation(
+            method = "getBlockBreakingSpeed",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;isOnGround()Z"
+            )
+    )
+    private boolean isOnGround(PlayerEntity instance, Operation<Boolean> original) {
+        return false;
+    }
+
+    @ModifyReturnValue(
+            method = "getBlockBreakingSpeed",
+            at = @At("RETURN")
+    )
+    private float getBlockBreakingSpeed(float original) {
+        if (isOnGround()) {
+            return original;
+        } else {
+            return original * (float) getAttributeValue(Armor.PLAYER_AIR_MINING_EFFICIENCY);
+        }
     }
 }

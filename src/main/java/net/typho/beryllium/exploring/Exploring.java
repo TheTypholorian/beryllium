@@ -27,8 +27,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
@@ -258,8 +256,6 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
             }
         }
     });
-
-    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = Beryllium.EXPLORING_CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.exploring.name.player.stable_footing", 0.2, 0.00001, 1).setTracked(true));
 
     public static final Int2ObjectMap<TradeOffers.Factory[]> ENDERMAN_TRADES = new Int2ObjectOpenHashMap<>(ImmutableMap.of(
             1, new TradeOffers.Factory[]{

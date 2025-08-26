@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.registry.RegistryAttribute;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -53,6 +54,7 @@ public class Armor implements ModInitializer {
     public static final RegistryEntry<EntityAttribute> GENERIC_SATURATION = Beryllium.ARMOR_CONSTRUCTOR.attribute("generic.saturation", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.saturation", 0).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_BLOCK_SLIPPERINESS = Beryllium.ARMOR_CONSTRUCTOR.attribute("generic.block_slipperiness", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.block_slipperiness", 1).setCategory(EntityAttribute.Category.NEUTRAL).setTracked(true));
     public static final RegistryEntry<EntityAttribute> GENERIC_RANGED_SPEED = Beryllium.ARMOR_CONSTRUCTOR.attribute("generic.ranged_speed", new FreeEntityAttribute("attribute.beryllium.armor.name.generic.ranged_speed", 1).setTracked(true));
+    public static final RegistryEntry<EntityAttribute> PLAYER_AIR_MINING_EFFICIENCY = Beryllium.ARMOR_CONSTRUCTOR.attribute("player.air_mining_efficiency", new ClampedEntityAttribute("attribute.beryllium.armor.name.player.air_mining_efficiency", 0.2, 0.00001, 1).setTracked(true));
 
     public static float trimMaterialScale(ItemStack stack) {
         ArmorTrim trim = stack.getOrDefault(DataComponentTypes.TRIM, null);

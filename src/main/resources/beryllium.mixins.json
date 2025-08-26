@@ -73,7 +73,6 @@
     "exploring.EndSpikeFeatureMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
-    "exploring.PlayerEntityMixin",
     "food.SugarCaneBlockMixin",
     "redstone.CropBlockMixin",
     "redstone.DispenserBlockMixin",
