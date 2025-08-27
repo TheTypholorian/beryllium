@@ -1,0 +1,30 @@
+{
+  "format": "POSITION_COLOR_TEX_LIGHTMAP",
+  "mode": "QUADS",
+  "bufferSize": "TRANSIENT",
+  "sort": true,
+  "affectsCrumbling": true,
+  "outline": false,
+  "layers": [
+    {
+      "type": "veil:shader",
+      "name": "beryllium:congealed_void"
+    },
+    {
+      "type": "minecraft:depth_test",
+      "mode": "always"
+    },
+    {
+      "type": "minecraft:lightmap"
+    },
+    {
+      "type": "minecraft:write_mask",
+      "color": true,
+      "depth": true
+    },
+    {
+      "type": "minecraft:output",
+      "framebuffer": "beryllium:congealed_void"
+    }
+  ]
+}

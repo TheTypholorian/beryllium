@@ -1,6 +1,9 @@
 package net.typho.beryllium.exploring;
 
 import com.google.common.collect.ImmutableMap;
+import foundry.veil.api.client.render.VeilRenderSystem;
+import foundry.veil.fabric.event.FabricVeilAddShaderPreProcessorsEvent;
+import foundry.veil.platform.VeilEventPlatform;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.api.ClientModInitializer;
@@ -512,7 +515,9 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
         BlockRenderLayerMap.INSTANCE.putBlock(POINTED_BONE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLAZING_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BLAZING_WALL_TORCH, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(CONGEALED_VOID, RenderLayer.getTranslucent());
+        VeilEventPlatform.INSTANCE.onVeilAddShaderProcessors((FabricVeilAddShaderPreProcessorsEvent) (resourceProvider, registry) -> {
+            VeilRenderSystem.renderer().getPostProcessingManager().add(Beryllium.BASE_CONSTRUCTOR.id("congealed_void"));
+        });
     }
 
     public static MaterialRules.MaterialRule createEndRule() {

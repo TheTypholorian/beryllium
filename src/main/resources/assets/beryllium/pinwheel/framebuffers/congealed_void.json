@@ -4,9 +4,9 @@
   "autoClear": true,
   "color_buffers": [
     {
-      "type": "render_buffer",
+      "type": "texture",
       "format": "RGBA8",
-      "name": "CongealedVoidBuffer"
+      "name": "CongealedVoidSampler"
     }
   ],
   "depth": true

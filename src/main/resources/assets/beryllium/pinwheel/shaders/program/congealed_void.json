@@ -1,4 +1,4 @@
 {
-  "vertex": "minecraft:position",
+  "vertex": "beryllium:position_color_tex_lightmap",
   "fragment": "beryllium:congealed_void"
 }

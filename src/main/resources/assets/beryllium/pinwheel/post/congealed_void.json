@@ -1,0 +1,16 @@
+{
+  "stages": [
+    {
+      "type": "veil:blit",
+      "shader": "beryllium:congealed_void_blit",
+      "in": "minecraft:main",
+      "out": "veil:post"
+    }
+  ],
+  "textures": {
+    "CongealedVoidSampler": {
+      "type": "framebuffer",
+      "name": "beryllium:congealed_void"
+    }
+  }
+}
