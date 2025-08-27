@@ -4,7 +4,7 @@
   "autoClear": true,
   "color_buffers": [
     {
-      "type": "texture",
+      "type": "renderbuffer",
       "format": "RGBA8",
       "name": "CongealedVoidSampler"
     }

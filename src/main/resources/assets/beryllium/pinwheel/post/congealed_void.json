@@ -3,8 +3,7 @@
     {
       "type": "veil:blit",
       "shader": "beryllium:congealed_void_blit",
-      "in": "minecraft:main",
-      "out": "veil:post"
+      "in": "minecraft:main"
     }
   ],
   "textures": {
