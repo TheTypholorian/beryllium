@@ -71,6 +71,7 @@
     "exploring.EnderDragonEntityMixin",
     "exploring.EndermanEntityMixin",
     "exploring.EndSpikeFeatureMixin",
+    "exploring.ForestRockFeatureMixin",
     "exploring.GlassBottleItemMixin",
     "exploring.MinecraftServerMixin",
     "food.SugarCaneBlockMixin",

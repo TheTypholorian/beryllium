@@ -101,6 +101,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final TagKey<Structure> SPAWN_KEY = TagKey.of(RegistryKeys.STRUCTURE, Beryllium.EXPLORING_CONSTRUCTOR.id("spawn"));
 
     public static final TagKey<Biome> HAS_FIREFLIES = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("has_fireflies"));
+    public static final TagKey<Biome> HAS_END_ROCK = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("has_end_rock"));
     public static final TagKey<Biome> BIRCH_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("birch"));
     public static final TagKey<Biome> SPRUCE_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("spruce"));
     public static final TagKey<Biome> OAK_TAG = TagKey.of(RegistryKeys.BIOME, Beryllium.EXPLORING_CONSTRUCTOR.id("oak"));
@@ -122,6 +123,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final RegistryKey<ConfiguredFeature<?, ?>> MAGMA_DELTA_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("magma_delta"));
     public static final RegistryKey<ConfiguredFeature<?, ?>> BONE_SPIKES_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("bone_spikes"));
     public static final RegistryKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted_tree"));
+    public static final RegistryKey<ConfiguredFeature<?, ?>> END_ROCK_CONFIGURED = RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("end_rock"));
 
     public static final RegistryKey<PlacedFeature> SWAMP_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("swamp_algae"));
     public static final RegistryKey<PlacedFeature> RIVER_ALGAE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("river_algae"));
@@ -131,6 +133,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final RegistryKey<PlacedFeature> MAGMA_DELTA_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("magma_delta"));
     public static final RegistryKey<PlacedFeature> BONE_SPIKES_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("bone_spikes"));
     public static final RegistryKey<PlacedFeature> CORRUPTED_TREE_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted_tree"));
+    public static final RegistryKey<PlacedFeature> END_ROCK_PLACED = RegistryKey.of(RegistryKeys.PLACED_FEATURE, Beryllium.EXPLORING_CONSTRUCTOR.id("end_rock"));
 
     public static final SaplingGenerator CORRUPTED_SAPLING_GENERATOR = new SaplingGenerator(Beryllium.EXPLORING_CONSTRUCTOR.id("corrupted").toString(), Optional.empty(), Optional.of(CORRUPTED_TREE_CONFIGURED), Optional.empty());
 
@@ -329,6 +332,11 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
                 BiomeSelectors.foundInTheNether(),
                 GenerationStep.Feature.UNDERGROUND_DECORATION,
                 BONE_SPIKES_PLACED
+        );
+        BiomeModifications.addFeature(
+                context -> context.hasTag(HAS_END_ROCK),
+                GenerationStep.Feature.LOCAL_MODIFICATIONS,
+                END_ROCK_PLACED
         );
         BiomeModifications.create(Beryllium.EXPLORING_CONSTRUCTOR.id("fireflies"))
                 .add(ModificationPhase.ADDITIONS, BiomeSelectors.tag(HAS_FIREFLIES), context -> {

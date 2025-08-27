@@ -1,7 +1,5 @@
 - corrupted planks texture
 - corrupted forest foliage
-- fix stonecutting granite bricks from granite/polished granite
-- replace stonecutting inputs with tag
 - fix creative durability (it's at 1/4 for some reason)
 - enderman trades
 - end city

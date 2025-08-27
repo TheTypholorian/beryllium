@@ -120,6 +120,13 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                                     new TwoLayersFeatureSize(1, 0, 2)
                             ).dirtProvider(BlockStateProvider.of(Blocks.END_STONE)).build()
                     ));
+            context.register(Exploring.END_ROCK_CONFIGURED,
+                    new ConfiguredFeature<>(
+                            Feature.FOREST_ROCK,
+                            new SingleStateFeatureConfig(
+                                    Blocks.OBSIDIAN.getDefaultState()
+                            )
+                    ));
         });
         builder.addRegistry(RegistryKeys.PLACED_FEATURE, context -> {
             context.register(Exploring.SWAMP_ALGAE_PLACED, new PlacedFeature(
@@ -168,6 +175,16 @@ public class BerylliumDataGenerator implements DataGeneratorEntrypoint {
                     VegetationPlacedFeatures.treeModifiersWithWouldSurvive(
                             PlacedFeatures.createCountExtraModifier(2, 0.1f, 2),
                             Exploring.CORRUPTED_SAPLING
+                    )
+            ));
+            context.register(Exploring.END_ROCK_PLACED, new PlacedFeature(
+                    context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE)
+                            .getOrThrow(Exploring.END_ROCK_CONFIGURED),
+                    List.of(
+                            CountPlacementModifier.of(UniformIntProvider.create(0, 1)),
+                            SquarePlacementModifier.of(),
+                            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
+                            BiomePlacementModifier.of()
                     )
             ));
         });

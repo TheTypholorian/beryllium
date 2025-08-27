@@ -1,8 +1,8 @@
 {
   "values": [
+    "beryllium:exploring/corrupted_plank_fence",
     "beryllium:building/cracked_nether_brick_fence",
     "beryllium:building/red_nether_brick_fence",
-    "beryllium:building/cracked_red_nether_brick_fence",
-    "beryllium:exploring/corrupted_plank_fence"
+    "beryllium:building/cracked_red_nether_brick_fence"
   ]
 }

@@ -46,6 +46,11 @@ repositories {
     }
 
     maven { url = 'https://maven.minecraftforge.net/' }
+
+    maven {
+        name = 'BlameJared Maven (CrT / Bookshelf)'
+        url = 'https://maven.blamejared.com'
+    }
 }
 
 dependencies {
@@ -66,6 +71,11 @@ dependencies {
 
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}"
     modImplementation "maven.modrinth:sodium:${project.sodium_version}-fabric"
+
+    modImplementation("foundry.veil:veil-fabric-${project.minecraft_version}:${project.veil_version}") {
+        exclude group: "maven.modrinth"
+        exclude group: "me.fallenbreath"
+    }
 }
 
 processResources {

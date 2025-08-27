@@ -23,6 +23,9 @@ public class GenBiomeTags extends FabricTagProvider<Biome> {
                 .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
                 .add(BiomeKeys.SWAMP)
                 .add(BiomeKeys.MANGROVE_SWAMP);
+        getOrCreateTagBuilder(Exploring.HAS_END_ROCK)
+                .add(BiomeKeys.END_HIGHLANDS)
+                .add(Exploring.CORRUPTED_FOREST);
         getOrCreateTagBuilder(Exploring.BIRCH_TAG)
                 .add(BiomeKeys.BIRCH_FOREST)
                 .add(BiomeKeys.OLD_GROWTH_BIRCH_FOREST);
