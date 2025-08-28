@@ -64,6 +64,7 @@
     "exploring.AbstractFireBlockMixin",
     "exploring.ChorusFlowerBlockMixin",
     "exploring.ChorusPlantBlockMixin",
+    "exploring.DefaultMaterialsMixin",
     "exploring.DeltaFeatureMixin",
     "exploring.DragonFireballEntityMixin",
     "exploring.EnchantmentHelperMixin",
@@ -97,7 +98,8 @@
     "client.VideoOptionsScreenMixin",
     "client.WorldTabMixin",
     "combat.TridentEntityRendererMixin",
-    "enchanting.EnchantmentScreenMixin"
+    "enchanting.EnchantmentScreenMixin",
+    "exploring.RenderLayersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

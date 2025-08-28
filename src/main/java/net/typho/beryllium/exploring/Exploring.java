@@ -2,9 +2,7 @@ package net.typho.beryllium.exploring;
 
 import com.google.common.collect.ImmutableMap;
 import foundry.veil.api.client.render.VeilRenderSystem;
-import foundry.veil.api.client.render.rendertype.VeilRenderType;
 import foundry.veil.fabric.event.FabricVeilAddShaderPreProcessorsEvent;
-import foundry.veil.fabric.event.FabricVeilRenderLevelStageEvent;
 import foundry.veil.platform.VeilEventPlatform;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -29,7 +27,6 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.Entity;
@@ -288,15 +285,6 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     @Override
     public void onInitialize() {
-        VeilEventPlatform.INSTANCE.onVeilRenderLevelStage((FabricVeilRenderLevelStageEvent) (stage, levelRenderer, bufferSource, matrixStack, frustumMatrix, projectionMatrix, renderTick, deltaTracker, camera, frustum) -> {
-            RenderLayer layer = VeilRenderType.get(Beryllium.BASE_CONSTRUCTOR.id("congealed_void"));
-            VertexConsumer consumer = bufferSource.getBuffer(layer);
-
-            consumer.vertex(0, 0, 0).color(-1);
-            consumer.vertex(0, 0, 1).color(-1);
-            consumer.vertex(0, 1, 1).color(-1);
-            consumer.vertex(0, 1, 0).color(-1);
-        });
         StrippableBlockRegistry.register(CORRUPTED_LOG, STRIPPED_CORRUPTED_LOG);
         StrippableBlockRegistry.register(CORRUPTED_WOOD, STRIPPED_CORRUPTED_WOOD);
         FlammableBlockRegistry.getDefaultInstance().add(DAFFODILS, 60, 100);
