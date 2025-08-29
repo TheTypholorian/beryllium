@@ -31,6 +31,6 @@ public class LevelPropertiesMixin {
             at = @At("HEAD")
     )
     private void updateProperties(DynamicRegistryManager registryManager, NbtCompound levelNbt, NbtCompound playerNbt, CallbackInfo ci) {
-        levelNbt.put(Beryllium.MOD_ID + "ServerConfig", ServerConfig.write(registryManager));
+        levelNbt.put(Beryllium.MOD_ID + "ServerConfig", ServerConfig.write());
     }
 }

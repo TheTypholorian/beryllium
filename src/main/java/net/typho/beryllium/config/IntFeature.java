@@ -1,34 +1,26 @@
 package net.typho.beryllium.config;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.serialization.OptionalDynamic;
+import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtInt;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 
 public class IntFeature extends Feature<Integer> {
+    public final Codec<Integer> codec;
+
     public IntFeature(FeatureGroup parent, String name, Integer value) {
         super(parent, name, IntegerArgumentType.integer(), value);
+        codec = Codec.INT.fieldOf(id.toString()).codec();
     }
 
     @Override
-    public void read(OptionalDynamic<?> dynamic) {
-        value = dynamic.asInt(value);
+    public Codec<Integer> codec() {
+        return codec;
     }
 
     @Override
-    public void decode(ByteBuf buf) {
-        value = buf.readInt();
-    }
-
-    @Override
-    public NbtElement write(DynamicRegistryManager registries) {
-        return NbtInt.of(value);
-    }
-
-    @Override
-    public void encode(ByteBuf buf) {
-        buf.writeInt(value);
+    public PacketCodec<ByteBuf, Integer> packetCodec() {
+        return PacketCodecs.INTEGER;
     }
 }

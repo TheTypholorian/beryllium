@@ -3,12 +3,10 @@ package net.typho.beryllium.config;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.serialization.OptionalDynamic;
+import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.resource.featuretoggle.FeatureSet;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -71,17 +69,9 @@ public abstract class Feature<O> implements FeatureGroupChild {
         return Text.translatable(translationKey());
     }
 
-    public abstract void read(OptionalDynamic<?> dynamic);
+    public abstract Codec<O> codec();
 
-    public abstract void decode(ByteBuf buf);
-
-    public abstract NbtElement write(DynamicRegistryManager registries);
-
-    public abstract void encode(ByteBuf buf);
-
-    public FeatureSet applyFeatures(FeatureSet features) {
-        return features;
-    }
+    public abstract PacketCodec<ByteBuf, O> packetCodec();
 
     @Override
     public void add(FeatureGroup group) {
@@ -90,6 +80,6 @@ public abstract class Feature<O> implements FeatureGroupChild {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " " + id.toString();
+        return getClass().getSimpleName() + " " + id.toString() + " = " + value.toString();
     }
 }
