@@ -15,10 +15,6 @@
       "mode": "always"
     },
     {
-      "type": "minecraft:transparency",
-      "mode": "additive"
-    },
-    {
       "type": "minecraft:write_mask",
       "color": true,
       "depth": true
