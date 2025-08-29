@@ -29,7 +29,7 @@ public class RespawnAnchorBlockMixin {
             cancellable = true
     )
     private void onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ItemActionResult> cir) {
-        if (ServerConfig.respawnAnchorsDontExplode.get() && !isNether(world)) {
+        if (ServerConfig.RESPAWN_ANCHORS_DONT_EXPLODE.get() && !isNether(world)) {
             cir.setReturnValue(ItemActionResult.SKIP_DEFAULT_BLOCK_INTERACTION);
         }
     }

@@ -1,35 +1,34 @@
 package net.typho.beryllium.config;
 
-import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.serialization.OptionalDynamic;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
 
-public class BooleanProperty extends Property<Boolean> {
-    public BooleanProperty(Identifier id, Boolean value) {
-        super(id, BoolArgumentType.bool(), value);
+public class IntFeature extends Feature<Integer> {
+    public IntFeature(FeatureGroup parent, String name, Integer value) {
+        super(parent, name, IntegerArgumentType.integer(), value);
     }
 
     @Override
     public void read(OptionalDynamic<?> dynamic) {
-        value = dynamic.asBoolean(value);
+        value = dynamic.asInt(value);
     }
 
     @Override
     public void decode(ByteBuf buf) {
-        value = buf.readBoolean();
+        value = buf.readInt();
     }
 
     @Override
     public NbtElement write(DynamicRegistryManager registries) {
-        return NbtByte.of(value);
+        return NbtInt.of(value);
     }
 
     @Override
     public void encode(ByteBuf buf) {
-        buf.writeBoolean(value);
+        buf.writeInt(value);
     }
 }

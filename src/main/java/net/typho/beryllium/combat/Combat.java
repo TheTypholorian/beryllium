@@ -111,7 +111,7 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<Item> HORSE_ARMOR = TagKey.of(RegistryKeys.ITEM, Beryllium.COMBAT_CONSTRUCTOR.id("horse_armor"));
 
     public static float shieldDurability(ItemStack shield) {
-        return shield.getOrDefault(SHIELD_DURABILITY, ServerConfig.shieldMaxDurability.get()).floatValue();
+        return shield.getOrDefault(SHIELD_DURABILITY, ServerConfig.SHIELD_MAX_DURABILITY.get()).floatValue();
     }
 
     @Override

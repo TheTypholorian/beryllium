@@ -16,7 +16,7 @@ public class GameRendererMixin {
             cancellable = true
     )
     private void getSkyDarkness(float tickDelta, CallbackInfoReturnable<Float> cir) {
-        if (ServerConfig.ultraDark.get()) {
+        if (ServerConfig.ULTRA_DARK.get()) {
             cir.setReturnValue(ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world));
         }
     }

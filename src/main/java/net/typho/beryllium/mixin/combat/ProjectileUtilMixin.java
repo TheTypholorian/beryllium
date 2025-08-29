@@ -31,7 +31,7 @@ public class ProjectileUtilMixin {
         Vec3d vec3d = null;
         float margin = 0;
 
-        if (ServerConfig.sweepingMargin.get() && entity instanceof PlayerEntity player) {
+        if (ServerConfig.SWEEPING_MARGIN.get() && entity instanceof PlayerEntity player) {
             ItemStack held = player.getWeaponStack();
 
             if (held.getItem() instanceof SweepingItem sweep) {

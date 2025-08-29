@@ -26,7 +26,7 @@ public class AttributeModifiersComponentMixin {
             )
     )
     private void disabledArmor(BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> instance, Object attribute, Object modifier, Operation<Void> original) {
-        if (!(ServerConfig.disabledArmor.get() && attribute == EntityAttributes.GENERIC_ARMOR)) {
+        if (!(ServerConfig.DISABLED_ARMOR.get() && attribute == EntityAttributes.GENERIC_ARMOR)) {
             original.call(instance, attribute, modifier);
         }
     }

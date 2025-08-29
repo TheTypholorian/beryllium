@@ -27,19 +27,19 @@ public class SugarCaneBlockMixin {
             constant = @Constant(intValue = 3)
     )
     private int maxHeight(int maxHeight) {
-        return ServerConfig.maxSugarcaneHeight.get();
+        return ServerConfig.MAX_SUGARCANE_HEIGHT.get();
     }
 
     public boolean fert$isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return ServerConfig.fertilizableSugarcane.get();
+        return ServerConfig.FERTILIZABLE_SUGARCANE.get();
     }
 
     public boolean fert$canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return ServerConfig.fertilizableSugarcane.get();
+        return ServerConfig.FERTILIZABLE_SUGARCANE.get();
     }
 
     public void fert$grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (ServerConfig.fertilizableSugarcane.get()) {
+        if (ServerConfig.FERTILIZABLE_SUGARCANE.get()) {
             int y = pos.getY();
             BlockState top = state;
 

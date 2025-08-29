@@ -22,7 +22,7 @@ public class TntBlockMixin {
             cancellable = true
     )
     public void onDestroyedByExplosion(World world, BlockPos pos, Explosion explosion, CallbackInfo ci) {
-        if (ServerConfig.instantChainTNT.get()) {
+        if (ServerConfig.INSTANT_CHAIN_TNT.get()) {
             if (!world.isClient) {
                 world.createExplosion(
                         null,

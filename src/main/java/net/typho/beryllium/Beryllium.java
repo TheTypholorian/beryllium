@@ -11,7 +11,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.config.Property;
+import net.typho.beryllium.config.Feature;
 import net.typho.beryllium.config.ServerConfig;
 import net.typho.beryllium.config.SyncServerConfigS2C;
 import net.typho.beryllium.util.Constructor;
@@ -22,6 +22,7 @@ public class Beryllium implements ModInitializer {
     public static final Identifier SYNC_SERVER_CONFIG_ID = BASE_CONSTRUCTOR.id("sync_server_config");
 
     public static final Constructor COMBAT_CONSTRUCTOR = new Constructor("combat");
+    public static final Constructor CHALLENGES_CONSTRUCTOR = new Constructor("challenges");
     public static final Constructor ARMOR_CONSTRUCTOR = new Constructor("armor");
     public static final Constructor BUILDING_CONSTRUCTOR = new Constructor("building");
     public static final Constructor ENCHANTING_CONSTRUCTOR = new Constructor("enchanting");
@@ -34,8 +35,8 @@ public class Beryllium implements ModInitializer {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
         PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.PACKET_CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            for (Property<?> property : ServerConfig.properties.values()) {
-                sender.sendPacket(new SyncServerConfigS2C(property));
+            for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
+                sender.sendPacket(new SyncServerConfigS2C(feature));
             }
         });
         CommandRegistrationCallback.EVENT.register((dispatcher, registries, environment) -> {

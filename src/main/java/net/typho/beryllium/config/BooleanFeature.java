@@ -6,11 +6,10 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.util.Identifier;
 
-public class BooleanServerResourceProperty extends ServerResourceProperty<Boolean> {
-    public BooleanServerResourceProperty(Identifier id, Boolean value) {
-        super(id, BoolArgumentType.bool(), value);
+public class BooleanFeature extends Feature<Boolean> {
+    public BooleanFeature(FeatureGroup parent, String name, Boolean value) {
+        super(parent, name, BoolArgumentType.bool(), value);
     }
 
     @Override

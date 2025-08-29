@@ -214,7 +214,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean canFitEnchantment(ItemStack stack, Enchantment enchant, Supplier<Stream<EnchantmentLevelEntry>> enchantments) {
-        if (!ServerConfig.enchantmentCapacity.get()) {
+        if (!ServerConfig.ENCHANTMENT_CAPACITY.get()) {
             return true;
         }
 
@@ -230,7 +230,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static ItemStack getCatalyst(RegistryEntry<Enchantment> enchant, int level) {
-        if (!ServerConfig.enchantmentCatalysts.get()) {
+        if (!ServerConfig.ENCHANTMENT_CATALYSTS.get()) {
             return ItemStack.EMPTY;
         }
 
@@ -238,7 +238,7 @@ public class Enchanting implements ModInitializer {
     }
 
     public static boolean hasEnoughCatalysts(ItemStack source, RegistryEntry<Enchantment> enchant, int level, PlayerEntity player) {
-        if (player.getAbilities().creativeMode || !ServerConfig.enchantmentCatalysts.get()) {
+        if (player.getAbilities().creativeMode || !ServerConfig.ENCHANTMENT_CATALYSTS.get()) {
             return true;
         }
 

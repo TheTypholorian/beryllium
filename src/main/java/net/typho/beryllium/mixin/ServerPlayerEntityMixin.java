@@ -18,7 +18,7 @@ public class ServerPlayerEntityMixin {
             cancellable = true
     )
     private void acceptsMessage(CallbackInfoReturnable<Boolean> cir) {
-        if (ServerConfig.disabledChat.get()) {
+        if (ServerConfig.DISABLED_CHAT.get()) {
             cir.setReturnValue(false);
         }
     }

@@ -22,7 +22,7 @@ public class WorldTabMixin {
             )
     )
     private void ultraDark(CreateWorldScreen screen, CallbackInfo ci, @Local WorldScreenOptionGrid.Builder builder) {
-        builder.add(Text.translatable("selectWorld.beryllium.ultraDark"), ServerConfig.ultraDark::get, ServerConfig.ultraDark::set)
+        builder.add(Text.translatable("selectWorld.beryllium.ultraDark"), ServerConfig.ULTRA_DARK::get, ServerConfig.ULTRA_DARK::set)
                 .tooltip(Text.translatable("selectWorld.beryllium.ultraDark.info"));
     }
 }

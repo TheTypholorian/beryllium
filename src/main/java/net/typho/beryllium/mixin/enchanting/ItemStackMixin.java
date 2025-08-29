@@ -35,7 +35,7 @@ public abstract class ItemStackMixin {
     )
     @Environment(EnvType.CLIENT)
     private void appendTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> text) {
-        if (ServerConfig.enchantmentCapacity.get() && player != null) {
+        if (ServerConfig.ENCHANTMENT_CAPACITY.get() && player != null) {
             if (player.currentScreenHandler instanceof EnchantmentScreenHandler || player.currentScreenHandler instanceof AnvilScreenHandler || player.currentScreenHandler instanceof GrindstoneScreenHandler) {
                 ItemStack stack = (ItemStack) (Object) this;
 

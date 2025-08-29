@@ -14,17 +14,22 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 
-public abstract class Property<O> {
+public abstract class Feature<O> implements FeatureGroupChild {
     public final Identifier id;
+    public final String name;
+    public final FeatureGroup parent;
     public final ArgumentType<O> argumentType;
     public final O defValue;
     protected O value;
 
-    public Property(Identifier id, ArgumentType<O> argumentType, O value) {
-        this.id = id;
+    public Feature(FeatureGroup parent, String name, ArgumentType<O> argumentType, O value) {
+        this.id = parent.id.withSuffixedPath("/" + name);
+        this.name = name;
+        this.parent = parent;
         this.argumentType = argumentType;
         this.value = defValue = value;
-        ServerConfig.properties.put(id, this);
+        parent.features.add(this);
+        ServerConfig.ALL_FEATURES.put(id, this);
     }
 
     public O get() {
@@ -74,7 +79,17 @@ public abstract class Property<O> {
 
     public abstract void encode(ByteBuf buf);
 
-    public FeatureSet getFeatures(FeatureSet features) {
+    public FeatureSet applyFeatures(FeatureSet features) {
         return features;
+    }
+
+    @Override
+    public void add(FeatureGroup group) {
+        group.features.add(this);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " " + id.toString();
     }
 }

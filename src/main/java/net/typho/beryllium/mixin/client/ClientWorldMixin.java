@@ -16,7 +16,7 @@ public class ClientWorldMixin {
             cancellable = true
     )
     private void getSkyBrightness(float tickDelta, CallbackInfoReturnable<Float> cir) {
-        if (ServerConfig.ultraDark.get()) {
+        if (ServerConfig.ULTRA_DARK.get()) {
             cir.setReturnValue(1 - ServerConfig.ultraDarkBlend((World) (Object) this));
         }
     }

@@ -24,7 +24,7 @@ public class RegistryLoaderMixin {
     )
     private static <E> void loadFromResource(ResourceManager resourceManager, RegistryOps.RegistryInfoGetter infoGetter, MutableRegistry<E> registry, Decoder<E> elementDecoder, Map<RegistryKey<?>, Exception> errors, CallbackInfo ci, @Local RegistryKey<E> resKey) {
         System.out.println("Load " + resKey);
-        if (ServerConfig.durabilityRemoval.get() && registry.getKey().equals(RegistryKeys.ENCHANTMENT) && ServerConfig.DURABILITY_ENCHANTS.contains(resKey.getValue())) {
+        if (ServerConfig.DURABILITY_REMOVAL.get() && registry.getKey().equals(RegistryKeys.ENCHANTMENT) && ServerConfig.DURABILITY_ENCHANTS.contains(resKey.getValue())) {
             System.out.println("cancel");
             //ci.cancel();
         }

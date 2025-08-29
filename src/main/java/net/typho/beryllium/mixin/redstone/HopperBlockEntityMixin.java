@@ -42,6 +42,6 @@ public abstract class HopperBlockEntityMixin {
             constant = @Constant(intValue = 8)
     )
     private static int cooldown(int cooldown) {
-        return ServerConfig.hopperCooldown.get();
+        return ServerConfig.HOPPER_COOLDOWN.get();
     }
 }

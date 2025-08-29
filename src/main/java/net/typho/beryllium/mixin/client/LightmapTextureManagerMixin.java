@@ -20,6 +20,6 @@ public class LightmapTextureManagerMixin {
             )
     )
     private float gamma(Double instance, Operation<Float> original) {
-        return ServerConfig.ultraDark.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) * (1 - ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world)) : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
+        return ServerConfig.ULTRA_DARK.get() ? Armor.bonusSight(MinecraftClient.getInstance().player) * (1 - ServerConfig.ultraDarkBlend(MinecraftClient.getInstance().world)) : original.call(instance) + Armor.bonusSight(MinecraftClient.getInstance().player);
     }
 }

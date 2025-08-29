@@ -24,7 +24,7 @@ public class MinecraftServerMixin {
             cancellable = true
     )
     private static void setupSpawn(ServerWorld world, ServerWorldProperties worldProperties, boolean bonusChest, boolean debugWorld, CallbackInfo ci) {
-        if (ServerConfig.spawnInVillage.get()) {
+        if (ServerConfig.SPAWN_IN_VILLAGE.get()) {
             BlockPos spawn = world.locateStructure(Exploring.SPAWN_KEY, new BlockPos(0, 0, 0), 500, false);
 
             if (spawn != null) {

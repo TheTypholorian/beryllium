@@ -26,7 +26,7 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @Override
     protected boolean hasComparatorOutput(BlockState state) {
-        return ServerConfig.cropComparatorOutput.get();
+        return ServerConfig.CROP_COMPARATOR_OUTPUT.get();
     }
 
     @Override

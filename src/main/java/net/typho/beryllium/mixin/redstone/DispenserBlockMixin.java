@@ -30,7 +30,7 @@ public class DispenserBlockMixin {
             BlockPos targetPos = pointer.pos().offset(pointer.state().get(DispenserBlock.FACING));
             BlockState targetState = pointer.world().getBlockState(targetPos);
 
-            if (stack.getItem() instanceof BlockItem blockItem && ServerConfig.dispensersPlaceBlocks.get()) {
+            if (stack.getItem() instanceof BlockItem blockItem && ServerConfig.DISPENSERS_PLACE_BLOCKS.get()) {
                 Block block = blockItem.getBlock();
                 BlockState placeState = block.getDefaultState();
 

@@ -50,7 +50,7 @@ public class Constructor implements Identifierifier {
 
     @Override
     public Identifier id(String id) {
-        return Identifier.of(Beryllium.MOD_ID, name == null ? id : (name + "/" + id));
+        return Identifier.of(Beryllium.MOD_ID, name == null ? id : id.isEmpty() ? name : (name + "/" + id));
     }
 
     public <I extends Item> I item(String id, I item) {

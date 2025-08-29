@@ -34,7 +34,7 @@ public abstract class EndCrystalEntityMixin {
                 crystal.remove(Entity.RemovalReason.KILLED);
 
                 DamageSource damageSource = source.getAttacker() != null ? crystal.getDamageSources().explosion(crystal, source.getAttacker()) : null;
-                crystal.getWorld().createExplosion(crystal, damageSource, null, crystal.getX(), crystal.getY(), crystal.getZ(), ServerConfig.endCrystalPower.get(), false, World.ExplosionSourceType.BLOCK);
+                crystal.getWorld().createExplosion(crystal, damageSource, null, crystal.getX(), crystal.getY(), crystal.getZ(), ServerConfig.END_CRYSTAL_POWER.get(), false, World.ExplosionSourceType.BLOCK);
 
                 crystalDestroyed(source);
             }

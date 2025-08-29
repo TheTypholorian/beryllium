@@ -11,8 +11,8 @@ import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 
 public record SyncServerConfigS2C(Identifier id, String value) implements CustomPayload {
-    public SyncServerConfigS2C(Property<?> property) {
-        this(property.id, property.value.toString());
+    public SyncServerConfigS2C(Feature<?> feature) {
+        this(feature.id, feature.value.toString());
     }
 
     public static final Id<SyncServerConfigS2C> ID = new Id<>(Beryllium.SYNC_SERVER_CONFIG_ID);

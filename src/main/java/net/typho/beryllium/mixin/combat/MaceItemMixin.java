@@ -22,7 +22,7 @@ public class MaceItemMixin {
             cancellable = true
     )
     private void getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource, CallbackInfoReturnable<Float> cir) {
-        if (ServerConfig.maceRebalance.get()) {
+        if (ServerConfig.MACE_REBALANCE.get()) {
             if (damageSource.getSource() instanceof LivingEntity livingEntity) {
                 if (!shouldDealAdditionalDamage(livingEntity)) {
                     cir.setReturnValue(0f);

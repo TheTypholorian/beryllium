@@ -30,7 +30,7 @@ public class EndCrystalItemMixin {
     private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         if (cir.getReturnValue().isAccepted()) {
             if (context.getPlayer() != null) {
-                context.getPlayer().getItemCooldownManager().set((Item) (Object) this, ServerConfig.endCrystalCooldown.get());
+                context.getPlayer().getItemCooldownManager().set((Item) (Object) this, ServerConfig.END_CRYSTAL_COOLDOWN.get());
             }
         }
     }
