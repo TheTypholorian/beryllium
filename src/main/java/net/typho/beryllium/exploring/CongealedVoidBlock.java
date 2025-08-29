@@ -1,15 +1,18 @@
 package net.typho.beryllium.exploring;
 
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.TranslucentBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-public class CongealedVoidBlock extends TranslucentBlock {
+public class CongealedVoidBlock extends TranslucentBlock implements BlockEntityProvider {
     public CongealedVoidBlock(Settings settings) {
         super(settings);
     }
@@ -25,7 +28,12 @@ public class CongealedVoidBlock extends TranslucentBlock {
     }
 
     @Override
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CongealedVoidBlockEntity(pos, state);
+    }
+
+    @Override
     protected BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.INVISIBLE;
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 }

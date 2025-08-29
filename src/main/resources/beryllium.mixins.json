@@ -30,6 +30,7 @@
     "client.CompassItemMixin",
     "client.CraftingRecipeJsonBuilderMixin",
     "client.RecipeProviderMixin",
+    "client.ShaderImportProcessorMixin",
     "client.VeilMultiBindMixin",
     "client.VeilShaderSourceMixin",
     "combat.BrewingRecipeRegistryMixin",

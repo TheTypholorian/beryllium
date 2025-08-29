@@ -9,5 +9,8 @@
       "name": "CongealedVoidSampler"
     }
   ],
-  "depth": true
+  "depth": {
+    "format": "DEPTH_COMPONENT",
+    "name": "CongealedVoidDepthSampler"
+  }
 }

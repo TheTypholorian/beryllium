@@ -27,6 +27,7 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.component.ComponentType;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.entity.Entity;
@@ -237,6 +238,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final Block BLAZING_WALL_TORCH = Beryllium.EXPLORING_CONSTRUCTOR.block("blazing_wall_torch", new BlazingWallTorchBlock(ParticleTypes.FIREWORK, AbstractBlock.Settings.copy(Blocks.TORCH)));
 
     public static final BlockEntityType<BlazingTorchBlockEntity> BLAZING_TORCH_BLOCK_ENTITY = Beryllium.EXPLORING_CONSTRUCTOR.blockEntity("blazing_torch", BlockEntityType.Builder.create(BlazingTorchBlockEntity::new, BLAZING_TORCH, BLAZING_WALL_TORCH));
+    public static final BlockEntityType<CongealedVoidBlockEntity> CONGEALED_VOID_BLOCK_ENTITY = Beryllium.EXPLORING_CONSTRUCTOR.blockEntity("congealed_void", BlockEntityType.Builder.create(CongealedVoidBlockEntity::new, CONGEALED_VOID));
 
     public static final Item ONYX = Beryllium.EXPLORING_CONSTRUCTOR.item("onyx", new Item(new Item.Settings()));
     public static final Item METAL_DETECTOR_ITEM = Beryllium.EXPLORING_CONSTRUCTOR.item("metal_detector", new MetalDetectorItem(new Item.Settings()));
@@ -465,6 +467,7 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
 
     @Override
     public void onInitializeClient() {
+        BlockEntityRendererFactories.register(CONGEALED_VOID_BLOCK_ENTITY, ctx -> new CongealedVoidBlockEntityRenderer());
         ModelPredicateProviderRegistry.register(METAL_DETECTOR_ITEM, Identifier.ofVanilla("angle"), new CompassAnglePredicateProvider((world, stack, entity) -> MetalDetectorItem.nearestOre(entity, world)));
         ParticleFactoryRegistry.getInstance().register(
                 FIREFLY_PARTICLE,
