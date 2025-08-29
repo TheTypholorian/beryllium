@@ -24,7 +24,7 @@ public class CongealedVoidBlock extends TranslucentBlock implements BlockEntityP
 
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        entity.slowMovement(state, new Vec3d(0.5, 0.5, 0.5));
+        entity.slowMovement(state, new Vec3d(0.9, 0.9, 0.9));
     }
 
     @Override

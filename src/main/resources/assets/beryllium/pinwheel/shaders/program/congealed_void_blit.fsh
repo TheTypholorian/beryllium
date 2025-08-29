@@ -23,7 +23,6 @@ void main() {
             vec3 pos = screenToLocalSpace(texCoord, gameDepth).xyz;
             float vertexDistance = fog_distance(pos, 0);
             fragColor = linear_fog(fragColor, vertexDistance, 8, 12, voidColor);
-            //fragColor.rgb += (voidColor.rgb / voidColor.a) / vertexDistance;
         }
     //}
 }

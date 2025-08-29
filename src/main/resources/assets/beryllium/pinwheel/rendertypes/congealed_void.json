@@ -2,7 +2,7 @@
   "format": "POSITION_COLOR",
   "mode": "QUADS",
   "bufferSize": "TRANSIENT",
-  "sort": true,
+  "sort": false,
   "affectsCrumbling": true,
   "outline": false,
   "layers": [
