@@ -23,7 +23,7 @@ public abstract class ShieldItemMixin extends Item {
             player.getItemCooldownManager().set(stack.getItem(), ServerConfig.shieldLowerCooldown.get());
         }
 
-        if (ServerConfig.shieldDurability.get()) {
+        if (ServerConfig.durabilityRemoval.get()) {
             stack.set(Combat.SHIELD_DURABILITY, (float) ServerConfig.shieldMaxDurability.get());
         }
 
@@ -32,7 +32,7 @@ public abstract class ShieldItemMixin extends Item {
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
-        if (!ServerConfig.shieldDurability.get()) {
+        if (!ServerConfig.durabilityRemoval.get()) {
             return super.isItemBarVisible(stack);
         }
 
@@ -47,7 +47,7 @@ public abstract class ShieldItemMixin extends Item {
 
     @Override
     public int getItemBarColor(ItemStack stack) {
-        if (!ServerConfig.shieldDurability.get()) {
+        if (!ServerConfig.durabilityRemoval.get()) {
             return super.getItemBarColor(stack);
         }
 
@@ -62,7 +62,7 @@ public abstract class ShieldItemMixin extends Item {
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        if (!ServerConfig.shieldDurability.get()) {
+        if (!ServerConfig.durabilityRemoval.get()) {
             return super.getItemBarStep(stack);
         }
 

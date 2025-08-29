@@ -90,7 +90,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .smelting(BlockFamilies.STONE)
             .build();
     public static final BlockFamily GRANITE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("granite_brick", Blocks.STONE_BRICKS)
-            .features(ServerConfig.graniteBricks.flag)
+            .features(ServerConfig.extraStoneBricks.flag)
             .base("granite_bricks")
             .wall()
             .stairs()
@@ -99,6 +99,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stonecutting(Blocks.GRANITE, Blocks.POLISHED_GRANITE)
             .build();
     public static final BlockFamily DIORITE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("diorite_brick", Blocks.STONE_BRICKS)
+            .features(ServerConfig.extraStoneBricks.flag)
             .base("diorite_bricks")
             .wall()
             .stairs()
@@ -107,6 +108,7 @@ public class Building implements ModInitializer, ClientModInitializer {
             .stonecutting(Blocks.DIORITE, Blocks.POLISHED_DIORITE)
             .build();
     public static final BlockFamily ANDESITE_BRICKS = Beryllium.BUILDING_CONSTRUCTOR.blockFamily("andesite_brick", Blocks.STONE_BRICKS)
+            .features(ServerConfig.extraStoneBricks.flag)
             .base("andesite_bricks")
             .wall()
             .stairs()

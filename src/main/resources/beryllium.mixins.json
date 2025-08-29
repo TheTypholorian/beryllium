@@ -21,6 +21,7 @@
     "armor.PersistentProjectileEntityMixin",
     "armor.PlayerEntityMixin",
     "armor.RangedWeaponItemMixin",
+    "armor.RegistryLoaderMixin",
     "armor.ServerPlayNetworkHandlerMixin",
     "armor.SmithingTemplateItemMixin",
     "armor.StatusEffectInstanceMixin",

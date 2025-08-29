@@ -20,11 +20,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.typho.beryllium.Beryllium;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ServerConfig implements ModInitializer {
     public static final Map<Identifier, Property<?>> properties = new LinkedHashMap<>();
+
+    public static final Set<Identifier> DURABILITY_ENCHANTS = new HashSet<>(Set.of(
+            Identifier.ofVanilla("mending"),
+            Identifier.ofVanilla("unbreaking")
+    ));
 
     public static final BooleanProperty fertilizableSugarcane = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("fertilizable_sugarcane"), true);
     public static final IntProperty maxSugarcaneHeight = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("max_sugarcane_height"), 5);
@@ -37,14 +44,14 @@ public class ServerConfig implements ModInitializer {
     public static final FloatProperty sweepMarginMultiplier = new FloatProperty(Beryllium.COMBAT_CONSTRUCTOR.id("sweep_margin_multiplier"), 0.05f);
     public static final BooleanProperty crossbowEndCrystals = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("crossbow_end_crystals"), true);
     public static final BooleanProperty respawnAnchorsDontExplode = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("respawn_anchors_dont_explode"), true);
-    public static final BooleanProperty shieldDurability = new BooleanProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_durability"), true);
     public static final IntProperty shieldMaxDurability = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_max_durability"), 30);
     public static final IntProperty shieldLowerCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("shield_lower_cooldown"), 60);
     public static final IntProperty splashPotionCooldown = new IntProperty(Beryllium.COMBAT_CONSTRUCTOR.id("splash_potion_cooldown"), 100);
 
     public static final BooleanProperty disabledArmor = new BooleanProperty(Beryllium.ARMOR_CONSTRUCTOR.id("disabled_armor"), true);
+    public static final BooleanProperty betterArmor = new BooleanProperty(Beryllium.ARMOR_CONSTRUCTOR.id("better_armor"), true);
 
-    public static final FeatureProperty graniteBricks = new FeatureProperty(Beryllium.BUILDING_CONSTRUCTOR.id("granite_bricks"), true);
+    public static final FeatureProperty extraStoneBricks = new FeatureProperty(Beryllium.BUILDING_CONSTRUCTOR.id("extra_stone_bricks"), true);
 
     public static final IntProperty metalDetectorRadius = new IntProperty(Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector_radius"), 16);
     public static final IntProperty metalDetectorHeight = new IntProperty(Beryllium.EXPLORING_CONSTRUCTOR.id("metal_detector_height"), 2);
@@ -58,7 +65,7 @@ public class ServerConfig implements ModInitializer {
     public static final IntProperty hopperCooldown = new IntProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("hopper_cooldown"), 4);
     public static final BooleanProperty instantChainTNT = new BooleanProperty(Beryllium.REDSTONE_CONSTRUCTOR.id("instant_chain_tnt"), false);
 
-    public static final BooleanProperty durabilityRemoval = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("durability_removal"), false);
+    public static final BooleanServerResourceProperty durabilityRemoval = new BooleanServerResourceProperty(Beryllium.BASE_CONSTRUCTOR.id("durability_removal"), true);
     public static final BooleanProperty ultraDark = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("ultra_dark"), false);
     public static final BooleanProperty disabledChat = new BooleanProperty(Beryllium.BASE_CONSTRUCTOR.id("disabled_chat"), false);
 

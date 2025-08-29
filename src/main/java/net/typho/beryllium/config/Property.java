@@ -35,7 +35,6 @@ public abstract class Property<O> {
     }
 
     public void updatedServer(MinecraftServer server) {
-        server.sendMessage(Text.translatable("config.beryllium.feature_warning"));
     }
 
     @SuppressWarnings("unchecked")
