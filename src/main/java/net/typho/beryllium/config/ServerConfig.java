@@ -1,6 +1,7 @@
 package net.typho.beryllium.config;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.api.ModInitializer;
@@ -9,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -37,13 +38,13 @@ public class ServerConfig implements ModInitializer {
             Identifier.ofVanilla("unbreaking")
     ));
 
-    public static final FeatureGroup ARMOR_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), Beryllium.ARMOR_CONSTRUCTOR, "config");
-    public static final FeatureGroup BUILDING_GROUP = new FeatureGroup(new ItemStack(Items.BRICKS), Beryllium.BUILDING_CONSTRUCTOR, "config");
-    public static final FeatureGroup CHALLENGES_GROUP = new FeatureGroup(new ItemStack(Items.NETHERITE_BLOCK), Beryllium.CHALLENGES_CONSTRUCTOR, "config");
-    public static final FeatureGroup COMBAT_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_SWORD), Beryllium.COMBAT_CONSTRUCTOR, "config");
-    public static final FeatureGroup ENCHANTING_GROUP = new FeatureGroup(new ItemStack(Items.ENCHANTED_BOOK), Beryllium.ENCHANTING_CONSTRUCTOR, "config");
-    public static final FeatureGroup EXPLORING_GROUP = new FeatureGroup(new ItemStack(Items.OAK_SAPLING), Beryllium.EXPLORING_CONSTRUCTOR, "config");
-    public static final FeatureGroup REDSTONE_GROUP = new FeatureGroup(new ItemStack(Items.REDSTONE), Beryllium.REDSTONE_CONSTRUCTOR, "config");
+    public static final FeatureGroup ARMOR_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), Beryllium.ARMOR_CONSTRUCTOR, "");
+    public static final FeatureGroup BUILDING_GROUP = new FeatureGroup(new ItemStack(Items.BRICKS), Beryllium.BUILDING_CONSTRUCTOR, "");
+    public static final FeatureGroup CHALLENGES_GROUP = new FeatureGroup(new ItemStack(Items.TRIAL_KEY), Beryllium.CHALLENGES_CONSTRUCTOR, "");
+    public static final FeatureGroup COMBAT_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_SWORD), Beryllium.COMBAT_CONSTRUCTOR, "");
+    public static final FeatureGroup ENCHANTING_GROUP = new FeatureGroup(new ItemStack(Items.ENCHANTED_BOOK), Beryllium.ENCHANTING_CONSTRUCTOR, "");
+    public static final FeatureGroup EXPLORING_GROUP = new FeatureGroup(new ItemStack(Items.MAP), Beryllium.EXPLORING_CONSTRUCTOR, "");
+    public static final FeatureGroup REDSTONE_GROUP = new FeatureGroup(new ItemStack(Items.REDSTONE), Beryllium.REDSTONE_CONSTRUCTOR, "");
 
     public static final FeatureGroup BASE_GROUP = new FeatureGroup(
             ItemStack.EMPTY, Beryllium.BASE_CONSTRUCTOR, "config",
@@ -105,23 +106,35 @@ public class ServerConfig implements ModInitializer {
 
     public static void read(Dynamic<?> dynamic) {
         for (Feature<?> feature : ALL_FEATURES.values()) {
-            feature.read(dynamic.get(feature.id.toString()));
+            DataResult<? extends Dynamic<?>> result = dynamic.get(feature.id.toString()).get();
+
+            if (result.isSuccess()) {
+                feature.set(feature.codec().decode(result.getOrThrow()));
+            }
         }
     }
 
-    public static NbtElement write(DynamicRegistryManager registries) {
+    private static <T> DataResult<NbtElement> write(Feature<T> feature, NbtCompound nbt) {
+        return feature.codec().encode(feature.value, NbtOps.INSTANCE, nbt);
+    }
+
+    public static NbtElement write() {
         NbtCompound nbt = new NbtCompound();
 
         for (Feature<?> feature : ALL_FEATURES.values()) {
-            nbt.put(feature.id.toString(), feature.write(registries));
+            nbt = (NbtCompound) write(feature, nbt).getOrThrow();
         }
 
         return nbt;
     }
 
+    private static <T> void encode(ByteBuf buf, Feature<T> feature) {
+        feature.packetCodec().encode(buf, feature.value);
+    }
+
     public static void encode(ByteBuf buf) {
         for (Feature<?> feature : ALL_FEATURES.values()) {
-            feature.encode(buf);
+            encode(buf, feature);
         }
     }
 
