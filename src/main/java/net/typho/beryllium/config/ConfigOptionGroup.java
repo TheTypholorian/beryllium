@@ -11,37 +11,37 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChild> {
+public class ConfigOptionGroup implements ConfigOptionGroupChild, Iterable<ConfigOptionGroupChild> {
     public final Identifier id;
     public final String name;
-    public final FeatureGroup parent;
-    public final List<FeatureGroup> subGroups = new LinkedList<>();
-    public final List<Feature<?>> features = new LinkedList<>();
+    public final ConfigOptionGroup parent;
+    public final List<ConfigOptionGroup> subGroups = new LinkedList<>();
+    public final List<ConfigOption<?>> options = new LinkedList<>();
     public final ItemStack icon;
 
-    public FeatureGroup(ItemStack icon, Identifier id, FeatureGroupChild... features) {
+    public ConfigOptionGroup(ItemStack icon, Identifier id, ConfigOptionGroupChild... features) {
         this.icon = icon;
         this.id = id;
         this.name = id.getPath();
         this.parent = null;
 
-        for (FeatureGroupChild feature : features) {
+        for (ConfigOptionGroupChild feature : features) {
             feature.add(this);
         }
     }
 
-    public FeatureGroup(ItemStack icon, Constructor constructor, String name, FeatureGroupChild... features) {
+    public ConfigOptionGroup(ItemStack icon, Constructor constructor, String name, ConfigOptionGroupChild... features) {
         this.icon = icon;
         this.id = constructor.id(name);
         this.name = name;
         this.parent = null;
 
-        for (FeatureGroupChild feature : features) {
+        for (ConfigOptionGroupChild feature : features) {
             feature.add(this);
         }
     }
 
-    public FeatureGroup(ItemStack icon, FeatureGroup parent, String folder, FeatureGroupChild... features) {
+    public ConfigOptionGroup(ItemStack icon, ConfigOptionGroup parent, String folder, ConfigOptionGroupChild... features) {
         this.icon = icon;
         this.id = parent.id.withSuffixedPath("/" + folder);
         this.name = folder;
@@ -49,14 +49,14 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
 
         parent.subGroups.add(this);
 
-        for (FeatureGroupChild feature : features) {
+        for (ConfigOptionGroupChild feature : features) {
             feature.add(this);
         }
     }
 
     @Override
-    public @NotNull Iterator<FeatureGroupChild> iterator() {
-        return Iterators.concat(subGroups.iterator(), features.iterator());
+    public @NotNull Iterator<ConfigOptionGroupChild> iterator() {
+        return Iterators.concat(subGroups.iterator(), options.iterator());
     }
 
     @Override
@@ -75,20 +75,20 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
     }
 
     @SuppressWarnings("unchecked")
-    public <O> Feature<O> getFeature(Class<O> cls, String name) {
-        return (Feature<O>) features.stream().filter(feature -> feature.name.equals(name)).findAny().orElse(null);
+    public <O> ConfigOption<O> getFeature(Class<O> cls, String name) {
+        return (ConfigOption<O>) options.stream().filter(feature -> feature.name.equals(name)).findAny().orElse(null);
     }
 
-    public FeatureGroup getFolder(String name) {
+    public ConfigOptionGroup getFolder(String name) {
         return subGroups.stream().filter(group -> group.name.equals(name)).findAny().orElse(null);
     }
 
-    public <O> Feature<O> getFeature(Class<O> cls, String... path) {
+    public <O> ConfigOption<O> getFeature(Class<O> cls, String... path) {
         if (path.length == 1) {
             return getFeature(cls, path[0]);
         }
 
-        FeatureGroup found = getFolder(path[0]);
+        ConfigOptionGroup found = getFolder(path[0]);
 
         if (found == null) {
             return null;
@@ -99,12 +99,12 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
         return found.getFeature(cls, subPath);
     }
 
-    public FeatureGroup getFolder(String... path) {
+    public ConfigOptionGroup getFolder(String... path) {
         if (path.length == 1) {
             return getFolder(path[0]);
         }
 
-        FeatureGroup found = subGroups.stream().filter(group -> group.name.equals(path[0])).findAny().orElse(null);
+        ConfigOptionGroup found = subGroups.stream().filter(group -> group.name.equals(path[0])).findAny().orElse(null);
 
         if (found == null) {
             return null;
@@ -116,7 +116,7 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
     }
 
     @Override
-    public void add(FeatureGroup group) {
+    public void add(ConfigOptionGroup group) {
         group.subGroups.add(this);
     }
 
@@ -124,12 +124,12 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
     public String toString() {
         StringBuilder builder = new StringBuilder(getClass().getSimpleName() + " " + id.toString());
 
-        for (FeatureGroup subGroup : subGroups) {
+        for (ConfigOptionGroup subGroup : subGroups) {
             builder.append('\n').append(subGroup);
         }
 
-        for (Feature<?> feature : features) {
-            builder.append('\n').append(feature);
+        for (ConfigOption<?> option : options) {
+            builder.append('\n').append(option);
         }
 
         return builder.toString();

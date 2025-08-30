@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ServerConfigScreen extends Screen {
-    private final List<FeatureGroup> history = new LinkedList<>();
-    private FeatureGroup tab = ServerConfig.BASE_GROUP;
+    private final List<ConfigOptionGroup> history = new LinkedList<>();
+    private ConfigOptionGroup tab = ServerConfig.BASE_GROUP;
 
     public ServerConfigScreen(Text title) {
         super(title);
@@ -36,7 +36,7 @@ public class ServerConfigScreen extends Screen {
 
         boolean side = false;
 
-        for (FeatureGroupChild child : tab) {
+        for (ConfigOptionGroupChild child : tab) {
             addDrawableChild(new Node(side ? centerX : centerX - width, y, width, height, child));
 
             if (side) {
@@ -47,11 +47,11 @@ public class ServerConfigScreen extends Screen {
         }
     }
 
-    public FeatureGroup getTab() {
+    public ConfigOptionGroup getTab() {
         return tab;
     }
 
-    public void pushTab(FeatureGroup tab) {
+    public void pushTab(ConfigOptionGroup tab) {
         if (this.tab != null) {
             history.add(this.tab);
         }
@@ -68,7 +68,7 @@ public class ServerConfigScreen extends Screen {
         return false;
     }
 
-    public void setTab(FeatureGroup tab) {
+    public void setTab(ConfigOptionGroup tab) {
         this.tab = tab;
 
         clearAndInit();
@@ -87,9 +87,9 @@ public class ServerConfigScreen extends Screen {
     }
 
     public class Node extends ClickableWidget {
-        public final FeatureGroupChild child;
+        public final ConfigOptionGroupChild child;
 
-        public Node(int x, int y, int width, int height, FeatureGroupChild child) {
+        public Node(int x, int y, int width, int height, ConfigOptionGroupChild child) {
             super(x, y, width, height, null);
             this.child = child;
             child.init(this);

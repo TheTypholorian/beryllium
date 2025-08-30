@@ -1,6 +1,6 @@
 package net.typho.beryllium.config;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.gui.DrawContext;
@@ -9,11 +9,11 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.text.Text;
 
-public class IntFeature extends Feature<Integer> {
+public class FloatConfigOption extends ConfigOption<Float> {
     public final ItemStack icon;
 
-    public IntFeature(ItemStack icon, FeatureGroup parent, String name, Integer value) {
-        super(parent, name, IntegerArgumentType.integer(), value);
+    public FloatConfigOption(ItemStack icon, ConfigOptionGroup parent, String name, Float value) {
+        super(parent, name, FloatArgumentType.floatArg(), value);
         this.icon = icon;
     }
 
@@ -24,23 +24,23 @@ public class IntFeature extends Feature<Integer> {
 
     @Override
     public boolean scroll(ServerConfigScreen.Node node, double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-        setUpdateSendClient(get() + (int) verticalAmount);
+        setUpdateSendClient(get() + (float) verticalAmount / 10f);
         return true;
     }
 
     @Override
     public void render(ServerConfigScreen.Node node, DrawContext context, int mouseX, int mouseY, float delta) {
-        Text text = Text.literal(get().toString());
+        Text text = Text.literal(String.format("%.1f", get()));
         context.drawTextWithShadow(node.textRenderer(), text, node.getX() + node.getWidth() - node.textRenderer().getWidth(text) - 8, node.getY() + (node.getHeight() - node.textRenderer().fontHeight) / 2, 0xFFFFFFFF);
     }
 
     @Override
-    public Codec<Integer> codec() {
-        return Codec.INT;
+    public Codec<Float> codec() {
+        return Codec.FLOAT;
     }
 
     @Override
-    public PacketCodec<ByteBuf, Integer> packetCodec() {
-        return PacketCodecs.INTEGER;
+    public PacketCodec<ByteBuf, Float> packetCodec() {
+        return PacketCodecs.FLOAT;
     }
 }

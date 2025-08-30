@@ -13,7 +13,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.config.Feature;
+import net.typho.beryllium.config.ConfigOption;
 import net.typho.beryllium.config.ServerConfig;
 import net.typho.beryllium.config.SetConfigValuePacket;
 import net.typho.beryllium.util.Constructor;
@@ -36,16 +36,17 @@ public class Beryllium implements ModInitializer {
     public void onInitialize() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
         PayloadTypeRegistry.playS2C().register(SetConfigValuePacket.ID, SetConfigValuePacket.PACKET_CODEC);
+        PayloadTypeRegistry.playC2S().register(SetConfigValuePacket.ID, SetConfigValuePacket.PACKET_CODEC);
         ServerPlayNetworking.registerGlobalReceiver(SetConfigValuePacket.ID, (payload, context) -> {
             if (context.player().hasPermissionLevel(2)) {
-                payload.feature().set(payload.value());
-                payload.feature().updatedServer(context.server());
+                payload.option().set(payload.value());
+                payload.option().updatedServer(context.server());
             }
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
-                for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
-                    sender.sendPacket(new SetConfigValuePacket<>(feature));
+                for (ConfigOption<?> option : ServerConfig.ALL_OPTIONS.values()) {
+                    sender.sendPacket(new SetConfigValuePacket<>(option));
                 }
             }
         });

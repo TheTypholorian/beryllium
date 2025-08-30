@@ -13,22 +13,22 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 
-public abstract class Feature<O> implements FeatureGroupChild {
+public abstract class ConfigOption<O> implements ConfigOptionGroupChild {
     public final Identifier id;
     public final String name;
-    public final FeatureGroup parent;
+    public final ConfigOptionGroup parent;
     public final ArgumentType<O> argumentType;
     public final O defValue;
     protected O value;
 
-    public Feature(FeatureGroup parent, String name, ArgumentType<O> argumentType, O value) {
+    public ConfigOption(ConfigOptionGroup parent, String name, ArgumentType<O> argumentType, O value) {
         this.id = parent.id.withSuffixedPath("/" + name);
         this.name = name;
         this.parent = parent;
         this.argumentType = argumentType;
         this.value = defValue = value;
-        parent.features.add(this);
-        ServerConfig.ALL_FEATURES.put(id, this);
+        parent.options.add(this);
+        ServerConfig.ALL_OPTIONS.put(id, this);
     }
 
     @Override
@@ -94,8 +94,8 @@ public abstract class Feature<O> implements FeatureGroupChild {
     public abstract PacketCodec<ByteBuf, O> packetCodec();
 
     @Override
-    public void add(FeatureGroup group) {
-        group.features.add(this);
+    public void add(ConfigOptionGroup group) {
+        group.options.add(this);
     }
 
     @Override

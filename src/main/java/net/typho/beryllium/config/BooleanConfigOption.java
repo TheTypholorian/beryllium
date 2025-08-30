@@ -10,10 +10,10 @@ import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 
-public class BooleanFeature extends Feature<Boolean> {
+public class BooleanConfigOption extends ConfigOption<Boolean> {
     public final ItemStack icon;
 
-    public BooleanFeature(ItemStack icon, FeatureGroup parent, String name, Boolean value) {
+    public BooleanConfigOption(ItemStack icon, ConfigOptionGroup parent, String name, Boolean value) {
         super(parent, name, BoolArgumentType.bool(), value);
         this.icon = icon;
     }

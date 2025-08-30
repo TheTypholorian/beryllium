@@ -4,8 +4,8 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
-public interface FeatureGroupChild {
-    void add(FeatureGroup group);
+public interface ConfigOptionGroupChild {
+    void add(ConfigOptionGroup group);
 
     Text name();
 

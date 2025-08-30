@@ -1,6 +1,7 @@
 package net.typho.beryllium.config;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import net.fabricmc.api.EnvType;
@@ -12,7 +13,6 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -32,22 +32,22 @@ import java.util.Map;
 import java.util.Set;
 
 public class ServerConfig implements ModInitializer {
-    public static final Map<Identifier, Feature<?>> ALL_FEATURES = new LinkedHashMap<>();
+    public static final Map<Identifier, ConfigOption<?>> ALL_OPTIONS = new LinkedHashMap<>();
 
     public static final Set<Identifier> DURABILITY_ENCHANTS = new HashSet<>(Set.of(
             Identifier.ofVanilla("mending"),
             Identifier.ofVanilla("unbreaking")
     ));
 
-    public static final FeatureGroup ARMOR_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), Beryllium.ARMOR_CONSTRUCTOR, "");
-    public static final FeatureGroup BUILDING_GROUP = new FeatureGroup(new ItemStack(Items.BRICKS), Beryllium.BUILDING_CONSTRUCTOR, "");
-    public static final FeatureGroup CHALLENGES_GROUP = new FeatureGroup(new ItemStack(Items.TRIAL_KEY), Beryllium.CHALLENGES_CONSTRUCTOR, "");
-    public static final FeatureGroup COMBAT_GROUP = new FeatureGroup(new ItemStack(Items.DIAMOND_SWORD), Beryllium.COMBAT_CONSTRUCTOR, "");
-    public static final FeatureGroup ENCHANTING_GROUP = new FeatureGroup(new ItemStack(Items.ENCHANTED_BOOK), Beryllium.ENCHANTING_CONSTRUCTOR, "");
-    public static final FeatureGroup EXPLORING_GROUP = new FeatureGroup(new ItemStack(Items.FILLED_MAP), Beryllium.EXPLORING_CONSTRUCTOR, "");
-    public static final FeatureGroup REDSTONE_GROUP = new FeatureGroup(new ItemStack(Items.REDSTONE), Beryllium.REDSTONE_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup ARMOR_GROUP = new ConfigOptionGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), Beryllium.ARMOR_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup BUILDING_GROUP = new ConfigOptionGroup(new ItemStack(Items.BRICKS), Beryllium.BUILDING_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup CHALLENGES_GROUP = new ConfigOptionGroup(new ItemStack(Items.TRIAL_KEY), Beryllium.CHALLENGES_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup COMBAT_GROUP = new ConfigOptionGroup(new ItemStack(Items.DIAMOND_SWORD), Beryllium.COMBAT_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup ENCHANTING_GROUP = new ConfigOptionGroup(new ItemStack(Items.ENCHANTED_BOOK), Beryllium.ENCHANTING_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup EXPLORING_GROUP = new ConfigOptionGroup(new ItemStack(Items.FILLED_MAP), Beryllium.EXPLORING_CONSTRUCTOR, "");
+    public static final ConfigOptionGroup REDSTONE_GROUP = new ConfigOptionGroup(new ItemStack(Items.REDSTONE), Beryllium.REDSTONE_CONSTRUCTOR, "");
 
-    public static final FeatureGroup BASE_GROUP = new FeatureGroup(
+    public static final ConfigOptionGroup BASE_GROUP = new ConfigOptionGroup(
             ItemStack.EMPTY, Beryllium.BASE_CONSTRUCTOR, "config",
             ARMOR_GROUP,
             BUILDING_GROUP,
@@ -58,40 +58,40 @@ public class ServerConfig implements ModInitializer {
             REDSTONE_GROUP
     );
 
-    public static final BooleanFeature DURABILITY_REMOVAL = new BooleanFeature(new ItemStack(Items.ANVIL), COMBAT_GROUP, "durability_removal", false);
-    public static final IntFeature ENDER_PEARL_COOLDOWN = new IntFeature(new ItemStack(Items.ENDER_PEARL), COMBAT_GROUP, "ender_pearl_cooldown", 300);
-    public static final FloatFeature ENDER_PEARL_SPEED = new FloatFeature(new ItemStack(Items.ENDER_PEARL), COMBAT_GROUP, "ender_pearl_speed", 1f);
-    public static final IntFeature END_CRYSTAL_COOLDOWN = new IntFeature(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "end_crystal_cooldown", 30);
-    public static final FloatFeature END_CRYSTAL_POWER = new FloatFeature(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "end_crystal_power", 4f);
-    public static final BooleanFeature CROSSBOW_END_CRYSTALS = new BooleanFeature(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "crossbow_end_crystals", false);
-    public static final BooleanFeature MACE_REBALANCE = new BooleanFeature(new ItemStack(Items.MACE), COMBAT_GROUP, "mace_rebalance", true);
-    public static final BooleanFeature SWEEPING_MARGIN = new BooleanFeature(new ItemStack(Combat.DIAMOND_GLAIVE), COMBAT_GROUP, "sweeping_margin", false);
-    public static final FloatFeature SWEEP_MARGIN_MULTIPLIER = new FloatFeature(new ItemStack(Combat.DIAMOND_GLAIVE), COMBAT_GROUP, "sweep_margin_multiplier", 0.05f);
-    public static final BooleanFeature RESPAWN_ANCHORS_DONT_EXPLODE = new BooleanFeature(new ItemStack(Items.RESPAWN_ANCHOR), COMBAT_GROUP, "respawn_anchors_dont_explode", false);
-    public static final IntFeature SHIELD_MAX_DURABILITY = new IntFeature(new ItemStack(Items.SHIELD), COMBAT_GROUP, "shield_max_durability", 30);
-    public static final IntFeature SHIELD_LOWER_COOLDOWN = new IntFeature(new ItemStack(Items.SHIELD), COMBAT_GROUP, "shield_lower_cooldown", 60);
-    public static final IntFeature SPLASH_POTION_COOLDOWN = new IntFeature(new ItemStack(Items.SHIELD), COMBAT_GROUP, "splash_potion_cooldown", 100);
+    public static final BooleanConfigOption DURABILITY_REMOVAL = new BooleanConfigOption(new ItemStack(Items.ANVIL), COMBAT_GROUP, "durability_removal", false);
+    public static final RangedIntConfigOption ENDER_PEARL_COOLDOWN = new RangedIntConfigOption(new ItemStack(Items.ENDER_PEARL), COMBAT_GROUP, "ender_pearl_cooldown", 0, 0, 600);
+    public static final RangedFloatConfigOption ENDER_PEARL_SPEED = new RangedFloatConfigOption(new ItemStack(Items.ENDER_PEARL), COMBAT_GROUP, "ender_pearl_speed", 1.5f, 0f, 10f);
+    public static final RangedIntConfigOption END_CRYSTAL_COOLDOWN = new RangedIntConfigOption(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "end_crystal_cooldown", 0, 0, 600);
+    public static final RangedFloatConfigOption END_CRYSTAL_POWER = new RangedFloatConfigOption(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "end_crystal_power", 6f, 0f, 20f);
+    public static final BooleanConfigOption CROSSBOW_END_CRYSTALS = new BooleanConfigOption(new ItemStack(Items.END_CRYSTAL), COMBAT_GROUP, "crossbow_end_crystals", false);
+    public static final BooleanConfigOption MACE_REBALANCE = new BooleanConfigOption(new ItemStack(Items.MACE), COMBAT_GROUP, "mace_rebalance", true);
+    public static final BooleanConfigOption SWEEPING_MARGIN = new BooleanConfigOption(new ItemStack(Combat.DIAMOND_GLAIVE), COMBAT_GROUP, "sweeping_margin", false);
+    public static final RangedFloatConfigOption SWEEP_MARGIN_MULTIPLIER = new RangedFloatConfigOption(new ItemStack(Combat.DIAMOND_GLAIVE), COMBAT_GROUP, "sweep_margin_multiplier", 0.05f, 0f, 5f);
+    public static final BooleanConfigOption RESPAWN_ANCHORS_DONT_EXPLODE = new BooleanConfigOption(new ItemStack(Items.RESPAWN_ANCHOR), COMBAT_GROUP, "respawn_anchors_dont_explode", false);
+    public static final RangedIntConfigOption SHIELD_MAX_DURABILITY = new RangedIntConfigOption(new ItemStack(Items.SHIELD), COMBAT_GROUP, "shield_max_durability", 30, 0, 200);
+    public static final RangedIntConfigOption SHIELD_LOWER_COOLDOWN = new RangedIntConfigOption(new ItemStack(Items.SHIELD), COMBAT_GROUP, "shield_lower_cooldown", 60, 0, 600);
+    public static final RangedIntConfigOption SPLASH_POTION_COOLDOWN = new RangedIntConfigOption(new ItemStack(Items.SHIELD), COMBAT_GROUP, "splash_potion_cooldown", 0, 0, 600);
 
-    public static final BooleanFeature DISABLED_ARMOR = new BooleanFeature(new ItemStack(Items.DIAMOND_CHESTPLATE), ARMOR_GROUP, "disabled_armor", false);
+    public static final BooleanConfigOption DISABLED_ARMOR = new BooleanConfigOption(new ItemStack(Items.DIAMOND_CHESTPLATE), ARMOR_GROUP, "disabled_armor", false);
 
-    public static final BooleanFeature ULTRA_DARK = new BooleanFeature(new ItemStack(Items.SCULK), CHALLENGES_GROUP, "ultra_dark", false);
-    public static final BooleanFeature DISABLED_CHAT = new BooleanFeature(new ItemStack(Items.OAK_SIGN), CHALLENGES_GROUP, "disabled_chat", false);
+    public static final BooleanConfigOption ULTRA_DARK = new BooleanConfigOption(new ItemStack(Items.SCULK), CHALLENGES_GROUP, "ultra_dark", false);
+    public static final BooleanConfigOption DISABLED_CHAT = new BooleanConfigOption(new ItemStack(Items.OAK_SIGN), CHALLENGES_GROUP, "disabled_chat", false);
 
-    public static final BooleanFeature EXTRA_STONE_BRICKS = new BooleanFeature(new ItemStack(Building.GRANITE_BRICKS.getBaseBlock()), BUILDING_GROUP, "extra_stone_bricks", true);
+    public static final BooleanConfigOption EXTRA_STONE_BRICKS = new BooleanConfigOption(new ItemStack(Building.GRANITE_BRICKS.getBaseBlock()), BUILDING_GROUP, "extra_stone_bricks", true);
 
-    public static final IntFeature METAL_DETECTOR_RADIUS = new IntFeature(new ItemStack(Exploring.METAL_DETECTOR_ITEM), EXPLORING_GROUP, "metal_detector_radius", 16);
-    public static final IntFeature METAL_DETECTOR_HEIGHT = new IntFeature(new ItemStack(Exploring.METAL_DETECTOR_ITEM), EXPLORING_GROUP, "metal_detector_height", 2);
-    public static final BooleanFeature SPAWN_IN_VILLAGE = new BooleanFeature(new ItemStack(Items.VILLAGER_SPAWN_EGG), EXPLORING_GROUP, "spawn_in_village", true);
-    public static final BooleanFeature FERTILIZABLE_SUGARCANE = new BooleanFeature(new ItemStack(Items.BONE_MEAL), EXPLORING_GROUP, "fertilizable_sugarcane", false);
-    public static final IntFeature MAX_SUGARCANE_HEIGHT = new IntFeature(new ItemStack(Items.SUGAR_CANE), EXPLORING_GROUP, "max_sugarcane_height", 3);
+    public static final RangedIntConfigOption METAL_DETECTOR_RADIUS = new RangedIntConfigOption(new ItemStack(Exploring.METAL_DETECTOR_ITEM), EXPLORING_GROUP, "metal_detector_radius", 16, 0, 50);
+    public static final RangedIntConfigOption METAL_DETECTOR_HEIGHT = new RangedIntConfigOption(new ItemStack(Exploring.METAL_DETECTOR_ITEM), EXPLORING_GROUP, "metal_detector_height", 2, 0, 50);
+    public static final BooleanConfigOption SPAWN_IN_VILLAGE = new BooleanConfigOption(new ItemStack(Items.VILLAGER_SPAWN_EGG), EXPLORING_GROUP, "spawn_in_village", true);
+    public static final BooleanConfigOption FERTILIZABLE_SUGARCANE = new BooleanConfigOption(new ItemStack(Items.BONE_MEAL), EXPLORING_GROUP, "fertilizable_sugarcane", false);
+    public static final RangedIntConfigOption MAX_SUGARCANE_HEIGHT = new RangedIntConfigOption(new ItemStack(Items.SUGAR_CANE), EXPLORING_GROUP, "max_sugarcane_height", 3, 2, 30);
 
-    public static final BooleanFeature ENCHANTMENT_CATALYSTS = new BooleanFeature(new ItemStack(Items.BLAZE_POWDER), ENCHANTING_GROUP, "catalysts", false);
-    public static final BooleanFeature ENCHANTMENT_CAPACITY = new BooleanFeature(new ItemStack(Items.ENCHANTING_TABLE), ENCHANTING_GROUP, "capacity", false);
+    public static final BooleanConfigOption ENCHANTMENT_CATALYSTS = new BooleanConfigOption(new ItemStack(Items.BLAZE_POWDER), ENCHANTING_GROUP, "catalysts", false);
+    public static final BooleanConfigOption ENCHANTMENT_CAPACITY = new BooleanConfigOption(new ItemStack(Items.ENCHANTING_TABLE), ENCHANTING_GROUP, "capacity", false);
 
-    public static final BooleanFeature CROP_COMPARATOR_OUTPUT = new BooleanFeature(new ItemStack(Items.COMPARATOR), REDSTONE_GROUP, "crop_comparator_output", false);
-    public static final BooleanFeature DISPENSERS_PLACE_BLOCKS = new BooleanFeature(new ItemStack(Items.DISPENSER), REDSTONE_GROUP, "dispensers_place_blocks", false);
-    public static final IntFeature HOPPER_COOLDOWN = new IntFeature(new ItemStack(Items.HOPPER), REDSTONE_GROUP, "hopper_cooldown", 8);
-    public static final BooleanFeature INSTANT_CHAIN_TNT = new BooleanFeature(new ItemStack(Items.TNT), REDSTONE_GROUP, "instant_chain_tnt", false);
+    public static final BooleanConfigOption CROP_COMPARATOR_OUTPUT = new BooleanConfigOption(new ItemStack(Items.COMPARATOR), REDSTONE_GROUP, "crop_comparator_output", false);
+    public static final BooleanConfigOption DISPENSERS_PLACE_BLOCKS = new BooleanConfigOption(new ItemStack(Items.DISPENSER), REDSTONE_GROUP, "dispensers_place_blocks", false);
+    public static final RangedIntConfigOption HOPPER_COOLDOWN = new RangedIntConfigOption(new ItemStack(Items.HOPPER), REDSTONE_GROUP, "hopper_cooldown", 8, 1, 20);
+    public static final BooleanConfigOption INSTANT_CHAIN_TNT = new BooleanConfigOption(new ItemStack(Items.TNT), REDSTONE_GROUP, "instant_chain_tnt", false);
 
     public static float ultraDarkBlend(World world) {
         if (!ULTRA_DARK.get()) {
@@ -105,25 +105,31 @@ public class ServerConfig implements ModInitializer {
     }
 
     public static void read(Dynamic<?> dynamic) {
-        for (Feature<?> feature : ALL_FEATURES.values()) {
-            DataResult<? extends Dynamic<?>> result = dynamic.get(feature.id.toString()).get();
+        for (ConfigOption<?> option : ALL_OPTIONS.values()) {
+            dynamic.get(option.id.toString()).get().ifSuccess(result -> {
+                DataResult<? extends Pair<?, ?>> result1 = option.codec().decode(result);
 
-            if (result.isSuccess()) {
-                feature.set(feature.codec().decode(result.getOrThrow()).getOrThrow().getFirst());
-            }
+                if (result1.isSuccess()) {
+                    option.set(result1.getOrThrow().getFirst());
+                } else {
+                    System.err.println("Error reading server config [" + option.id + "]: " + result1.error().orElseThrow().message());
+                }
+            });
         }
     }
 
-    private static <T> void write(Feature<T> feature, NbtCompound nbt) {
-        feature.codec().encodeStart(NbtOps.INSTANCE, feature.get())
-                .result().ifPresent(elem -> nbt.put(feature.name, elem));
+    private static <T> void write(ConfigOption<T> option, NbtCompound nbt) {
+        if (option.defValue == null || !option.defValue.equals(option.value)) {
+            option.codec().encodeStart(NbtOps.INSTANCE, option.get())
+                    .result().ifPresent(elem -> nbt.put(option.id.toString(), elem));
+        }
     }
 
     public static NbtElement write() {
         NbtCompound nbt = new NbtCompound();
 
-        for (Feature<?> feature : ALL_FEATURES.values()) {
-            write(feature, nbt);
+        for (ConfigOption<?> option : ALL_OPTIONS.values()) {
+            write(option, nbt);
         }
 
         return nbt;
@@ -132,15 +138,11 @@ public class ServerConfig implements ModInitializer {
     public static Text print() {
         MutableText text = Text.translatable("config.beryllium.title");
 
-        for (Feature<?> feature : ALL_FEATURES.values()) {
-            text.append(Text.literal("\n").append(feature.display()).append(" = ").append(feature.value.toString()));
+        for (ConfigOption<?> option : ALL_OPTIONS.values()) {
+            text.append(Text.literal("\n").append(option.display()).append(" = ").append(option.value.toString()));
         }
 
         return text;
-    }
-
-    public static void save(MinecraftServer server) {
-        server.session.backupLevelDataFile(server.getRegistryManager(), server.getSaveProperties(), server.getPlayerManager().getUserData());
     }
 
     public static LiteralArgumentBuilder<ServerCommandSource> command(LiteralArgumentBuilder<ServerCommandSource> command) {
@@ -150,30 +152,29 @@ public class ServerConfig implements ModInitializer {
                     return 1;
                 }));
 
-        for (Feature<?> feature : ALL_FEATURES.values()) {
+        for (ConfigOption<?> option : ALL_OPTIONS.values()) {
             command.then(
-                    LiteralArgumentBuilder.<ServerCommandSource>literal(feature.commandPath())
+                    LiteralArgumentBuilder.<ServerCommandSource>literal(option.commandPath())
                             .requires(context -> context.hasPermissionLevel(2))
                             .executes(context -> {
-                                context.getSource().sendFeedback(() -> feature.display().copy().append(" is set to ").append(feature.get().toString()), false);
+                                context.getSource().sendFeedback(() -> option.display().copy().append(" is set to ").append(option.get().toString()), false);
                                 return 1;
                             })
                             .then(
-                                    CommandManager.argument("value", feature.argumentType)
+                                    CommandManager.argument("value", option.argumentType)
                                             .executes(context -> {
                                                 context.getSource().getServer().execute(() -> {
                                                     Object value = context.getArgument("value", Object.class);
-                                                    feature.set(value);
-                                                    feature.updatedServer(context.getSource().getServer());
-                                                    save(context.getSource().getServer());
+                                                    option.set(value);
+                                                    option.updatedServer(context.getSource().getServer());
 
                                                     if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                                                         for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
-                                                            ServerPlayNetworking.send(player, new SetConfigValuePacket<>(feature));
+                                                            ServerPlayNetworking.send(player, new SetConfigValuePacket<>(option));
                                                         }
                                                     }
 
-                                                    context.getSource().sendFeedback(() -> feature.display().copy().append(" now set to ").append(feature.get().toString()), true);
+                                                    context.getSource().sendFeedback(() -> option.display().copy().append(" now set to ").append(option.get().toString()), true);
                                                 });
                                                 return 1;
                                             })

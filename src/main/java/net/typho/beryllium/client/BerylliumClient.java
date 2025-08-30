@@ -9,8 +9,8 @@ public class BerylliumClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(SetConfigValuePacket.ID, (payload, context) -> {
-            payload.feature().set(payload.value());
-            payload.feature().updatedClient(MinecraftClient.getInstance());
+            payload.option().set(payload.value());
+            payload.option().updatedClient(MinecraftClient.getInstance());
         });
     }
 }
