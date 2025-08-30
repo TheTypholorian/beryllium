@@ -40,7 +40,7 @@ public class BerylliumConfig implements ModInitializer {
             Identifier.ofVanilla("unbreaking")
     ));
 
-    public static final RootConfigOptionGroup ROOT_GROUP = new RootConfigOptionGroup(ItemStack.EMPTY, Beryllium.BASE_CONSTRUCTOR.id("config"));
+    public static final RootConfigOptionGroup ROOT_GROUP = new RootConfigOptionGroup(new ItemStack(Items.END_CRYSTAL), Beryllium.BASE_CONSTRUCTOR.id("config"));
 
     public static final ConfigOptionGroup ARMOR_GROUP = new ConfigOptionGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), ROOT_GROUP, "armor");
     public static final ConfigOptionGroup BUILDING_GROUP = new ConfigOptionGroup(new ItemStack(Items.BRICKS), ROOT_GROUP, "building");
