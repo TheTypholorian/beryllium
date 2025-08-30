@@ -8,12 +8,10 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 
 public class IntFeature extends Feature<Integer> {
-    public final Codec<Integer> codec;
     public final ItemStack icon;
 
     public IntFeature(ItemStack icon, FeatureGroup parent, String name, Integer value) {
         super(parent, name, IntegerArgumentType.integer(), value);
-        codec = Codec.INT.fieldOf(id.toString()).codec();
         this.icon = icon;
     }
 
@@ -23,13 +21,8 @@ public class IntFeature extends Feature<Integer> {
     }
 
     @Override
-    public void click(ServerConfigScreen screen) {
-        System.out.println("implement int features dumbass");
-    }
-
-    @Override
     public Codec<Integer> codec() {
-        return codec;
+        return Codec.INT;
     }
 
     @Override

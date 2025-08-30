@@ -1,10 +1,12 @@
 package net.typho.beryllium.config;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.Element;
+import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -12,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ServerConfigScreen extends Screen {
-    private final ThreePartsLayoutWidget layout = new ThreePartsLayoutWidget(this);
     private final List<FeatureGroup> history = new LinkedList<>();
     private FeatureGroup tab = ServerConfig.BASE_GROUP;
 
@@ -21,13 +22,19 @@ public class ServerConfigScreen extends Screen {
     }
 
     @Override
-    protected void init() {
-        layout.addHeader(Text.literal("header"), textRenderer);
+    public <T extends Element & Drawable & Selectable> T addDrawableChild(T drawableElement) {
+        return super.addDrawableChild(drawableElement);
+    }
 
-        int y = height / 2 - 256;
+    @Override
+    protected void init() {
+        int width = Math.min(256, this.width / 2);
+        int height = 24;
+        int x = (this.width - width) / 2;
+        int y = this.height / 2 - 256;
 
         for (FeatureGroupChild child : tab) {
-            addDrawableChild(new Node(width / 2 - 128, y, 256, 24, child));
+            addDrawableChild(new Node(x, y, width, height, child));
             y += 48;
         }
     }
@@ -66,23 +73,31 @@ public class ServerConfigScreen extends Screen {
         }
     }
 
+    @Override
+    public boolean shouldPause() {
+        return false;
+    }
+
     public class Node extends ClickableWidget {
         public final FeatureGroupChild child;
 
         public Node(int x, int y, int width, int height, FeatureGroupChild child) {
             super(x, y, width, height, null);
             this.child = child;
+            child.init(this);
+        }
+
+        public ServerConfigScreen parent() {
+            return ServerConfigScreen.this;
         }
 
         @Override
         public void onClick(double mouseX, double mouseY) {
-            child.click(ServerConfigScreen.this);
+            child.click(this, mouseX, mouseY);
         }
 
         @Override
         protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-            context.fill(getX(), getY(), getX() + width, getY() + height, 0xFF7F3FFF);
-
             int itemSize = 16;
 
             float scale = itemSize / 16f;

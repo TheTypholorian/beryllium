@@ -70,8 +70,8 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
     }
 
     @Override
-    public void click(ServerConfigScreen screen) {
-        screen.pushTab(this);
+    public void click(ServerConfigScreen.Node node, double mouseX, double mouseY) {
+        node.parent().pushTab(this);
     }
 
     @SuppressWarnings("unchecked")

@@ -8,12 +8,10 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 
 public class FloatFeature extends Feature<Float> {
-    public final Codec<Float> codec;
     public final ItemStack icon;
 
     public FloatFeature(ItemStack icon, FeatureGroup parent, String name, Float value) {
         super(parent, name, FloatArgumentType.floatArg(), value);
-        codec = Codec.FLOAT.fieldOf(id.toString()).codec();
         this.icon = icon;
     }
 
@@ -23,13 +21,8 @@ public class FloatFeature extends Feature<Float> {
     }
 
     @Override
-    public void click(ServerConfigScreen screen) {
-        System.out.println("implement float features dumbass");
-    }
-
-    @Override
     public Codec<Float> codec() {
-        return codec;
+        return Codec.FLOAT;
     }
 
     @Override

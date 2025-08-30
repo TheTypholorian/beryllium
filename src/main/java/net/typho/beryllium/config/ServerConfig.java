@@ -110,20 +110,21 @@ public class ServerConfig implements ModInitializer {
             DataResult<? extends Dynamic<?>> result = dynamic.get(feature.id.toString()).get();
 
             if (result.isSuccess()) {
-                feature.set(feature.codec().decode(result.getOrThrow()));
+                feature.set(feature.codec().decode(result.getOrThrow()).getOrThrow().getFirst());
             }
         }
     }
 
-    private static <T> DataResult<NbtElement> write(Feature<T> feature, NbtCompound nbt) {
-        return feature.codec().encode(feature.value, NbtOps.INSTANCE, nbt);
+    private static <T> void write(Feature<T> feature, NbtCompound nbt) {
+        feature.codec().encodeStart(NbtOps.INSTANCE, feature.get())
+                .result().ifPresent(elem -> nbt.put(feature.name, elem));
     }
 
     public static NbtElement write() {
         NbtCompound nbt = new NbtCompound();
 
         for (Feature<?> feature : ALL_FEATURES.values()) {
-            nbt = (NbtCompound) write(feature, nbt).getOrThrow();
+            write(feature, nbt);
         }
 
         return nbt;

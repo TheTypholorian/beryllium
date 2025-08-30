@@ -85,6 +85,6 @@ public abstract class Feature<O> implements FeatureGroupChild {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " " + id.toString() + " = " + value.toString();
+        return getClass().getSimpleName() + " " + id.toString() + " = " + get().toString();
     }
 }
