@@ -3,14 +3,13 @@ package net.typho.beryllium.mixin.client;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.option.SimpleOption;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.util.Arm;
-import net.typho.beryllium.client.ClientConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector2i;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,8 +33,7 @@ public abstract class InGameHudMixin {
             at = @At("TAIL")
     )
     private void renderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        SimpleOption<Boolean> hudItemTooltips = ClientConfig.get().hudItemTooltips();
-        if (hudItemTooltips != null && hudItemTooltips.getValue()) {
+        if (BerylliumConfig.HUD_ITEM_TOOLTIPS.get()) {
             PlayerEntity player = getCameraPlayer();
 
             if (player != null) {
@@ -60,8 +58,7 @@ public abstract class InGameHudMixin {
             cancellable = true
     )
     private void renderHeldItemTooltip(DrawContext context, CallbackInfo ci) {
-        SimpleOption<Boolean> hudItemTooltips = ClientConfig.get().hudItemTooltips();
-        if (hudItemTooltips != null && hudItemTooltips.getValue()) {
+        if (BerylliumConfig.HUD_ITEM_TOOLTIPS.get()) {
             ci.cancel();
         }
     }

@@ -8,7 +8,7 @@ import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.combat.EndCrystalProjectileEntity;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +30,7 @@ public class EndCrystalItemMixin {
     private void useOnBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         if (cir.getReturnValue().isAccepted()) {
             if (context.getPlayer() != null) {
-                context.getPlayer().getItemCooldownManager().set((Item) (Object) this, ServerConfig.END_CRYSTAL_COOLDOWN.get());
+                context.getPlayer().getItemCooldownManager().set((Item) (Object) this, BerylliumConfig.END_CRYSTAL_COOLDOWN.get());
             }
         }
     }

@@ -12,7 +12,7 @@ import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.screen.GrindstoneScreenHandler;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import net.typho.beryllium.enchanting.Enchanting;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +35,7 @@ public abstract class ItemStackMixin {
     )
     @Environment(EnvType.CLIENT)
     private void appendTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, @Local List<Text> text) {
-        if (ServerConfig.ENCHANTMENT_CAPACITY.get() && player != null) {
+        if (BerylliumConfig.ENCHANTMENT_CAPACITY.get() && player != null) {
             if (player.currentScreenHandler instanceof EnchantmentScreenHandler || player.currentScreenHandler instanceof AnvilScreenHandler || player.currentScreenHandler instanceof GrindstoneScreenHandler) {
                 ItemStack stack = (ItemStack) (Object) this;
 

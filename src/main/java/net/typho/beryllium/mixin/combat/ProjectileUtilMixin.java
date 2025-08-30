@@ -8,7 +8,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import net.typho.beryllium.util.SweepingItem;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +31,7 @@ public class ProjectileUtilMixin {
         Vec3d vec3d = null;
         float margin = 0;
 
-        if (ServerConfig.SWEEPING_MARGIN.get() && entity instanceof PlayerEntity player) {
+        if (BerylliumConfig.SWEEPING_MARGIN.get() && entity instanceof PlayerEntity player) {
             ItemStack held = player.getWeaponStack();
 
             if (held.getItem() instanceof SweepingItem sweep) {

@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldScreenOptionGrid;
 import net.minecraft.text.Text;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +22,7 @@ public class WorldTabMixin {
             )
     )
     private void ultraDark(CreateWorldScreen screen, CallbackInfo ci, @Local WorldScreenOptionGrid.Builder builder) {
-        builder.add(Text.translatable("selectWorld.beryllium.ultraDark"), ServerConfig.ULTRA_DARK::get, ServerConfig.ULTRA_DARK::set)
+        builder.add(Text.translatable("selectWorld.beryllium.ultraDark"), BerylliumConfig.ULTRA_DARK::get, BerylliumConfig.ULTRA_DARK::set)
                 .tooltip(Text.translatable("selectWorld.beryllium.ultraDark.info"));
     }
 }

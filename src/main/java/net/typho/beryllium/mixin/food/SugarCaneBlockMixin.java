@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
@@ -27,19 +27,19 @@ public class SugarCaneBlockMixin {
             constant = @Constant(intValue = 3)
     )
     private int maxHeight(int maxHeight) {
-        return ServerConfig.MAX_SUGARCANE_HEIGHT.get();
+        return BerylliumConfig.MAX_SUGARCANE_HEIGHT.get();
     }
 
     public boolean fert$isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return ServerConfig.FERTILIZABLE_SUGARCANE.get();
+        return BerylliumConfig.FERTILIZABLE_SUGARCANE.get();
     }
 
     public boolean fert$canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return ServerConfig.FERTILIZABLE_SUGARCANE.get();
+        return BerylliumConfig.FERTILIZABLE_SUGARCANE.get();
     }
 
     public void fert$grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (ServerConfig.FERTILIZABLE_SUGARCANE.get()) {
+        if (BerylliumConfig.FERTILIZABLE_SUGARCANE.get()) {
             int y = pos.getY();
             BlockState top = state;
 

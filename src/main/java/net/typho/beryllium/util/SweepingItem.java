@@ -3,10 +3,10 @@ package net.typho.beryllium.util;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 
 public interface SweepingItem {
     default float sweep(PlayerEntity player, ItemStack stack) {
-        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) * ServerConfig.SWEEP_MARGIN_MULTIPLIER.get();
+        return (float) player.getAttributeValue(EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE) * BerylliumConfig.SWEEP_MARGIN_MULTIPLIER.get();
     }
 }

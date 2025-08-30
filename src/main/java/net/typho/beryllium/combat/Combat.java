@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.EndCrystalProjectileEntityRenderer;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.jetbrains.annotations.Nullable;
 
 public class Combat implements ModInitializer, ClientModInitializer {
@@ -111,7 +111,7 @@ public class Combat implements ModInitializer, ClientModInitializer {
     public static final TagKey<Item> HORSE_ARMOR = TagKey.of(RegistryKeys.ITEM, Beryllium.COMBAT_CONSTRUCTOR.id("horse_armor"));
 
     public static float shieldDurability(ItemStack shield) {
-        return shield.getOrDefault(SHIELD_DURABILITY, ServerConfig.SHIELD_MAX_DURABILITY.get()).floatValue();
+        return shield.getOrDefault(SHIELD_DURABILITY, BerylliumConfig.SHIELD_MAX_DURABILITY.get()).floatValue();
     }
 
     @Override

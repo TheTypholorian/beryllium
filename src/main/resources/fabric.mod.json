@@ -31,7 +31,7 @@
       "net.typho.beryllium.enchanting.Enchanting",
       "net.typho.beryllium.exploring.Exploring",
       "net.typho.beryllium.food.Food",
-      "net.typho.beryllium.config.ServerConfig"
+      "net.typho.beryllium.config.BerylliumConfig"
     ],
     "cardinal-components": [
       "net.typho.beryllium.exploring.Exploring"
@@ -47,10 +47,8 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}",
-    "terrablender": "*"
-  },
-  "recommends": {
-    "modmenu": "*"
+    "terrablender": "*",
+    "typho_config": "*"
   },
   "custom": {
     "cardinal-components": [

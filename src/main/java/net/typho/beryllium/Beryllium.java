@@ -1,11 +1,7 @@
 package net.typho.beryllium;
 
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -13,9 +9,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.typho.beryllium.config.ConfigOption;
-import net.typho.beryllium.config.ServerConfig;
-import net.typho.beryllium.config.SetConfigValuePacket;
+import net.typho.beryllium.config.BerylliumConfig;
 import net.typho.beryllium.util.Constructor;
 
 public class Beryllium implements ModInitializer {
@@ -31,27 +25,13 @@ public class Beryllium implements ModInitializer {
     public static final Constructor EXPLORING_CONSTRUCTOR = new Constructor("exploring");
     public static final Constructor FOOD_CONSTRUCTOR = new Constructor("food");
     public static final Constructor REDSTONE_CONSTRUCTOR = new Constructor("redstone");
+    public static final Constructor CLIENT_CONSTRUCTOR = new Constructor("client");
 
     @Override
     public void onInitialize() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
-        PayloadTypeRegistry.playS2C().register(SetConfigValuePacket.ID, SetConfigValuePacket.PACKET_CODEC);
-        PayloadTypeRegistry.playC2S().register(SetConfigValuePacket.ID, SetConfigValuePacket.PACKET_CODEC);
-        ServerPlayNetworking.registerGlobalReceiver(SetConfigValuePacket.ID, (payload, context) -> {
-            if (context.player().hasPermissionLevel(2)) {
-                payload.option().set(payload.value());
-                payload.option().updatedServer(context.server());
-            }
-        });
-        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
-                for (ConfigOption<?> option : ServerConfig.ALL_OPTIONS.values()) {
-                    sender.sendPacket(new SetConfigValuePacket<>(option));
-                }
-            }
-        });
         CommandRegistrationCallback.EVENT.register((dispatcher, registries, environment) -> {
-            dispatcher.register(ServerConfig.command(CommandManager.literal(Beryllium.MOD_ID)
+            dispatcher.register(BerylliumConfig.command(CommandManager.literal(Beryllium.MOD_ID)
                     .executes(context -> {
                         context.getSource().sendFeedback(() -> Text.literal(mod.getMetadata().getName() + " v" + FabricLoader.getInstance().getModContainer(Beryllium.MOD_ID).orElseThrow().getMetadata().getVersion()), false);
                         return 1;

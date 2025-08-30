@@ -7,7 +7,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -26,7 +26,7 @@ public class AttributeModifiersComponentMixin {
             )
     )
     private void disabledArmor(BiConsumer<RegistryEntry<EntityAttribute>, EntityAttributeModifier> instance, Object attribute, Object modifier, Operation<Void> original) {
-        if (!(ServerConfig.DISABLED_ARMOR.get() && attribute == EntityAttributes.GENERIC_ARMOR)) {
+        if (!(BerylliumConfig.DISABLED_ARMOR.get() && attribute == EntityAttributes.GENERIC_ARMOR)) {
             original.call(instance, attribute, modifier);
         }
     }

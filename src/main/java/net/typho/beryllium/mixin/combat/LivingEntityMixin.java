@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.typho.beryllium.combat.Combat;
 import net.typho.beryllium.combat.ScytheItem;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -89,7 +89,7 @@ public abstract class LivingEntityMixin {
         float durability = Combat.shieldDurability(shield) - amount;
 
         if (durability <= 0) {
-            durability = ServerConfig.SHIELD_MAX_DURABILITY.get();
+            durability = BerylliumConfig.SHIELD_MAX_DURABILITY.get();
 
             if ((Object) this instanceof PlayerEntity player) {
                 player.disableShield();
@@ -108,7 +108,7 @@ public abstract class LivingEntityMixin {
         float durability = Combat.shieldDurability(shield) - 1;
 
         if (durability <= 0) {
-            durability = ServerConfig.SHIELD_MAX_DURABILITY.get();
+            durability = BerylliumConfig.SHIELD_MAX_DURABILITY.get();
 
             if ((Object) this instanceof PlayerEntity player) {
                 player.disableShield();

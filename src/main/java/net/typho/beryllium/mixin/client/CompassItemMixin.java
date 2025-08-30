@@ -9,7 +9,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
-import net.typho.beryllium.client.ClientConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.Mixin;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public abstract class CompassItemMixin extends Item {
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
 
-        if (stack.getHolder() != null && stack.getHolder() instanceof PlayerEntity player && ClientConfig.get().compassCoords().getValue() && !player.hasReducedDebugInfo()) {
+        if (stack.getHolder() != null && stack.getHolder() instanceof PlayerEntity player && BerylliumConfig.COMPASS_COORDS.get() && !player.hasReducedDebugInfo()) {
             BlockPos playerPos = stack.getHolder().getBlockPos();
             tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
         }

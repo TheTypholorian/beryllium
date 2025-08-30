@@ -21,8 +21,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 import net.minecraft.world.World;
-import net.typho.beryllium.client.ClientConfig;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 
 import java.awt.*;
 import java.util.*;
@@ -62,7 +61,7 @@ public class MetalDetectorItem extends Item {
         BlockPos origin = entity.getBlockPos();
         Set<BlockPos> found = new HashSet<>();
 
-        int xRad = ServerConfig.METAL_DETECTOR_RADIUS.get(), yRad = ServerConfig.METAL_DETECTOR_HEIGHT.get();
+        int xRad = BerylliumConfig.METAL_DETECTOR_RADIUS.get(), yRad = BerylliumConfig.METAL_DETECTOR_HEIGHT.get();
 
         for (int y = -yRad; y <= yRad; y++) {
             int by = origin.getY() + y;
@@ -111,10 +110,10 @@ public class MetalDetectorItem extends Item {
         if (player != null && player.getInventory().contains(stack)) {
             BlockPos playerPos = player.getBlockPos();
             World world = player.getWorld();
-            int radius = ServerConfig.METAL_DETECTOR_RADIUS.get();
+            int radius = BerylliumConfig.METAL_DETECTOR_RADIUS.get();
             Map<Block, Integer> found = new HashMap<>();
 
-            if (ClientConfig.get().compassCoords().getValue() && !player.hasReducedDebugInfo()) {
+            if (BerylliumConfig.COMPASS_COORDS.get() && !player.hasReducedDebugInfo()) {
                 tooltip.add(Text.translatable("item.beryllium.exploring.compass.pos", playerPos.getX(), playerPos.getY(), playerPos.getZ()).setStyle(Style.EMPTY.withColor(Formatting.GOLD)));
             }
 

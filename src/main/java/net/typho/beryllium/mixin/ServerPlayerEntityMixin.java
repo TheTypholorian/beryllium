@@ -1,7 +1,7 @@
 package net.typho.beryllium.mixin;
 
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.typho.beryllium.config.ServerConfig;
+import net.typho.beryllium.config.BerylliumConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,7 +18,7 @@ public class ServerPlayerEntityMixin {
             cancellable = true
     )
     private void acceptsMessage(CallbackInfoReturnable<Boolean> cir) {
-        if (ServerConfig.DISABLED_CHAT.get()) {
+        if (BerylliumConfig.DISABLED_CHAT.get()) {
             cir.setReturnValue(false);
         }
     }
