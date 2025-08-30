@@ -1,5 +1,6 @@
 package net.typho.beryllium;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -35,8 +36,10 @@ public class Beryllium implements ModInitializer {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
         PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.PACKET_CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
-                sender.sendPacket(new SyncServerConfigS2C(feature));
+            if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
+                    sender.sendPacket(new SyncServerConfigS2C<>(feature));
+                }
             }
         });
         CommandRegistrationCallback.EVENT.register((dispatcher, registries, environment) -> {

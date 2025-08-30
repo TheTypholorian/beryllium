@@ -3,9 +3,10 @@ package net.typho.beryllium.config;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
-import io.netty.buffer.ByteBuf;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -128,16 +129,6 @@ public class ServerConfig implements ModInitializer {
         return nbt;
     }
 
-    private static <T> void encode(ByteBuf buf, Feature<T> feature) {
-        feature.packetCodec().encode(buf, feature.value);
-    }
-
-    public static void encode(ByteBuf buf) {
-        for (Feature<?> feature : ALL_FEATURES.values()) {
-            encode(buf, feature);
-        }
-    }
-
     public static Text print() {
         MutableText text = Text.translatable("config.beryllium.title");
 
@@ -176,8 +167,10 @@ public class ServerConfig implements ModInitializer {
                                                     feature.updatedServer(context.getSource().getServer());
                                                     save(context.getSource().getServer());
 
-                                                    for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
-                                                        ServerPlayNetworking.send(player, new SyncServerConfigS2C(feature));
+                                                    if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                                                        for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
+                                                            ServerPlayNetworking.send(player, new SyncServerConfigS2C<>(feature));
+                                                        }
                                                     }
 
                                                     context.getSource().sendFeedback(() -> feature.display().copy().append(" now set to ").append(feature.get().toString()), true);
