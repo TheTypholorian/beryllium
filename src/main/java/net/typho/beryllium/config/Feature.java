@@ -30,6 +30,11 @@ public abstract class Feature<O> implements FeatureGroupChild {
         ServerConfig.ALL_FEATURES.put(id, this);
     }
 
+    @Override
+    public Text name() {
+        return Text.translatable(id.toTranslationKey());
+    }
+
     public O get() {
         return value;
     }
