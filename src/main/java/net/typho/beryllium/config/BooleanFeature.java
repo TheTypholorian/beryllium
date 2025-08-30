@@ -3,13 +3,27 @@ package net.typho.beryllium.config;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.serialization.OptionalDynamic;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.DynamicRegistryManager;
 
 public class BooleanFeature extends Feature<Boolean> {
-    public BooleanFeature(FeatureGroup parent, String name, Boolean value) {
+    public final ItemStack icon;
+
+    public BooleanFeature(ItemStack icon, FeatureGroup parent, String name, Boolean value) {
         super(parent, name, BoolArgumentType.bool(), value);
+        this.icon = icon;
+    }
+
+    @Override
+    public ItemStack icon() {
+        return icon;
+    }
+
+    @Override
+    public void click(ServerConfigScreen screen) {
+        set(!get());
     }
 
     @Override

@@ -1,19 +1,26 @@
 package net.typho.beryllium.config;
 
+import com.google.common.collect.Iterators;
+import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.util.Constructor;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FeatureGroup implements FeatureGroupChild {
+public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChild> {
     public final Identifier id;
     public final String name;
     public final FeatureGroup parent;
     public final List<FeatureGroup> subGroups = new LinkedList<>();
     public final List<Feature<?>> features = new LinkedList<>();
+    public final ItemStack icon;
 
-    public FeatureGroup(Identifier id, FeatureGroupChild... features) {
+    public FeatureGroup(ItemStack icon, Identifier id, FeatureGroupChild... features) {
+        this.icon = icon;
         this.id = id;
         this.name = id.getPath();
         this.parent = null;
@@ -23,7 +30,8 @@ public class FeatureGroup implements FeatureGroupChild {
         }
     }
 
-    public FeatureGroup(Constructor constructor, String name, FeatureGroupChild... features) {
+    public FeatureGroup(ItemStack icon, Constructor constructor, String name, FeatureGroupChild... features) {
+        this.icon = icon;
         this.id = constructor.id(name);
         this.name = name;
         this.parent = null;
@@ -33,7 +41,8 @@ public class FeatureGroup implements FeatureGroupChild {
         }
     }
 
-    public FeatureGroup(FeatureGroup parent, String folder, FeatureGroupChild... features) {
+    public FeatureGroup(ItemStack icon, FeatureGroup parent, String folder, FeatureGroupChild... features) {
+        this.icon = icon;
         this.id = parent.id.withSuffixedPath("/" + folder);
         this.name = folder;
         this.parent = parent;
@@ -43,6 +52,26 @@ public class FeatureGroup implements FeatureGroupChild {
         for (FeatureGroupChild feature : features) {
             feature.add(this);
         }
+    }
+
+    @Override
+    public @NotNull Iterator<FeatureGroupChild> iterator() {
+        return Iterators.concat(subGroups.iterator(), features.iterator());
+    }
+
+    @Override
+    public ItemStack icon() {
+        return icon;
+    }
+
+    @Override
+    public Text name() {
+        return Text.translatable(id.toTranslationKey());
+    }
+
+    @Override
+    public void click(ServerConfigScreen screen) {
+        screen.pushTab(this);
     }
 
     @SuppressWarnings("unchecked")

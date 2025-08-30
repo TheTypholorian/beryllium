@@ -23,6 +23,7 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.item.CompassAnglePredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
@@ -35,7 +36,6 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.projectile.DragonFireballEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
@@ -82,6 +82,7 @@ import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules;
 import net.typho.beryllium.Beryllium;
 import net.typho.beryllium.client.FireflyFactory;
 import net.typho.beryllium.combat.ReelingComponent;
+import net.typho.beryllium.config.ServerConfigScreen;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentRegistryV3;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -247,10 +248,8 @@ public class Exploring implements ModInitializer, ClientModInitializer, EntityCo
     public static final Item TEST_STICK = Beryllium.EXPLORING_CONSTRUCTOR.item("test_stick", new Item(new Item.Settings()) {
         @Override
         public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-            if (!world.isClient) {
-                DragonFireballEntity fireball = new DragonFireballEntity(world, user, user.getRotationVector().multiply(2));
-
-                world.spawnEntity(fireball);
+            if (world.isClient) {
+                MinecraftClient.getInstance().setScreenAndRender(new ServerConfigScreen(Text.literal("server config screen")));
             }
 
             return super.use(world, user, hand);
