@@ -36,7 +36,7 @@ public class Beryllium implements ModInitializer {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
         PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.PACKET_CODEC);
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-            if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                 for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
                     sender.sendPacket(new SyncServerConfigS2C<>(feature));
                 }

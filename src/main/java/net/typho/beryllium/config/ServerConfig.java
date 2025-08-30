@@ -167,7 +167,7 @@ public class ServerConfig implements ModInitializer {
                                                     feature.updatedServer(context.getSource().getServer());
                                                     save(context.getSource().getServer());
 
-                                                    if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                                                    if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                                                         for (ServerPlayerEntity player : context.getSource().getServer().getPlayerManager().getPlayerList()) {
                                                             ServerPlayNetworking.send(player, new SyncServerConfigS2C<>(feature));
                                                         }
