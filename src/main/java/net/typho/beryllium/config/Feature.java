@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -32,11 +33,15 @@ public abstract class Feature<O> implements FeatureGroupChild {
 
     @Override
     public Text name() {
-        return Text.translatable(id.toTranslationKey());
+        return Text.translatable(id.toTranslationKey("config").replace('/', '.'));
     }
 
     public O get() {
         return value;
+    }
+
+    public void updatedClient() {
+        updatedClient(MinecraftClient.getInstance());
     }
 
     public void updatedClient(MinecraftClient client) {
@@ -48,6 +53,16 @@ public abstract class Feature<O> implements FeatureGroupChild {
     @SuppressWarnings("unchecked")
     public void set(Object value) {
         this.value = (O) value;
+    }
+
+    public void setUpdateSendClient(Object value) {
+        MinecraftClient client = MinecraftClient.getInstance();
+
+        if (client.player != null && client.player.hasPermissionLevel(2)) {
+            set(value);
+            updatedClient(client);
+            client.player.networkHandler.sendPacket(new CustomPayloadC2SPacket(new SetConfigValuePacket<>(this, get())));
+        }
     }
 
     public void set(String s) {

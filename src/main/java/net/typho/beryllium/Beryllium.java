@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -14,7 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.config.Feature;
 import net.typho.beryllium.config.ServerConfig;
-import net.typho.beryllium.config.SyncServerConfigS2C;
+import net.typho.beryllium.config.SetConfigValuePacket;
 import net.typho.beryllium.util.Constructor;
 
 public class Beryllium implements ModInitializer {
@@ -34,11 +35,17 @@ public class Beryllium implements ModInitializer {
     @Override
     public void onInitialize() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
-        PayloadTypeRegistry.playS2C().register(SyncServerConfigS2C.ID, SyncServerConfigS2C.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(SetConfigValuePacket.ID, SetConfigValuePacket.PACKET_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(SetConfigValuePacket.ID, (payload, context) -> {
+            if (context.player().hasPermissionLevel(2)) {
+                payload.feature().set(payload.value());
+                payload.feature().updatedServer(context.server());
+            }
+        });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                 for (Feature<?> feature : ServerConfig.ALL_FEATURES.values()) {
-                    sender.sendPacket(new SyncServerConfigS2C<>(feature));
+                    sender.sendPacket(new SetConfigValuePacket<>(feature));
                 }
             }
         });

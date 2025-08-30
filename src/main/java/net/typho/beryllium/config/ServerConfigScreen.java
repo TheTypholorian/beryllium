@@ -1,5 +1,6 @@
 package net.typho.beryllium.config;
 
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
@@ -30,12 +31,19 @@ public class ServerConfigScreen extends Screen {
     protected void init() {
         int width = Math.min(256, this.width / 2);
         int height = 24;
-        int x = (this.width - width) / 2;
-        int y = this.height / 2 - 256;
+        int centerX = this.width / 2;
+        int y = Math.max(this.height / 2 - 256, height);
+
+        boolean side = false;
 
         for (FeatureGroupChild child : tab) {
-            addDrawableChild(new Node(x, y, width, height, child));
-            y += 48;
+            addDrawableChild(new Node(side ? centerX : centerX - width, y, width, height, child));
+
+            if (side) {
+                y += height;
+            }
+
+            side = !side;
         }
     }
 
@@ -91,17 +99,25 @@ public class ServerConfigScreen extends Screen {
             return ServerConfigScreen.this;
         }
 
+        public TextRenderer textRenderer() {
+            return textRenderer;
+        }
+
         @Override
         public void onClick(double mouseX, double mouseY) {
             child.click(this, mouseX, mouseY);
         }
 
         @Override
-        protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-            int itemSize = 16;
+        public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+            return child.scroll(this, mouseX, mouseY, horizontalAmount, verticalAmount);
+        }
 
-            float scale = itemSize / 16f;
-            boolean hovered = isHovered();
+        @Override
+        protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+            context.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), hovered ? 0xFF000000 : 0xCC000000);
+
+            float scale = 1;
 
             if (hovered) {
                 scale *= 1.5f;
@@ -110,11 +126,12 @@ public class ServerConfigScreen extends Screen {
             MatrixStack matrices = context.getMatrices();
             matrices.push();
             matrices.scale(scale, scale, scale);
-            matrices.translate(-itemSize / 2f + (getX() + itemSize / 2f + (height - itemSize) / 2f) / scale, -itemSize / 2f + (getY() + itemSize / 2f + (height - itemSize) / 2f) / scale, 0);
+            matrices.translate(-8 + (getX() + 8 + (height - 16) / 2f) / scale, -8 + (getY() + 8 + (height - 16) / 2f) / scale, 0);
             context.drawItem(child.icon(), 0, 0);
             matrices.pop();
 
-            context.drawTextWithShadow(textRenderer, child.name(), getX() + itemSize * 2, getY() + (height - textRenderer.fontHeight) / 2, 0xFFFFFFFF);
+            context.drawTextWithShadow(textRenderer, child.name(), getX() + 32, getY() + (height - textRenderer.fontHeight) / 2, 0xFFFFFFFF);
+            child.render(this, context, mouseX, mouseY, delta);
         }
 
         @Override

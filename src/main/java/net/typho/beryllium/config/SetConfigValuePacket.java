@@ -6,14 +6,14 @@ import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
 import net.typho.beryllium.Beryllium;
 
-public record SyncServerConfigS2C<T>(Feature<T> feature, T value) implements CustomPayload {
-    public SyncServerConfigS2C(Feature<T> feature) {
+public record SetConfigValuePacket<T>(Feature<T> feature, T value) implements CustomPayload {
+    public SetConfigValuePacket(Feature<T> feature) {
         this(feature, feature.value);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> SyncServerConfigS2C<T> cast(Feature<?> feature, Object value) {
-        return new SyncServerConfigS2C<>((Feature<T>) feature, (T) value);
+    public static <T> SetConfigValuePacket<T> cast(Feature<?> feature, Object value) {
+        return new SetConfigValuePacket<>((Feature<T>) feature, (T) value);
     }
 
     public void encode(PacketByteBuf buf) {
@@ -21,22 +21,23 @@ public record SyncServerConfigS2C<T>(Feature<T> feature, T value) implements Cus
         feature.packetCodec().encode(buf, value);
     }
 
-    public static final Id<SyncServerConfigS2C<?>> ID = new Id<>(Beryllium.SYNC_SERVER_CONFIG_ID);
-    public static final PacketCodec<PacketByteBuf, SyncServerConfigS2C<?>> PACKET_CODEC = new PacketCodec<>() {
+    public static final Id<SetConfigValuePacket<?>> ID = new Id<>(Beryllium.SYNC_SERVER_CONFIG_ID);
+    public static final PacketCodec<PacketByteBuf, SetConfigValuePacket<?>> PACKET_CODEC = new PacketCodec<>() {
         @Override
-        public SyncServerConfigS2C<?> decode(PacketByteBuf buf) {
+        public SetConfigValuePacket<?> decode(PacketByteBuf buf) {
             Identifier id = Identifier.PACKET_CODEC.decode(buf);
             Feature<?> feature = ServerConfig.ALL_FEATURES.get(id);
 
             if (feature == null) {
-                throw new NullPointerException("No feature with id " + id);
+                System.err.println("No feature with id " + id);
+                return null;
             }
 
-            return SyncServerConfigS2C.cast(feature, feature.packetCodec().decode(buf));
+            return SetConfigValuePacket.cast(feature, feature.packetCodec().decode(buf));
         }
 
         @Override
-        public void encode(PacketByteBuf buf, SyncServerConfigS2C<?> packet) {
+        public void encode(PacketByteBuf buf, SetConfigValuePacket<?> packet) {
             packet.encode(buf);
         }
     };

@@ -66,7 +66,7 @@ public class FeatureGroup implements FeatureGroupChild, Iterable<FeatureGroupChi
 
     @Override
     public Text name() {
-        return Text.translatable(id.toTranslationKey());
+        return Text.translatable(id.toTranslationKey("config").replace('/', '.'));
     }
 
     @Override

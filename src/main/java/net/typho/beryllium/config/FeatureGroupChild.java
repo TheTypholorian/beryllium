@@ -17,6 +17,10 @@ public interface FeatureGroupChild {
     default void click(ServerConfigScreen.Node node, double mouseX, double mouseY) {
     }
 
+    default boolean scroll(ServerConfigScreen.Node node, double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+        return false;
+    }
+
     default void render(ServerConfigScreen.Node node, DrawContext context, int mouseX, int mouseY, float delta) {
     }
 }

@@ -13,7 +13,6 @@ out vec4 fragColor;
 void main() {
     fragColor = texture(DiffuseSampler0, texCoord);
 
-    /*
     float voidDepth = texture(CongealedVoidDepthSampler, texCoord).r;
     float gameDepth = texture(DiffuseDepthSampler, texCoord).r;
 
@@ -26,5 +25,4 @@ void main() {
             fragColor = linear_fog(fragColor, vertexDistance, 8, 12, voidColor);
         }
     //}
-    */
 }
