@@ -72,7 +72,7 @@ dependencies {
     include "org.ladysnake.cardinal-components-api:cardinal-components-world:${project.cca_version}"
 
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:${project.terrablender_version}"
-    modImplementation "com.github.TheTypholorian:config:${project.typho_config_version}"
+    modImplementation include("com.github.TheTypholorian:config:${project.typho_config_version}")
 
     modImplementation("foundry.veil:veil-fabric-${project.minecraft_version}:${project.veil_version}") {
         exclude group: "maven.modrinth"

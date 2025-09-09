@@ -40,54 +40,54 @@ public class BerylliumConfig implements ModInitializer {
             Identifier.ofVanilla("unbreaking")
     ));
 
-    public static final RootConfigOptionGroup ROOT_GROUP = new RootConfigOptionGroup(new ItemStack(Items.END_CRYSTAL), Beryllium.BASE_CONSTRUCTOR.id("config"));
+    public static final RootConfigOptionGroup ROOT_GROUP = new RootConfigOptionGroup.Builder().icon(new ItemStack(Items.END_CRYSTAL)).id(Beryllium.BASE_CONSTRUCTOR.id("config")).build();
 
-    public static final ConfigOptionGroup ARMOR_GROUP = new ConfigOptionGroup(new ItemStack(Items.DIAMOND_CHESTPLATE), ROOT_GROUP, "armor");
-    public static final ConfigOptionGroup BUILDING_GROUP = new ConfigOptionGroup(new ItemStack(Items.BRICKS), ROOT_GROUP, "building");
-    public static final ConfigOptionGroup CHALLENGES_GROUP = new ConfigOptionGroup(new ItemStack(Items.TRIAL_KEY), ROOT_GROUP, "challenges");
-    public static final ConfigOptionGroup COMBAT_GROUP = new ConfigOptionGroup(new ItemStack(Items.DIAMOND_SWORD), ROOT_GROUP, "combat");
-    public static final ConfigOptionGroup ENCHANTING_GROUP = new ConfigOptionGroup(new ItemStack(Items.ENCHANTED_BOOK), ROOT_GROUP, "enchanting");
-    public static final ConfigOptionGroup EXPLORING_GROUP = new ConfigOptionGroup(new ItemStack(Items.FILLED_MAP), ROOT_GROUP, "exploring");
-    public static final ConfigOptionGroup REDSTONE_GROUP = new ConfigOptionGroup(new ItemStack(Items.REDSTONE), ROOT_GROUP, "redstone");
-    public static final ConfigOptionGroup CLIENT_GROUP = new ConfigOptionGroup(EnvType.CLIENT, new ItemStack(Items.PAPER), ROOT_GROUP, "client");
+    public static final ConfigOptionGroup ARMOR_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.DIAMOND_CHESTPLATE)).parent(ROOT_GROUP).id("armor").build();
+    public static final ConfigOptionGroup BUILDING_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.BRICKS)).parent(ROOT_GROUP).id("building").build();
+    public static final ConfigOptionGroup CHALLENGES_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.TRIAL_KEY)).parent(ROOT_GROUP).id("challenges").build();
+    public static final ConfigOptionGroup COMBAT_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.DIAMOND_SWORD)).parent(ROOT_GROUP).id("combat").build();
+    public static final ConfigOptionGroup ENCHANTING_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.ENCHANTED_BOOK)).parent(ROOT_GROUP).id("enchanting").build();
+    public static final ConfigOptionGroup EXPLORING_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.FILLED_MAP)).parent(ROOT_GROUP).id("exploring").build();
+    public static final ConfigOptionGroup REDSTONE_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.REDSTONE)).parent(ROOT_GROUP).id("redstone").build();
+    public static final ConfigOptionGroup CLIENT_GROUP = new ConfigOptionGroup.Builder().icon(new ItemStack(Items.PAPER)).env(EnvType.CLIENT).parent(ROOT_GROUP).id("client").build();
 
-    public static final BooleanConfigOption DURABILITY_REMOVAL = new BooleanConfigOption(COMBAT_GROUP, "durability_removal", false, new ItemStack(Items.ANVIL));
-    public static final RangedIntConfigOption ENDER_PEARL_COOLDOWN = new RangedIntConfigOption(COMBAT_GROUP, "ender_pearl_cooldown", 0, new ItemStack(Items.ENDER_PEARL), 0, 600);
-    public static final RangedFloatConfigOption ENDER_PEARL_SPEED = new RangedFloatConfigOption(COMBAT_GROUP, "ender_pearl_speed", 1.5f, new ItemStack(Items.ENDER_PEARL), 0f, 10f);
-    public static final RangedIntConfigOption END_CRYSTAL_COOLDOWN = new RangedIntConfigOption(COMBAT_GROUP, "end_crystal_cooldown", 0, new ItemStack(Items.END_CRYSTAL), 0, 600);
-    public static final RangedFloatConfigOption END_CRYSTAL_POWER = new RangedFloatConfigOption(COMBAT_GROUP, "end_crystal_power", 6f, new ItemStack(Items.END_CRYSTAL), 0f, 20f);
-    public static final BooleanConfigOption CROSSBOW_END_CRYSTALS = new BooleanConfigOption(COMBAT_GROUP, "crossbow_end_crystals", false, new ItemStack(Items.END_CRYSTAL));
-    public static final BooleanConfigOption MACE_REBALANCE = new BooleanConfigOption(COMBAT_GROUP, "mace_rebalance", true, new ItemStack(Items.MACE));
-    public static final BooleanConfigOption SWEEPING_MARGIN = new BooleanConfigOption(COMBAT_GROUP, "sweeping_margin", false, new ItemStack(Combat.DIAMOND_GLAIVE));
-    public static final RangedFloatConfigOption SWEEP_MARGIN_MULTIPLIER = new RangedFloatConfigOption(COMBAT_GROUP, "sweep_margin_multiplier", 0.05f, new ItemStack(Combat.DIAMOND_GLAIVE), 0f, 5f);
-    public static final BooleanConfigOption RESPAWN_ANCHORS_DONT_EXPLODE = new BooleanConfigOption(COMBAT_GROUP, "respawn_anchors_dont_explode", false, new ItemStack(Items.RESPAWN_ANCHOR));
-    public static final RangedIntConfigOption SHIELD_MAX_DURABILITY = new RangedIntConfigOption(COMBAT_GROUP, "shield_max_durability", 30, new ItemStack(Items.SHIELD), 0, 200);
-    public static final RangedIntConfigOption SHIELD_LOWER_COOLDOWN = new RangedIntConfigOption(COMBAT_GROUP, "shield_lower_cooldown", 60, new ItemStack(Items.SHIELD), 0, 600);
-    public static final RangedIntConfigOption SPLASH_POTION_COOLDOWN = new RangedIntConfigOption(COMBAT_GROUP, "splash_potion_cooldown", 0, new ItemStack(Items.SHIELD), 0, 600);
+    public static final BooleanConfigOption DURABILITY_REMOVAL = new BooleanConfigOption.Builder().parent(COMBAT_GROUP).id("durability_removal").value(false).icon(new ItemStack(Items.ANVIL)).build();
+    public static final RangedIntConfigOption ENDER_PEARL_COOLDOWN = new RangedIntConfigOption.Builder().parent(COMBAT_GROUP).id("ender_pearl_cooldown").value(0).icon(new ItemStack(Items.ENDER_PEARL)).min(0).max(600).build();
+    public static final RangedFloatConfigOption ENDER_PEARL_SPEED = new RangedFloatConfigOption.Builder().parent(COMBAT_GROUP).id("ender_pearl_speed").value(1.5f).icon(new ItemStack(Items.ENDER_PEARL)).min(0f).max(10f).build();
+    public static final RangedIntConfigOption END_CRYSTAL_COOLDOWN = new RangedIntConfigOption.Builder().parent(COMBAT_GROUP).id("end_crystal_cooldown").value(0).icon(new ItemStack(Items.END_CRYSTAL)).min(0).max(600).build();
+    public static final RangedFloatConfigOption END_CRYSTAL_POWER = new RangedFloatConfigOption.Builder().parent(COMBAT_GROUP).id("end_crystal_power").value(6f).icon(new ItemStack(Items.END_CRYSTAL)).min(0f).max(20f).build();
+    public static final BooleanConfigOption CROSSBOW_END_CRYSTALS = new BooleanConfigOption.Builder().parent(COMBAT_GROUP).id("crossbow_end_crystals").value(false).icon(new ItemStack(Items.END_CRYSTAL)).build();
+    public static final BooleanConfigOption MACE_REBALANCE = new BooleanConfigOption.Builder().parent(COMBAT_GROUP).id("mace_rebalance").value(true).icon(new ItemStack(Items.MACE)).build();
+    public static final BooleanConfigOption SWEEPING_MARGIN = new BooleanConfigOption.Builder().parent(COMBAT_GROUP).id("sweeping_margin").value(false).icon(new ItemStack(Combat.DIAMOND_GLAIVE)).build();
+    public static final RangedFloatConfigOption SWEEP_MARGIN_MULTIPLIER = new RangedFloatConfigOption.Builder().parent(COMBAT_GROUP).id("sweep_margin_multiplier").value(0.05f).icon(new ItemStack(Combat.DIAMOND_GLAIVE)).min(0f).max(5f).build();
+    public static final BooleanConfigOption RESPAWN_ANCHORS_DONT_EXPLODE = new BooleanConfigOption.Builder().parent(COMBAT_GROUP).id("respawn_anchors_dont_explode").value(false).icon(new ItemStack(Items.RESPAWN_ANCHOR)).build();
+    public static final RangedIntConfigOption SHIELD_MAX_DURABILITY = new RangedIntConfigOption.Builder().parent(COMBAT_GROUP).id("shield_max_durability").value(30).icon(new ItemStack(Items.SHIELD)).min(0).max(200).build();
+    public static final RangedIntConfigOption SHIELD_LOWER_COOLDOWN = new RangedIntConfigOption.Builder().parent(COMBAT_GROUP).id("shield_lower_cooldown").value(60).icon(new ItemStack(Items.SHIELD)).min(0).max(600).build();
+    public static final RangedIntConfigOption SPLASH_POTION_COOLDOWN = new RangedIntConfigOption.Builder().parent(COMBAT_GROUP).id("splash_potion_cooldown").value(0).icon(new ItemStack(Items.SHIELD)).min(0).max(600).build();
 
-    public static final BooleanConfigOption DISABLED_ARMOR = new BooleanConfigOption(ARMOR_GROUP, "disabled_armor", false, new ItemStack(Items.DIAMOND_CHESTPLATE));
+    public static final BooleanConfigOption DISABLED_ARMOR = new BooleanConfigOption.Builder().parent(ARMOR_GROUP).id("disabled_armor").value(false).icon(new ItemStack(Items.DIAMOND_CHESTPLATE)).build();
 
-    public static final BooleanConfigOption ULTRA_DARK = new BooleanConfigOption(CHALLENGES_GROUP, "ultra_dark", false, new ItemStack(Items.SCULK));
-    public static final BooleanConfigOption DISABLED_CHAT = new BooleanConfigOption(CHALLENGES_GROUP, "disabled_chat", false, new ItemStack(Items.OAK_SIGN));
+    public static final BooleanConfigOption ULTRA_DARK = new BooleanConfigOption.Builder().parent(CHALLENGES_GROUP).id("ultra_dark").value(false).icon(new ItemStack(Items.SCULK)).build();
+    public static final BooleanConfigOption DISABLED_CHAT = new BooleanConfigOption.Builder().parent(CHALLENGES_GROUP).id("disabled_chat").value(false).icon(new ItemStack(Items.OAK_SIGN)).build();
 
-    public static final BooleanConfigOption EXTRA_STONE_BRICKS = new BooleanConfigOption(BUILDING_GROUP, "extra_stone_bricks", true, new ItemStack(Building.GRANITE_BRICKS.getBaseBlock()));
+    public static final BooleanConfigOption EXTRA_STONE_BRICKS = new BooleanConfigOption.Builder().parent(BUILDING_GROUP).id("extra_stone_bricks").value(true).icon(new ItemStack(Building.GRANITE_BRICKS.getBaseBlock())).build();
 
-    public static final RangedIntConfigOption METAL_DETECTOR_RADIUS = new RangedIntConfigOption(EXPLORING_GROUP, "metal_detector_radius", 16, new ItemStack(Exploring.METAL_DETECTOR_ITEM), 0, 50);
-    public static final RangedIntConfigOption METAL_DETECTOR_HEIGHT = new RangedIntConfigOption(EXPLORING_GROUP, "metal_detector_height", 2, new ItemStack(Exploring.METAL_DETECTOR_ITEM), 0, 50);
-    public static final BooleanConfigOption SPAWN_IN_VILLAGE = new BooleanConfigOption(EXPLORING_GROUP, "spawn_in_village", true, new ItemStack(Items.VILLAGER_SPAWN_EGG));
-    public static final BooleanConfigOption FERTILIZABLE_SUGARCANE = new BooleanConfigOption(EXPLORING_GROUP, "fertilizable_sugarcane", false, new ItemStack(Items.BONE_MEAL));
-    public static final RangedIntConfigOption MAX_SUGARCANE_HEIGHT = new RangedIntConfigOption(EXPLORING_GROUP, "max_sugarcane_height", 3, new ItemStack(Items.SUGAR_CANE), 2, 30);
+    public static final RangedIntConfigOption METAL_DETECTOR_RADIUS = new RangedIntConfigOption.Builder().parent(EXPLORING_GROUP).id("metal_detector_radius").value(16).icon(new ItemStack(Exploring.METAL_DETECTOR_ITEM)).min(0).max(50).build();
+    public static final RangedIntConfigOption METAL_DETECTOR_HEIGHT = new RangedIntConfigOption.Builder().parent(EXPLORING_GROUP).id("metal_detector_height").value(2).icon(new ItemStack(Exploring.METAL_DETECTOR_ITEM)).min(0).max(50).build();
+    public static final BooleanConfigOption SPAWN_IN_VILLAGE = new BooleanConfigOption.Builder().parent(EXPLORING_GROUP).id("spawn_in_village").value(true).icon(new ItemStack(Items.VILLAGER_SPAWN_EGG)).build();
+    public static final BooleanConfigOption FERTILIZABLE_SUGARCANE = new BooleanConfigOption.Builder().parent(EXPLORING_GROUP).id("fertilizable_sugarcane").value(false).icon(new ItemStack(Items.BONE_MEAL)).build();
+    public static final RangedIntConfigOption MAX_SUGARCANE_HEIGHT = new RangedIntConfigOption.Builder().parent(EXPLORING_GROUP).id("max_sugarcane_height").value(3).icon(new ItemStack(Items.SUGAR_CANE)).min(2).max(30).build();
 
-    public static final BooleanConfigOption ENCHANTMENT_CATALYSTS = new BooleanConfigOption(ENCHANTING_GROUP, "catalysts", false, new ItemStack(Items.BLAZE_POWDER));
-    public static final BooleanConfigOption ENCHANTMENT_CAPACITY = new BooleanConfigOption(ENCHANTING_GROUP, "capacity", false, new ItemStack(Items.ENCHANTING_TABLE));
+    public static final BooleanConfigOption ENCHANTMENT_CATALYSTS = new BooleanConfigOption.Builder().parent(ENCHANTING_GROUP).id("catalysts").value(false).icon(new ItemStack(Items.BLAZE_POWDER)).build();
+    public static final BooleanConfigOption ENCHANTMENT_CAPACITY = new BooleanConfigOption.Builder().parent(ENCHANTING_GROUP).id("capacity").value(false).icon(new ItemStack(Items.ENCHANTING_TABLE)).build();
 
-    public static final BooleanConfigOption CROP_COMPARATOR_OUTPUT = new BooleanConfigOption(REDSTONE_GROUP, "crop_comparator_output", false, new ItemStack(Items.COMPARATOR));
-    public static final BooleanConfigOption DISPENSERS_PLACE_BLOCKS = new BooleanConfigOption(REDSTONE_GROUP, "dispensers_place_blocks", false, new ItemStack(Items.DISPENSER));
-    public static final RangedIntConfigOption HOPPER_COOLDOWN = new RangedIntConfigOption(REDSTONE_GROUP, "hopper_cooldown", 8, new ItemStack(Items.HOPPER), 1, 20);
-    public static final BooleanConfigOption INSTANT_CHAIN_TNT = new BooleanConfigOption(REDSTONE_GROUP, "instant_chain_tnt", false, new ItemStack(Items.TNT));
+    public static final BooleanConfigOption CROP_COMPARATOR_OUTPUT = new BooleanConfigOption.Builder().parent(REDSTONE_GROUP).id("crop_comparator_output").value(false).icon(new ItemStack(Items.COMPARATOR)).build();
+    public static final BooleanConfigOption DISPENSERS_PLACE_BLOCKS = new BooleanConfigOption.Builder().parent(REDSTONE_GROUP).id("dispensers_place_blocks").value(false).icon(new ItemStack(Items.DISPENSER)).build();
+    public static final RangedIntConfigOption HOPPER_COOLDOWN = new RangedIntConfigOption.Builder().parent(REDSTONE_GROUP).id("hopper_cooldown").value(8).icon(new ItemStack(Items.HOPPER)).min(1).max(20).build();
+    public static final BooleanConfigOption INSTANT_CHAIN_TNT = new BooleanConfigOption.Builder().parent(REDSTONE_GROUP).id("instant_chain_tnt").value(false).icon(new ItemStack(Items.TNT)).build();
 
-    public static final BooleanConfigOption HUD_ITEM_TOOLTIPS = new BooleanConfigOption(CLIENT_GROUP, "hud_item_tooltips", false, new ItemStack(Items.SPYGLASS));
-    public static final BooleanConfigOption COMPASS_COORDS = new BooleanConfigOption(CLIENT_GROUP, "compass_corrds", true, new ItemStack(Items.COMPASS));
+    public static final BooleanConfigOption HUD_ITEM_TOOLTIPS = new BooleanConfigOption.Builder().parent(CLIENT_GROUP).id("hud_item_tooltips").value(false).icon(new ItemStack(Items.SPYGLASS)).build();
+    public static final BooleanConfigOption COMPASS_COORDS = new BooleanConfigOption.Builder().parent(CLIENT_GROUP).id("compass_corrds").value(true).icon(new ItemStack(Items.COMPASS)).build();
 
     public static float ultraDarkBlend(World world) {
         if (!ULTRA_DARK.get()) {
@@ -104,7 +104,7 @@ public class BerylliumConfig implements ModInitializer {
         MutableText text = Text.translatable("config.beryllium.title");
 
         for (ConfigOption<?> option : ALL_OPTIONS.values()) {
-            text.append(Text.literal("\n").append(option.name).append(" = ").append(option.get().toString()));
+            text.append(Text.literal("\n").append(option.name()).append(" = ").append(option.get().toString()));
         }
 
         return text;
