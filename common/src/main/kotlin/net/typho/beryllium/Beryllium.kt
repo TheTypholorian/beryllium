@@ -70,6 +70,7 @@ object Beryllium {
         Items.WOLF_ARMOR,
 
         Items.ENCHANTING_TABLE,
+        Items.ENCHANTED_BOOK,
     )
 
     fun init() {
