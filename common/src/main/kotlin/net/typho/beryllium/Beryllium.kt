@@ -6,7 +6,6 @@ import net.minecraft.world.item.Items
 object Beryllium {
     const val MOD_ID = "beryllium"
     val removedItems = listOf(
-        Items.WOODEN_SWORD,
         // keep wooden tools
 
         Items.STONE_SWORD,
@@ -15,7 +14,6 @@ object Beryllium {
         Items.STONE_SHOVEL,
         Items.STONE_HOE,
 
-        Items.IRON_SWORD,
         // keep iron tools
 
         Items.GOLDEN_SWORD,
@@ -48,6 +46,8 @@ object Beryllium {
         Items.CHAINMAIL_BOOTS,
         // mojang where chainmail horse armor
 
+        Items.IRON_HORSE_ARMOR,
+
         Items.GOLDEN_HELMET,
         Items.GOLDEN_CHESTPLATE,
         Items.GOLDEN_LEGGINGS,
@@ -65,6 +65,9 @@ object Beryllium {
         Items.NETHERITE_LEGGINGS,
         Items.NETHERITE_BOOTS,
         // mojang where netherite horse armor
+
+        Items.MACE,
+        Items.WOLF_ARMOR,
     )
 
     fun init() {
