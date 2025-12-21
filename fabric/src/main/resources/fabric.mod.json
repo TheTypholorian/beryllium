@@ -18,7 +18,7 @@
         "main": [
             {
                 "adapter": "kotlin",
-                "value": "com.example.examplemod.ExampleModKt::init"
+                "value": "net.typho.beryllium.BerylliumFabric"
             }
         ]
     },
@@ -32,9 +32,5 @@
         "minecraft": "${minecraft_version}",
         "java": ">=${java_version}",
         "fabric-language-kotlin": ">=${flk_version}"
-    },
-    "suggests": {
-        "another-mod": "*"
     }
 }
-  
