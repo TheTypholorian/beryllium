@@ -1,7 +1,7 @@
 package net.typho.beryllium.platform
 
 import net.typho.beryllium.platform.services.PlatformHelper
-import java.util.ServiceLoader
+import java.util.*
 
 object Services {
     val PLATFORM = load(PlatformHelper::class.java)
@@ -12,7 +12,6 @@ object Services {
             .orElseThrow {
                 IllegalStateException("Failed to load service for ${clazz.name}")
             }
-        Constants.LOG.debug("Loaded {} for service {}", loadedService, clazz)
         return loadedService
     }
 }
