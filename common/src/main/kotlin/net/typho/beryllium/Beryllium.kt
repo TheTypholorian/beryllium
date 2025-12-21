@@ -68,6 +68,8 @@ object Beryllium {
 
         Items.MACE,
         Items.WOLF_ARMOR,
+
+        Items.ENCHANTING_TABLE,
     )
 
     fun init() {
