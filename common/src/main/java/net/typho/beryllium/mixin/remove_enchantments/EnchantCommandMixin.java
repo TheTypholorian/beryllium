@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.enchantments;
+package net.typho.beryllium.mixin.remove_enchantments;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandBuildContext;

@@ -2,6 +2,9 @@ package net.typho.beryllium.mixin.tooltips;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -27,11 +30,45 @@ public abstract class ItemStackMixin {
             method = "getTooltipLines",
             at = @At(
                     value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/ItemStack;addAttributeTooltips(Ljava/util/function/Consumer;Lnet/minecraft/world/entity/player/Player;)V"
+            )
+    )
+    private void getTooltipLines1(
+            Item.TooltipContext context,
+            @Nullable Player player,
+            TooltipFlag tooltipFlag,
+            CallbackInfoReturnable<List<Component>> cir,
+            @Local Consumer<Component> out
+    ) {
+        ItemStack stack = (ItemStack) (Object) this;
+        String loreKey = getItem().getDescriptionId(stack) + ".lore";
+
+        if (I18n.exists(loreKey)) {
+            out.accept(CommonComponents.EMPTY);
+            out.accept(Component.translatable(loreKey).withStyle(ChatFormatting.GRAY));
+        }
+
+        String usageKey = getItem().getDescriptionId(stack) + ".usage";
+
+        if (I18n.exists(usageKey)) {
+            out.accept(CommonComponents.EMPTY);
+            out.accept(
+                    Screen.hasShiftDown()
+                            ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)
+                            : Component.translatable("tooltip.beryllium.usage").withStyle(ChatFormatting.GOLD)
+            );
+        }
+    }
+
+    @Inject(
+            method = "getTooltipLines",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/world/item/ItemStack;addToTooltip(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
                     ordinal = 6
             )
     )
-    private void getTooltipLines(
+    private void getTooltipLines2(
             Item.TooltipContext context,
             @Nullable Player player,
             TooltipFlag tooltipFlag,

@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.enchantments;
+package net.typho.beryllium.mixin.remove_enchantments;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.item.Item;

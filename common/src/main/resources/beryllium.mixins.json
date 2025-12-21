@@ -6,9 +6,10 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "accessors.TagEntryAccessor",
-    "enchantments.EnchantCommandMixin",
-    "enchantments.EnchantmentDefinitionMixin",
     "remove_durability.ItemStackMixin",
+    "remove_enchantments.EnchantCommandMixin",
+    "remove_enchantments.EnchantmentDefinitionMixin",
+    "remove_enchantments.ItemStackMixin",
     "remove_items.CreativeModeTabMixin",
     "remove_items.ItemParserMixin",
     "remove_items.LootPoolMixin",
