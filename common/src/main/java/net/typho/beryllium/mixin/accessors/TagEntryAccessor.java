@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin;
+package net.typho.beryllium.mixin.accessors;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagEntry;

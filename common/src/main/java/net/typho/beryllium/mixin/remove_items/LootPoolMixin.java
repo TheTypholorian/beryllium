@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin;
+package net.typho.beryllium.mixin.remove_items;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

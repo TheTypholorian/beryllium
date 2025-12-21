@@ -5,12 +5,14 @@
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
-    "CreativeModeTabMixin",
-    "ItemParserMixin",
-    "LootPoolMixin",
-    "RecipeManagerMixin",
-    "TagEntryAccessor",
-    "TagLoaderMixin"
+    "accessors.TagEntryAccessor",
+    "remove_items.CreativeModeTabMixin",
+    "remove_items.ItemParserMixin",
+    "remove_items.LootPoolMixin",
+    "remove_items.RecipeManagerMixin",
+    "remove_items.TagLoaderMixin",
+    "villagers.AbstractVillagerMixin",
+    "villagers.VillagerMixin"
   ],
   "client": [],
   "server": [],

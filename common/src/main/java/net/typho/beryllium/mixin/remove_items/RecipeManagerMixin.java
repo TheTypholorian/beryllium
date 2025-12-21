@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin;
+package net.typho.beryllium.mixin.remove_items;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;

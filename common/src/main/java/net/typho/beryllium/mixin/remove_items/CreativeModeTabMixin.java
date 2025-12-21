@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin;
+package net.typho.beryllium.mixin.remove_items;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;

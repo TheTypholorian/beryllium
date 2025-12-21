@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin;
+package net.typho.beryllium.mixin.remove_items;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -7,6 +7,7 @@ import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagFile;
 import net.minecraft.tags.TagLoader;
 import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.mixin.accessors.TagEntryAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
