@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
-import net.typho.beryllium.villagers.HasDeterministicTrades;
+import net.typho.beryllium.villagers.HasDailyTrades;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Villager.class)
-public abstract class VillagerMixin extends AbstractVillager implements HasDeterministicTrades {
+public abstract class VillagerMixin extends AbstractVillager implements HasDailyTrades {
     @Unique
     private RandomSource beryllium$tradeRandom = random;
 

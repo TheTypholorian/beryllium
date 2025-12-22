@@ -2,11 +2,11 @@
   "tooltip.beryllium.is_material": "Material",
   "tooltip.beryllium.usage": "Hold Shift to view usage",
 
-  "tier.common": "Common",
-  "tier.uncommon": "Uncommon",
-  "tier.rare": "Rare",
-  "tier.epic": "Epic",
-  "tier.legendary": "Legendary",
+  "tier.wood": "Wood",
+  "tier.stone": "Stone",
+  "tier.iron": "Iron",
+  "tier.gold": "Gold",
+  "tier.diamond": "Diamond",
 
   "item.minecraft.trident.lore": "A reward for conquering the ocean monument, this item is both a weapon and a mobility tool while underwater.",
   "item.minecraft.trident.usage": "Hold use while in water, then release to launch yourself forward in your crosshair direction. If you hit an enemy while dashing, you stop dashing and deal damage.",

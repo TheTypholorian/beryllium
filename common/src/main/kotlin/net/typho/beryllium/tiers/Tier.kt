@@ -2,7 +2,6 @@ package net.typho.beryllium.tiers
 
 import com.mojang.serialization.Codec
 import io.netty.buffer.ByteBuf
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -10,18 +9,19 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
 import net.minecraft.util.StringRepresentable
 import net.typho.beryllium.Beryllium
+import java.awt.Color
 
 enum class Tier(
-    val color: ChatFormatting
+    val color: Color
 ) : StringRepresentable {
-    COMMON(ChatFormatting.GRAY),
-    UNCOMMON(ChatFormatting.GREEN),
-    RARE(ChatFormatting.AQUA),
-    EPIC(ChatFormatting.LIGHT_PURPLE),
-    UNIQUE(ChatFormatting.GOLD);
+    WOOD(Color(117, 88, 33)),
+    STONE(Color(149, 145, 141)),
+    IRON(Color(216, 216, 216)),
+    GOLD(Color(222, 177, 45)),
+    DIAMOND(Color(51, 235, 203));
 
     fun getText(): Component = Component.translatable("tier.${name.lowercase()}")
-        .withStyle(color)
+        .withColor(color.rgb)
 
     fun getTooltipBackground(): ResourceLocation = Beryllium.id("${name.lowercase()}_tier")
 

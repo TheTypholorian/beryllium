@@ -2,6 +2,6 @@ package net.typho.beryllium.villagers
 
 import net.minecraft.util.RandomSource
 
-interface HasDeterministicTrades {
+interface HasDailyTrades {
     fun `beryllium$getTradeRandom`(): RandomSource
 }
