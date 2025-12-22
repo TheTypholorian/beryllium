@@ -4,8 +4,14 @@
   "package": "net.typho.beryllium.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [],
+  "mixins": [
+    "remove_items.fabric.RecipeManagerMixin",
+    "trims.fabric.RecipeManagerMixin"
+  ],
+  "client": [
+    "crossbows.fabric.ItemInHandRendererMixin",
+    "crossbows.fabric.PlayerRendererMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

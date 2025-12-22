@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.crossbows;
+package net.typho.beryllium.mixin.crossbows.fabric;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

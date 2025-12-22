@@ -1,4 +1,4 @@
-package net.typho.beryllium.mixin.crossbows;
+package net.typho.beryllium.mixin.crossbows.fabric;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -12,13 +12,14 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
     @WrapOperation(
-            method = "isChargedCrossbow",
+            method = "renderArmWithItem",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z"
+                    target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z",
+                    ordinal = 1
             )
     )
-    private static boolean isChargedCrossbow(ItemStack instance, Item item, Operation<Boolean> original) {
+    private static boolean renderArmWithItem(ItemStack instance, Item item, Operation<Boolean> original) {
         return original.call(instance, item) || instance.getItem() instanceof CrossbowItem;
     }
 }

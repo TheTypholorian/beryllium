@@ -16,7 +16,6 @@
     "remove_items.CreativeModeTabMixin",
     "remove_items.ItemParserMixin",
     "remove_items.LootPoolMixin",
-    "remove_items.RecipeManagerMixin",
     "remove_items.TagLoaderMixin",
     "tooltips.CrossbowItemMixin",
     "tooltips.ItemMixin",
@@ -24,15 +23,13 @@
     "tooltips.RecipeManagerMixin",
     "tridents.EnchantmentHelperMixin",
     "tridents.TridentItemMixin",
-    "trims.RecipeManagerMixin",
     "trims.SmithingMenuMixin",
     "villagers.AbstractVillagerMixin",
     "villagers.VillagerMixin"
   ],
   "client": [
     "crossbows.ItemInHandRendererMixin",
-    "crossbows.ItemPropertiesMixin",
-    "crossbows.PlayerRendererMixin"
+    "crossbows.ItemPropertiesMixin"
   ],
   "server": [],
   "injectors": {

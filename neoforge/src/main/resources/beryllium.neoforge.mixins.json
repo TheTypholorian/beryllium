@@ -3,7 +3,10 @@
   "minVersion": "0.8",
   "package": "net.typho.beryllium.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "remove_items.fabric.RecipeManagerMixin",
+    "trims.fabric.RecipeManagerMixin"
+  ],
   "client": [],
   "server": [],
   "injectors": {
