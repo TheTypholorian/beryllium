@@ -18,7 +18,7 @@ enum class Tier(
     UNCOMMON(ChatFormatting.GREEN),
     RARE(ChatFormatting.AQUA),
     EPIC(ChatFormatting.LIGHT_PURPLE),
-    LEGENDARY(ChatFormatting.GOLD);
+    UNIQUE(ChatFormatting.GOLD);
 
     fun getText(): Component = Component.translatable("tier.${name.lowercase()}")
         .withStyle(color)
