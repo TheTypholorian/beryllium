@@ -1,6 +1,9 @@
 package net.typho.beryllium
 
+import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.ShapedRecipe
 
 object RemovedThings {
     @JvmStatic
@@ -42,6 +45,7 @@ object RemovedThings {
         Items.CHAINMAIL_BOOTS,
         // mojang where chainmail horse armor
 
+        // keep iron armor
         Items.IRON_HORSE_ARMOR,
 
         Items.GOLDEN_HELMET,
@@ -68,4 +72,25 @@ object RemovedThings {
         Items.ENCHANTING_TABLE,
         Items.ENCHANTED_BOOK,
     )
+
+    @JvmStatic
+    fun isSmithingTemplateRecipe(shaped: ShapedRecipe, registries: HolderLookup.Provider): Boolean {
+        val ingredients = shaped.ingredients
+
+        if (ingredients.size == 9) {
+            val diamonds = intArrayOf(0, 2, 3, 5, 6, 7, 8)
+
+            for (index in diamonds) {
+                if (!ingredients[index].test(ItemStack(Items.DIAMOND))) {
+                    return false
+                }
+            }
+
+            if (ingredients[1].test(shaped.getResultItem(registries))) {
+                return true
+            }
+        }
+
+        return false
+    }
 }
