@@ -6,6 +6,9 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "accessors.TagEntryAccessor",
+    "crossbows.CrossbowItemMixin",
+    "crossbows.EnchantmentHelperMixin",
+    "crossbows.EntityMixin",
     "remove_durability.ItemStackMixin",
     "remove_enchantments.EnchantCommandMixin",
     "remove_enchantments.EnchantmentDefinitionMixin",
@@ -15,6 +18,7 @@
     "remove_items.LootPoolMixin",
     "remove_items.RecipeManagerMixin",
     "remove_items.TagLoaderMixin",
+    "tooltips.CrossbowItemMixin",
     "tooltips.ItemMixin",
     "tooltips.ItemStackMixin",
     "tooltips.RecipeManagerMixin",
@@ -25,7 +29,11 @@
     "villagers.AbstractVillagerMixin",
     "villagers.VillagerMixin"
   ],
-  "client": [],
+  "client": [
+    "crossbows.ItemInHandRendererMixin",
+    "crossbows.ItemPropertiesMixin",
+    "crossbows.PlayerRendererMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

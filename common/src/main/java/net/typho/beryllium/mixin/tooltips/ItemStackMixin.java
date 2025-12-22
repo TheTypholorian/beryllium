@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -44,14 +43,14 @@ public abstract class ItemStackMixin {
         String loreKey = getItem().getDescriptionId(stack) + ".lore";
 
         if (I18n.exists(loreKey)) {
-            out.accept(CommonComponents.EMPTY);
+            out.accept(Component.literal(""));
             out.accept(Component.translatable(loreKey).withStyle(ChatFormatting.GRAY));
         }
 
         String usageKey = getItem().getDescriptionId(stack) + ".usage";
 
         if (I18n.exists(usageKey)) {
-            out.accept(CommonComponents.EMPTY);
+            out.accept(Component.literal(""));
             out.accept(
                     Screen.hasShiftDown()
                             ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)

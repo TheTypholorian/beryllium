@@ -3,5 +3,8 @@
   "tooltip.beryllium.usage": "Hold Shift to view usage",
 
   "item.minecraft.trident.lore": "A reward for conquering the ocean monument, this item is both a weapon and a mobility tool while underwater.",
-  "item.minecraft.trident.usage": "Hold use while in water, then release to launch yourself forward in your crosshair direction. If you hit an enemy while dashing, you stop dashing and deal damage."
+  "item.minecraft.trident.usage": "Hold use while in water, then release to launch yourself forward in your crosshair direction. If you hit an enemy while dashing, you stop dashing and deal damage.",
+
+  "item.beryllium.burst_crossbow": "Burst Crossbow",
+  "item.beryllium.burst_crossbow.usage": "Fires three projectiles rather than one, though with less velocity. Can shoot wind charges."
 }

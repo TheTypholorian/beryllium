@@ -1,0 +1,20 @@
+package net.typho.beryllium
+
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.component.ChargedProjectiles
+import net.typho.beryllium.crossbows.BurstCrossbowItem
+import net.typho.beryllium.platform.Services
+
+object ModItems {
+    fun init() = Unit
+
+    @JvmStatic
+    val burstCrossbow = Services.REGISTRAR.registerItem("burst_crossbow") { properties ->
+        BurstCrossbowItem(
+            properties
+                .stacksTo(1)
+                .durability(465)
+                .component(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY)
+        )
+    }
+}

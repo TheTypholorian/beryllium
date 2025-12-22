@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/crossbow_firework",
+  "textures": {
+    "layer0": "beryllium:item/burst_crossbow_firework"
+  }
+}
