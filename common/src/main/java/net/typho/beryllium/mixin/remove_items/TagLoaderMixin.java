@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagFile;
 import net.minecraft.tags.TagLoader;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.RemovedThings;
 import net.typho.beryllium.mixin.accessors.TagEntryAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ public class TagLoaderMixin {
     private List<TagEntry> load(TagFile instance, Operation<List<TagEntry>> original) {
         return original.call(instance).stream()
                 .filter(entry ->
-                        Beryllium.INSTANCE.getRemovedItems().stream()
+                        RemovedThings.getItems().stream()
                                 .noneMatch(item -> BuiltInRegistries.ITEM
                                         .getKey(item)
                                         .equals(((TagEntryAccessor) entry).beryllium$getId())

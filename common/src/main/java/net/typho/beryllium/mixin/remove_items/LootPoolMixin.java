@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntry;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.RemovedThings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -28,7 +28,7 @@ public class LootPoolMixin {
             Operation<Void> original
     ) {
         original.call(instance, (Consumer<ItemStack>) stack -> {
-            if (!Beryllium.INSTANCE.getRemovedItems().contains(stack.getItem())) {
+            if (!RemovedThings.getItems().contains(stack.getItem())) {
                 out.accept(stack);
             }
         }, lootContext);

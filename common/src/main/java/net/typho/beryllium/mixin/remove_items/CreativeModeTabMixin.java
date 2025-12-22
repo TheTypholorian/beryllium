@@ -2,7 +2,7 @@ package net.typho.beryllium.mixin.remove_items;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.RemovedThings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ public class CreativeModeTabMixin {
             at = @At("TAIL")
     )
     private void buildContents(CreativeModeTab.ItemDisplayParameters parameters, CallbackInfo ci) {
-        displayItems.removeIf(stack -> Beryllium.INSTANCE.getRemovedItems().contains(stack.getItem()));
-        displayItemsSearchTab.removeIf(stack -> Beryllium.INSTANCE.getRemovedItems().contains(stack.getItem()));
+        displayItems.removeIf(stack -> RemovedThings.getItems().contains(stack.getItem()));
+        displayItemsSearchTab.removeIf(stack -> RemovedThings.getItems().contains(stack.getItem()));
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.typho.beryllium.Beryllium;
+import net.typho.beryllium.RemovedThings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -25,7 +25,7 @@ public class ItemParserMixin {
     )
     private Stream<ResourceKey<Item>> suggestItem(HolderLookup.RegistryLookup<Item> instance, Operation<Stream<ResourceKey<Item>>> original) {
         return original.call(instance).filter(key ->
-                Beryllium.INSTANCE.getRemovedItems()
+                RemovedThings.getItems()
                         .stream()
                         .noneMatch(item -> BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow().equals(key))
         );
@@ -40,7 +40,7 @@ public class ItemParserMixin {
     )
     private Optional<Holder.Reference<Item>> readItem(HolderLookup.RegistryLookup<Item> instance, ResourceKey<Item> resourceKey, Operation<Optional<Holder.Reference<Item>>> original) {
         return original.call(instance, resourceKey).filter(reference ->
-                !Beryllium.INSTANCE.getRemovedItems().contains(reference.value())
+                !RemovedThings.getItems().contains(reference.value())
         );
     }
 }
