@@ -17,6 +17,7 @@
     "remove_items.ItemParserMixin",
     "remove_items.LootPoolMixin",
     "remove_items.TagLoaderMixin",
+    "tiers.ItemStackMixin",
     "tooltips.CrossbowItemMixin",
     "tooltips.ItemMixin",
     "tooltips.ItemStackMixin",
@@ -29,7 +30,9 @@
   ],
   "client": [
     "crossbows.ItemInHandRendererMixin",
-    "crossbows.ItemPropertiesMixin"
+    "crossbows.ItemPropertiesMixin",
+    "tiers.AbstractContainerScreenMixin",
+    "tooltips.TooltipRenderUtilMixin"
   ],
   "server": [],
   "injectors": {

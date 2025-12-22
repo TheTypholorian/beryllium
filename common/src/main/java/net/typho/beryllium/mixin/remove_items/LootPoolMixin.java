@@ -28,7 +28,7 @@ public class LootPoolMixin {
             Operation<Void> original
     ) {
         original.call(instance, (Consumer<ItemStack>) stack -> {
-            if (!RemovedThings.getItems().contains(stack.getItem())) {
+            if (!RemovedThings.items.contains(stack.getItem())) {
                 out.accept(stack);
             }
         }, lootContext);

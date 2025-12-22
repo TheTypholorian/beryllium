@@ -28,7 +28,7 @@ public class RecipeManagerMixin {
             )
     )
     private <K, V> ImmutableMap.Builder<K, V> apply1(ImmutableMap.Builder<K, V> instance, K key, V value, Operation<ImmutableMap.Builder<K, V>> original) {
-        if (RemovedThings.getItems().contains(((RecipeHolder<?>) value).value().getResultItem(registries).getItem())) {
+        if (RemovedThings.items.contains(((RecipeHolder<?>) value).value().getResultItem(registries).getItem())) {
             return null;
         }
 
@@ -44,7 +44,7 @@ public class RecipeManagerMixin {
             )
     )
     private <K, V> ImmutableMultimap.Builder<K, V> apply2(ImmutableMultimap.Builder<K, V> instance, K key, V value, Operation<ImmutableMultimap.Builder<K, V>> original) {
-        if (RemovedThings.getItems().contains(((RecipeHolder<?>) value).value().getResultItem(registries).getItem())) {
+        if (RemovedThings.items.contains(((RecipeHolder<?>) value).value().getResultItem(registries).getItem())) {
             return null;
         }
 

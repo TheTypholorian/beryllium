@@ -44,14 +44,14 @@ public abstract class ItemStackMixin {
         String loreKey = getItem().getDescriptionId(stack) + ".lore";
 
         if (I18n.exists(loreKey)) {
-            out.accept(Component.literal(""));
+            out.accept(Component.literal(" "));
             out.accept(Component.translatable(loreKey).withStyle(ChatFormatting.GRAY));
         }
 
         String usageKey = getItem().getDescriptionId(stack) + ".usage";
 
         if (I18n.exists(usageKey)) {
-            out.accept(Component.literal(""));
+            out.accept(Component.literal(" "));
             out.accept(
                     Screen.hasShiftDown()
                             ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)

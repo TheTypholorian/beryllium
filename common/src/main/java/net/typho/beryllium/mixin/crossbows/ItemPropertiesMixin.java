@@ -27,7 +27,7 @@ public abstract class ItemPropertiesMixin {
     )
     private static void register(Item item, ResourceLocation name, ClampedItemPropertyFunction property, CallbackInfo ci) {
         if (item == Items.CROSSBOW) {
-            register(ModItems.getBurstCrossbow().get(), name, property);
+            register(ModItems.burstCrossbow.get(), name, property);
         }
     }
 

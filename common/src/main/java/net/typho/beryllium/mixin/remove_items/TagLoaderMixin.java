@@ -25,7 +25,7 @@ public class TagLoaderMixin {
     private List<TagEntry> load(TagFile instance, Operation<List<TagEntry>> original) {
         return original.call(instance).stream()
                 .filter(entry ->
-                        RemovedThings.getItems().stream()
+                        RemovedThings.items.stream()
                                 .noneMatch(item -> BuiltInRegistries.ITEM
                                         .getKey(item)
                                         .equals(((TagEntryAccessor) entry).beryllium$getId())

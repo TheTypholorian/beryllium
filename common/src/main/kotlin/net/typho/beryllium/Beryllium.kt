@@ -6,6 +6,7 @@ object Beryllium {
     const val MOD_ID = "beryllium"
 
     fun init() {
+        ModItemComponents.init()
         ModItems.init()
     }
 

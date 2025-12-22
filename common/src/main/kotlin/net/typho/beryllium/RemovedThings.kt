@@ -6,7 +6,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.ShapedRecipe
 
 object RemovedThings {
-    @JvmStatic
+    @JvmField
     val items = listOf(
         // keep wooden tools
 

@@ -28,7 +28,7 @@ public class RecipeManagerMixin {
     )
     private <T extends WithConditions<Recipe<?>>> Consumer<? super T> apply(Consumer<? super T> action) {
         return r -> {
-            if (!RemovedThings.getItems().contains(r.carrier().getResultItem(registries).getItem())) {
+            if (!RemovedThings.items.contains(r.carrier().getResultItem(registries).getItem())) {
                 action.accept(r);
             }
         };

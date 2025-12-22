@@ -25,7 +25,7 @@ public class CreativeModeTabMixin {
             at = @At("TAIL")
     )
     private void buildContents(CreativeModeTab.ItemDisplayParameters parameters, CallbackInfo ci) {
-        displayItems.removeIf(stack -> RemovedThings.getItems().contains(stack.getItem()));
-        displayItemsSearchTab.removeIf(stack -> RemovedThings.getItems().contains(stack.getItem()));
+        displayItems.removeIf(stack -> RemovedThings.items.contains(stack.getItem()));
+        displayItemsSearchTab.removeIf(stack -> RemovedThings.items.contains(stack.getItem()));
     }
 }

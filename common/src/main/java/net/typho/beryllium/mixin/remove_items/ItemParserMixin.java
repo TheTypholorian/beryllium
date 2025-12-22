@@ -25,7 +25,7 @@ public class ItemParserMixin {
     )
     private Stream<ResourceKey<Item>> suggestItem(HolderLookup.RegistryLookup<Item> instance, Operation<Stream<ResourceKey<Item>>> original) {
         return original.call(instance).filter(key ->
-                RemovedThings.getItems()
+                RemovedThings.items
                         .stream()
                         .noneMatch(item -> BuiltInRegistries.ITEM.getResourceKey(item).orElseThrow().equals(key))
         );
@@ -40,7 +40,7 @@ public class ItemParserMixin {
     )
     private Optional<Holder.Reference<Item>> readItem(HolderLookup.RegistryLookup<Item> instance, ResourceKey<Item> resourceKey, Operation<Optional<Holder.Reference<Item>>> original) {
         return original.call(instance, resourceKey).filter(reference ->
-                !RemovedThings.getItems().contains(reference.value())
+                !RemovedThings.items.contains(reference.value())
         );
     }
 }

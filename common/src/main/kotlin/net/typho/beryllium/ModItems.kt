@@ -8,7 +8,7 @@ import net.typho.beryllium.platform.Services
 object ModItems {
     fun init() = Unit
 
-    @JvmStatic
+    @JvmField
     val burstCrossbow = Services.REGISTRAR.registerItem("burst_crossbow") { properties ->
         BurstCrossbowItem(
             properties
