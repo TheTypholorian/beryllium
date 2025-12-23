@@ -20,6 +20,12 @@
                 "adapter": "kotlin",
                 "value": "net.typho.beryllium.BerylliumFabric"
             }
+        ],
+        "client": [
+            {
+                "adapter": "kotlin",
+                "value": "net.typho.beryllium.BerylliumClientFabric"
+            }
         ]
     },
     "mixins": [

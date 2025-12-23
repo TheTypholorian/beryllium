@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "beryllium:block/guster",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "beryllium:block/guster",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "beryllium:block/guster",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "beryllium:block/guster",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "beryllium:block/guster"
+    },
+    "facing=west": {
+      "model": "beryllium:block/guster",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

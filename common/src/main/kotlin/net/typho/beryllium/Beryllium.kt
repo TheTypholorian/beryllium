@@ -6,8 +6,11 @@ object Beryllium {
     const val MOD_ID = "beryllium"
 
     fun init() {
+        ModBlocks.init()
+        ModEntities.init()
         ModItemComponents.init()
         ModItems.init()
+        ModParticles.init()
     }
 
     @JvmStatic
