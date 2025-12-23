@@ -15,5 +15,6 @@ class DynamiteItem(properties: Properties) : Item(properties), ProjectileItem {
         stack: ItemStack,
         direction: Direction
     ): Projectile {
+        TODO()
     }
 }
