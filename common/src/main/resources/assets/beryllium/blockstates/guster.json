@@ -1,28 +1,54 @@
 {
   "variants": {
-    "facing=down": {
+    "facing=down,enabled=false": {
       "model": "beryllium:block/guster",
       "x": 180
     },
-    "facing=east": {
+    "facing=east,enabled=false": {
       "model": "beryllium:block/guster",
       "x": 90,
       "y": 90
     },
-    "facing=north": {
+    "facing=north,enabled=false": {
       "model": "beryllium:block/guster",
       "x": 90
     },
-    "facing=south": {
+    "facing=south,enabled=false": {
       "model": "beryllium:block/guster",
       "x": 90,
       "y": 180
     },
-    "facing=up": {
+    "facing=up,enabled=false": {
       "model": "beryllium:block/guster"
     },
-    "facing=west": {
+    "facing=west,enabled=false": {
       "model": "beryllium:block/guster",
+      "x": 90,
+      "y": 270
+    },
+    "facing=down,enabled=true": {
+      "model": "beryllium:block/guster_on",
+      "x": 180
+    },
+    "facing=east,enabled=true": {
+      "model": "beryllium:block/guster_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,enabled=true": {
+      "model": "beryllium:block/guster_on",
+      "x": 90
+    },
+    "facing=south,enabled=true": {
+      "model": "beryllium:block/guster_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,enabled=true": {
+      "model": "beryllium:block/guster_on"
+    },
+    "facing=west,enabled=true": {
+      "model": "beryllium:block/guster_on",
       "x": 90,
       "y": 270
     }
