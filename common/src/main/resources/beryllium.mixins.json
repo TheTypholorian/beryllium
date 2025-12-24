@@ -9,6 +9,7 @@
     "crossbows.CrossbowItemMixin",
     "crossbows.EnchantmentHelperMixin",
     "crossbows.EntityMixin",
+    "end_city.ShulkerBulletMixin",
     "remove_durability.ItemStackMixin",
     "remove_enchantments.EnchantCommandMixin",
     "remove_enchantments.EnchantmentDefinitionMixin",
