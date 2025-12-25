@@ -3,6 +3,7 @@ package net.typho.beryllium.mixin.remove_enchantments;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.typho.beryllium.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -17,7 +18,7 @@ public class EnchantmentDefinitionMixin {
             argsOnly = true
     )
     private static HolderSet<Item> init(HolderSet<Item> value) {
-        return HolderSet.empty();
+        return ModConfig.instance.enchantmentsEnabled ? value : HolderSet.empty();
     }
 
     @ModifyVariable(
@@ -26,6 +27,6 @@ public class EnchantmentDefinitionMixin {
             argsOnly = true
     )
     private static Optional<HolderSet<Item>> init(Optional<HolderSet<Item>> value) {
-        return Optional.empty();
+        return ModConfig.instance.enchantmentsEnabled ? value : Optional.empty();
     }
 }

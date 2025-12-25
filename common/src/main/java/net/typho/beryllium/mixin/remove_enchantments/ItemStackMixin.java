@@ -1,6 +1,7 @@
 package net.typho.beryllium.mixin.remove_enchantments;
 
 import net.minecraft.world.item.ItemStack;
+import net.typho.beryllium.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,6 +15,8 @@ public class ItemStackMixin {
             cancellable = true
     )
     private void isEnchantable(CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(false);
+        if (!ModConfig.instance.enchantmentsEnabled) {
+            cir.setReturnValue(false);
+        }
     }
 }

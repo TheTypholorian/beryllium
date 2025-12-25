@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.typho.beryllium.ModConfig;
 import net.typho.beryllium.RemovedThings;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,9 +30,11 @@ public class RecipeManagerMixin {
             )
     )
     private <K, V> ImmutableMultimap.Builder<K, V> apply(ImmutableMultimap.Builder<K, V> instance, K key, V value, Operation<ImmutableMultimap.Builder<K, V>> original) {
-        if (((RecipeHolder<?>) value).value() instanceof ShapedRecipe shaped) {
-            if (RemovedThings.isSmithingTemplateRecipe(shaped, registries)) {
-                return null;
+        if (!ModConfig.instance.smithing.templatesDuplicatable) {
+            if (((RecipeHolder<?>) value).value() instanceof ShapedRecipe shaped) {
+                if (RemovedThings.isSmithingTemplateRecipe(shaped, registries)) {
+                    return null;
+                }
             }
         }
 
@@ -47,9 +50,11 @@ public class RecipeManagerMixin {
             )
     )
     private <K, V> ImmutableMap.Builder<K, V> apply(ImmutableMap.Builder<K, V> instance, K key, V value, Operation<ImmutableMap.Builder<K, V>> original) {
-        if (((RecipeHolder<?>) value).value() instanceof ShapedRecipe shaped) {
-            if (RemovedThings.isSmithingTemplateRecipe(shaped, registries)) {
-                return null;
+        if (!ModConfig.instance.smithing.templatesDuplicatable) {
+            if (((RecipeHolder<?>) value).value() instanceof ShapedRecipe shaped) {
+                if (RemovedThings.isSmithingTemplateRecipe(shaped, registries)) {
+                    return null;
+                }
             }
         }
 

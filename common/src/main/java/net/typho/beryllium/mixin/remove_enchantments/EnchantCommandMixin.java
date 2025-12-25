@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.commands.EnchantCommand;
+import net.typho.beryllium.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,6 +18,8 @@ public class EnchantCommandMixin {
             cancellable = true
     )
     private static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext context, CallbackInfo ci) {
-        ci.cancel();
+        if (!ModConfig.instance.enchantmentsEnabled) {
+            ci.cancel();
+        }
     }
 }

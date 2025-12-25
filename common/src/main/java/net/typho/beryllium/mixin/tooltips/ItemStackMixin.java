@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.typho.beryllium.ModConfig;
 import net.typho.beryllium.tooltips.ItemIsMaterialStorage;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,16 +42,18 @@ public abstract class ItemStackMixin {
             CallbackInfoReturnable<List<Component>> cir,
             @Local Consumer<Component> out
     ) {
-        String usageKey = getItem().getDescriptionId((ItemStack) (Object) this) + ".usage";
+        if (ModConfig.instance.tooltips.usage) {
+            String usageKey = getItem().getDescriptionId((ItemStack) (Object) this) + ".usage";
 
-        if (I18n.exists(usageKey)) {
-            out.accept(Component.literal(" "));
-            out.accept(
-                    Screen.hasShiftDown()
-                            ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)
-                            : Component.translatable("tooltip.beryllium.usage").withStyle(ChatFormatting.GRAY)
-            );
-            out.accept(Component.literal(" "));
+            if (I18n.exists(usageKey)) {
+                out.accept(Component.literal(" "));
+                out.accept(
+                        Screen.hasShiftDown()
+                                ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)
+                                : Component.translatable("tooltip.beryllium.usage").withStyle(ChatFormatting.GRAY)
+                );
+                out.accept(Component.literal(" "));
+            }
         }
     }
 
@@ -69,12 +72,14 @@ public abstract class ItemStackMixin {
             CallbackInfoReturnable<List<Component>> cir,
             @Local Consumer<Component> out
     ) {
-        if (ItemIsMaterialStorage.test(getItem())) {
+        if (ModConfig.instance.tooltips.isMaterial && ItemIsMaterialStorage.test(getItem())) {
             out.accept(Component.translatable("tooltip.beryllium.is_material").withStyle(ChatFormatting.BLUE));
         }
 
-        if (getItem() instanceof SmithingTemplateItem) {
-            out.accept(Component.translatable("tooltip.beryllium.non_consumable").withStyle(ChatFormatting.BLUE));
+        if (ModConfig.instance.tooltips.nonConsumable) {
+            if (getItem() instanceof SmithingTemplateItem && !ModConfig.instance.smithing.templatesConsumable) {
+                out.accept(Component.translatable("tooltip.beryllium.non_consumable").withStyle(ChatFormatting.BLUE));
+            }
         }
     }
 }

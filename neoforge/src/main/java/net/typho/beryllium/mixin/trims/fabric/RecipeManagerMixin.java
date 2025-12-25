@@ -5,6 +5,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.neoforged.neoforge.common.conditions.WithConditions;
+import net.typho.beryllium.ModConfig;
 import net.typho.beryllium.RemovedThings;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,10 +29,14 @@ public class RecipeManagerMixin {
             )
     )
     private <T extends WithConditions<Recipe<?>>> Consumer<? super T> apply(Consumer<? super T> action) {
-        return r -> {
-            if (!(r.carrier() instanceof ShapedRecipe shaped && RemovedThings.isSmithingTemplateRecipe(shaped, registries))) {
-                action.accept(r);
-            }
-        };
+        if (ModConfig.instance.smithing.templatesDuplicatable) {
+            return action;
+        } else {
+            return r -> {
+                if (!(r.carrier() instanceof ShapedRecipe shaped && RemovedThings.isSmithingTemplateRecipe(shaped, registries))) {
+                    action.accept(r);
+                }
+            };
+        }
     }
 }

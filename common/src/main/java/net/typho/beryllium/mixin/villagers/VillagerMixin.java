@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
+import net.typho.beryllium.ModConfig;
 import net.typho.beryllium.villagers.HasDailyTrades;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,7 +32,11 @@ public abstract class VillagerMixin extends AbstractVillager implements HasDaily
             )
     )
     private float updateSpecialPrices(float value) {
-        return Math.min(value, 0);
+        if (ModConfig.instance.villagers.discountsEnabled) {
+            return value;
+        } else {
+            return Math.min(value, 0);
+        }
     }
 
     @Inject(

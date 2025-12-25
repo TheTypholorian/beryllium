@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
+import net.typho.beryllium.ModConfig
 import java.util.function.Predicate
 
 class BurstCrossbowItem(properties: Properties) : CrossbowItem(properties) {
@@ -21,11 +22,11 @@ class BurstCrossbowItem(properties: Properties) : CrossbowItem(properties) {
         inaccuracy: Float,
         target: LivingEntity?
     ) {
-        super.performShooting(level, shooter, hand, weapon, velocity / 2f, inaccuracy, target)
+        super.performShooting(level, shooter, hand, weapon, velocity * ModConfig.instance.crossbows.burstCrossbow.velocityMultiplier.get(), inaccuracy, target)
     }
 
     override fun getSupportedHeldProjectiles(): Predicate<ItemStack?> {
-        return super.getSupportedHeldProjectiles().or { stack -> stack.`is`(Items.WIND_CHARGE) }
+        return super.getSupportedHeldProjectiles().or { stack -> ModConfig.instance.crossbows.burstCrossbow.canLoadWindCharges && stack.`is`(Items.WIND_CHARGE) }
     }
 
     override fun createProjectile(

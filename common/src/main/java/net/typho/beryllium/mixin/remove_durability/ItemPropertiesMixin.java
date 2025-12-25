@@ -4,6 +4,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.Unbreakable;
+import net.typho.beryllium.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,6 +21,8 @@ public abstract class ItemPropertiesMixin {
             at = @At("TAIL")
     )
     private void durability(CallbackInfoReturnable<Boolean> cir) {
-        component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+        if (!ModConfig.instance.durabilityEnabled) {
+            component(DataComponents.UNBREAKABLE, new Unbreakable(true));
+        }
     }
 }

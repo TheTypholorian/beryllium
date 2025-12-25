@@ -15,6 +15,7 @@ dependencies {
     modImplementation(libs.fabricApi)
 
     modImplementation(libs.flk)
+    modImplementation(libs.fzzyConfig.common)
 }
 
 loom {

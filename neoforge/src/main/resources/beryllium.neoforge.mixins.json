@@ -4,6 +4,7 @@
   "package": "net.typho.beryllium.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "GameDataMixin",
     "remove_items.fabric.RecipeManagerMixin",
     "trims.fabric.RecipeManagerMixin"
   ],

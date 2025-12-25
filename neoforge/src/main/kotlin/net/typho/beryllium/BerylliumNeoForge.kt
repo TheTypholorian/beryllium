@@ -11,5 +11,6 @@ class BerylliumNeoForge(bus: IEventBus, modContainer: ModContainer) {
         Beryllium.init()
         NeoForgeRegistrar.items.register(bus)
         NeoForgeRegistrar.itemComponents.register(bus)
+        bus.addListener()
     }
 }
