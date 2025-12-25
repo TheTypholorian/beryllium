@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.typho.beryllium.tooltips.ItemIsMaterialStorage;
 import org.jetbrains.annotations.Nullable;
@@ -40,23 +41,16 @@ public abstract class ItemStackMixin {
             CallbackInfoReturnable<List<Component>> cir,
             @Local Consumer<Component> out
     ) {
-        ItemStack stack = (ItemStack) (Object) this;
-        String loreKey = getItem().getDescriptionId(stack) + ".lore";
-
-        if (I18n.exists(loreKey)) {
-            out.accept(Component.literal(" "));
-            out.accept(Component.translatable(loreKey).withStyle(ChatFormatting.GRAY));
-        }
-
-        String usageKey = getItem().getDescriptionId(stack) + ".usage";
+        String usageKey = getItem().getDescriptionId((ItemStack) (Object) this) + ".usage";
 
         if (I18n.exists(usageKey)) {
             out.accept(Component.literal(" "));
             out.accept(
                     Screen.hasShiftDown()
                             ? Component.translatable(usageKey).withStyle(ChatFormatting.GRAY)
-                            : Component.translatable("tooltip.beryllium.usage").withStyle(ChatFormatting.GOLD)
+                            : Component.translatable("tooltip.beryllium.usage").withStyle(ChatFormatting.GRAY)
             );
+            out.accept(Component.literal(" "));
         }
     }
 
@@ -77,6 +71,10 @@ public abstract class ItemStackMixin {
     ) {
         if (ItemIsMaterialStorage.test(getItem())) {
             out.accept(Component.translatable("tooltip.beryllium.is_material").withStyle(ChatFormatting.BLUE));
+        }
+
+        if (getItem() instanceof SmithingTemplateItem) {
+            out.accept(Component.translatable("tooltip.beryllium.non_consumable").withStyle(ChatFormatting.BLUE));
         }
     }
 }

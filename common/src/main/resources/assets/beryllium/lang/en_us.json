@@ -1,5 +1,6 @@
 {
   "tooltip.beryllium.is_material": "Material",
+  "tooltip.beryllium.non_consumable": "Non Consumable",
   "tooltip.beryllium.usage": "Hold Shift to view usage",
 
   "tier.wood": "Wood",
@@ -8,7 +9,6 @@
   "tier.gold": "Gold",
   "tier.diamond": "Diamond",
 
-  "item.minecraft.trident.lore": "A reward for conquering the ocean monument, this item is both a weapon and a mobility tool while underwater.",
   "item.minecraft.trident.usage": "Hold use while in water, then release to launch yourself forward in your crosshair direction. If you hit an enemy while dashing, you stop dashing and deal damage.",
 
   "item.beryllium.burst_crossbow": "Burst Crossbow",

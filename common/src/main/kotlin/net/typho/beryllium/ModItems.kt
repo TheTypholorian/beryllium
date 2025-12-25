@@ -2,15 +2,14 @@ package net.typho.beryllium
 
 import net.minecraft.Util
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.ArmorItem
-import net.minecraft.world.item.ArmorMaterial
-import net.minecraft.world.item.BlockItem
-import net.minecraft.world.item.Items
+import net.minecraft.world.item.*
 import net.minecraft.world.item.component.ChargedProjectiles
 import net.minecraft.world.item.crafting.Ingredient
 import net.typho.beryllium.crossbows.BurstCrossbowItem
 import net.typho.beryllium.explosives.DynamiteItem
+import net.typho.beryllium.mixin.accessors.CreativeModeTabsAccessor
 import net.typho.beryllium.platform.Services
 import java.util.*
 import java.util.function.Consumer
@@ -65,5 +64,21 @@ object ModItems {
             ModBlocks.guster.get(),
             properties
         )
+    }
+
+    @JvmStatic
+    fun getCreativeTabContents(key: ResourceKey<CreativeModeTab>): List<ItemStack>? {
+        if (key == CreativeModeTabsAccessor.getCombatTab()) {
+            return listOf(
+                ItemStack(burstCrossbow.get()),
+                ItemStack(levitationBoots.get()),
+            )
+        } else if (key == CreativeModeTabsAccessor.getToolsTab()) {
+            return listOf(
+                ItemStack(dynamite.get())
+            )
+        }
+
+        return null
     }
 }

@@ -5,12 +5,14 @@
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
+    "CreativeModeTabMixin",
+    "accessors.CreativeModeTabsAccessor",
     "accessors.TagEntryAccessor",
     "crossbows.CrossbowItemMixin",
     "crossbows.EnchantmentHelperMixin",
     "crossbows.EntityMixin",
     "end_city.ShulkerBulletMixin",
-    "remove_durability.ItemStackMixin",
+    "remove_durability.ItemPropertiesMixin",
     "remove_enchantments.EnchantCommandMixin",
     "remove_enchantments.EnchantmentDefinitionMixin",
     "remove_enchantments.ItemStackMixin",
@@ -18,7 +20,6 @@
     "remove_items.ItemParserMixin",
     "remove_items.LootPoolMixin",
     "remove_items.TagLoaderMixin",
-    "tiers.ItemStackMixin",
     "tooltips.CrossbowItemMixin",
     "tooltips.ItemMixin",
     "tooltips.ItemStackMixin",
@@ -31,9 +32,7 @@
   ],
   "client": [
     "crossbows.ItemInHandRendererMixin",
-    "crossbows.ItemPropertiesMixin",
-    "tiers.AbstractContainerScreenMixin",
-    "tooltips.TooltipRenderUtilMixin"
+    "crossbows.ItemPropertiesMixin"
   ],
   "server": [],
   "injectors": {
