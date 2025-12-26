@@ -11,6 +11,7 @@
     "crossbows.CrossbowItemMixin",
     "crossbows.EnchantmentHelperMixin",
     "crossbows.EntityMixin",
+    "elytra.FireworkRocketItemMixin",
     "end_city.ShulkerBulletMixin",
     "remove_durability.ItemPropertiesMixin",
     "remove_enchantments.EnchantCommandMixin",

@@ -45,6 +45,14 @@ class ModConfig : Config(Beryllium.id("config")) {
     }
 
     @JvmField
+    var elytra = ElytraSection()
+
+    class ElytraSection : ConfigSection() {
+        @JvmField
+        var rocketsEnabled = false
+    }
+
+    @JvmField
     var endCity = EndCitySection()
 
     class EndCitySection : ConfigSection() {
