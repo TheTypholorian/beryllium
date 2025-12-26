@@ -10,6 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.typho.beryllium.crossbows.BurstCrossbowItem
 import net.typho.beryllium.explosives.DynamiteItem
 import net.typho.beryllium.mixin.accessors.CreativeModeTabsAccessor
+import net.typho.beryllium.pillagers.RavagerShieldItem
 import net.typho.beryllium.platform.Services
 import java.util.*
 import java.util.function.Consumer
@@ -62,6 +63,12 @@ object ModItems {
     val guster = Services.REGISTRAR.registerItem("guster") { properties ->
         BlockItem(
             ModBlocks.guster.get(),
+            properties
+        )
+    }
+    @JvmField
+    val ravagerShield = Services.REGISTRAR.registerItem("ravager_shield") { properties ->
+        RavagerShieldItem(
             properties
         )
     }

@@ -13,6 +13,8 @@
     "crossbows.EntityMixin",
     "elytra.FireworkRocketItemMixin",
     "end_city.ShulkerBulletMixin",
+    "pillagers.AxeItemMixin",
+    "pillagers.PlayerMixin",
     "remove_durability.ItemPropertiesMixin",
     "remove_enchantments.EnchantCommandMixin",
     "remove_enchantments.EnchantmentDefinitionMixin",
@@ -33,7 +35,9 @@
   ],
   "client": [
     "crossbows.ItemInHandRendererMixin",
-    "crossbows.ItemPropertiesMixin"
+    "crossbows.ItemPropertiesMixin",
+    "pillagers.BlockEntityWithoutLevelRendererMixin",
+    "pillagers.ItemPropertiesMixin"
   ],
   "server": [],
   "injectors": {
