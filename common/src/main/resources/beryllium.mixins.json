@@ -37,6 +37,7 @@
     "crossbows.ItemInHandRendererMixin",
     "crossbows.ItemPropertiesMixin",
     "pillagers.BlockEntityWithoutLevelRendererMixin",
+    "pillagers.GuiGraphicsMixin",
     "pillagers.ItemPropertiesMixin"
   ],
   "server": [],
