@@ -2,7 +2,6 @@ package net.typho.beryllium
 
 import me.fzzyhmstrs.fzzy_config.annotations.Action
 import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction
-import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import me.fzzyhmstrs.fzzy_config.api.FileType
 import me.fzzyhmstrs.fzzy_config.config.Config
 import me.fzzyhmstrs.fzzy_config.config.ConfigSection
@@ -12,7 +11,7 @@ import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt
 class ModConfig : Config(Beryllium.id("config")) {
     companion object {
         @JvmField
-        val instance = ConfigApi.registerAndLoadConfig(::ModConfig)
+        val instance = ModConfig()//ConfigApi.registerAndLoadConfig(::ModConfig)
 
         fun init() = Unit
     }

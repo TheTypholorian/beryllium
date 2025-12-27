@@ -13,6 +13,7 @@
     "crossbows.EntityMixin",
     "elytra.FireworkRocketItemMixin",
     "end_city.ShulkerBulletMixin",
+    "goats.GoatMixin",
     "pillagers.AxeItemMixin",
     "pillagers.PlayerMixin",
     "remove_durability.ItemPropertiesMixin",
@@ -34,8 +35,11 @@
     "villagers.VillagerMixin"
   ],
   "client": [
+    "accessors.ModelLayersAccessor",
     "crossbows.ItemInHandRendererMixin",
     "crossbows.ItemPropertiesMixin",
+    "goats.GoatRendererMixin",
+    "goats.LayerDefinitionsMixin",
     "pillagers.BlockEntityWithoutLevelRendererMixin",
     "pillagers.GuiGraphicsMixin",
     "pillagers.ItemPropertiesMixin"

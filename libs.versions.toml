@@ -26,7 +26,7 @@ flk = "1.12.3+kotlin.2.0.21"
 
 mixin = "0.8.5"
 mixinExtras = "0.3.5"
-fzzyConfigCommon = "0.7.4+1.21"
+fzzyConfigCommon = "0.7.4-fix1+1.21"
 fzzyConfigNeo = "0.7.4+1.21+neoforge"
 
 [libraries]
