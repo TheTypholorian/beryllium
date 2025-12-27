@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.player.Player;
@@ -95,7 +96,8 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
     @Override
     protected void tickRidden(@NotNull Player player, @NotNull Vec3 travelVector) {
         super.tickRidden(player, travelVector);
-        //setRot(player.getYRot(), player.getXRot() * 0.5f);
+        setRot(player.getYRot(), player.getXRot() * 0.5f);
+        yRotO = yBodyRot = yHeadRot = getYRot();
     }
 
     @Override
@@ -168,5 +170,22 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
             Vec3 vec34 = beryllium$getDismountLocationInDirection(vec33, passenger);
             return vec34 != null ? vec34 : position();
         }
+    }
+
+    @Override
+    protected float getRiddenSpeed(@NotNull Player player) {
+        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED);
+    }
+
+    @Override
+    protected @NotNull Vec3 getRiddenInput(@NotNull Player player, @NotNull Vec3 travelVector) {
+        float f = player.xxa * 0.5f;
+        float g = player.zza;
+
+        if (g <= 0) {
+            g *= 0.25f;
+        }
+
+        return new Vec3(f, 0, g);
     }
 }
