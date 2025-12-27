@@ -22,6 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector2d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -78,11 +79,27 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
 
     @Override
     public void onPlayerJump(int i) {
+        if (onGround()) {
+            setPose(Pose.LONG_JUMPING);
+            Vec3 dir = getLookAngle();
+            double scale = i / 100.0;
+            Vector2d horizontal = new Vector2d(dir.x, dir.z).normalize(scale);
+
+            if (Double.isNaN(horizontal.x)) {
+                horizontal.x = 0;
+            }
+
+            if (Double.isNaN(horizontal.y)) {
+                horizontal.y = 0;
+            }
+
+            setDeltaMovement(horizontal.x, scale, horizontal.y);
+        }
     }
 
     @Override
     public boolean canJump() {
-        return isSaddled();
+        return isSaddled() && onGround();
     }
 
     @Override
@@ -101,6 +118,15 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
     }
 
     @Override
+    public void tick() {
+        super.tick();
+
+        if (getPose() == Pose.LONG_JUMPING && onGround()) {
+            setPose(Pose.STANDING);
+        }
+    }
+
+    @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (!isBaby() && isSaddled()) {
             player.startRiding(this);
@@ -108,6 +134,23 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
         }
 
         return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected float getRiddenSpeed(@NotNull Player player) {
+        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED);
+    }
+
+    @Override
+    protected @NotNull Vec3 getRiddenInput(@NotNull Player player, @NotNull Vec3 travelVector) {
+        float f = player.xxa * 0.5f;
+        float g = player.zza;
+
+        if (g <= 0) {
+            g *= 0.25f;
+        }
+
+        return new Vec3(f, 0, g);
     }
 
     @Override
@@ -170,22 +213,5 @@ public abstract class GoatMixin extends Animal implements PlayerRideableJumping,
             Vec3 vec34 = beryllium$getDismountLocationInDirection(vec33, passenger);
             return vec34 != null ? vec34 : position();
         }
-    }
-
-    @Override
-    protected float getRiddenSpeed(@NotNull Player player) {
-        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED);
-    }
-
-    @Override
-    protected @NotNull Vec3 getRiddenInput(@NotNull Player player, @NotNull Vec3 travelVector) {
-        float f = player.xxa * 0.5f;
-        float g = player.zza;
-
-        if (g <= 0) {
-            g *= 0.25f;
-        }
-
-        return new Vec3(f, 0, g);
     }
 }
